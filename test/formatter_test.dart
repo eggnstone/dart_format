@@ -5,7 +5,7 @@ void main()
 {
     test('Format empty string', ()
     {
-        final formatter = Formatter();
-        expect(formatter.format(""), "");
+        final Formatter formatter = Formatter();
+        expect(formatter.format(''), '');
     });
 }
