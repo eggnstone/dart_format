@@ -1,4 +1,52 @@
-include: package:flutter_lints/flutter.yaml
+# https://dash-overflow.net/articles/getting_started/
 
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+# Enable all rules by default
+include: all_lint_rules.yaml
+
+analyzer:
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+  errors:
+    # Otherwise cause the import of all_lint_rules to warn because of some rules conflicts.
+    # The conflicts are fixed in this file instead, so we can safely ignore the warning.
+    included_file_warning: ignore
+    missing_required_param: error
+    missing_return: error
+    must_be_immutable: error
+  exclude:
+    - 'lib/App.widgetbook.dart'
+    - 'lib/constants/generated/*.dart'
+    - 'lib/generated/*.dart'
+    - '**/*.freezed.dart'
+    - '**/*.g.dart'
+    - '**/*.gr.dart'
+    - '**/*Injection.config.dart'
+
+# Explicitly disable only the rules we do not want.
+linter:
+  rules:
+    avoid_dynamic_calls: false # temp
+    prefer_final_parameters: false # temp
+
+    always_use_package_imports: false
+    avoid_annotating_with_dynamic: false
+    avoid_catches_without_on_clauses: false
+    avoid_classes_with_only_static_members: false
+    avoid_types_on_closure_parameters: false
+    cascade_invocations: false
+    constant_identifier_names: false
+    curly_braces_in_flow_control_structures: false
+    depend_on_referenced_packages: false
+    file_names: false
+    flutter_style_todos: false
+    lines_longer_than_80_chars: false
+    omit_local_variable_types: false
+    prefer_double_quotes: false
+    public_member_api_docs: false
+    require_trailing_commas: false
+    sort_child_properties_last: false
+    sort_constructors_first: false
+    sort_pub_dependencies: false
+    sort_unnamed_constructors_first: false
+    unnecessary_final: false

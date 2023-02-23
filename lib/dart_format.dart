@@ -2,6 +2,6 @@ library dev.eggnstone.dart_format;
 
 class Formatter 
 {
-    format(String s) 
+    String format(String s)
     => s;
 }
