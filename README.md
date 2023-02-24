@@ -1,6 +1,6 @@
 # dart_format
 
-![Build](https://github.com/eggnstone/dart_format/actions/workflows/dart.yml/badge.svg)
+![Build](https://github.com/eggnstone/dart_format/actions/workflows/dart.yaml/badge.svg)
 [![pub package](https://img.shields.io/pub/v/dart_format.svg)](https://pub.dartlang.org/packages/dart_format)
 
 **A formatter for Dart.**
