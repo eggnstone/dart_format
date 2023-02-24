@@ -1,10 +1,15 @@
 import 'package:eggnstone_dart/eggnstone_dart.dart';
 
+import 'Block.dart';
+
 class Blockifier
 {
-    String blockify(String s) 
+    List<Block> blockify(String s)
     {
         logDebug('Blockifier.blockify');
-        return s;
+
+        final List<Block> blocks = <Block>[];
+
+        return blocks;
     }
 }
