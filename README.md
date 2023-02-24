@@ -6,5 +6,5 @@ Like dartfmt.
 But better ;)  
 Because it's configurable.
 
-Also available as IntelliJ plugin:
+Also available as a Jetbrains plugin:
 https://plugins.jetbrains.com/plugin/21003-dartformat

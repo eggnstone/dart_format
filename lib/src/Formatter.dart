@@ -1,4 +1,4 @@
-import 'eggnstone_dart/LogTools.dart';
+import 'package:eggnstone_dart/eggnstone_dart.dart';
 
 class Formatter
 {
