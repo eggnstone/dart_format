@@ -1,0 +1,4 @@
+ import "../tools.dt.g.dart" show Tools$Companion;
+ import "isimple_block.dt.g.dart" show ISimpleBlock;
+ import "package:meta/meta.dart" ;
+@sealed class SimpleWhitespaceBlock implements ISimpleBlock{  SimpleWhitespaceBlock(this.text) : super();@nonVirtual final String  text; bool equals(Object? other){return other is SimpleWhitespaceBlock && this.text == (other as SimpleWhitespaceBlock).text;}@override bool operator ==(Object? other)=> this.equals(other);@override int get hashCode{return this.text.hashCode;}@override String toString(){return "SimpleWhitespace(${Tools$Companion.$instance.$toDisplayString2(this.text)})";}}

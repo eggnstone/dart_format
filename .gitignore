@@ -5,6 +5,12 @@
 # As per https://dart.dev/guides/libraries/private-files#packages this library should ignore and remove the pubspec.lock file.
 /pubspec.lock
 
+# Ignore Kotlin/Dotlin stuff
+/.dotlin
+/out
+*.kt
+*.old
+
 # Exceptions to above rules.
 !*.iml
 !.idea/dictionaries

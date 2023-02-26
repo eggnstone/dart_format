@@ -12,5 +12,5 @@ Like dartfmt.
 But better ;)  
 Because it's configurable.
 
-Also available as a Jetbrains plugin:
+Also available as a plugin for Jetbrains (Android Studio, IntelliJ IDEA, ...)  
 https://plugins.jetbrains.com/plugin/21003-dartformat

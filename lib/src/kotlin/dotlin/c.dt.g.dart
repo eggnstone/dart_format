@@ -1,0 +1,3 @@
+ import "../dart_format_exception.dt.g.dart" show DartFormatException;
+ import "package:meta/meta.dart" ;
+@sealed class C{  C(this.value) : super(){if (this.value.length != 1){throw DartFormatException("value.length != 1");}}@nonVirtual final String  value; bool equals(Object? other){if (other == null){throw DartFormatException("other == null");}return other is C && this.value == (other as C).value;}@override bool operator ==(Object? other)=> this.equals(other);@override int get hashCode{return this.value.hashCode;}@override String toString(){return this.value;}}
