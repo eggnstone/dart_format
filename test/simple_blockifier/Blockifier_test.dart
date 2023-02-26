@@ -105,4 +105,53 @@ void main()
 
         expect(actualBlocks, equals(expectedBlocks));
     });
+
+    test('twoSimpleInstructionsWithWhitespacesAround', ()
+    {
+        const String inputText = '\nabc();\ndef();\n';
+
+        final SimpleWhitespaceBlock block1 = SimpleWhitespaceBlock('\n');
+        final SimpleInstructionBlock block2 = SimpleInstructionBlock('abc();');
+        final SimpleWhitespaceBlock block3 = SimpleWhitespaceBlock('\n');
+        final SimpleInstructionBlock block4 = SimpleInstructionBlock('def();');
+        final SimpleWhitespaceBlock block5 = SimpleWhitespaceBlock('\n');
+        final List<ISimpleBlock> expectedBlocks = <ISimpleBlock>[block1, block2, block3, block4, block5];
+
+        final SimpleBlockifier blockifier = SimpleBlockifier();
+        final List<ISimpleBlock> actualBlocks = blockifier.blockify(inputText);
+
+        expect(actualBlocks, equals(expectedBlocks));
+    });
+
+    test('unexpectedEndInCurlyBracketBlock', ()
+    {
+        const String inputText = '{';
+
+        final SimpleBlockifier blockifier = SimpleBlockifier();
+        expect(() => blockifier.blockify(inputText), throwsException);
+    });
+
+    test('unexpectedEndInRoundBracketBlock', ()
+    {
+        const String inputText = '(';
+
+        final SimpleBlockifier blockifier = SimpleBlockifier();
+        expect(() => blockifier.blockify(inputText), throwsException);
+    });
+
+    test('unexpectedEndInSquareBracketBlock', ()
+    {
+        const String inputText = '[';
+
+        final SimpleBlockifier blockifier = SimpleBlockifier();
+        expect(() => blockifier.blockify(inputText), throwsException);
+    });
+
+    test('unexpectedClosingCurlyBracket', ()
+    {
+        const String inputText = 'a}';
+
+        final SimpleBlockifier blockifier = SimpleBlockifier();
+        expect(() => blockifier.blockify(inputText), throwsException);
+    });
 }
