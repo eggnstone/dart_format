@@ -12,8 +12,8 @@ executables:
   dartformat: dart_format
 
 dependencies:
-  dotlin:
-    path: ../../../GitHub/dotlin/packages/dotlin
+  #dotlin:
+    #path: ../../../GitHub/dotlin/packages/dotlin
     #git:
     #  url: https://github.com/dotlin-org/dotlin.git
     #  path: packages/dotlin
@@ -21,8 +21,8 @@ dependencies:
   eggnstone_dart: ^1.0.0
 
 dev_dependencies:
-  dotlin_generator:
-    path: ../../../GitHub/dotlin/packages/dotlin_generator
+  #dotlin_generator:
+    #path: ../../../GitHub/dotlin/packages/dotlin_generator
     #git:
     #  url: https://github.com/dotlin-org/dotlin.git
     #  path: packages/dotlin_generator
