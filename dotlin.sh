@@ -17,7 +17,8 @@ echo Replacing some files ...
 cp lib/src/kotlin/dart_format_exception.dt.g.dart.save lib/src/kotlin/dart_format_exception.dt.g.dart
 cp lib/src/kotlin/dotlin/dotlin_logger.dt.g.dart.save lib/src/kotlin/dotlin/dotlin_logger.dt.g.dart
 
-./fixpaths.sh
+./FixPaths.sh
+./FixIsEmpty.sh
 
 echo Some more fixes ...
 mv lib/src/kotlin/dotlin/dotlin_tools.dt.g.dart lib/src/kotlin/dotlin/dotlin_tools.dt.g.dart.old
