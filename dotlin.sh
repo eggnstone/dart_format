@@ -1,7 +1,6 @@
 echo Copying Kotlin code from DartFormatJetBrainsPlugin ...
 
 #cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/com/eggnstone/jetbrainsplugins/dartformat/dotlin lib/src/kotlin
-cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/com/eggnstone/jetbrainsplugins/dartformat/dotlin/DotlinChar.kt lib/src/kotlin/dotlin
 # do not copy DotlinLogger.kt
 cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/com/eggnstone/jetbrainsplugins/dartformat/dotlin/DotlinTools.kt lib/src/kotlin/dotlin
 
