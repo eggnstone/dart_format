@@ -1,15 +1,15 @@
 echo Copying Kotlin code from DartFormatJetBrainsPlugin ...
 
-#cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/com/eggnstone/jetbrainsplugins/dartformat/dotlin lib/src/kotlin
+#cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/dev/eggnstone/plugins/jetbrains/dartformat/dotlin lib/src/kotlin
 # do not copy DotlinLogger.kt
-cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/com/eggnstone/jetbrainsplugins/dartformat/dotlin/DotlinTools.kt lib/src/kotlin/dotlin
+cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/dev/eggnstone/plugins/jetbrains/dartformat/dotlin/DotlinTools.kt lib/src/kotlin/dotlin
 
-cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/com/eggnstone/jetbrainsplugins/dartformat/simple_blockifier lib/src/kotlin
-cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/com/eggnstone/jetbrainsplugins/dartformat/simple_blocks lib/src/kotlin
+cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/dev/eggnstone/plugins/jetbrains/dartformat/simple_blockifier lib/src/kotlin
+cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/dev/eggnstone/plugins/jetbrains/dartformat/simple_blocks lib/src/kotlin
 
-cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/com/eggnstone/jetbrainsplugins/dartformat/Constants.kt lib/src/kotlin
-cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/com/eggnstone/jetbrainsplugins/dartformat/DartFormatException.kt lib/src/kotlin
-cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/com/eggnstone/jetbrainsplugins/dartformat/Tools.kt lib/src/kotlin
+cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/dev/eggnstone/plugins/jetbrains/dartformat/Constants.kt lib/src/kotlin
+cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/dev/eggnstone/plugins/jetbrains/dartformat/DartFormatException.kt lib/src/kotlin
+cp -r ../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/dev/eggnstone/plugins/jetbrains/dartformat/Tools.kt lib/src/kotlin
 
 echo Executing Dotlin ...
 ../../../GitHub/dotlin/compiler/build/distributions/dotlin-0.0.1/bin/dotlin
