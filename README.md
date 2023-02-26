@@ -14,3 +14,6 @@ Because it's configurable.
 
 Also available as a plugin for Jetbrains (Android Studio, IntelliJ IDEA, ...)  
 https://plugins.jetbrains.com/plugin/21003-dartformat
+
+Plugin and actual formatter source:
+https://github.com/eggnstone/DartFormatJetbrainsPlugin
