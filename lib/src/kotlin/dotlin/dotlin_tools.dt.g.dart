@@ -1,8 +1,0 @@
-import "../StringExtensions.dart";
- import "package:dotlin/src/kotlin/ranges/ranges_ext.dt.g.dart" show IntRangeFactoryExt;
- import "package:dotlin/src/dotlin/intrinsics/internal.dt.g.dart" show $Return;
- import "package:dotlin/src/kotlin/library.dt.g.dart" show SafeStringPlus;
- import "package:dotlin/src/kotlin/ranges/ranges.dt.g.dart" show IntRange;
- import "package:meta/meta.dart" ;
-@sealed class DotlinTools{ static const DotlinTools$Companion  $companion = DotlinTools$Companion.$instance; static bool contains(String s, String searchChar, )=> DotlinTools$Companion.$instance.$contains(s, searchChar); static String replace(String s, String searchChar, String replaceText, )=> DotlinTools$Companion.$instance.$replace(s, searchChar, replaceText);}
-@sealed class DotlinTools$Companion{ const  DotlinTools$Companion._() : super();@nonVirtual bool $contains(String s, String searchChar, ){try {for ( int  i = 0; i < s.length; i += 1) {final String  originalChar = s.get(i).toString();if (originalChar == searchChar){throw const $Return<bool>(true, 1280815707);}}return false;}on $Return<bool> catch (tmp0_return){if (tmp0_return.target == 1280815707){return tmp0_return.value;}else {throw tmp0_return;}} }@nonVirtual String $replace(String s, String searchChar, String replaceText, ){ String  result = "";for ( int  i = 0; i < s.length; i += 1) {final String  originalChar = s.get(i).toString();result += originalChar == searchChar ? replaceText : originalChar;}return result;} static const DotlinTools$Companion  $instance = const DotlinTools$Companion._();}

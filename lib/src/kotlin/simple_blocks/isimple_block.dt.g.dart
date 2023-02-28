@@ -1,2 +1,0 @@
- import "package:meta/meta.dart" ;
- abstract class ISimpleBlock{ bool equals(Object? other);@override bool operator ==(Object? other)=> this.equals(other);@override int get hashCode;@override String toString();}
