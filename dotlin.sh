@@ -1,15 +1,15 @@
 echo Copying Kotlin code from DartFormatJetBrainsPlugin ...
 
 SOURCE="../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/dev/eggnstone/plugins/jetbrains/dartformat"
-DEST="lib/src/kotlin/dev/eggnstone/plugins/jetbrains/dartformat/"
+DEST="lib/src/kotlin/dev/eggnstone/plugins/jetbrains/dartformat"
 
 cp -r $SOURCE/dotlin $DEST
+cp -r $SOURCE/indenters $DEST
 cp -r $SOURCE/parts $DEST
 cp -r $SOURCE/splitters $DEST
 
 cp -r $SOURCE/Constants.kt $DEST
 cp -r $SOURCE/DartFormatException.kt $DEST
-cp -r $SOURCE/Indenter.kt $DEST
 cp -r $SOURCE/Levels.kt $DEST
 cp -r $SOURCE/LevelsCalculator.kt $DEST
 cp -r $SOURCE/LineSplitter.kt $DEST
