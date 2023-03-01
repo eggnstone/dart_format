@@ -1,3 +1,5 @@
+#!/bin/sh
+
 echo Copying Kotlin code from DartFormatJetBrainsPlugin ...
 
 SOURCE="../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/dev/eggnstone/plugins/jetbrains/dartformat"
@@ -8,13 +10,13 @@ cp -r $SOURCE/indenters $DEST
 cp -r $SOURCE/parts $DEST
 cp -r $SOURCE/splitters $DEST
 
-cp -r $SOURCE/Constants.kt $DEST
-cp -r $SOURCE/DartFormatException.kt $DEST
-cp -r $SOURCE/Levels.kt $DEST
-cp -r $SOURCE/LevelsCalculator.kt $DEST
-cp -r $SOURCE/LineSplitter.kt $DEST
-cp -r $SOURCE/Tools.kt $DEST
-cp -r $SOURCE/WhitespaceSplitter.kt $DEST
+cp $SOURCE/Constants.kt $DEST
+cp $SOURCE/DartFormatException.kt $DEST
+cp $SOURCE/Levels.kt $DEST
+cp $SOURCE/LevelsCalculator.kt $DEST
+cp $SOURCE/LineSplitter.kt $DEST
+cp $SOURCE/Tools.kt $DEST
+cp $SOURCE/WhitespaceSplitter.kt $DEST
 
 echo Replacing some files ...
 cp $DEST/dotlin/DotlinLogger.kt.save $DEST/dotlin/DotlinLogger.kt
