@@ -6,17 +6,15 @@ SOURCE="../../JetBrains/DartFormatJetBrainsPlugin/src/main/kotlin/dev/eggnstone/
 DEST="lib/src/kotlin/dev/eggnstone/plugins/jetbrains/dartformat"
 
 cp -r $SOURCE/dotlin $DEST
+cp -r $SOURCE/extractors $DEST
 cp -r $SOURCE/indenters $DEST
+cp -r $SOURCE/levels $DEST
 cp -r $SOURCE/parts $DEST
 cp -r $SOURCE/splitters $DEST
 
 cp $SOURCE/Constants.kt $DEST
 cp $SOURCE/DartFormatException.kt $DEST
-cp $SOURCE/Levels.kt $DEST
-cp $SOURCE/LevelsCalculator.kt $DEST
-cp $SOURCE/LineSplitter.kt $DEST
 cp $SOURCE/Tools.kt $DEST
-cp $SOURCE/WhitespaceSplitter.kt $DEST
 
 echo Replacing some files ...
 cp $DEST/dotlin/DotlinLogger.kt.save $DEST/dotlin/DotlinLogger.kt
