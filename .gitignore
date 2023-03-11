@@ -11,6 +11,9 @@
 *.kt
 *.old
 
+# Ignore generated files for now
+*.dt.g.dart
+
 # Exceptions to above rules.
 !*.iml
 !.idea/dictionaries
