@@ -6,7 +6,7 @@
 [![GitHub Forks](https://img.shields.io/github/forks/eggnstone/dart_format.svg)](https://github.com/eggnstone/dart_format/network)
 [![GitHub Stars](https://img.shields.io/github/stars/eggnstone/dart_format.svg)](https://github.com/eggnstone/dart_format/stargazers)
 
-**A formatter for Dart.**
+## A formatter for Dart.
 
 Like dartfmt.  
 But better ;)  
@@ -15,5 +15,17 @@ Because it's configurable.
 Also available as a plugin for Jetbrains (Android Studio, IntelliJ IDEA, ...)  
 https://plugins.jetbrains.com/plugin/21003-dartformat
 
-Plugin and actual formatter source:
-https://github.com/eggnstone/DartFormatJetbrainsPlugin
+## To run dart_format from the command line:
+- Follow the instructions at https://pub.dev/packages/dart_format/install
+
+```
+Usage: dart_format [args]
+    <dart file> [<dart file> ...]    Formats the specified dart file(s)
+    --config=<config JSON>           Specifies the configuration
+    --dry-run, -dr                   Writes output to "<original filename>.formatted.dart"
+    --errors-as-json                 Writes errors as JSON to stderr
+    --log-to-console                 Logs to console
+    --log-to-temp-file               Logs to a temp file ("dart_format_<date>_<time>_<pid>.log" in the system temp directory)
+    --pipe                           Formats stdin and writes to stdout
+    --web[service]                   Starts in web service mode
+```

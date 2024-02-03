@@ -1,0 +1,27 @@
+import 'package:dart_format/dart_format.dart';
+import 'package:test/test.dart';
+
+import '../../../../../TestTools/TestTools.dart';
+
+void main()
+{
+    TestTools.init();
+
+    const Config config = Config.none();
+    final Formatter formatter = Formatter(config);
+
+    group('WhileStatements', ()
+        {
+            test('Simple while statement', ()
+                {
+                    const String inputText = 'void f(){while(true);}';
+                    const String expectedText = 'void f(){while(true);}';
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
+        }
+    );
+}

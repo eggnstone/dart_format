@@ -15,13 +15,8 @@ analyzer:
     missing_return: error
     must_be_immutable: error
   exclude:
-    - 'lib/App.widgetbook.dart'
-    - 'lib/constants/generated/*.dart'
-    - 'lib/generated/*.dart'
     - '**/*.freezed.dart'
     - '**/*.g.dart'
-    - '**/*.gr.dart'
-    - '**/*Injection.config.dart'
 
 # Explicitly disable only the rules we do not want.
 linter:

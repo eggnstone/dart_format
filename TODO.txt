@@ -1,0 +1,14 @@
+TODO
+====
+- Indent assignments when multiline
+- Error "Missed some text" does not fully carry over to the plugin when the text contains <text> e.g. <DartFormatException>.
+- favicon.ico does not work when called from plugin.
+- integration tests for indentation=-1
+- integration tests for maxEmptyLines
+- maxEmptyLines can only work when removeLeadingWhitespace does not already remove all empty lines.
+- tests for FormalParameterListFormatter, ... (test preservation/removal of trailing comma)
+
+DONE (I Think)
+==============
+- Block comments: keep indentation
+- Method params: indent when multiline with "(" and "({"

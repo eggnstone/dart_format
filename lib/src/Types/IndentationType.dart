@@ -1,0 +1,5 @@
+enum IndentationType
+{
+    single,
+    multiple
+}
