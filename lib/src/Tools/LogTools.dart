@@ -74,37 +74,37 @@ class LogTools
 
     static void logDebug(String message, {bool preventLoggingToConsole = false})
     {
-        if (logToConsole! && !preventLoggingToConsole)
+        if ((logToConsole ?? false) && !preventLoggingToConsole)
             eggnstone_dart.logDebug(message);
 
-        if (logToTempFile!)
+        if (logToTempFile ?? false)
             _logToTempFile('Debug:  $message');
     }
 
     static void logInfo(String message)
     {
-        if (logToConsole!)
+        if (logToConsole ?? false)
             eggnstone_dart.logInfo(message);
 
-        if (logToTempFile!)
+        if (logToTempFile ?? false)
             _logToTempFile('Info:   $message');
     }
 
     static void logWarning(String message)
     {
-        if (logToConsole!)
+        if (logToConsole ?? false)
             eggnstone_dart.logWarning(message);
 
-        if (logToTempFile!)
+        if (logToTempFile ?? false)
             _logToTempFile('Warn:   $message');
     }
 
     static void logError(String message)
     {
-        if (logToConsole!)
+        if (logToConsole ?? false)
             eggnstone_dart.logError(message);
 
-        if (logToTempFile!)
+        if (logToTempFile ?? false)
             _logToTempFile('Error:  $message');
     }
 
@@ -131,11 +131,11 @@ class LogTools
         {
             // Sometimes (e.g. when /quit is being called) we may encounter
             // "OS Error: The pipe is being closed., errno = 232"
-            if (logToTempFile!)
+            if (logToTempFile ?? false)
                 _logToTempFile('Failed to write to stdout: $e');
         }
 
-        if (logToTempFile!)
+        if ((logToTempFile ?? false) && !preventLoggingToTempFile)
             _logToTempFile('StdOut: $s');
     }
 
@@ -149,11 +149,11 @@ class LogTools
         {
             // Sometimes (e.g. when /quit is being called) we may encounter
             // "OS Error: The pipe is being closed., errno = 232"
-            if (logToTempFile!)
+            if (logToTempFile ?? false)
                 _logToTempFile('Failed to write to stdout: $e');
         }
 
-        if (logToTempFile!)
+        if ((logToTempFile ?? false) && !preventLoggingToTempFile)
             _logToTempFile('StdOut: $s');
     }
 
@@ -167,11 +167,11 @@ class LogTools
         {
             // Sometimes (e.g. when /quit is being called) we may encounter
             // "OS Error: The pipe is being closed., errno = 232"
-            if (logToTempFile!)
+            if (logToTempFile ?? false)
                 _logToTempFile('Failed to write to stderr: $e');
         }
 
-        if (logToTempFile!)
+        if (logToTempFile ?? false)
             _logToTempFile('StdErr: $s');
     }
 

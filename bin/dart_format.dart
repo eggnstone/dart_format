@@ -13,7 +13,7 @@ Future<void> main(List<String> args)
 async
 {
     LogTools.logToConsole = args.contains('--log-to-console') || args.contains('--log-to-console=true');
-    LogTools.logToTempFile = args.contains('--log-to-temp-file') || args.contains('--log-to-temp-file=true');
+    LogTools.logToTempFile = true;//args.contains('--log-to-temp-file') || args.contains('--log-to-temp-file=true');
 
     logDebug('main START', preventLoggingToConsole: true);
 
@@ -71,6 +71,7 @@ async
 {
     if (args.isEmpty)
     {
+        logDebug('No arguments given => Printing usage.');
         writeUsageToStdOut();
         return ErrorCodes.DART_FORMAT__ARGS_IS_EMPTY;
     }
@@ -119,6 +120,7 @@ async
 
         if (arg.startsWith('-'))
         {
+            logDebug('Unknown argument: $arg => Printing usage.');
             writeUsageToStdOut();
             writelnToStdOut('Unknown argument: $arg');
             return ErrorCodes.DART_FORMAT__UNKNOWN_ARGUMENT;
@@ -129,6 +131,7 @@ async
 
     if (isPipe && isWebService)
     {
+        logDebug('Cannot specify both --pipe and --webservice => Printing usage.');
         writeUsageToStdOut();
         writelnToStdOut('Cannot specify both --pipe and --webservice');
         return ErrorCodes.DART_FORMAT__CANNOT_SPECIFY_BOTH_PIPE_AND_WEB_SERVICE;
@@ -151,19 +154,19 @@ async
     return defaultHandler.run();
 }
 
-void writeCopyrightToStdOut()
-=> writelnToStdOut('dart_format (c) 2022-2024 Mark Eggenstein'); // TODO: version
+void writeCopyrightToStdOut({bool preventLoggingToTempFile = false})
+=> writelnToStdOut('dart_format (c) 2022-2024 Mark Eggenstein', preventLoggingToTempFile: preventLoggingToTempFile); // TODO: version
 
 void writeUsageToStdOut()
 {
-    writeCopyrightToStdOut();
+    writeCopyrightToStdOut(preventLoggingToTempFile: true);
     writelnToStdOut('Usage: dart_format [args]', preventLoggingToTempFile: true);
     writelnToStdOut('    <dart file> [<dart file> ...]    Formats the specified dart file(s)', preventLoggingToTempFile: true);
     writelnToStdOut('    --config=<config JSON>           Specifies the configuration', preventLoggingToTempFile: true);
     writelnToStdOut('    --dry-run, -dr                   Writes output to "<original filename>.formatted.dart"', preventLoggingToTempFile: true);
     writelnToStdOut('    --errors-as-json                 Writes errors as JSON to stderr', preventLoggingToTempFile: true);
     writelnToStdOut('    --log-to-console                 Logs to console', preventLoggingToTempFile: true);
-    writelnToStdOut('    --log-to-temp-file               Logs to a temp file ("dart_format_<date>_<time>_<pid>.log" in the system temp directory)', preventLoggingToTempFile: true);
+    //writelnToStdOut('    --log-to-temp-file               Logs to a temp file ("dart_format_<date>_<time>_<pid>.log" in the system temp directory)', preventLoggingToTempFile: true);
     writelnToStdOut('    --pipe                           Formats stdin and writes to stdout', preventLoggingToTempFile: true);
     writelnToStdOut('    --web[service]                   Starts in web service mode', preventLoggingToTempFile: true);
 }

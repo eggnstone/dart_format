@@ -24,7 +24,6 @@ Usage: dart_format [args]
     --dry-run, -dr                   Writes output to "<original filename>.formatted.dart"
     --errors-as-json                 Writes errors as JSON to stderr
     --log-to-console                 Logs to console
-    --log-to-temp-file               Logs to a temp file ("dart_format_<date>_<time>_<pid>.log" in the system temp directory)
     --pipe                           Formats stdin and writes to stdout
     --web[service]                   Starts in web service mode
 ```
