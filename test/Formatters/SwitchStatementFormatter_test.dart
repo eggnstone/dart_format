@@ -20,8 +20,8 @@ void main()
             inputTrailing: '}',
             name: 'SwitchStatement',
             astVisitors: <TestAstVisitor>[
-              TestSimpleIdentifierVisitor(16, 'i'),
-              TestSwitchPatternCaseVisitor(19, 'case 0:;')
+                TestSimpleIdentifierVisitor(16, 'i'),
+                TestSwitchPatternCaseVisitor(19, 'case 0:;')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

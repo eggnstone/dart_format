@@ -31,7 +31,7 @@ void main()
             inputTrailing: '//Comment\n',
             name: 'End of text with comment',
             astVisitors: <TestAstVisitor>[
-              TestLibraryIdentifierVisitor(8, 'l')
+                TestLibraryIdentifierVisitor(8, 'l')
             ]
         ),
         TestGroupConfig(
@@ -44,7 +44,7 @@ void main()
                 TestConfig('library l;//Comment\n', '')
             ],
             astVisitors: <TestAstVisitor>[
-              TestLibraryIdentifierVisitor(8, 'l')
+                TestLibraryIdentifierVisitor(8, 'l')
             ]
         )
     ];

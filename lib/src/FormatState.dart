@@ -48,6 +48,12 @@ class FormatState
     .._lastConsumedPosition = leading?.length ?? 0
     .._trailingForTests = trailing;
 
+    void acceptListWithPeriod(List<AstNode> nodes, AstVisitor<void> astVisitor, String source)
+    {
+        // TODO
+        acceptList(nodes, astVisitor, source);
+    }
+
     void acceptList(List<AstNode> nodes, AstVisitor<void> astVisitor, String source)
     {
         _log('# FormatState.acceptNodeList($source)');

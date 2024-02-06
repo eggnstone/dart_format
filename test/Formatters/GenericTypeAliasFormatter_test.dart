@@ -34,7 +34,7 @@ void main()
                 TestConfig('typedef F=void Function();\n')
             ],
             astVisitors: <TestAstVisitor>[
-              TestGenericFunctionTypeVisitor(10, 'void Function()')
+                TestGenericFunctionTypeVisitor(10, 'void Function()')
             ]
         )
     ];
