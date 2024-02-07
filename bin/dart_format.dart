@@ -1,15 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dart_format/src/Constants/ErrorCodes.dart';
-import 'package:dart_format/src/Data/Version.dart';
+import 'package:dart_format/src/Constants/ExitCodes.dart';
 import 'package:dart_format/src/Exceptions/DartFormatException.dart';
 import 'package:dart_format/src/Handlers/DefaultHandler.dart';
 import 'package:dart_format/src/Handlers/PipeHandler.dart';
 import 'package:dart_format/src/Handlers/WebServiceHandler.dart';
 import 'package:dart_format/src/Tools/LogTools.dart';
 import 'package:dart_format/src/Types/FailType.dart';
-import 'package:dart_format/src/VersionChecker.dart';
 
 Future<void> main(List<String> args)
 async
@@ -36,7 +34,7 @@ async
     );
 
     logDebug('main END (ExitCode=$exitCode, EncounteredErrorInRunZonedGuarded=$encounteredErrorInRunZonedGuarded)', preventLoggingToConsole: true);
-    exit(exitCode ?? ErrorCodes.DART_FORMAT__NO_EXIT_CODE);
+    exit(exitCode ?? ExitCodes.ERROR);
 }
 
 Future<int> main1(List<String> args)
@@ -52,12 +50,12 @@ async
     {
         final String optionalLocation = e.line == null && e.column == null ? '' : ' at ${e.line}:${e.column}';
         writelnToStdErr('${e.type.name}$optionalLocation: ${e.message}');
-        exitCode = ErrorCodes.DART_FORMAT__OTHER_ERROR;
+        exitCode = ExitCodes.COMMAND_LINE__OTHER_ERROR;
     }
     catch (e)
     {
         writelnToStdErr('Error in dart_format: $e');
-        exitCode = ErrorCodes.DART_FORMAT__OTHER_ERROR;
+        exitCode = ExitCodes.COMMAND_LINE__OTHER_ERROR;
     }
     finally
     {
@@ -75,7 +73,7 @@ async
     {
         logDebug('No arguments given => Printing usage.');
         writeUsageToStdOut();
-        return ErrorCodes.DART_FORMAT__ARGS_IS_EMPTY;
+        return ExitCodes.COMMAND_LINE__ARGS_IS_EMPTY;
     }
 
     final List<String> fileNames = <String>[];
@@ -134,7 +132,7 @@ async
             logDebug('Unknown argument: $arg => Printing usage.');
             writeUsageToStdOut();
             writelnToStdOut('Unknown argument: $arg');
-            return ErrorCodes.DART_FORMAT__UNKNOWN_ARGUMENT;
+            return ExitCodes.COMMAND_LINE__UNKNOWN_ARGUMENT;
         }
 
         fileNames.add(arg);
@@ -145,30 +143,28 @@ async
         logDebug('Cannot specify both --pipe and --webservice => Printing usage.');
         writeUsageToStdOut();
         writelnToStdOut('Cannot specify both --pipe and --webservice');
-        return ErrorCodes.DART_FORMAT__CANNOT_SPECIFY_BOTH_PIPE_AND_WEB_SERVICE;
+        return ExitCodes.COMMAND_LINE__CANNOT_SPECIFY_BOTH_PIPE_AND_WEB_SERVICE;
     }
 
-    if (!skipVersionCheck && !isPipe && !isWebService && !LogTools.logToConsole!)
+    /*if (!skipVersionCheck && !isPipe && !isWebService && !LogTools.logToConsole!)
     {
-        skipVersionCheck = true;
-        logDebug('Skipping version check because not in pipe or web service mode and not logging to console.');
-    }
-
-    final Version? latestVersion = skipVersionCheck ? null : await VersionChecker.getLatestVersion();
+    skipVersionCheck = true;
+    logDebug('Skipping version check because not in pipe or web service mode and not logging to console.');
+    }*/
 
     if (isPipe)
     {
         final PipeHandler pipeHandler = PipeHandler(
             configText: configText,
             errorsAsJson: errorsAsJson,
-            latestVersion: latestVersion
+            skipVersionCheck: skipVersionCheck
         );
         return pipeHandler.run();
     }
 
     if (isWebService)
     {
-        final WebServiceHandler webServiceHandler = WebServiceHandler(latestVersion: latestVersion);
+        final WebServiceHandler webServiceHandler = WebServiceHandler(skipVersionCheck: skipVersionCheck);
         return webServiceHandler.run();
     }
 
@@ -178,7 +174,7 @@ async
         configText: configText,
         fileNames: fileNames,
         isDryRun: isDryRun,
-        latestVersion: latestVersion
+        skipVersionCheck: skipVersionCheck
     );
     return defaultHandler.run();
 }

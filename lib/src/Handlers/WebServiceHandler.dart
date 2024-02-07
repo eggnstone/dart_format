@@ -5,27 +5,32 @@ import 'dart:io';
 import 'package:mime/mime.dart';
 
 import '../Config.dart';
-import '../Constants/ErrorCodes.dart';
+import '../Constants/ExitCodes.dart';
 import '../Constants/Generated/VersionConstants.dart';
 import '../Data/JsonResponse.dart';
-import '../Data/Version.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../Formatter.dart';
 import '../Tools/LogTools.dart';
+import '../Tools/VersionTools.dart';
 
 class WebServiceHandler
 {
-    final Version? latestVersion;
+    final bool skipVersionCheck;
 
     final DateTime _startTime = DateTime.now();
 
-    WebServiceHandler({this.latestVersion});
+    WebServiceHandler({required this.skipVersionCheck});
 
     Future<int> run()
     async
     {
         bool terminate = false;
         bool terminateWithError = false;
+
+        logDebug('WebServiceHandler.run START');
+
+        final bool isNewerVersionAvailable = await VersionTools().isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
+        final int exitCodeForSuccess = isNewerVersionAvailable ? ExitCodes.SUCCESS_AND_NEW_VERSION_AVAILABLE : ExitCodes.SUCCESS;
 
         try
         {
@@ -81,12 +86,20 @@ class WebServiceHandler
             while (!terminate)
                 await Future<void>.delayed(const Duration(milliseconds: 1000));
 
-            return terminateWithError ? ErrorCodes.WEB_SERVICE_HANDLER__FAIL : 0;
+            if (terminateWithError)
+            {
+                logDebug('WebServiceHandler.run END with ERROR');
+                return ExitCodes.ERROR;
+            }
+
+            logDebug('WebServiceHandler.run END with SUCCESS');
+            return exitCodeForSuccess;
         }
         catch (e)
         {
             writelnToStdErr(e.toString());
-            return ErrorCodes.WEB_SERVICE_HANDLER__FAIL;
+            logDebug('WebServiceHandler.run END with ERROR');
+            return ExitCodes.ERROR;
         }
     }
 

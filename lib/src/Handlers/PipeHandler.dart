@@ -2,22 +2,22 @@ import 'dart:convert';
 import 'dart:io';
 
 import '../Config.dart';
-import '../Constants/ErrorCodes.dart';
-import '../Data/Version.dart';
+import '../Constants/ExitCodes.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../Formatter.dart';
 import '../Tools/LogTools.dart';
+import '../Tools/VersionTools.dart';
 
 class PipeHandler
 {
     final String? configText;
     final bool errorsAsJson;
-    final Version? latestVersion;
+    final bool skipVersionCheck;
 
     PipeHandler({
         required this.errorsAsJson,
-        this.configText,
-        this.latestVersion
+        required this.skipVersionCheck,
+        this.configText
     });
 
     Future<int> run()
@@ -25,20 +25,21 @@ class PipeHandler
     {
         DartFormatException? dartFormatException;
 
+        logDebug('PipeHandler.run START');
+
+        final bool isNewerVersionAvailable = await VersionTools().isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
+        final int exitCodeForSuccess = isNewerVersionAvailable ? ExitCodes.SUCCESS_AND_NEW_VERSION_AVAILABLE : ExitCodes.SUCCESS;        
+
         try
         {
-            final String inputText = _readInput();
-            if (inputText.isEmpty) 
-                return 0;
-
             final Config config = Config.fromJson(configText);
             final Formatter formatter = Formatter(config);
+            final String inputText = _readInput();
             final String formattedText = formatter.format(inputText);
-            if (formattedText.isEmpty)
-                throw DartFormatException.error('No output generated.');
-
             writeToStdOut(formattedText, preventLoggingToTempFile: true);
-            return 0;
+
+            logDebug('PipeHandler.run END with SUCCESS');
+            return exitCodeForSuccess;
         }
         on DartFormatException catch (e)
         {
@@ -54,7 +55,8 @@ class PipeHandler
         else
             writelnToStdErr('${dartFormatException.type.name}: ${dartFormatException.message}');
 
-        return ErrorCodes.PIPE_HANDLER__FAIL;
+        logDebug('PipeHandler.run END with ERROR');
+        return ExitCodes.ERROR;
     }
 
     String _readInput()
