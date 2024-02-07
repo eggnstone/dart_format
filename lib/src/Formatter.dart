@@ -5,6 +5,7 @@ import 'package:analyzer/source/line_info.dart';
 
 import 'Config.dart';
 import 'Constants/Constants.dart';
+import 'Data/IntTuple.dart';
 import 'Exceptions/DartFormatException.dart';
 import 'FormatState.dart';
 import 'FormatVisitor.dart';
@@ -12,7 +13,6 @@ import 'Tools/FormatTools.dart';
 import 'Tools/LogTools.dart';
 import 'Tools/StringTools.dart';
 import 'Tools/TextTools.dart';
-import 'Tuple.dart';
 
 class Formatter
 {
@@ -89,7 +89,7 @@ class Formatter
 
         final String message1;
         final String message2;
-        if (positions == const IntTuple.empty())
+        if (positions == createEmptyIntTuple())
         {
             message1 = 'Internal error: Invalid changes detected but no differences to show.';
             message2 =
@@ -112,7 +112,7 @@ class Formatter
         if (Constants.DEBUG_FORMATTER)
         {
             final IntTuple positions2 = StringTools.findDiff(condensedInput, condensedResultWithIgnores);
-            if (positions2 != const IntTuple.empty())
+            if (positions2 != createEmptyIntTuple())
             {
                 final String message2a =
                 'Same:                       ${StringTools.toDisplayStringCutAtEnd(condensedResultWithIgnores.substring(0, positions2.item2), Constants.MAX_DEBUG_LENGTH)}\n'

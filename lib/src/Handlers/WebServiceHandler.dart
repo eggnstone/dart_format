@@ -5,16 +5,21 @@ import 'dart:io';
 import 'package:mime/mime.dart';
 
 import '../Config.dart';
-import '../Constants/Generated/Version.dart';
-import '../ErrorCodes.dart';
+import '../Constants/ErrorCodes.dart';
+import '../Constants/Generated/VersionConstants.dart';
+import '../Data/JsonResponse.dart';
+import '../Data/Version.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../Formatter.dart';
-import '../JsonResponse.dart';
 import '../Tools/LogTools.dart';
 
 class WebServiceHandler
 {
+    final Version? latestVersion;
+
     final DateTime _startTime = DateTime.now();
+
+    WebServiceHandler({this.latestVersion});
 
     Future<int> run()
     async
@@ -39,7 +44,7 @@ class WebServiceHandler
 
             const String protocol = 'http';
             final String message = '$protocol://${server.address.address}:${server.port}';
-            const String version = '${Version.MAJOR}.${Version.MINOR}.${Version.PATCH}';
+            final String version = VersionConstants.VERSION.toString();
             final JsonResponse jsonResponse = JsonResponse(statusCode: 200, status: 'OK', message: message, version: version);
             writelnToStdOut(jsonEncode(jsonResponse.toJson()));
 

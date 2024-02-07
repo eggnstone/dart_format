@@ -1,6 +1,6 @@
 
 import '../Constants/Constants.dart';
-import '../Tuple.dart';
+import '../Data/IntTuple.dart';
 import 'LogTools.dart';
 
 class StringTools
@@ -33,7 +33,7 @@ class StringTools
         }
 
         if (indexInput == s1.length && indexResult == s2.length)
-            return const IntTuple.empty();
+            return createEmptyIntTuple();
 
         return IntTuple(indexInput, indexResult);
     }

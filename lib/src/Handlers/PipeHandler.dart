@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import '../Config.dart';
-import '../ErrorCodes.dart';
+import '../Constants/ErrorCodes.dart';
+import '../Data/Version.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../Formatter.dart';
 import '../Tools/LogTools.dart';
@@ -11,8 +12,13 @@ class PipeHandler
 {
     final String? configText;
     final bool errorsAsJson;
+    final Version? latestVersion;
 
-    PipeHandler(this.configText, {required this.errorsAsJson});
+    PipeHandler({
+        required this.errorsAsJson,
+        this.configText,
+        this.latestVersion
+    });
 
     Future<int> run()
     async

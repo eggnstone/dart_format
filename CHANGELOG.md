@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.5
+
+- Added version check.
+
 ## 1.1.4
 
 - Added version to initial JSON reply.

@@ -6,8 +6,8 @@ import 'package:analyzer/source/line_info.dart';
 
 import 'Config.dart';
 import 'Constants/Constants.dart';
+import 'Data/Indentation.dart';
 import 'Exceptions/DartFormatException.dart';
-import 'Indentation.dart';
 import 'StringBufferEx.dart';
 import 'Tools/FormatTools.dart';
 import 'Tools/LogTools.dart';

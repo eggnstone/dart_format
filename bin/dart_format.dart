@@ -1,13 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dart_format/src/ErrorCodes.dart';
+import 'package:dart_format/src/Constants/ErrorCodes.dart';
+import 'package:dart_format/src/Data/Version.dart';
 import 'package:dart_format/src/Exceptions/DartFormatException.dart';
 import 'package:dart_format/src/Handlers/DefaultHandler.dart';
 import 'package:dart_format/src/Handlers/PipeHandler.dart';
 import 'package:dart_format/src/Handlers/WebServiceHandler.dart';
 import 'package:dart_format/src/Tools/LogTools.dart';
 import 'package:dart_format/src/Types/FailType.dart';
+import 'package:dart_format/src/VersionChecker.dart';
 
 Future<void> main(List<String> args)
 async
@@ -82,43 +84,52 @@ async
     bool isDryRun = false;
     bool isPipe = false;
     bool isWebService = false;
+    bool skipVersionCheck = false;
 
     for (final String arg in args)
     {
-        if (arg.startsWith('--config='))
+        final String argLower = arg.toLowerCase();
+
+        if (argLower == '--skip-version-check')
         {
-            configText = arg.substring('--config='.length);
+            skipVersionCheck = true;
             continue;
         }
 
-        if (arg == '--dry-run' || arg == '-dr')
+        if (argLower.startsWith('--config='))
+        {
+            configText = argLower.substring('--config='.length);
+            continue;
+        }
+
+        if (argLower == '--dry-run' || argLower == '-dr')
         {
             isDryRun = true;
             continue;
         }
 
-        if (arg == '--errors-as-json')
+        if (argLower == '--errors-as-json')
         {
             errorsAsJson = true;
             continue;
         }
 
-        if (arg == '--pipe')
+        if (argLower == '--pipe')
         {
             isPipe = true;
             continue;
         }
 
-        if (arg == '--web' || arg == '--webservice')
+        if (argLower == '--web' || argLower == '--webservice')
         {
             isWebService = true;
             continue;
         }
 
-        if (arg.startsWith('--log-to-console') || arg.startsWith('--log-to-temp-file'))
+        if (argLower.startsWith('--log-to-console') || argLower.startsWith('--log-to-temp-file'))
             continue;
 
-        if (arg.startsWith('-'))
+        if (argLower.startsWith('-'))
         {
             logDebug('Unknown argument: $arg => Printing usage.');
             writeUsageToStdOut();
@@ -137,20 +148,38 @@ async
         return ErrorCodes.DART_FORMAT__CANNOT_SPECIFY_BOTH_PIPE_AND_WEB_SERVICE;
     }
 
+    if (!skipVersionCheck && !isPipe && !isWebService && !LogTools.logToConsole!)
+    {
+        skipVersionCheck = true;
+        logDebug('Skipping version check because not in pipe or web service mode and not logging to console.');
+    }
+
+    final Version? latestVersion = skipVersionCheck ? null : await VersionChecker.getLatestVersion();
+
     if (isPipe)
     {
-        final PipeHandler pipeHandler = PipeHandler(configText, errorsAsJson: errorsAsJson);
+        final PipeHandler pipeHandler = PipeHandler(
+            configText: configText,
+            errorsAsJson: errorsAsJson,
+            latestVersion: latestVersion
+        );
         return pipeHandler.run();
     }
 
     if (isWebService)
     {
-        final WebServiceHandler webServiceHandler = WebServiceHandler();
+        final WebServiceHandler webServiceHandler = WebServiceHandler(latestVersion: latestVersion);
         return webServiceHandler.run();
     }
 
     writeCopyrightToStdOut();
-    final DefaultHandler defaultHandler = DefaultHandler(fileNames: fileNames, configText: configText, isDryRun: isDryRun);
+
+    final DefaultHandler defaultHandler = DefaultHandler(
+        configText: configText,
+        fileNames: fileNames,
+        isDryRun: isDryRun,
+        latestVersion: latestVersion
+    );
     return defaultHandler.run();
 }
 
@@ -168,5 +197,6 @@ void writeUsageToStdOut()
     writelnToStdOut('    --log-to-console                 Logs to console', preventLoggingToTempFile: true);
     //writelnToStdOut('    --log-to-temp-file               Logs to a temp file ("dart_format_<date>_<time>_<pid>.log" in the system temp directory)', preventLoggingToTempFile: true);
     writelnToStdOut('    --pipe                           Formats stdin and writes to stdout', preventLoggingToTempFile: true);
+    writelnToStdOut('    --skip-version-check             Skips version check on start-up', preventLoggingToTempFile: true);
     writelnToStdOut('    --web[service]                   Starts in web service mode', preventLoggingToTempFile: true);
 }

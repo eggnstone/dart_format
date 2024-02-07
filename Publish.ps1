@@ -1,6 +1,6 @@
 $versionRegex = "version: (\d+)\.(\d+).(\d+)"
 $pubspecFileName = "pubspec.yaml"
-$versionDartFileName = "lib/src/Constants/Generated/Version.dart"
+$versionDartFileName = "lib/src/Constants/Generated/VersionConstants.dart"
 
 $pubspecFileContent = (Get-Content -Path $pubspecFileName)
 $select = $pubspecFileContent | Select-String -Pattern $versionRegex

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'Types/IndentationType.dart';
+import '../Types/IndentationType.dart';
 
 part 'Indentation.freezed.dart';
 
