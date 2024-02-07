@@ -27,23 +27,23 @@ class Version with _$Version
     @override
     String toString() => '$major.$minor.$patch';
 
-    bool isOlderThan(Version? latestVersion)
+    bool isOlderThan(Version? otherVersion)
     {
-        if (latestVersion == null)
+        if (otherVersion == null)
             return false;
 
-        if (major < latestVersion.major)
+        if (major < otherVersion.major)
             return true;
 
-        if (major > latestVersion.major)
+        if (major > otherVersion.major)
             return false;
 
-        if (minor < latestVersion.minor)
+        if (minor < otherVersion.minor)
             return true;
 
-        if (minor > latestVersion.minor)
+        if (minor > otherVersion.minor)
             return false;
 
-        return patch < latestVersion.patch;
+        return patch < otherVersion.patch;
     }
 }

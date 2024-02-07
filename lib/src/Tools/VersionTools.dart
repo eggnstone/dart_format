@@ -32,7 +32,7 @@ class VersionTools
             _log('! Newer version available:');
             _log('  Current version: ${VersionConstants.VERSION}');
             _log('  Latest Version:  $latestVersion');
-            _log('  Update here:     https://pub.dev/packages/dart_format');
+            _log('  Update here:     https://pub.dev/packages/dart_format/install');
             return true;
         }
 
