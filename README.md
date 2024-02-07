@@ -25,5 +25,6 @@ Usage: dart_format [args]
     --errors-as-json                 Writes errors as JSON to stderr
     --log-to-console                 Logs to console
     --pipe                           Formats stdin and writes to stdout
+    --skip-version-check             Skips version check on start-up
     --web[service]                   Starts in web service mode
 ```

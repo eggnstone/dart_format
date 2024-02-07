@@ -3,6 +3,7 @@ import 'dart:io';
 import '../Config.dart';
 import '../Constants/ExitCodes.dart';
 import '../Formatter.dart';
+import '../Tools/InfoTools.dart';
 import '../Tools/LogTools.dart';
 import '../Tools/VersionTools.dart';
 
@@ -23,6 +24,7 @@ class DefaultHandler
     Future<int> run()
     async
     {
+        InfoTools.writeCopyrightToStdOut();
         logDebug('DefaultHandler.run START');
 
         final bool isNewerVersionAvailable = await VersionTools(writeToStdOut: true).isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);

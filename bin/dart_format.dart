@@ -6,6 +6,7 @@ import 'package:dart_format/src/Exceptions/DartFormatException.dart';
 import 'package:dart_format/src/Handlers/DefaultHandler.dart';
 import 'package:dart_format/src/Handlers/PipeHandler.dart';
 import 'package:dart_format/src/Handlers/WebServiceHandler.dart';
+import 'package:dart_format/src/Tools/InfoTools.dart';
 import 'package:dart_format/src/Tools/LogTools.dart';
 import 'package:dart_format/src/Types/FailType.dart';
 
@@ -50,12 +51,12 @@ async
     {
         final String optionalLocation = e.line == null && e.column == null ? '' : ' at ${e.line}:${e.column}';
         writelnToStdErr('${e.type.name}$optionalLocation: ${e.message}');
-        exitCode = ExitCodes.COMMAND_LINE__OTHER_ERROR;
+        exitCode = ExitCodes.ERROR;
     }
     catch (e)
     {
         writelnToStdErr('Error in dart_format: $e');
-        exitCode = ExitCodes.COMMAND_LINE__OTHER_ERROR;
+        exitCode = ExitCodes.ERROR;
     }
     finally
     {
@@ -71,9 +72,10 @@ async
 {
     if (args.isEmpty)
     {
+        InfoTools.writeCopyrightToStdOut();
         logDebug('No arguments given => Printing usage.');
-        writeUsageToStdOut();
-        return ExitCodes.COMMAND_LINE__ARGS_IS_EMPTY;
+        InfoTools.writeUsageToStdOut();
+        return ExitCodes.ERROR;
     }
 
     final List<String> fileNames = <String>[];
@@ -129,10 +131,11 @@ async
 
         if (argLower.startsWith('-'))
         {
+            InfoTools.writeCopyrightToStdOut();
             logDebug('Unknown argument: $arg => Printing usage.');
-            writeUsageToStdOut();
+            InfoTools.writeUsageToStdOut();
             writelnToStdOut('Unknown argument: $arg');
-            return ExitCodes.COMMAND_LINE__UNKNOWN_ARGUMENT;
+            return ExitCodes.ERROR;
         }
 
         fileNames.add(arg);
@@ -140,10 +143,11 @@ async
 
     if (isPipe && isWebService)
     {
+        InfoTools.writeCopyrightToStdOut();
         logDebug('Cannot specify both --pipe and --webservice => Printing usage.');
-        writeUsageToStdOut();
+        InfoTools.writeUsageToStdOut();
         writelnToStdOut('Cannot specify both --pipe and --webservice');
-        return ExitCodes.COMMAND_LINE__CANNOT_SPECIFY_BOTH_PIPE_AND_WEB_SERVICE;
+        return ExitCodes.ERROR;
     }
 
     if (isPipe)
@@ -162,8 +166,6 @@ async
         return webServiceHandler.run();
     }
 
-    writeCopyrightToStdOut();
-
     final DefaultHandler defaultHandler = DefaultHandler(
         configText: configText,
         fileNames: fileNames,
@@ -171,22 +173,4 @@ async
         skipVersionCheck: skipVersionCheck
     );
     return defaultHandler.run();
-}
-
-void writeCopyrightToStdOut({bool preventLoggingToTempFile = false})
-=> writelnToStdOut('dart_format (c) 2022-2024 Mark Eggenstein', preventLoggingToTempFile: preventLoggingToTempFile); // TODO: version
-
-void writeUsageToStdOut()
-{
-    writeCopyrightToStdOut(preventLoggingToTempFile: true);
-    writelnToStdOut('Usage: dart_format [args]', preventLoggingToTempFile: true);
-    writelnToStdOut('    <dart file> [<dart file> ...]    Formats the specified dart file(s)', preventLoggingToTempFile: true);
-    writelnToStdOut('    --config=<config JSON>           Specifies the configuration', preventLoggingToTempFile: true);
-    writelnToStdOut('    --dry-run, -dr                   Writes output to "<original filename>.formatted.dart"', preventLoggingToTempFile: true);
-    writelnToStdOut('    --errors-as-json                 Writes errors as JSON to stderr', preventLoggingToTempFile: true);
-    writelnToStdOut('    --log-to-console                 Logs to console', preventLoggingToTempFile: true);
-    //writelnToStdOut('    --log-to-temp-file               Logs to a temp file ("dart_format_<date>_<time>_<pid>.log" in the system temp directory)', preventLoggingToTempFile: true);
-    writelnToStdOut('    --pipe                           Formats stdin and writes to stdout', preventLoggingToTempFile: true);
-    writelnToStdOut('    --skip-version-check             Skips version check on start-up', preventLoggingToTempFile: true);
-    writelnToStdOut('    --web[service]                   Starts in web service mode', preventLoggingToTempFile: true);
 }
