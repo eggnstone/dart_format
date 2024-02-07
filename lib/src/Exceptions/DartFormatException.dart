@@ -8,6 +8,7 @@ import '../Types/FailType.dart';
 part 'DartFormatException.freezed.dart';
 part 'DartFormatException.g.dart';
 
+/// The DartFormatException class is used to report errors and warnings.
 @freezed
 class DartFormatException with _$DartFormatException implements Exception
 {

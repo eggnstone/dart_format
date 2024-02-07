@@ -3,47 +3,72 @@ import 'dart:convert';
 /// Configuration for the formatter.
 class Config
 {
-    /// Whether to add a new line after a closing brace./1
+    /// Default value when all options are turned on: Whether to add a new line after a closing brace.
     static const bool ADD_NEW_LINE_AFTER_CLOSING_BRACE_DEFAULT = true;
+    /// Default value when all options are turned off: Whether to add a new line after a closing brace.
     static const bool ADD_NEW_LINE_AFTER_CLOSING_BRACE_NONE = false;
 
+    /// Default value when all options are turned on: Whether to add a new line after an opening brace.
     static const bool ADD_NEW_LINE_AFTER_OPENING_BRACE_DEFAULT = true;
+    /// Default value when all options are turned off: Whether to add a new line after an opening brace.
     static const bool ADD_NEW_LINE_AFTER_OPENING_BRACE_NONE = false;
 
+    /// Default value when all options are turned on: Whether to add a new line after a semicolon.
     static const bool ADD_NEW_LINE_AFTER_SEMICOLON_DEFAULT = true;
+    /// Default value when all options are turned off: Whether to add a new line after a semicolon.
     static const bool ADD_NEW_LINE_AFTER_SEMICOLON_NONE = false;
 
+    /// Default value when all options are turned on: Whether to add a new line at the end of the text.
     static const bool ADD_NEW_LINE_AT_END_OF_TEXT_DEFAULT = true;
+    /// Default value when all options are turned off: Whether to add a new line at the end of the text.
     static const bool ADD_NEW_LINE_AT_END_OF_TEXT_NONE = false;
 
+    /// Default value when all options are turned on: Whether to add a new line before a closing brace.
     static const bool ADD_NEW_LINE_BEFORE_CLOSING_BRACE_DEFAULT = true;
+    /// Default value when all options are turned off: Whether to add a new line before a closing brace.
     static const bool ADD_NEW_LINE_BEFORE_CLOSING_BRACE_NONE = false;
 
+    /// Default value when all options are turned on: Whether to add a new line before an opening brace.
     static const bool ADD_NEW_LINE_BEFORE_OPENING_BRACE_DEFAULT = true;
+    /// Default value when all options are turned off: Whether to add a new line before an opening brace.
     static const bool ADD_NEW_LINE_BEFORE_OPENING_BRACE_NONE = false;
 
+    /// Default value when all options are turned on: The number of spaces to use for indentation.
     static const int INDENTATION_SPACES_PER_LEVEL_DEFAULT = 4;
+    /// Default value when all options are turned off: The number of spaces to use for indentation.
     static const int INDENTATION_SPACES_PER_LEVEL_NONE = -1;
 
+    /// Default value when all options are turned on: The maximum number of empty lines to allow.
     static const int MAX_EMPTY_LINES_DEFAULT = 1;
+    /// Default value when all options are turned off: The maximum number of empty lines to allow.
     static const int MAX_EMPTY_LINES_NONE = -1;
 
+    /// Default value when all options are turned on: Whether to remove trailing commas.
     static const bool REMOVE_TRAILING_COMMAS_DEFAULT = true;
+    /// Default value when all options are turned off: Whether to remove trailing commas.
     static const bool REMOVE_TRAILING_COMMAS_NONE = false;
 
-    /// Whether to add a new line after a closing brace./2
+    /// Whether to add a new line after a closing brace.
     final bool addNewLineAfterClosingBrace;
+    /// Whether to add a new line after an opening brace.
     final bool addNewLineAfterOpeningBrace;
+    /// Whether to add a new line after a semicolon.
     final bool addNewLineAfterSemicolon;
+    /// Whether to add a new line at the end of the text.
     final bool addNewLineAtEndOfText;
+    /// Whether to add a new line before a closing brace.
     final bool addNewLineBeforeClosingBrace;
+    /// Whether to add a new line before an opening brace.
     final bool addNewLineBeforeOpeningBrace;
+    /// The number of spaces to use for indentation. -1 = do not change indentation.
     final int indentationSpacesPerLevel;
+    /// The maximum number of empty lines to allow. -1 = do not change empty lines.
     final int maxEmptyLines;
+    /// Whether to remove trailing commas.
     final bool removeTrailingCommas;
 
+    /// Create a new instance of [Config] with all options turned on.
     const Config.all({
-        /// Whether to add a new line after a closing brace./3
         this.addNewLineAfterClosingBrace = ADD_NEW_LINE_AFTER_CLOSING_BRACE_DEFAULT,
         this.addNewLineAfterOpeningBrace = ADD_NEW_LINE_AFTER_OPENING_BRACE_DEFAULT,
         this.addNewLineAfterSemicolon = ADD_NEW_LINE_AFTER_SEMICOLON_DEFAULT,
@@ -55,6 +80,7 @@ class Config
         this.removeTrailingCommas = REMOVE_TRAILING_COMMAS_DEFAULT
     });
 
+    /// Create a new instance of [Config] with all options turned off.
     const Config.none({
         this.addNewLineAfterClosingBrace = ADD_NEW_LINE_AFTER_CLOSING_BRACE_NONE,
         this.addNewLineAfterOpeningBrace = ADD_NEW_LINE_AFTER_OPENING_BRACE_NONE,
@@ -67,6 +93,7 @@ class Config
         this.removeTrailingCommas = REMOVE_TRAILING_COMMAS_NONE
     });
 
+    /// Create a new instance of [Config] from a JSON string.
     factory Config.fromJson(String? configText)
     {
         if (configText == null)

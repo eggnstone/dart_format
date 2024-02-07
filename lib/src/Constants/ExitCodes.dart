@@ -1,3 +1,4 @@
+/// Exit codes for the application.
 class ExitCodes
 {
     static const int SUCCESS = 0;

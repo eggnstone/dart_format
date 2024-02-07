@@ -1,4 +1,4 @@
-/// dart_format
+/// The main library of the package.
 library dart_format;
 
 export 'src/Config.dart';

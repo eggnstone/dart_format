@@ -14,6 +14,7 @@ import 'Tools/LogTools.dart';
 import 'Tools/StringTools.dart';
 import 'Tools/TextTools.dart';
 
+/// The Formatter class is the main class of the package.
 class Formatter
 {
     final Config config;

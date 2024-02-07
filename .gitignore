@@ -7,4 +7,5 @@
 pubspec.lock
 
 # Manually added
-.idea/libraries/Dart_Packages.xml
+/.idea/libraries/Dart_Packages.xml
+/doc/
