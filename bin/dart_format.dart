@@ -146,12 +146,6 @@ async
         return ExitCodes.COMMAND_LINE__CANNOT_SPECIFY_BOTH_PIPE_AND_WEB_SERVICE;
     }
 
-    /*if (!skipVersionCheck && !isPipe && !isWebService && !LogTools.logToConsole!)
-    {
-    skipVersionCheck = true;
-    logDebug('Skipping version check because not in pipe or web service mode and not logging to console.');
-    }*/
-
     if (isPipe)
     {
         final PipeHandler pipeHandler = PipeHandler(
