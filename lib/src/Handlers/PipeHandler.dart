@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import '../Config.dart';
+import '../Constants/Constants.dart';
 import '../Constants/ExitCodes.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../Formatter.dart';
@@ -25,7 +26,7 @@ class PipeHandler
     {
         DartFormatException? dartFormatException;
 
-        logDebug('PipeHandler.run START');
+        _logDebug('PipeHandler.run START');
 
         final bool isNewerVersionAvailable = await VersionTools().isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
         final int exitCodeForSuccess = isNewerVersionAvailable ? ExitCodes.SUCCESS_AND_NEW_VERSION_AVAILABLE : ExitCodes.SUCCESS;        
@@ -38,7 +39,7 @@ class PipeHandler
             final String formattedText = formatter.format(inputText);
             writeToStdOut(formattedText, preventLoggingToTempFile: true);
 
-            logDebug('PipeHandler.run END with SUCCESS');
+            _logDebug('PipeHandler.run END with SUCCESS');
             return exitCodeForSuccess;
         }
         on DartFormatException catch (e)
@@ -55,8 +56,14 @@ class PipeHandler
         else
             writelnToStdErr('${dartFormatException.type.name}: ${dartFormatException.message}');
 
-        logDebug('PipeHandler.run END with ERROR');
+        _logDebug('PipeHandler.run END with ERROR');
         return ExitCodes.ERROR;
+    }
+
+    void _logDebug(String s)
+    {
+        if (Constants.DEBUG_DART_FORMAT_HANDLERS)
+            logDebug(s);
     }
 
     String _readInput()

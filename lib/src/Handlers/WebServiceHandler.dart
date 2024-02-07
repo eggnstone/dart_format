@@ -5,9 +5,11 @@ import 'dart:io';
 import 'package:mime/mime.dart';
 
 import '../Config.dart';
+import '../Constants/Constants.dart';
 import '../Constants/ExitCodes.dart';
 import '../Constants/Generated/VersionConstants.dart';
 import '../Data/JsonResponse.dart';
+import '../Data/Version.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../Formatter.dart';
 import '../Tools/LogTools.dart';
@@ -24,12 +26,14 @@ class WebServiceHandler
     Future<int> run()
     async
     {
+        final VersionTools versionTools = VersionTools();
         bool terminate = false;
         bool terminateWithError = false;
 
-        logDebug('WebServiceHandler.run START');
+        _logDebug('WebServiceHandler.run START');
 
-        final bool isNewerVersionAvailable = await VersionTools().isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
+        final Version? latestVersion = await versionTools.getLatestVersion(skipVersionCheck: skipVersionCheck);
+        final bool isNewerVersionAvailable = await versionTools.isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
         final int exitCodeForSuccess = isNewerVersionAvailable ? ExitCodes.SUCCESS_AND_NEW_VERSION_AVAILABLE : ExitCodes.SUCCESS;
 
         try
@@ -49,8 +53,14 @@ class WebServiceHandler
 
             const String protocol = 'http';
             final String message = '$protocol://${server.address.address}:${server.port}';
-            final String version = VersionConstants.VERSION.toString();
-            final JsonResponse jsonResponse = JsonResponse(statusCode: 200, status: 'OK', message: message, version: version);
+            final String currentVersion = VersionConstants.VERSION.toString();
+            final JsonResponse jsonResponse = JsonResponse(
+                statusCode: 200, 
+                status: 'OK', 
+                currentVersion: currentVersion,
+                latestVersion: latestVersion?.toString(),
+                message: message 
+            );
             writelnToStdOut(jsonEncode(jsonResponse.toJson()));
 
             server.listen(
@@ -88,17 +98,17 @@ class WebServiceHandler
 
             if (terminateWithError)
             {
-                logDebug('WebServiceHandler.run END with ERROR');
+                _logDebug('WebServiceHandler.run END with ERROR');
                 return ExitCodes.ERROR;
             }
 
-            logDebug('WebServiceHandler.run END with SUCCESS');
+            _logDebug('WebServiceHandler.run END with SUCCESS');
             return exitCodeForSuccess;
         }
         catch (e)
         {
             writelnToStdErr(e.toString());
-            logDebug('WebServiceHandler.run END with ERROR');
+            _logDebug('WebServiceHandler.run END with ERROR');
             return ExitCodes.ERROR;
         }
     }
@@ -363,4 +373,10 @@ class WebServiceHandler
 
     String _getHtmlEnd()
     => '</body></html>';
+
+    void _logDebug(String s)
+    {
+        if (Constants.DEBUG_DART_FORMAT_HANDLERS)
+            logDebug(s);
+    }
 }

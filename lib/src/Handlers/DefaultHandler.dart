@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import '../Config.dart';
+import '../Constants/Constants.dart';
 import '../Constants/ExitCodes.dart';
 import '../Formatter.dart';
 import '../Tools/InfoTools.dart';
@@ -25,7 +26,7 @@ class DefaultHandler
     async
     {
         InfoTools.writeCopyrightToStdOut();
-        logDebug('DefaultHandler.run START');
+        _logDebug('DefaultHandler.run START');
 
         final bool isNewerVersionAvailable = await VersionTools(writeToStdOut: true).isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
         final int exitCodeForSuccess = isNewerVersionAvailable ? ExitCodes.SUCCESS_AND_NEW_VERSION_AVAILABLE : ExitCodes.SUCCESS;
@@ -41,7 +42,7 @@ class DefaultHandler
             final String result = formatter.format(inputText);
             if (result == inputText && !isDryRun)
             {
-                //logDebug('    No changes made.');
+                //_logDebug('    No changes made.');
                 continue;
             }
 
@@ -49,7 +50,13 @@ class DefaultHandler
             outputFile.writeAsStringSync(result);
         }
 
-        logDebug('DefaultHandler.run END with SUCCESS');
+        _logDebug('DefaultHandler.run END with SUCCESS');
         return exitCodeForSuccess;
+    }
+
+    void _logDebug(String s)
+    {
+        if (Constants.DEBUG_DART_FORMAT_HANDLERS)
+            logDebug(s);
     }
 }

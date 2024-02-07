@@ -12,6 +12,9 @@ class VersionTools
 
     final bool writeToStdOut;
 
+    bool _alreadyCheckForLatestVersion = false;
+    Version? _latestVersion;
+
     VersionTools({this.writeToStdOut = false});
 
     Future<bool> isNewerVersionAvailable({required bool skipVersionCheck})
@@ -20,7 +23,7 @@ class VersionTools
         if (skipVersionCheck)
             return false;
 
-        final Version? latestVersion =  await _getLatestVersion();
+        final Version? latestVersion = await getLatestVersion(skipVersionCheck: skipVersionCheck);
         if (latestVersion == null)
             return false;
 
@@ -37,9 +40,17 @@ class VersionTools
         return false;
     }
 
-    Future<Version?> _getLatestVersion()
+    Future<Version?> getLatestVersion({required bool skipVersionCheck})
     async
     {
+        if (skipVersionCheck)
+            return null;
+
+        if (_alreadyCheckForLatestVersion)
+            return _latestVersion;
+
+        _alreadyCheckForLatestVersion = true;
+
         try
         {
             final Http.Response response = await Http.get(Uri.parse(DART_FORMAT_VERSIONS_URL));

@@ -11,8 +11,9 @@ class JsonResponse with _$JsonResponse implements Exception
     const factory JsonResponse({
         @JsonKey(name: 'StatusCode') required int statusCode,
         @JsonKey(name: 'Status') required String status,
-        @JsonKey(includeIfNull: false, name: 'Message') String? message,
-        @JsonKey(includeIfNull: false, name: 'Version') String? version
+        @JsonKey(includeIfNull: false, name: 'CurrentVersion') String? currentVersion,
+        @JsonKey(includeIfNull: false, name: 'LatestVersion') String? latestVersion,
+        @JsonKey(includeIfNull: false, name: 'Message') String? message
     }) = _JsonResponse;
 
     factory JsonResponse.fromJson(Map<String, dynamic> json)
