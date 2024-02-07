@@ -11,6 +11,7 @@ _$JsonResponseImpl _$$JsonResponseImplFromJson(Map<String, dynamic> json) =>
       statusCode: json['StatusCode'] as int,
       status: json['Status'] as String,
       message: json['Message'] as String?,
+      version: json['Version'] as String?,
     );
 
 Map<String, dynamic> _$$JsonResponseImplToJson(_$JsonResponseImpl instance) {
@@ -26,5 +27,6 @@ Map<String, dynamic> _$$JsonResponseImplToJson(_$JsonResponseImpl instance) {
   }
 
   writeNotNull('Message', instance.message);
+  writeNotNull('Version', instance.version);
   return val;
 }

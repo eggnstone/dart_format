@@ -26,6 +26,8 @@ mixin _$JsonResponse {
   String get status => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false, name: 'Message')
   String? get message => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false, name: 'Version')
+  String? get version => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,7 +44,8 @@ abstract class $JsonResponseCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'StatusCode') int statusCode,
       @JsonKey(name: 'Status') String status,
-      @JsonKey(includeIfNull: false, name: 'Message') String? message});
+      @JsonKey(includeIfNull: false, name: 'Message') String? message,
+      @JsonKey(includeIfNull: false, name: 'Version') String? version});
 }
 
 /// @nodoc
@@ -61,6 +64,7 @@ class _$JsonResponseCopyWithImpl<$Res, $Val extends JsonResponse>
     Object? statusCode = null,
     Object? status = null,
     Object? message = freezed,
+    Object? version = freezed,
   }) {
     return _then(_value.copyWith(
       statusCode: null == statusCode
@@ -74,6 +78,10 @@ class _$JsonResponseCopyWithImpl<$Res, $Val extends JsonResponse>
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+      version: freezed == version
+          ? _value.version
+          : version // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -90,7 +98,8 @@ abstract class _$$JsonResponseImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'StatusCode') int statusCode,
       @JsonKey(name: 'Status') String status,
-      @JsonKey(includeIfNull: false, name: 'Message') String? message});
+      @JsonKey(includeIfNull: false, name: 'Message') String? message,
+      @JsonKey(includeIfNull: false, name: 'Version') String? version});
 }
 
 /// @nodoc
@@ -107,6 +116,7 @@ class __$$JsonResponseImplCopyWithImpl<$Res>
     Object? statusCode = null,
     Object? status = null,
     Object? message = freezed,
+    Object? version = freezed,
   }) {
     return _then(_$JsonResponseImpl(
       statusCode: null == statusCode
@@ -121,6 +131,10 @@ class __$$JsonResponseImplCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
+      version: freezed == version
+          ? _value.version
+          : version // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -131,7 +145,8 @@ class _$JsonResponseImpl implements _JsonResponse {
   const _$JsonResponseImpl(
       {@JsonKey(name: 'StatusCode') required this.statusCode,
       @JsonKey(name: 'Status') required this.status,
-      @JsonKey(includeIfNull: false, name: 'Message') this.message});
+      @JsonKey(includeIfNull: false, name: 'Message') this.message,
+      @JsonKey(includeIfNull: false, name: 'Version') this.version});
 
   factory _$JsonResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$JsonResponseImplFromJson(json);
@@ -145,10 +160,13 @@ class _$JsonResponseImpl implements _JsonResponse {
   @override
   @JsonKey(includeIfNull: false, name: 'Message')
   final String? message;
+  @override
+  @JsonKey(includeIfNull: false, name: 'Version')
+  final String? version;
 
   @override
   String toString() {
-    return 'JsonResponse(statusCode: $statusCode, status: $status, message: $message)';
+    return 'JsonResponse(statusCode: $statusCode, status: $status, message: $message, version: $version)';
   }
 
   @override
@@ -159,12 +177,14 @@ class _$JsonResponseImpl implements _JsonResponse {
             (identical(other.statusCode, statusCode) ||
                 other.statusCode == statusCode) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.version, version) || other.version == version));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, statusCode, status, message);
+  int get hashCode =>
+      Object.hash(runtimeType, statusCode, status, message, version);
 
   @JsonKey(ignore: true)
   @override
@@ -184,8 +204,9 @@ abstract class _JsonResponse implements JsonResponse {
   const factory _JsonResponse(
       {@JsonKey(name: 'StatusCode') required final int statusCode,
       @JsonKey(name: 'Status') required final String status,
-      @JsonKey(includeIfNull: false, name: 'Message')
-      final String? message}) = _$JsonResponseImpl;
+      @JsonKey(includeIfNull: false, name: 'Message') final String? message,
+      @JsonKey(includeIfNull: false, name: 'Version')
+      final String? version}) = _$JsonResponseImpl;
 
   factory _JsonResponse.fromJson(Map<String, dynamic> json) =
       _$JsonResponseImpl.fromJson;
@@ -199,6 +220,9 @@ abstract class _JsonResponse implements JsonResponse {
   @override
   @JsonKey(includeIfNull: false, name: 'Message')
   String? get message;
+  @override
+  @JsonKey(includeIfNull: false, name: 'Version')
+  String? get version;
   @override
   @JsonKey(ignore: true)
   _$$JsonResponseImplCopyWith<_$JsonResponseImpl> get copyWith =>

@@ -1,4 +1,4 @@
-import '../Constants.dart';
+import '../Constants/Constants.dart';
 import '../Exceptions/DartFormatException.dart';
 import 'LogTools.dart';
 import 'StringTools.dart';

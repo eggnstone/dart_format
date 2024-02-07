@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:mime/mime.dart';
 
 import '../Config.dart';
+import '../Constants/Generated/Version.dart';
 import '../ErrorCodes.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../Formatter.dart';
@@ -38,7 +39,9 @@ class WebServiceHandler
 
             const String protocol = 'http';
             final String message = '$protocol://${server.address.address}:${server.port}';
-            writelnToStdOut(jsonEncode(JsonResponse(statusCode: 200, status: 'OK', message: message).toJson()));
+            const String version = '${Version.MAJOR}.${Version.MINOR}.${Version.PATCH}';
+            final JsonResponse jsonResponse = JsonResponse(statusCode: 200, status: 'OK', message: message, version: version);
+            writelnToStdOut(jsonEncode(jsonResponse.toJson()));
 
             server.listen(
                 (HttpRequest request) => _handleRequest(request, onQuit: ()

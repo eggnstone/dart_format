@@ -1,8 +1,8 @@
 # Changelog
 
-## 1.1.3
+## 1.1.4
 
-- Small bug fixes.
+- Added version to initial JSON reply.
 
 ## 1.1.0
 

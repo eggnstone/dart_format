@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants.dart';
+import '../Constants/Constants.dart';
 import '../Tools/LogTools.dart';
 
 abstract class IFormatter

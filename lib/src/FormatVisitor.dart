@@ -2,7 +2,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/source/line_info.dart';
 
 import 'Config.dart';
-import 'Constants.dart';
+import 'Constants/Constants.dart';
 import 'Exceptions/DartFormatException.dart';
 import 'FormatState.dart';
 import 'Formatters/AdjacentStringsFormatter.dart';

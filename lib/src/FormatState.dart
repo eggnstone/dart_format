@@ -5,7 +5,7 @@ import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/source/line_info.dart';
 
 import 'Config.dart';
-import 'Constants.dart';
+import 'Constants/Constants.dart';
 import 'Exceptions/DartFormatException.dart';
 import 'Indentation.dart';
 import 'StringBufferEx.dart';
