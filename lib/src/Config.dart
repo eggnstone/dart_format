@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+/// Configuration for the formatter.
 class Config
 {
+    /// Whether to add a new line after a closing brace./1
     static const bool ADD_NEW_LINE_AFTER_CLOSING_BRACE_DEFAULT = true;
     static const bool ADD_NEW_LINE_AFTER_CLOSING_BRACE_NONE = false;
 
@@ -29,6 +31,7 @@ class Config
     static const bool REMOVE_TRAILING_COMMAS_DEFAULT = true;
     static const bool REMOVE_TRAILING_COMMAS_NONE = false;
 
+    /// Whether to add a new line after a closing brace./2
     final bool addNewLineAfterClosingBrace;
     final bool addNewLineAfterOpeningBrace;
     final bool addNewLineAfterSemicolon;
@@ -40,6 +43,7 @@ class Config
     final bool removeTrailingCommas;
 
     const Config.all({
+        /// Whether to add a new line after a closing brace./3
         this.addNewLineAfterClosingBrace = ADD_NEW_LINE_AFTER_CLOSING_BRACE_DEFAULT,
         this.addNewLineAfterOpeningBrace = ADD_NEW_LINE_AFTER_OPENING_BRACE_DEFAULT,
         this.addNewLineAfterSemicolon = ADD_NEW_LINE_AFTER_SEMICOLON_DEFAULT,

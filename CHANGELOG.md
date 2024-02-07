@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.7
+
+- Added example.
+
 ## 1.1.6
 
 - Added version check.
