@@ -23,7 +23,7 @@ class Formatter
 
     String format(String s)
     {
-        //throw DartFormatException.error('Formatter.format() is not implemented');
+        throw DartFormatException.error('Formatter.format() is not implemented');
         _log('# Formatter.format()');
         _log('  ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
         _log('  indentationSpacesPerLevel: ${config.indentationSpacesPerLevel}');
