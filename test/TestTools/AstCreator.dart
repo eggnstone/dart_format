@@ -3,6 +3,15 @@ import 'package:analyzer/src/dart/ast/ast.dart';
 
 class AstCreator
 {
+    static VariableDeclarationList createVariableDeclarationListInClass(String s)
+    => createFieldDeclarationInClass(s).fields;
+
+    static FieldDeclaration createFieldDeclarationInClass(String s)
+    => createDeclarationInClass(s) as FieldDeclaration;
+
+    static ClassMember createDeclarationInClass(String s)
+    => createClassDeclaration(s).members[0];
+
     static TypeAnnotation createTypeAnnotationInFunctionParameter(String s)
     => createSimpleFormalParameterInFunction(s).type!;
 

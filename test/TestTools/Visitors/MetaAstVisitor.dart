@@ -47,6 +47,7 @@ import 'TestSwitchPatternCaseVisitor.dart';
 import 'TestTypeArgumentListVisitor.dart';
 import 'TestTypeParameterListVisitor.dart';
 import 'TestVariableDeclarationListVisitor.dart';
+import 'TestVariableDeclarationVisitor.dart';
 import 'TestWithClauseVisitor.dart';
 
 class MetaAstVisitor extends ThrowingAstVisitor<void>
@@ -219,6 +220,10 @@ class MetaAstVisitor extends ThrowingAstVisitor<void>
     @override
     void visitTypeParameterList(TypeParameterList node)
     => _visit<TestTypeParameterListVisitor>(node);
+
+    @override
+    void visitVariableDeclaration(VariableDeclaration node)
+    => _visit<TestVariableDeclarationVisitor>(node);
 
     @override
     void visitVariableDeclarationList(VariableDeclarationList node)
