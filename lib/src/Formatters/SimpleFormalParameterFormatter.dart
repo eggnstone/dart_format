@@ -24,6 +24,7 @@ class SimpleFormalParameterFormatter extends IFormatter
             throw FormatException('Not a SimpleFormalParameter: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
+        formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword');
         formatState.copyEntity(node.requiredKeyword, astVisitor, '$methodName/node.requiredKeyword');
         formatState.copyEntity(node.type, astVisitor, '$methodName/node.type');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
