@@ -6,22 +6,22 @@ import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
-class AssertStatementFormatter extends IFormatter
+class AssertInitializerFormatter extends IFormatter
 {
     final AstVisitor<void> astVisitor;
     final Config config;
     final FormatState formatState;
 
-    AssertStatementFormatter(this.config, this.astVisitor, this.formatState);
+    AssertInitializerFormatter(this.config, this.astVisitor, this.formatState);
 
     @override
     void format(AstNode node)
     {
-        const String methodName = 'AssertStatementFormatter.format';
+        const String methodName = 'AssertInitializerFormatter.format';
         log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
 
-        if (node is! AssertStatement)
-            throw FormatException('Not an AssertStatement: ${node.runtimeType}');
+        if (node is! AssertInitializer)
+            throw FormatException('Not an AssertInitializer: ${node.runtimeType}');
 
         // TODO: create a base class for Assertion
         formatState.copyEntity(node.assertKeyword, astVisitor, '$methodName/node.assertKeyword');
@@ -30,8 +30,5 @@ class AssertStatementFormatter extends IFormatter
         formatState.copyEntity(node.comma, astVisitor, '$methodName/node.comma');
         formatState.copyEntity(node.message, astVisitor, '$methodName/node.message');
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
-
-        // Only the semicolon is specific to AssertStatement
-        formatState.copyEntity(node.semicolon, astVisitor, '$methodName/node.semicolon');
     }
 }

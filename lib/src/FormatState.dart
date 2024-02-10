@@ -50,8 +50,21 @@ class FormatState
 
     void acceptListWithPeriod(List<AstNode> nodes, AstVisitor<void> astVisitor, String source)
     {
-        // TODO
-        acceptList(nodes, astVisitor, source);
+        AstNode? lastNode;
+        for (final AstNode node in nodes)
+        {
+            if (lastNode != null)
+            {
+                final String periodText = getText(lastNode.end, node.offset);
+                if (!FormatTools.isPeriodText(periodText))
+                    throw DartFormatException.error('periodText is not a period: ${StringTools.toDisplayString(periodText)}');
+
+                consumeText(lastNode.end, node.offset, periodText, '$source/Period');
+            }
+
+            node.accept(astVisitor);
+            lastNode = node;
+        }
     }
 
     void acceptList(List<AstNode> nodes, AstVisitor<void> astVisitor, String source)

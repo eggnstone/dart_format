@@ -9,6 +9,7 @@ import 'Formatters/AdjacentStringsFormatter.dart';
 import 'Formatters/AnnotationFormatter.dart';
 import 'Formatters/ArgumentListFormatter.dart';
 import 'Formatters/AsExpressionFormatter.dart';
+import 'Formatters/AssertInitializerFormatter.dart';
 import 'Formatters/AssertStatementFormatter.dart';
 import 'Formatters/AssignmentExpressionFormatter.dart';
 import 'Formatters/AwaitExpressionFormatter.dart';
@@ -24,6 +25,7 @@ import 'Formatters/ClassDeclarationFormatter.dart';
 import 'Formatters/CommentFormatter.dart';
 import 'Formatters/CompilationUnitFormatter.dart';
 import 'Formatters/ConditionalExpressionFormatter.dart';
+import 'Formatters/ConfigurationFormatter.dart';
 import 'Formatters/ConstantPatternFormatter.dart';
 import 'Formatters/ConstructorDeclarationFormatter.dart';
 import 'Formatters/ConstructorFieldInitializerFormatter.dart';
@@ -31,6 +33,7 @@ import 'Formatters/ConstructorNameFormatter.dart';
 import 'Formatters/ContinueStatementFormatter.dart';
 import 'Formatters/DeclaredIdentifierFormatter.dart';
 import 'Formatters/DefaultFormalParameterFormatter.dart';
+import 'Formatters/DottedNameFormatter.dart';
 import 'Formatters/DoubleLiteralFormatter.dart';
 import 'Formatters/EmptyFunctionBodyFormatter.dart';
 import 'Formatters/EmptyStatementFormatter.dart';
@@ -85,6 +88,7 @@ import 'Formatters/RecordLiteralFormatter.dart';
 import 'Formatters/RethrowExpressionFormatter.dart';
 import 'Formatters/ReturnStatementFormatter.dart';
 import 'Formatters/SetOrMapLiteralFormatter.dart';
+import 'Formatters/ShowCombinatorFormatter.dart';
 import 'Formatters/SimpleFormalParameterFormatter.dart';
 import 'Formatters/SimpleIdentifierFormatter.dart';
 import 'Formatters/SimpleStringLiteralFormatter.dart';
@@ -119,6 +123,7 @@ class FormatVisitor extends AstVisitor<void>
     late final AnnotationFormatter _annotationFormatter = AnnotationFormatter(config, this, _formatState);
     late final ArgumentListFormatter _argumentListFormatter = ArgumentListFormatter(config, this, _formatState);
     late final AsExpressionFormatter _asExpressionFormatter = AsExpressionFormatter(config, this, _formatState);
+    late final AssertInitializerFormatter _assertInitializerFormatter = AssertInitializerFormatter(config, this, _formatState);
     late final AssertStatementFormatter _assertStatementFormatter = AssertStatementFormatter(config, this, _formatState);
     late final AssignmentExpressionFormatter _assignmentExpressionFormatter = AssignmentExpressionFormatter(config, this, _formatState);
     late final AwaitExpressionFormatter _awaitExpressionFormatter = AwaitExpressionFormatter(config, this, _formatState);
@@ -134,6 +139,7 @@ class FormatVisitor extends AstVisitor<void>
     late final CommentFormatter _commentFormatter = CommentFormatter(config, this, _formatState);
     late final CompilationUnitFormatter _compilationUnitFormatter = CompilationUnitFormatter(config, this, _formatState);
     late final ConditionalExpressionFormatter _conditionalExpressionFormatter = ConditionalExpressionFormatter(config, this, _formatState);
+    late final ConfigurationFormatter _configurationFormatter = ConfigurationFormatter(config, this, _formatState);
     late final ConstantPatternFormatter _constantPatternFormatter = ConstantPatternFormatter(config, this, _formatState);
     late final ConstructorDeclarationFormatter _constructorDeclarationFormatter = ConstructorDeclarationFormatter(config, this, _formatState);
     late final ConstructorFieldInitializerFormatter _constructorFieldInitializerFormatter = ConstructorFieldInitializerFormatter(config, this, _formatState);
@@ -141,6 +147,7 @@ class FormatVisitor extends AstVisitor<void>
     late final ContinueStatementFormatter _continueStatementFormatter = ContinueStatementFormatter(config, this, _formatState);
     late final DeclaredIdentifierFormatter _declaredIdentifierFormatter = DeclaredIdentifierFormatter(config, this, _formatState);
     late final DefaultFormalParameterFormatter _defaultFormalParameterFormatter = DefaultFormalParameterFormatter(config, this, _formatState);
+    late final DottedNameFormatter _dottedNameFormatter = DottedNameFormatter(config, this, _formatState);
     late final DoubleLiteralFormatter _doubleLiteralFormatter = DoubleLiteralFormatter(config, this, _formatState);
     late final EmptyFunctionBodyFormatter _emptyFunctionBodyFormatter = EmptyFunctionBodyFormatter(config, this, _formatState);
     late final EmptyStatementFormatter _emptyStatementFormatter = EmptyStatementFormatter(config, this, _formatState);
@@ -195,6 +202,7 @@ class FormatVisitor extends AstVisitor<void>
     late final RethrowExpressionFormatter _rethrowExpressionFormatter = RethrowExpressionFormatter(config, this, _formatState);
     late final ReturnStatementFormatter _returnStatementFormatter = ReturnStatementFormatter(config, this, _formatState);
     late final SetOrMapLiteralFormatter _setOrMapLiteralFormatter = SetOrMapLiteralFormatter(config, this, _formatState);
+    late final ShowCombinatorFormatter _showCombinatorFormatter = ShowCombinatorFormatter(config, this, _formatState);
     late final SimpleIdentifierFormatter _simpleIdentifierFormatter = SimpleIdentifierFormatter(config, this, _formatState);
     late final SimpleFormalParameterFormatter _simpleFormalParameterFormatter = SimpleFormalParameterFormatter(config, this, _formatState);
     late final SimpleStringLiteralFormatter _simpleStringLiteralFormatter = SimpleStringLiteralFormatter(config, this, _formatState);
@@ -432,7 +440,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitAssertInitializer(AssertInitializer node)
-    => _visitUnimplemented(node);
+    => _assertInitializerFormatter.format(node);
 
     @override
     void visitAssertStatement(AssertStatement assertStatement)
@@ -484,7 +492,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitConfiguration(Configuration node)
-    => _visitUnimplemented(node);
+    => _configurationFormatter.format(node);
 
     @override
     void visitConstantPattern(ConstantPattern node)
@@ -524,7 +532,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitDottedName(DottedName node)
-    => _visitUnimplemented(node);
+    => _dottedNameFormatter.format(node);
 
     @override
     void visitDoubleLiteral(DoubleLiteral node)
@@ -824,7 +832,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitShowCombinator(ShowCombinator node)
-    => _visitUnimplemented(node);
+    => _showCombinatorFormatter.format(node);
 
     @override
     void visitSimpleFormalParameter(SimpleFormalParameter node)

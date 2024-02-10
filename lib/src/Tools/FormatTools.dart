@@ -5,6 +5,9 @@ import 'StringTools.dart';
 
 class FormatTools
 {
+    static bool isPeriodText(String s)
+    => s == '.';
+
     static bool isCommaText(String s)
     {
         const String methodName = 'FormatTools.isCommaText';

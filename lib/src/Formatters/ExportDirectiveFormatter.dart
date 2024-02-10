@@ -25,6 +25,8 @@ class ExportDirectiveFormatter extends IFormatter
 
         formatState.copyEntity(node.exportKeyword, astVisitor, '$methodName/node.exportKeyword'); // covered by tests
         formatState.copyEntity(node.uri, astVisitor, '$methodName/node.uri'); // covered by tests
+        formatState.acceptList(node.combinators, astVisitor, '$methodName/node.combinators');
+        formatState.acceptList(node.configurations, astVisitor, '$methodName/node.configurations');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
     }
 }
