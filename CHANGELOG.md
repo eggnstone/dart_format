@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.9
+
+- More formatters.
+
 ## 1.1.8
 
 - Added example. Improved documentation.
