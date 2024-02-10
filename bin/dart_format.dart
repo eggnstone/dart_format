@@ -25,7 +25,7 @@ async
         async
         {
             logDebug('main/runZonedGuarded START', preventLoggingToConsole: true);
-            final int exitCode = await main1(args);
+            final int exitCode = await mainNoThrow(args);
             logDebug('main/runZonedGuarded END', preventLoggingToConsole: true);
             return exitCode;
         }
@@ -40,14 +40,14 @@ async
     exit(exitCode ?? ExitCodes.ERROR);
 }
 
-Future<int> main1(List<String> args)
+Future<int> mainNoThrow(List<String> args)
 async
 {
     int exitCode;
 
     try
     {
-        exitCode = await main2(args);
+        exitCode = await mainOrThrow(args);
     }
     on DartFormatException catch (e)
     {
@@ -69,7 +69,7 @@ async
     return exitCode;
 }
 
-Future<int> main2(List<String> args)
+Future<int> mainOrThrow(List<String> args)
 async
 {
     if (args.isEmpty)
