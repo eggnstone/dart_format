@@ -4,6 +4,7 @@ import 'package:http/http.dart' as Http; // ignore: library_prefixes
 
 import '../Constants/Generated/VersionConstants.dart';
 import '../Data/Version.dart';
+import 'JsonTools.dart';
 import 'LogTools.dart';
 
 class VersionTools
@@ -56,7 +57,7 @@ class VersionTools
             final Http.Response response = await Http.get(Uri.parse(DART_FORMAT_VERSIONS_URL));
             //logDebug('Response: ${response.body}');
             final Map<String, dynamic> json = jsonDecode(response.body);
-            final String version = json['versions'][0];
+            final String version = JsonTools.getOrThrow<List<String>>(json, 'versions')[0];
 
             return Version.parse(version);
         }

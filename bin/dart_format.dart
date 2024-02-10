@@ -14,6 +14,8 @@ Future<void> main(List<String> args)
 async
 {
     LogTools.logToConsole = args.contains('--log-to-console') || args.contains('--log-to-console=true');
+
+    // Mandatory for the beta phase. Optional afterwards.
     LogTools.logToTempFile = true;//args.contains('--log-to-temp-file') || args.contains('--log-to-temp-file=true');
 
     logDebug('main START', preventLoggingToConsole: true);

@@ -16,6 +16,8 @@ import 'TestParseStringResult.dart';
 import 'Visitors/MetaAstVisitor.dart';
 import 'Visitors/TestAstVisitor.dart';
 
+// TODO: why use LogTools instead of eggnstone_dart?
+
 typedef CreateFormatterFunction = IFormatter Function(Config config, AstVisitor<void> astVisitor, FormatState formatState);
 typedef FormatFunction = String Function(FormatState formatState, TestGroupConfig testGroupConfig, TestConfig testConfig, AstNode node);
 
@@ -33,6 +35,7 @@ class TestTools
         try
         {
             Test.expect(actual, matcher, reason: reason);
+            // TODO: why use logInternalInfo instead of logInfo?
             logInternalInfo('OK: ${StringTools.toDisplayString(actual, Constants.MAX_DEBUG_LENGTH)}');
         }
         on Test.TestFailure catch (e)
@@ -75,6 +78,7 @@ class TestTools
                             }
                             catch (e)
                             {
+                                // TODO: why use logInternalError instead of logError?
                                 logInternalError('AlternativeStackTrace:\n$finalStackTrace');
                                 rethrow;
                             }

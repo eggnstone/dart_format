@@ -6,9 +6,7 @@ import '../TestTools/TestGroupConfig.dart';
 import '../TestTools/TestTools.dart';
 import '../TestTools/Visitors/TestAnnotationVisitor.dart';
 import '../TestTools/Visitors/TestAstVisitor.dart';
-import '../TestTools/Visitors/TestNamedTypeVisitor.dart';
 import '../TestTools/Visitors/TestVariableDeclarationListVisitor.dart';
-import '../TestTools/Visitors/TestVariableDeclarationVisitor.dart';
 
 void main()
 {
@@ -27,7 +25,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('@a final int i;\n',)
+                TestConfig('@a final int i;\n')
             ]
         ) 
     ];

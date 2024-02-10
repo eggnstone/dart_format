@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'Tools/JsonTools.dart';
+
 /// Configuration for the formatter.
 class Config
 {
@@ -101,15 +103,15 @@ class Config
 
         final dynamic json = jsonDecode(configText);
         return Config.none(
-            addNewLineAfterClosingBrace: json['AddNewLineAfterClosingBrace'] ?? ADD_NEW_LINE_AFTER_CLOSING_BRACE_NONE,
-            addNewLineAfterOpeningBrace: json['AddNewLineAfterOpeningBrace'] ?? ADD_NEW_LINE_AFTER_OPENING_BRACE_NONE,
-            addNewLineAfterSemicolon: json['AddNewLineAfterSemicolon'] ?? ADD_NEW_LINE_AFTER_SEMICOLON_NONE,
-            addNewLineAtEndOfText: json['AddNewLineAtEndOfText'] ?? ADD_NEW_LINE_AT_END_OF_TEXT_NONE,
-            addNewLineBeforeClosingBrace: json['AddNewLineBeforeClosingBrace'] ?? ADD_NEW_LINE_BEFORE_CLOSING_BRACE_NONE,
-            addNewLineBeforeOpeningBrace: json['AddNewLineBeforeOpeningBrace'] ?? ADD_NEW_LINE_BEFORE_OPENING_BRACE_NONE,
-            indentationSpacesPerLevel: json['IndentationSpacesPerLevel'] ?? INDENTATION_SPACES_PER_LEVEL_NONE,
-            maxEmptyLines: json['MaxEmptyLines'] ?? MAX_EMPTY_LINES_NONE,
-            removeTrailingCommas: json['RemoveTrailingCommas'] ?? REMOVE_TRAILING_COMMAS_NONE
+            addNewLineAfterClosingBrace: JsonTools.get(json, 'AddNewLineAfterClosingBrace', ADD_NEW_LINE_AFTER_CLOSING_BRACE_NONE),
+            addNewLineAfterOpeningBrace: JsonTools.get(json, 'AddNewLineAfterOpeningBrace', ADD_NEW_LINE_AFTER_OPENING_BRACE_NONE),
+            addNewLineAfterSemicolon: JsonTools.get(json, 'AddNewLineAfterSemicolon', ADD_NEW_LINE_AFTER_SEMICOLON_NONE),
+            addNewLineAtEndOfText: JsonTools.get(json, 'AddNewLineAtEndOfText', ADD_NEW_LINE_AT_END_OF_TEXT_NONE),
+            addNewLineBeforeClosingBrace: JsonTools.get(json, 'AddNewLineBeforeClosingBrace', ADD_NEW_LINE_BEFORE_CLOSING_BRACE_NONE),
+            addNewLineBeforeOpeningBrace: JsonTools.get(json, 'AddNewLineBeforeOpeningBrace', ADD_NEW_LINE_BEFORE_OPENING_BRACE_NONE),
+            indentationSpacesPerLevel: JsonTools.get(json, 'IndentationSpacesPerLevel', INDENTATION_SPACES_PER_LEVEL_NONE),
+            maxEmptyLines: JsonTools.get(json, 'MaxEmptyLines', MAX_EMPTY_LINES_NONE),
+            removeTrailingCommas: JsonTools.get(json, 'RemoveTrailingCommas', REMOVE_TRAILING_COMMAS_NONE)
         );
     }
 }

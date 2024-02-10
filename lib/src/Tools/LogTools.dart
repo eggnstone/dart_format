@@ -108,6 +108,8 @@ class LogTools
             _logToTempFile('Error:  $message');
     }
 
+
+    // TODO: move to eggnstone_dart
     static void logErrorObject(String source, Object error, StackTrace stackTrace)
     => logError('In $source\n$error\n$stackTrace');
 

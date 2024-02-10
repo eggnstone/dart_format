@@ -17,8 +17,10 @@ import '../Tools/VersionTools.dart';
 
 class WebServiceHandler
 {
-    final bool skipVersionCheck;
+    static const String CLASS_NAME = 'WebServiceHandler';
+    static int _requestCount = 0;
 
+    final bool skipVersionCheck;
     final DateTime _startTime = DateTime.now();
 
     WebServiceHandler({required this.skipVersionCheck});
@@ -26,11 +28,13 @@ class WebServiceHandler
     Future<int> run()
     async
     {
+        const String METHOD_NAME = '$CLASS_NAME.run';
+
         final VersionTools versionTools = VersionTools();
         bool terminate = false;
         bool terminateWithError = false;
 
-        _logDebug('WebServiceHandler.run START');
+        _logDebug('$METHOD_NAME START');
 
         final Version? latestVersion = await versionTools.getLatestVersion(skipVersionCheck: skipVersionCheck);
         final bool isNewerVersionAvailable = await versionTools.isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
@@ -66,19 +70,19 @@ class WebServiceHandler
             server.listen(
                 (HttpRequest request) => _handleRequest(request, onQuit: ()
                     {
-                        logDebug('WebServiceHandler.run: Quitting because server.listen()/onQuit called.');
+                        logDebug('$METHOD_NAME: Quitting because server.listen()/onQuit called.');
                         terminate = true;
                     }
                 ),
                 onDone: ()
                 {
-                    logDebug('WebServiceHandler.run: Quitting because server.listen()/onDone called.');
+                    logDebug('$METHOD_NAME: Quitting because server.listen()/onDone called.');
                     terminate = true;
                 }
                 ,
                 onError: (Object error, StackTrace stackTrace)
                 {
-                    logError('WebServiceHandler.run: Quitting because server.listen()/onError called: $error');
+                    logError('$METHOD_NAME: Quitting because server.listen()/onError called: $error');
                     terminate = true;
                     terminateWithError = true;
                 }
@@ -87,7 +91,7 @@ class WebServiceHandler
             stdin.handleError(
                 (Object error, StackTrace stackTrace)
                 {
-                    logError('WebServiceHandler.run: Quitting because stdin.handleError()/onError called: $error');
+                    logError('$METHOD_NAME: Quitting because stdin.handleError()/onError called: $error');
                     terminate = true;
                     terminateWithError = true;
                 }
@@ -98,17 +102,17 @@ class WebServiceHandler
 
             if (terminateWithError)
             {
-                _logDebug('WebServiceHandler.run END with ERROR');
+                _logDebug('$METHOD_NAME END with ERROR');
                 return ExitCodes.ERROR;
             }
 
-            _logDebug('WebServiceHandler.run END with SUCCESS');
+            _logDebug('$METHOD_NAME END with SUCCESS');
             return exitCodeForSuccess;
         }
         catch (e)
         {
             writelnToStdErr(e.toString());
-            _logDebug('WebServiceHandler.run END with ERROR');
+            _logDebug('$METHOD_NAME END with ERROR');
             return ExitCodes.ERROR;
         }
     }
@@ -141,7 +145,6 @@ class WebServiceHandler
         request.response.statusCode = HttpStatus.ok;
         request.response.headers.contentType = ContentType.binary;
         await request.response.addStream(File('assets/favicon.ico').openRead());
-        //request.response.write(await File('assets/favicon.ico').readAsBytes());
         await request.response.close();
     }
 
@@ -293,8 +296,13 @@ class WebServiceHandler
     Future<void> _handleRequest(HttpRequest request, {Function()? onQuit})
     async
     {
-        logDebug('WebServiceHandler._handleRequest: Request: ${request.method} ${request.uri}');
+        const String METHOD_NAME = '$CLASS_NAME._handleRequest';
+        final DateTime startTime = DateTime.now();
 
+        _requestCount++;
+        logDebug('$METHOD_NAME START #$_requestCount: ${request.method} ${request.uri}');
+
+        // TODO: timeout?
         try
         {
             if (request.method == 'GET')
@@ -314,22 +322,10 @@ class WebServiceHandler
             request.response.writeln('Exception: $e');
             await request.response.close();
         }
-        /*on Error catch (e)
+        finally
         {
-        writelnToStdErr('Error: $e');
-        request.response.statusCode = HttpStatus.internalServerError;
-        request.response.headers.contentType = ContentType.text;
-        request.response.writeln('Error: $e');
-        await request.response.close();
-        }*/
-        /*catch (e)
-        {
-        writelnToStdErr('???: $e');
-        request.response.statusCode = HttpStatus.internalServerError;
-        request.response.headers.contentType = ContentType.text;
-        request.response.writeln('Exception: $e');
-        await request.response.close();
-        }*/
+            logDebug('$METHOD_NAME END   #$_requestCount: ${request.method} ${request.uri} took ${DateTime.now().difference(startTime).inMilliseconds / 1000}s');
+        }
     }
 
     Future<void> _handleRoot(HttpRequest request)
