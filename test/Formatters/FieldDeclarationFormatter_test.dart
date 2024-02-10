@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Formatters/DeclarationFormatters/FieldDeclarationFormatter.dart';
+import 'package:dart_format/src/Formatters/FieldDeclarationFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';

@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Formatters/DirectiveFormatters/PartDirectiveFormatter.dart';
+import 'package:dart_format/src/Formatters/PartDirectiveFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';

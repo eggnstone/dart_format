@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Formatters/DeclarationFormatters/ForEachPartsWithDeclarationFormatter.dart';
+import 'package:dart_format/src/Formatters/ForEachPartsWithDeclarationFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestGroupConfig.dart';

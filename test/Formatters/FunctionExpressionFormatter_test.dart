@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Formatters/ExpressionFormatters/FunctionExpressionFormatter.dart';
+import 'package:dart_format/src/Formatters/FunctionExpressionFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestGroupConfig.dart';

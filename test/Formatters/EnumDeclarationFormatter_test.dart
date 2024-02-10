@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Formatters/DeclarationFormatters/EnumDeclarationFormatter.dart';
+import 'package:dart_format/src/Formatters/EnumDeclarationFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';

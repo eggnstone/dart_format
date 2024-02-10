@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Formatters/StatementFormatters/TryStatementFormatter.dart';
+import 'package:dart_format/src/Formatters/TryStatementFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestGroupConfig.dart';

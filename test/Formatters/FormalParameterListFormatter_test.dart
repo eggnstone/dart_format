@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Formatters/ListFormatters/FormalParameterListFormatter.dart';
+import 'package:dart_format/src/Formatters/FormalParameterListFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';

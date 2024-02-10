@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Formatters/StatementFormatters/BreakStatementFormatter.dart';
+import 'package:dart_format/src/Formatters/BreakStatementFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';

@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Formatters/DeclarationFormatters/ForPartsWithDeclarationsFormatter.dart';
+import 'package:dart_format/src/Formatters/ForPartsWithDeclarationsFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestGroupConfig.dart';

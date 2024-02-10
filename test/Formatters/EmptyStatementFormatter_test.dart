@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Formatters/StatementFormatters/EmptyStatementFormatter.dart';
+import 'package:dart_format/src/Formatters/EmptyStatementFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';

@@ -1,5 +1,5 @@
 
-import 'package:dart_format/src/Formatters/ExpressionFormatters/ForPartsWithExpressionFormatter.dart';
+import 'package:dart_format/src/Formatters/ForPartsWithExpressionFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestGroupConfig.dart';

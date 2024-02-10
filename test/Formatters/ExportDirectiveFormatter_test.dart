@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Formatters/DirectiveFormatters/ExportDirectiveFormatter.dart';
+import 'package:dart_format/src/Formatters/ExportDirectiveFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';

@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Formatters/ExpressionFormatters/PostfixExpressionFormatter.dart';
+import 'package:dart_format/src/Formatters/PostfixExpressionFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestGroupConfig.dart';

@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Formatters/StatementFormatters/WhileStatementFormatter.dart';
+import 'package:dart_format/src/Formatters/WhileStatementFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';

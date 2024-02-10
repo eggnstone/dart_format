@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Formatters/ExpressionFormatters/RethrowExpressionFormatter.dart';
+import 'package:dart_format/src/Formatters/RethrowExpressionFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestGroupConfig.dart';

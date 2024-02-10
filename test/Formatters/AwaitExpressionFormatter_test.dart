@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Formatters/ExpressionFormatters/AwaitExpressionFormatter.dart';
+import 'package:dart_format/src/Formatters/AwaitExpressionFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestGroupConfig.dart';

@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Formatters/StatementFormatters/SwitchStatementFormatter.dart';
+import 'package:dart_format/src/Formatters/SwitchStatementFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';
