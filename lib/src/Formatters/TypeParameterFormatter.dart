@@ -23,6 +23,7 @@ class TypeParameterFormatter extends IFormatter
         if (node is! TypeParameter)
             throw FormatException('Not a TypeParameter: ${node.runtimeType}');
 
+        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         /*formatState.acceptListOld(node.metadata, astVisitor, '$methodName/node.metadata');
         formatState.copyEntity(node.extendsKeyword, astVisitor, '$methodName/node.extendsKeyword');

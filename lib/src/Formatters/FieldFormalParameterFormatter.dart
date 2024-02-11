@@ -23,6 +23,7 @@ class FieldFormalParameterFormatter extends IFormatter
         if (node is! FieldFormalParameter)
             throw FormatException('Not a FieldFormalParameter: ${node.runtimeType}');
 
+        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.requiredKeyword, astVisitor, '$methodName/node.requiredKeyword');
         formatState.copyEntity(node.thisKeyword, astVisitor, '$methodName/node.thisKeyword');
         formatState.copyEntity(node.period, astVisitor, '$methodName/node.period');

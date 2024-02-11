@@ -23,6 +23,7 @@ class EnumDeclarationFormatter extends IFormatter
         if (node is! EnumDeclaration)
             throw FormatException('Not an EnumDeclaration: ${node.runtimeType}');
 
+        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.enumKeyword, astVisitor, '$methodName/node.enumKeyword'); // covered by tests
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name'); // covered by tests
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket'); // covered by tests

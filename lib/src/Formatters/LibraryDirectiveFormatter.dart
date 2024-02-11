@@ -23,6 +23,7 @@ class LibraryDirectiveFormatter extends IFormatter
         if (node is! LibraryDirective)
             throw FormatException('Not a LibraryDirective: ${node.runtimeType}');
 
+        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.libraryKeyword, astVisitor, '$methodName/node.libraryKeyword');
         formatState.copyEntity(node.name2, astVisitor, '$methodName/node.name2');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');

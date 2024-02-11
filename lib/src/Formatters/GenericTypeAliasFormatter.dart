@@ -23,6 +23,7 @@ class GenericTypeAliasFormatter extends IFormatter
         if (node is! GenericTypeAlias)
             throw FormatException('Not a GenericTypeAlias: ${node.runtimeType}');
 
+        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.typedefKeyword, astVisitor, '$methodName/node.typedefKeyword'); // covered by tests
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name'); // covered by tests
         formatState.copyEntity(node.equals, astVisitor, '$methodName/node.equals'); // covered by tests

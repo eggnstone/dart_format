@@ -23,6 +23,7 @@ class DeclaredIdentifierFormatter extends IFormatter
         if (node is! DeclaredIdentifier)
             throw FormatException('Not a DeclaredIdentifier: ${node.runtimeType}');
 
+        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword');
         formatState.copyEntity(node.type, astVisitor, '$methodName/node.type');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');

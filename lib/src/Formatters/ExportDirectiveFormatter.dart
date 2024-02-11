@@ -23,6 +23,7 @@ class ExportDirectiveFormatter extends IFormatter
         if (node is! ExportDirective)
             throw FormatException('Not an ExportDirective: ${node.runtimeType}');
 
+        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.exportKeyword, astVisitor, '$methodName/node.exportKeyword'); // covered by tests
         formatState.copyEntity(node.uri, astVisitor, '$methodName/node.uri'); // covered by tests
         formatState.acceptList(node.combinators, astVisitor, '$methodName/node.combinators');

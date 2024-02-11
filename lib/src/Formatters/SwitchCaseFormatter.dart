@@ -24,6 +24,7 @@ class SwitchCaseFormatter extends IFormatter
         if (node is! SwitchMember)
             throw FormatException('Not a SwitchCase: ${node.runtimeType}');
 
+        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.keyword, '$methodName/node.keyword'); // covered by tests
         //formatState.acceptNodeList(node.labels, astVisitor, '$methodName/node.labels');
         formatState.copyEntity(node.colon, '$methodName/node.colon'); // covered by tests

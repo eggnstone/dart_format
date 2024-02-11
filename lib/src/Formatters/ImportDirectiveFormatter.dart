@@ -23,6 +23,7 @@ class ImportDirectiveFormatter extends IFormatter
         if (node is! ImportDirective)
             throw FormatException('Not an ImportDirective: ${node.runtimeType}');
 
+        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.importKeyword, astVisitor, '$methodName/node.importKeyword');
         formatState.copyEntity(node.uri, astVisitor, '$methodName/node.uri');
         formatState.copyEntity(node.deferredKeyword, astVisitor, '$methodName/node.deferredKeyword');
