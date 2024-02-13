@@ -11,7 +11,9 @@ import 'Formatters/ArgumentListFormatter.dart';
 import 'Formatters/AsExpressionFormatter.dart';
 import 'Formatters/AssertInitializerFormatter.dart';
 import 'Formatters/AssertStatementFormatter.dart';
+import 'Formatters/AssignedVariablePatternFormatter.dart';
 import 'Formatters/AssignmentExpressionFormatter.dart';
+import 'Formatters/AugmentationImportDirectiveFormatter.dart';
 import 'Formatters/AwaitExpressionFormatter.dart';
 import 'Formatters/BinaryExpressionFormatter.dart';
 import 'Formatters/BlockFormatter.dart';
@@ -19,9 +21,12 @@ import 'Formatters/BlockFunctionBodyFormatter.dart';
 import 'Formatters/BooleanLiteralFormatter.dart';
 import 'Formatters/BreakStatementFormatter.dart';
 import 'Formatters/CascadeExpressionFormatter.dart';
+import 'Formatters/CaseClauseFormatter.dart';
+import 'Formatters/CastPatternFormatter.dart';
 import 'Formatters/CatchClauseFormatter.dart';
 import 'Formatters/CatchClauseParameterFormatter.dart';
 import 'Formatters/ClassDeclarationFormatter.dart';
+import 'Formatters/ClassTypeAliasFormatter.dart';
 import 'Formatters/CommentFormatter.dart';
 import 'Formatters/CompilationUnitFormatter.dart';
 import 'Formatters/ConditionalExpressionFormatter.dart';
@@ -126,6 +131,8 @@ class FormatVisitor extends AstVisitor<void>
     late final AssertInitializerFormatter _assertInitializerFormatter = AssertInitializerFormatter(config, this, _formatState);
     late final AssertStatementFormatter _assertStatementFormatter = AssertStatementFormatter(config, this, _formatState);
     late final AssignmentExpressionFormatter _assignmentExpressionFormatter = AssignmentExpressionFormatter(config, this, _formatState);
+    late final AssignedVariablePatternFormatter _assignedVariablePatternFormatter = AssignedVariablePatternFormatter(config, this, _formatState);
+    late final AugmentationImportDirectiveFormatter _augmentationImportDirectiveFormatter = AugmentationImportDirectiveFormatter(config, this, _formatState);
     late final AwaitExpressionFormatter _awaitExpressionFormatter = AwaitExpressionFormatter(config, this, _formatState);
     late final BinaryExpressionFormatter _binaryExpressionFormatter = BinaryExpressionFormatter(config, this, _formatState);
     late final BlockFormatter _blockFormatter = BlockFormatter(config, this, _formatState);
@@ -133,9 +140,12 @@ class FormatVisitor extends AstVisitor<void>
     late final BooleanLiteralFormatter _booleanLiteralFormatter = BooleanLiteralFormatter(config, this, _formatState);
     late final BreakStatementFormatter _breakStatementFormatter = BreakStatementFormatter(config, this, _formatState);
     late final CascadeExpressionFormatter _cascadeExpressionFormatter = CascadeExpressionFormatter(config, this, _formatState);
+    late final CaseClauseFormatter _caseClauseFormatter = CaseClauseFormatter(config, this, _formatState);
+    late final CastPatternFormatter _castPatternFormatter = CastPatternFormatter(config, this, _formatState);
     late final CatchClauseFormatter _catchClauseFormatter = CatchClauseFormatter(config, this, _formatState);
     late final CatchClauseParameterFormatter _catchClauseParameterFormatter = CatchClauseParameterFormatter(config, this, _formatState);
     late final ClassDeclarationFormatter _classDeclarationFormatter = ClassDeclarationFormatter(config, this, _formatState);
+    late final ClassTypeAliasFormatter _classTypeAliasFormatter = ClassTypeAliasFormatter(config, this, _formatState);
     late final CommentFormatter _commentFormatter = CommentFormatter(config, this, _formatState);
     late final CompilationUnitFormatter _compilationUnitFormatter = CompilationUnitFormatter(config, this, _formatState);
     late final ConditionalExpressionFormatter _conditionalExpressionFormatter = ConditionalExpressionFormatter(config, this, _formatState);
@@ -258,11 +268,11 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitAssignedVariablePattern(AssignedVariablePattern node)
-    => _visitUnimplemented(node);
+    => _assignedVariablePatternFormatter.format(node);
 
     @override
     void visitAugmentationImportDirective(AugmentationImportDirective node)
-    => _visitUnimplemented(node);
+    => _augmentationImportDirectiveFormatter.format(node);
 
     @override
     void visitAwaitExpression(AwaitExpression node)
@@ -294,11 +304,11 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitCaseClause(CaseClause node)
-    => _visitUnimplemented(node);
+    => _caseClauseFormatter.format(node);
 
     @override
     void visitCastPattern(CastPattern node)
-    => _visitUnimplemented(node);
+    => _castPatternFormatter.format(node);
 
     @override
     void visitCatchClause(CatchClause node)
@@ -314,7 +324,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitClassTypeAlias(ClassTypeAlias node)
-    => _visitUnimplemented(node);
+    => _classTypeAliasFormatter.format(node);
 
     @override
     void visitComment(Comment node)
