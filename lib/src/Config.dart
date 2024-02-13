@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'Tools/JsonTools.dart';
 
+// TODO: JSON and freezed
+
 /// Configuration for the formatter.
 class Config
 {

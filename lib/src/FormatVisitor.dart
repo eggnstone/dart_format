@@ -229,210 +229,20 @@ class FormatVisitor extends AstVisitor<void>
         : _formatState = formatState;
 
     @override
-    void visitAnnotation(Annotation node)
-    => _annotationFormatter.format(node);
-
-    @override
-    void visitAssignmentExpression(AssignmentExpression node)
-    => _assignmentExpressionFormatter.format(node);
-
-    @override
-    void visitAwaitExpression(AwaitExpression node)
-    => _awaitExpressionFormatter.format(node);
-
-    @override
-    void visitBlock(Block node)
-    => _blockFormatter.format(node);
-
-    @override
-    void visitBlockFunctionBody(BlockFunctionBody node)
-    => _blockFunctionBodyFormatter.format(node);
-
-    @override
-    void visitBreakStatement(BreakStatement node)
-    => _breakStatementFormatter.format(node);
-
-    @override
-    void visitCatchClause(CatchClause node)
-    => _catchClauseFormatter.format(node);
-
-    @override
-    void visitClassDeclaration(ClassDeclaration node)
-    => _classDeclarationFormatter.format(node);
-
-    @override
-    void visitComment(Comment node)
-    => _commentFormatter.format(node);
-
-    @override
-    void visitCompilationUnit(CompilationUnit node)
-    => _compilationUnitFormatter.format(node);
-
-    @override
-    void visitConstructorDeclaration(ConstructorDeclaration node)
-    => _constructorDeclarationFormatter.format(node);
-
-    @override
-    void visitConstructorFieldInitializer(ConstructorFieldInitializer node)
-    => _constructorFieldInitializerFormatter.format(node);
-
-    @override
-    void visitEmptyFunctionBody(EmptyFunctionBody node)
-    => _emptyFunctionBodyFormatter.format(node);
-
-    @override
-    void visitEmptyStatement(EmptyStatement node)
-    => _emptyStatementFormatter.format(node);
-
-    @override
-    void visitEnumConstantDeclaration(EnumConstantDeclaration node)
-    => _enumConstantDeclarationFormatter.format(node);
-
-    @override
-    void visitEnumDeclaration(EnumDeclaration node)
-    => _enumDeclarationFormatter.format(node);
-
-    @override
-    void visitExportDirective(ExportDirective node)
-    => _exportDirectiveFormatter.format(node);
-
-    @override
-    void visitExpressionFunctionBody(ExpressionFunctionBody node)
-    => _expressionFunctionBodyFormatter.format(node);
-
-    @override
-    void visitExpressionStatement(ExpressionStatement node)
-    => _expressionStatementFormatter.format(node);
-
-    @override
-    void visitExtensionDeclaration(ExtensionDeclaration node)
-    => _extensionDeclarationFormatter.format(node);
-
-    @override
-    void visitFieldDeclaration(FieldDeclaration node)
-    => _fieldDeclarationFormatter.format(node);
-
-    @override
-    void visitForEachPartsWithDeclaration(ForEachPartsWithDeclaration node)
-    => _forEachPartsWithDeclarationFormatter.format(node);
-
-    @override
-    void visitForPartsWithDeclarations(ForPartsWithDeclarations node)
-    => _forPartsWithDeclarationsFormatter.format(node);
-
-    @override
-    void visitForPartsWithExpression(ForPartsWithExpression node)
-    => _forPartsWithExpressionFormatter.format(node);
-
-    @override
-    void visitForStatement(ForStatement node)
-    => _forStatementFormatter.format(node);
-
-    @override
-    void visitFunctionDeclaration(FunctionDeclaration node)
-    => _functionDeclarationFormatter.format(node);
-
-    @override
-    void visitFunctionExpression(FunctionExpression node)
-    => _functionExpressionFormatter.format(node);
-
-    @override
-    void visitGenericTypeAlias(GenericTypeAlias node)
-    => _genericTypeAliasFormatter.format(node);
-
-    @override
-    void visitIfStatement(IfStatement node)
-    => _ifStatementFormatter.format(node);
-
-    @override
-    void visitImportDirective(ImportDirective node)
-    => _importDirectiveFormatter.format(node);
-
-    @override
-    void visitLibraryDirective(LibraryDirective node)
-    => _libraryDirectiveFormatter.format(node);
-
-    @override
-    void visitMethodDeclaration(MethodDeclaration node)
-    => _methodDeclarationFormatter.format(node);
-
-    @override
-    void visitMethodInvocation(MethodInvocation node)
-    => _methodInvocationFormatter.format(node);
-
-    @override
-    void visitRethrowExpression(RethrowExpression node)
-    => _rethrowExpressionFormatter.format(node);
-
-    @override
-    void visitReturnStatement(ReturnStatement node)
-    => _returnStatementFormatter.format(node);
-
-    @override
-    void visitPartDirective(PartDirective node)
-    => _partDirectiveFormatter.format(node);
-
-    @override
-    void visitPostfixExpression(PostfixExpression node)
-    => _postfixExpressionFormatter.format(node);
-
-    @override
-    void visitSimpleIdentifier(SimpleIdentifier node)
-    => _simpleIdentifierFormatter.format(node);
-
-    @override
-    void visitSwitchCase(SwitchCase node)
-    => _visitUnimplemented(node);
-
-    @override
-    void visitSwitchDefault(SwitchDefault node)
-    => _visitUnimplemented(node);
-
-    @override
-    void visitSwitchExpression(SwitchExpression node)
-    => _visitUnimplemented(node);
-
-    @override
-    void visitSwitchExpressionCase(SwitchExpressionCase node)
-    => _visitUnimplemented(node);
-
-    @override
-    void visitSwitchPatternCase(SwitchPatternCase node)
-    => _switchPatternCaseFormatter.format(node);
-
-    @override
-    void visitSwitchStatement(SwitchStatement node)
-    => _switchStatementFormatter.format(node);
-
-    @override
-    void visitTopLevelVariableDeclaration(TopLevelVariableDeclaration node)
-    => _topLevelVariableDeclarationFormatter.format(node);
-
-    @override
-    void visitTryStatement(TryStatement node)
-    => _tryStatementFormatter.format(node);
-
-    @override
-    void visitThrowExpression(ThrowExpression node)
-    => _throwExpressionFormatter.format(node);
-
-    @override
-    void visitVariableDeclarationStatement(VariableDeclarationStatement node)
-    => _variableDeclarationStatementFormatter.format(node);
-
-    @override
-    void visitWhileStatement(WhileStatement node)
-    => _whileStatementFormatter.format(node);
-
-    /*TODO: sort alphabetically*/
-
-    @override
     void visitAdjacentStrings(AdjacentStrings node)
     => _adjacentStringsFormatter.format(node);
 
     @override
+    void visitAnnotation(Annotation node)
+    => _annotationFormatter.format(node);
+
+    @override
     void visitArgumentList(ArgumentList node)
     => _argumentListFormatter.format(node);
+
+    @override
+    void visitAssignmentExpression(AssignmentExpression node)
+    => _assignmentExpressionFormatter.format(node);
 
     @override
     void visitAsExpression(AsExpression node)
@@ -455,12 +265,28 @@ class FormatVisitor extends AstVisitor<void>
     => _visitUnimplemented(node);
 
     @override
+    void visitAwaitExpression(AwaitExpression node)
+    => _awaitExpressionFormatter.format(node);
+
+    @override
     void visitBinaryExpression(BinaryExpression node)
     => _binaryExpressionFormatter.format(node);
 
     @override
+    void visitBlock(Block node)
+    => _blockFormatter.format(node);
+
+    @override
+    void visitBlockFunctionBody(BlockFunctionBody node)
+    => _blockFunctionBodyFormatter.format(node);
+
+    @override
     void visitBooleanLiteral(BooleanLiteral node)
     => _booleanLiteralFormatter.format(node);
+
+    @override
+    void visitBreakStatement(BreakStatement node)
+    => _breakStatementFormatter.format(node);
 
     @override
     void visitCascadeExpression(CascadeExpression node)
@@ -475,16 +301,32 @@ class FormatVisitor extends AstVisitor<void>
     => _visitUnimplemented(node);
 
     @override
+    void visitCatchClause(CatchClause node)
+    => _catchClauseFormatter.format(node);
+
+    @override
     void visitCatchClauseParameter(CatchClauseParameter node)
     => _catchClauseParameterFormatter.format(node);
+
+    @override
+    void visitClassDeclaration(ClassDeclaration node)
+    => _classDeclarationFormatter.format(node);
 
     @override
     void visitClassTypeAlias(ClassTypeAlias node)
     => _visitUnimplemented(node);
 
     @override
+    void visitComment(Comment node)
+    => _commentFormatter.format(node);
+
+    @override
     void visitCommentReference(CommentReference node)
     => _visitUnimplemented(node);
+
+    @override
+    void visitCompilationUnit(CompilationUnit node)
+    => _compilationUnitFormatter.format(node);
 
     @override
     void visitConditionalExpression(ConditionalExpression node)
@@ -497,6 +339,14 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitConstantPattern(ConstantPattern node)
     => _constantPatternFormatter.format(node);
+
+    @override
+    void visitConstructorDeclaration(ConstructorDeclaration node)
+    => _constructorDeclarationFormatter.format(node);
+
+    @override
+    void visitConstructorFieldInitializer(ConstructorFieldInitializer node)
+    => _constructorFieldInitializerFormatter.format(node);
 
     @override
     void visitConstructorName(ConstructorName node)
@@ -539,12 +389,44 @@ class FormatVisitor extends AstVisitor<void>
     => _doubleLiteralFormatter.format(node);
 
     @override
+    void visitEmptyFunctionBody(EmptyFunctionBody node)
+    => _emptyFunctionBodyFormatter.format(node);
+
+    @override
+    void visitEmptyStatement(EmptyStatement node)
+    => _emptyStatementFormatter.format(node);
+
+    @override
     void visitEnumConstantArguments(EnumConstantArguments node)
     => _visitUnimplemented(node);
 
     @override
+    void visitEnumConstantDeclaration(EnumConstantDeclaration node)
+    => _enumConstantDeclarationFormatter.format(node);
+
+    @override
+    void visitEnumDeclaration(EnumDeclaration node)
+    => _enumDeclarationFormatter.format(node);
+
+    @override
+    void visitExportDirective(ExportDirective node)
+    => _exportDirectiveFormatter.format(node);
+
+    @override
+    void visitExpressionFunctionBody(ExpressionFunctionBody node)
+    => _expressionFunctionBodyFormatter.format(node);
+
+    @override
+    void visitExpressionStatement(ExpressionStatement node)
+    => _expressionStatementFormatter.format(node);
+
+    @override
     void visitExtendsClause(ExtendsClause node)
     => _extendsClauseFormatter.format(node);
+
+    @override
+    void visitExtensionDeclaration(ExtensionDeclaration node)
+    => _extensionDeclarationFormatter.format(node);
 
     @override
     void visitExtensionOverride(ExtensionOverride node)
@@ -555,8 +437,16 @@ class FormatVisitor extends AstVisitor<void>
     => _visitUnimplemented(node);
 
     @override
+    void visitFieldDeclaration(FieldDeclaration node)
+    => _fieldDeclarationFormatter.format(node);
+
+    @override
     void visitFieldFormalParameter(FieldFormalParameter node)
     => _fieldFormalParameterFormatter.format(node);
+
+    @override
+    void visitForEachPartsWithDeclaration(ForEachPartsWithDeclaration node)
+    => _forEachPartsWithDeclarationFormatter.format(node);
 
     @override
     void visitForEachPartsWithIdentifier(ForEachPartsWithIdentifier node)
@@ -571,16 +461,36 @@ class FormatVisitor extends AstVisitor<void>
     => _visitUnimplemented(node);
 
     @override
-    void visitForPartsWithPattern(ForPartsWithPattern node)
-    => _visitUnimplemented(node);
-
-    @override
     void visitFormalParameterList(FormalParameterList node)
     => _formalParameterListFormatter.format(node);
 
     @override
+    void visitForPartsWithDeclarations(ForPartsWithDeclarations node)
+    => _forPartsWithDeclarationsFormatter.format(node);
+
+    @override
+    void visitForPartsWithExpression(ForPartsWithExpression node)
+    => _forPartsWithExpressionFormatter.format(node);
+
+    @override
+    void visitForPartsWithPattern(ForPartsWithPattern node)
+    => _visitUnimplemented(node);
+
+    @override
+    void visitForStatement(ForStatement node)
+    => _forStatementFormatter.format(node);
+
+    @override
+    void visitFunctionDeclaration(FunctionDeclaration node)
+    => _functionDeclarationFormatter.format(node);
+
+    @override
     void visitFunctionDeclarationStatement(FunctionDeclarationStatement node)
     => _visitUnimplemented(node);
+
+    @override
+    void visitFunctionExpression(FunctionExpression node)
+    => _functionExpressionFormatter.format(node);
 
     @override
     void visitFunctionExpressionInvocation(FunctionExpressionInvocation node)
@@ -603,6 +513,10 @@ class FormatVisitor extends AstVisitor<void>
     => _genericFunctionTypeFormatter.format(node);
 
     @override
+    void visitGenericTypeAlias(GenericTypeAlias node)
+    => _genericTypeAliasFormatter.format(node);
+
+    @override
     void visitGuardedPattern(GuardedPattern node)
     => _guardedPatternFormatter.format(node);
 
@@ -615,12 +529,20 @@ class FormatVisitor extends AstVisitor<void>
     => _ifElementFormatter.format(node);
 
     @override
+    void visitIfStatement(IfStatement node)
+    => _ifStatementFormatter.format(node);
+
+    @override
     void visitImplementsClause(ImplementsClause node)
     => _implementsClauseFormatter.format(node);
 
     @override
     void visitImplicitCallReference(ImplicitCallReference node)
     => _visitUnimplemented(node);
+
+    @override
+    void visitImportDirective(ImportDirective node)
+    => _importDirectiveFormatter.format(node);
 
     @override
     void visitImportPrefixReference(ImportPrefixReference node)
@@ -663,6 +585,10 @@ class FormatVisitor extends AstVisitor<void>
     => _visitUnimplemented(node);
 
     @override
+    void visitLibraryDirective(LibraryDirective node)
+    => _libraryDirectiveFormatter.format(node);
+
+    @override
     void visitLibraryIdentifier(LibraryIdentifier node)
     => _libraryIdentifierFormatter.format(node);
 
@@ -693,6 +619,14 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitMapPatternEntry(MapPatternEntry node)
     => _visitUnimplemented(node);
+
+    @override
+    void visitMethodDeclaration(MethodDeclaration node)
+    => _methodDeclarationFormatter.format(node);
+
+    @override
+    void visitMethodInvocation(MethodInvocation node)
+    => _methodInvocationFormatter.format(node);
 
     @override
     void visitMixinDeclaration(MixinDeclaration node)
@@ -743,6 +677,10 @@ class FormatVisitor extends AstVisitor<void>
     => _visitUnimplemented(node);
 
     @override
+    void visitPartDirective(PartDirective node)
+    => _partDirectiveFormatter.format(node);
+
+    @override
     void visitPartOfDirective(PartOfDirective node)
     => _visitUnimplemented(node);
 
@@ -765,6 +703,10 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitPatternVariableDeclarationStatement(PatternVariableDeclarationStatement node)
     => _visitUnimplemented(node);
+
+    @override
+    void visitPostfixExpression(PostfixExpression node)
+    => _postfixExpressionFormatter.format(node);
 
     @override
     void visitPrefixExpression(PrefixExpression node)
@@ -823,6 +765,14 @@ class FormatVisitor extends AstVisitor<void>
     => _visitUnimplemented(node);
 
     @override
+    void visitRethrowExpression(RethrowExpression node)
+    => _rethrowExpressionFormatter.format(node);
+
+    @override
+    void visitReturnStatement(ReturnStatement node)
+    => _returnStatementFormatter.format(node);
+
+    @override
     void visitScriptTag(ScriptTag node)
     => _visitUnimplemented(node);
 
@@ -837,6 +787,10 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitSimpleFormalParameter(SimpleFormalParameter node)
     => _simpleFormalParameterFormatter.format(node);
+
+    @override
+    void visitSimpleIdentifier(SimpleIdentifier node)
+    => _simpleIdentifierFormatter.format(node);
 
     @override
     void visitSimpleStringLiteral(SimpleStringLiteral node)
@@ -863,12 +817,48 @@ class FormatVisitor extends AstVisitor<void>
     => _superFormalParameterFormatter.format(node);
 
     @override
+    void visitSwitchCase(SwitchCase node)
+    => _visitUnimplemented(node);
+
+    @override
+    void visitSwitchDefault(SwitchDefault node)
+    => _visitUnimplemented(node);
+
+    @override
+    void visitSwitchExpression(SwitchExpression node)
+    => _visitUnimplemented(node);
+
+    @override
+    void visitSwitchExpressionCase(SwitchExpressionCase node)
+    => _visitUnimplemented(node);
+
+    @override
+    void visitSwitchPatternCase(SwitchPatternCase node)
+    => _switchPatternCaseFormatter.format(node);
+
+    @override
+    void visitSwitchStatement(SwitchStatement node)
+    => _switchStatementFormatter.format(node);
+
+    @override
     void visitSymbolLiteral(SymbolLiteral node)
     => _visitUnimplemented(node);
 
     @override
     void visitThisExpression(ThisExpression node)
     => _thisExpressionFormatter.format(node);
+
+    @override
+    void visitTopLevelVariableDeclaration(TopLevelVariableDeclaration node)
+    => _topLevelVariableDeclarationFormatter.format(node);
+
+    @override
+    void visitThrowExpression(ThrowExpression node)
+    => _throwExpressionFormatter.format(node);
+
+    @override
+    void visitTryStatement(TryStatement node)
+    => _tryStatementFormatter.format(node);
 
     @override
     void visitTypeArgumentList(TypeArgumentList node)
@@ -895,8 +885,16 @@ class FormatVisitor extends AstVisitor<void>
     => _variableDeclarationListFormatter.format(node);
 
     @override
+    void visitVariableDeclarationStatement(VariableDeclarationStatement node)
+    => _variableDeclarationStatementFormatter.format(node);
+
+    @override
     void visitWhenClause(WhenClause node)
     => _visitUnimplemented(node);
+
+    @override
+    void visitWhileStatement(WhileStatement node)
+    => _whileStatementFormatter.format(node);
 
     @override
     void visitWildcardPattern(WildcardPattern node)
@@ -917,7 +915,5 @@ class FormatVisitor extends AstVisitor<void>
             logInternal('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
 
         throw DartFormatException.warning('Unimplemented: $methodName', CharacterLocation(node.offset, node.length));
-
-        /*_formatState.copyEntityOld(node, methodName);*/
     }
 }
