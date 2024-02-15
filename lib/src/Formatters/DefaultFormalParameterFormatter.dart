@@ -23,6 +23,7 @@ class DefaultFormalParameterFormatter extends IFormatter
         if (node is! DefaultFormalParameter)
             throw FormatException('Not a DefaultFormalParameter: ${node.runtimeType}');
 
+        formatState.acceptList(node.metadata, astVisitor, '$methodName/node.metadata');
         formatState.copyEntity(node.parameter, astVisitor, '$methodName/node.parameter');
         formatState.copyEntity(node.separator, astVisitor, '$methodName/node.separator');
         formatState.copyEntity(node.defaultValue, astVisitor, '$methodName/node.defaultValue');

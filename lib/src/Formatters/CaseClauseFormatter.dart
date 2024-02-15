@@ -23,7 +23,7 @@ class CaseClauseFormatter extends IFormatter
         if (node is! CaseClause)
             throw FormatException('Not a CaseClause: ${node.runtimeType}');
 
-        formatState.copyEntity(node.caseKeyword, astVisitor, '$methodName/caseKeyword');
-        formatState.copyEntity(node.guardedPattern, astVisitor, '$methodName/guardedPattern');
+        formatState.copyEntity(node.caseKeyword, astVisitor, '$methodName/node.caseKeyword');
+        formatState.copyEntity(node.guardedPattern, astVisitor, '$methodName/node.guardedPattern');
     }
 }

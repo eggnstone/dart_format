@@ -47,7 +47,7 @@ class FormalParameterListFormatter extends IFormatter
                 if (!FormatTools.isCommaText(commaText))
                     throw DartFormatException.error('commaText is not a comma: ${StringTools.toDisplayString(commaText)}');
 
-                formatState.consumeText(lastNode.end, end, commaText, '$methodName/Comma');
+                formatState.consumeText(lastNode.end, end, commaText, '$methodName/commaText');
             }
 
             if (shouldWriteLeftDelimiter)
@@ -75,7 +75,7 @@ class FormalParameterListFormatter extends IFormatter
                 if (config.removeTrailingCommas)
                     commaText = commaText.replaceFirst(',', '${Constants.REMOVE_START},${Constants.REMOVE_END}');
 
-                formatState.consumeText(lastNode.end, endToken.offset, commaText, '$methodName/TrailingComma');
+                formatState.consumeText(lastNode.end, endToken.offset, commaText, '$methodName/commaText');
             }
         }
 

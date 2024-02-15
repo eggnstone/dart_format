@@ -23,21 +23,22 @@ class ClassTypeAliasFormatter extends IFormatter
         if (node is! ClassTypeAlias)
             throw FormatException('Not a ClassTypeAlias: ${node.runtimeType}');
 
-        formatState.copyEntity(node.typedefKeyword, astVisitor, '$methodName/typedefKeyword');
-        formatState.copyEntity(node.name, astVisitor, '$methodName/name');
-        formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/typeParameters');
-        formatState.copyEntity(node.equals, astVisitor, '$methodName/equals');
-        formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/abstractKeyword');
-        //formatState.copyEntity(node.macroKeyword, astVisitor, '$methodName/macroKeyword');
-        formatState.copyEntity(node.sealedKeyword, astVisitor, '$methodName/sealedKeyword');
-        formatState.copyEntity(node.baseKeyword, astVisitor, '$methodName/baseKeyword');
-        formatState.copyEntity(node.interfaceKeyword, astVisitor, '$methodName/interfaceKeyword');
-        formatState.copyEntity(node.finalKeyword, astVisitor, '$methodName/finalKeyword');
-        //formatState.copyEntity(node.augmentKeyword, astVisitor, '$methodName/augmentKeyword');
-        formatState.copyEntity(node.mixinKeyword, astVisitor, '$methodName/mixinKeyword');
-        formatState.copyEntity(node.superclass, astVisitor, '$methodName/superclass');
-        formatState.copyEntity(node.withClause, astVisitor, '$methodName/withClause');
-        formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/implementsClause');
-        formatState.copySemicolon(node.semicolon, config, '$methodName/semicolon');
+        formatState.acceptList(node.metadata, astVisitor, '$methodName/node.metadata');
+        formatState.copyEntity(node.typedefKeyword, astVisitor, '$methodName/node.typedefKeyword');
+        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
+        formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
+        formatState.copyEntity(node.equals, astVisitor, '$methodName/node.equals');
+        formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword');
+        //formatState.copyEntity(node.macroKeyword, astVisitor, '$methodName/node.macroKeyword');
+        formatState.copyEntity(node.sealedKeyword, astVisitor, '$methodName/node.sealedKeyword');
+        formatState.copyEntity(node.baseKeyword, astVisitor, '$methodName/node.baseKeyword');
+        formatState.copyEntity(node.interfaceKeyword, astVisitor, '$methodName/node.interfaceKeyword');
+        formatState.copyEntity(node.finalKeyword, astVisitor, '$methodName/node.finalKeyword');
+        //formatState.copyEntity(node.augmentKeyword, astVisitor, '$methodName/node.augmentKeyword');
+        formatState.copyEntity(node.mixinKeyword, astVisitor, '$methodName/node.mixinKeyword');
+        formatState.copyEntity(node.superclass, astVisitor, '$methodName/node.superclass');
+        formatState.copyEntity(node.withClause, astVisitor, '$methodName/node.withClause');
+        formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause');
+        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
     }
 }

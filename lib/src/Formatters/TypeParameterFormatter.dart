@@ -25,8 +25,7 @@ class TypeParameterFormatter extends IFormatter
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
-        /*formatState.acceptListOld(node.metadata, astVisitor, '$methodName/node.metadata');
         formatState.copyEntity(node.extendsKeyword, astVisitor, '$methodName/node.extendsKeyword');
-        formatState.copyEntity(node.bound, astVisitor, '$methodName/node.bound');*/
+        formatState.copyEntity(node.bound, astVisitor, '$methodName/node.bound');
     }
 }

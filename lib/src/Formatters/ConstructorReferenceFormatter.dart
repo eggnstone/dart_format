@@ -6,23 +6,23 @@ import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
-class SimpleIdentifierFormatter extends IFormatter
+class ConstructorReferenceFormatter extends IFormatter
 {
     final AstVisitor<void> astVisitor;
     final Config config;
     final FormatState formatState;
 
-    SimpleIdentifierFormatter(this.config, this.astVisitor, this.formatState);
+    ConstructorReferenceFormatter(this.config, this.astVisitor, this.formatState);
 
     @override
     void format(AstNode node)
     {
-        const String methodName = 'SimpleIdentifierFormatter.format';
+        const String methodName = 'ConstructorReferenceFormatter.format';
         log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
 
-        if (node is! SimpleIdentifier)
-            throw FormatException('Not a SimpleIdentifier: ${node.runtimeType}');
+        if (node is! ConstructorReference)
+            throw FormatException('Not a ConstructorReference: ${node.runtimeType}');
 
-        formatState.copyEntity(node.token, astVisitor, '$methodName/node.token');
+        formatState.copyEntity(node.constructorName, astVisitor, '$methodName/node.constructorName');
     }
 }

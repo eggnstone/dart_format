@@ -28,6 +28,7 @@ import 'Formatters/CatchClauseParameterFormatter.dart';
 import 'Formatters/ClassDeclarationFormatter.dart';
 import 'Formatters/ClassTypeAliasFormatter.dart';
 import 'Formatters/CommentFormatter.dart';
+import 'Formatters/CommentReferenceFormatter.dart';
 import 'Formatters/CompilationUnitFormatter.dart';
 import 'Formatters/ConditionalExpressionFormatter.dart';
 import 'Formatters/ConfigurationFormatter.dart';
@@ -35,13 +36,18 @@ import 'Formatters/ConstantPatternFormatter.dart';
 import 'Formatters/ConstructorDeclarationFormatter.dart';
 import 'Formatters/ConstructorFieldInitializerFormatter.dart';
 import 'Formatters/ConstructorNameFormatter.dart';
+import 'Formatters/ConstructorReferenceFormatter.dart';
+import 'Formatters/ConstructorSelectorFormatter.dart';
 import 'Formatters/ContinueStatementFormatter.dart';
 import 'Formatters/DeclaredIdentifierFormatter.dart';
+import 'Formatters/DeclaredVariablePatternFormatter.dart';
 import 'Formatters/DefaultFormalParameterFormatter.dart';
+import 'Formatters/DoStatementFormatter.dart';
 import 'Formatters/DottedNameFormatter.dart';
 import 'Formatters/DoubleLiteralFormatter.dart';
 import 'Formatters/EmptyFunctionBodyFormatter.dart';
 import 'Formatters/EmptyStatementFormatter.dart';
+import 'Formatters/EnumConstantArgumentsFormatter.dart';
 import 'Formatters/EnumConstantDeclarationFormatter.dart';
 import 'Formatters/EnumDeclarationFormatter.dart';
 import 'Formatters/ExportDirectiveFormatter.dart';
@@ -49,9 +55,14 @@ import 'Formatters/ExpressionFunctionBodyFormatter.dart';
 import 'Formatters/ExpressionStatementFormatter.dart';
 import 'Formatters/ExtendsClauseFormatter.dart';
 import 'Formatters/ExtensionDeclarationFormatter.dart';
+import 'Formatters/ExtensionOverrideFormatter.dart';
+import 'Formatters/ExtensionTypeDeclarationFormatter.dart';
 import 'Formatters/FieldDeclarationFormatter.dart';
 import 'Formatters/FieldFormalParameterFormatter.dart';
 import 'Formatters/ForEachPartsWithDeclarationFormatter.dart';
+import 'Formatters/ForEachPartsWithIdentifierFormatter.dart';
+import 'Formatters/ForEachPartsWithPatternFormatter.dart';
+import 'Formatters/ForElementFormatter.dart';
 import 'Formatters/ForPartsWithDeclarationsFormatter.dart';
 import 'Formatters/ForPartsWithExpressionFormatter.dart';
 import 'Formatters/ForStatementFormatter.dart';
@@ -147,6 +158,7 @@ class FormatVisitor extends AstVisitor<void>
     late final ClassDeclarationFormatter _classDeclarationFormatter = ClassDeclarationFormatter(config, this, _formatState);
     late final ClassTypeAliasFormatter _classTypeAliasFormatter = ClassTypeAliasFormatter(config, this, _formatState);
     late final CommentFormatter _commentFormatter = CommentFormatter(config, this, _formatState);
+    late final CommentReferenceFormatter _commentReferenceFormatter = CommentReferenceFormatter(config, this, _formatState);
     late final CompilationUnitFormatter _compilationUnitFormatter = CompilationUnitFormatter(config, this, _formatState);
     late final ConditionalExpressionFormatter _conditionalExpressionFormatter = ConditionalExpressionFormatter(config, this, _formatState);
     late final ConfigurationFormatter _configurationFormatter = ConfigurationFormatter(config, this, _formatState);
@@ -154,13 +166,18 @@ class FormatVisitor extends AstVisitor<void>
     late final ConstructorDeclarationFormatter _constructorDeclarationFormatter = ConstructorDeclarationFormatter(config, this, _formatState);
     late final ConstructorFieldInitializerFormatter _constructorFieldInitializerFormatter = ConstructorFieldInitializerFormatter(config, this, _formatState);
     late final ConstructorNameFormatter _constructorNameFormatter = ConstructorNameFormatter(config, this, _formatState);
+    late final ConstructorReferenceFormatter _constructorReferenceFormatter = ConstructorReferenceFormatter(config, this, _formatState);
+    late final ConstructorSelectorFormatter _constructorSelectorFormatter = ConstructorSelectorFormatter(config, this, _formatState);
     late final ContinueStatementFormatter _continueStatementFormatter = ContinueStatementFormatter(config, this, _formatState);
     late final DeclaredIdentifierFormatter _declaredIdentifierFormatter = DeclaredIdentifierFormatter(config, this, _formatState);
+    late final DeclaredVariablePatternFormatter _declaredVariablePatternFormatter = DeclaredVariablePatternFormatter(config, this, _formatState);
     late final DefaultFormalParameterFormatter _defaultFormalParameterFormatter = DefaultFormalParameterFormatter(config, this, _formatState);
+    late final DoStatementFormatter _doStatementFormatter = DoStatementFormatter(config, this, _formatState);
     late final DottedNameFormatter _dottedNameFormatter = DottedNameFormatter(config, this, _formatState);
     late final DoubleLiteralFormatter _doubleLiteralFormatter = DoubleLiteralFormatter(config, this, _formatState);
     late final EmptyFunctionBodyFormatter _emptyFunctionBodyFormatter = EmptyFunctionBodyFormatter(config, this, _formatState);
     late final EmptyStatementFormatter _emptyStatementFormatter = EmptyStatementFormatter(config, this, _formatState);
+    late final EnumConstantArgumentsFormatter _enumConstantArgumentsFormatter = EnumConstantArgumentsFormatter(config, this, _formatState);
     late final EnumConstantDeclarationFormatter _enumConstantDeclarationFormatter = EnumConstantDeclarationFormatter(config, this, _formatState);
     late final EnumDeclarationFormatter _enumDeclarationFormatter = EnumDeclarationFormatter(config, this, _formatState);
     late final ExtendsClauseFormatter _extendsClauseFormatter = ExtendsClauseFormatter(config, this, _formatState);
@@ -168,9 +185,14 @@ class FormatVisitor extends AstVisitor<void>
     late final ExportDirectiveFormatter _exportDirectiveFormatter = ExportDirectiveFormatter(config, this, _formatState);
     late final ExpressionFunctionBodyFormatter _expressionFunctionBodyFormatter = ExpressionFunctionBodyFormatter(config, this, _formatState);
     late final ExpressionStatementFormatter _expressionStatementFormatter = ExpressionStatementFormatter(config, this, _formatState);
+    late final ExtensionOverrideFormatter _extensionOverrideFormatter = ExtensionOverrideFormatter(config, this, _formatState);
+    late final ExtensionTypeDeclarationFormatter _extensionTypeDeclarationFormatter = ExtensionTypeDeclarationFormatter(config, this, _formatState);
     late final FieldDeclarationFormatter _fieldDeclarationFormatter = FieldDeclarationFormatter(config, this, _formatState);
     late final FieldFormalParameterFormatter _fieldFormalParameterFormatter = FieldFormalParameterFormatter(config, this, _formatState);
     late final ForEachPartsWithDeclarationFormatter _forEachPartsWithDeclarationFormatter = ForEachPartsWithDeclarationFormatter(config, this, _formatState);
+    late final ForEachPartsWithIdentifierFormatter _forEachPartsWithIdentifierFormatter = ForEachPartsWithIdentifierFormatter(config, this, _formatState);
+    late final ForEachPartsWithPatternFormatter _forEachPartsWithPatternFormatter = ForEachPartsWithPatternFormatter(config, this, _formatState);
+    late final ForElementFormatter _forElementFormatter = ForElementFormatter(config, this, _formatState);
     late final FormalParameterListFormatter _formalParameterListFormatter = FormalParameterListFormatter(config, this, _formatState);
     late final ForPartsWithDeclarationsFormatter _forPartsWithDeclarationsFormatter = ForPartsWithDeclarationsFormatter(config, this, _formatState);
     late final ForPartsWithExpressionFormatter _forPartsWithExpressionFormatter = ForPartsWithExpressionFormatter(config, this, _formatState);
@@ -332,7 +354,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitCommentReference(CommentReference node)
-    => _visitUnimplemented(node);
+    => _commentReferenceFormatter.format(node);
 
     @override
     void visitCompilationUnit(CompilationUnit node)
@@ -364,11 +386,11 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitConstructorReference(ConstructorReference node)
-    => _visitUnimplemented(node);
+    => _constructorReferenceFormatter.format(node);
 
     @override
     void visitConstructorSelector(ConstructorSelector node)
-    => _visitUnimplemented(node);
+    => _constructorSelectorFormatter.format(node);
 
     @override
     void visitContinueStatement(ContinueStatement node)
@@ -380,7 +402,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitDeclaredVariablePattern(DeclaredVariablePattern node)
-    => _visitUnimplemented(node);
+    => _declaredVariablePatternFormatter.format(node);
 
     @override
     void visitDefaultFormalParameter(DefaultFormalParameter node)
@@ -388,7 +410,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitDoStatement(DoStatement node)
-    => _visitUnimplemented(node);
+    => _doStatementFormatter.format(node);
 
     @override
     void visitDottedName(DottedName node)
@@ -408,7 +430,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitEnumConstantArguments(EnumConstantArguments node)
-    => _visitUnimplemented(node);
+    => _enumConstantArgumentsFormatter.format(node);
 
     @override
     void visitEnumConstantDeclaration(EnumConstantDeclaration node)
@@ -440,11 +462,11 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitExtensionOverride(ExtensionOverride node)
-    => _visitUnimplemented(node);
+    => _extensionOverrideFormatter.format(node);
 
     @override
     void visitExtensionTypeDeclaration(ExtensionTypeDeclaration node)
-    => _visitUnimplemented(node);
+    => _extensionTypeDeclarationFormatter.format(node);
 
     @override
     void visitFieldDeclaration(FieldDeclaration node)
@@ -460,15 +482,15 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitForEachPartsWithIdentifier(ForEachPartsWithIdentifier node)
-    => _visitUnimplemented(node);
+    => _forEachPartsWithIdentifierFormatter.format(node);
 
     @override
     void visitForEachPartsWithPattern(ForEachPartsWithPattern node)
-    => _visitUnimplemented(node);
+    => _forEachPartsWithPatternFormatter.format(node);
 
     @override
     void visitForElement(ForElement node)
-    => _visitUnimplemented(node);
+    => _forElementFormatter.format(node);
 
     @override
     void visitFormalParameterList(FormalParameterList node)
