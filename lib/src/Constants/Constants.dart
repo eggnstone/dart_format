@@ -1,6 +1,6 @@
 class Constants
 {
-    static const bool DEBUG = false;
+    static const bool DEBUG = true;
     static const bool DEBUG_ALL = false;
 
     static const bool DEBUG_DART_FORMAT_HANDLERS = (DEBUG && false) || DEBUG_ALL;
@@ -9,7 +9,8 @@ class Constants
     static const bool DEBUG_FORMAT_VISITOR = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_FORMAT_VISITOR_UNIMPLEMENTED = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_FORMATTER = (DEBUG && false) || DEBUG_ALL;
-    static const bool DEBUG_I_FORMATTER = (DEBUG && false) || DEBUG_ALL;
+    static const bool DEBUG_FORMATTER_DEFAULT = (DEBUG && false) || DEBUG_ALL;
+    static const bool DEBUG_I_FORMATTER = (DEBUG && true) || DEBUG_ALL;
     static const bool DEBUG_INDENT_TOOLS = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_STRING_TOOLS = (DEBUG && false) || DEBUG_ALL;
 
