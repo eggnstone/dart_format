@@ -57,7 +57,9 @@ class VersionTools
             final Http.Response response = await Http.get(Uri.parse(DART_FORMAT_VERSIONS_URL));
             //logDebug('Response: ${response.body}');
             final Map<String, dynamic> json = jsonDecode(response.body);
-            final String version = JsonTools.getOrThrow<List<String>>(json, 'versions')[0];
+            //logDebug('json: $json');
+            final String version = JsonTools.getOrThrow<List<dynamic>>(json, 'versions')[0];
+            //logDebug('version: $version');
 
             return Version.parse(version);
         }
