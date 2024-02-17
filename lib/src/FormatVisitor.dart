@@ -59,9 +59,13 @@ import 'Formatters/FunctionTypeAliasFormatter.dart';
 import 'Formatters/GenericTypeAliasFormatter.dart';
 import 'Formatters/IfStatementFormatter.dart';
 import 'Formatters/ImportDirectiveFormatter.dart';
+import 'Formatters/LibraryAugmentationDirectiveFormatter.dart';
 import 'Formatters/LibraryDirectiveFormatter.dart';
 import 'Formatters/ListLiteralFormatter.dart';
+import 'Formatters/NativeFunctionBodyFormatter.dart';
 import 'Formatters/PartDirectiveFormatter.dart';
+import 'Formatters/PartOfDirectiveFormatter.dart';
+import 'Formatters/PatternVariableDeclarationStatementFormatter.dart';
 import 'Formatters/RecordLiteralFormatter.dart';
 import 'Formatters/ReturnStatementFormatter.dart';
 import 'Formatters/SetOrMapLiteralFormatter.dart';
@@ -73,6 +77,7 @@ import 'Formatters/TypeArgumentListFormatter.dart';
 import 'Formatters/TypeParameterListFormatter.dart';
 import 'Formatters/VariableDeclarationStatementFormatter.dart';
 import 'Formatters/WhileStatementFormatter.dart';
+import 'Formatters/YieldStatementFormatter.dart';
 
 class FormatVisitor extends AstVisitor<void>
 {
@@ -125,89 +130,37 @@ class FormatVisitor extends AstVisitor<void>
     late final EnumConstantArgumentsFormatter _enumConstantArgumentsFormatter = EnumConstantArgumentsFormatter(config, this, _formatState);
     late final EnumConstantDeclarationFormatter _enumConstantDeclarationFormatter = EnumConstantDeclarationFormatter(config, this, _formatState);
     late final EnumDeclarationFormatter _enumDeclarationFormatter = EnumDeclarationFormatter(config, this, _formatState);
-    //late final ExtendsClauseFormatter _extendsClauseFormatter = ExtendsClauseFormatter(config, this, _formatState);
     late final ExtensionDeclarationFormatter _extensionDeclarationFormatter = ExtensionDeclarationFormatter(config, this, _formatState);
     late final ExportDirectiveFormatter _exportDirectiveFormatter = ExportDirectiveFormatter(config, this, _formatState);
     late final ExpressionFunctionBodyFormatter _expressionFunctionBodyFormatter = ExpressionFunctionBodyFormatter(config, this, _formatState);
     late final ExpressionStatementFormatter _expressionStatementFormatter = ExpressionStatementFormatter(config, this, _formatState);
-    //late final ExtensionOverrideFormatter _extensionOverrideFormatter = ExtensionOverrideFormatter(config, this, _formatState);
-    //late final ExtensionTypeDeclarationFormatter _extensionTypeDeclarationFormatter = ExtensionTypeDeclarationFormatter(config, this, _formatState);
     late final FieldDeclarationFormatter _fieldDeclarationFormatter = FieldDeclarationFormatter(config, this, _formatState);
-    //late final FieldFormalParameterFormatter _fieldFormalParameterFormatter = FieldFormalParameterFormatter(config, this, _formatState);
-    //late final ForEachPartsWithDeclarationFormatter _forEachPartsWithDeclarationFormatter = ForEachPartsWithDeclarationFormatter(config, this, _formatState);
-    //late final ForEachPartsWithIdentifierFormatter _forEachPartsWithIdentifierFormatter = ForEachPartsWithIdentifierFormatter(config, this, _formatState);
-    //late final ForEachPartsWithPatternFormatter _forEachPartsWithPatternFormatter = ForEachPartsWithPatternFormatter(config, this, _formatState);
-    //late final ForElementFormatter _forElementFormatter = ForElementFormatter(config, this, _formatState);
     late final FormalParameterListFormatter _formalParameterListFormatter = FormalParameterListFormatter(config, this, _formatState);
-    //late final ForPartsWithDeclarationsFormatter _forPartsWithDeclarationsFormatter = ForPartsWithDeclarationsFormatter(config, this, _formatState);
-    //late final ForPartsWithExpressionFormatter _forPartsWithExpressionFormatter = ForPartsWithExpressionFormatter(config, this, _formatState);
-    //late final ForPartsWithPatternFormatter _forPartsWithPatternFormatter = ForPartsWithPatternFormatter(config, this, _formatState);
     late final ForStatementFormatter _forStatementFormatter = ForStatementFormatter(config, this, _formatState);
-    //late final FunctionDeclarationFormatter _functionDeclarationFormatter = FunctionDeclarationFormatter(config, this, _formatState);
-    //late final FunctionDeclarationStatementFormatter _functionDeclarationStatementFormatter = FunctionDeclarationStatementFormatter(config, this, _formatState);
-    //late final FunctionExpressionFormatter _functionExpressionFormatter = FunctionExpressionFormatter(config, this, _formatState);
-    //late final FunctionExpressionInvocationFormatter _functionExpressionInvocationFormatter = FunctionExpressionInvocationFormatter(config, this, _formatState);
-    //late final FunctionReferenceFormatter _functionReferenceFormatter = FunctionReferenceFormatter(config, this, _formatState);
     late final FunctionTypeAliasFormatter _functionTypeAliasFormatter = FunctionTypeAliasFormatter(config, this, _formatState);
-    //late final FunctionTypedFormalParameterFormatter _functionTypedFormalParameterFormatter = FunctionTypedFormalParameterFormatter(config, this, _formatState);
-    //late final GenericFunctionTypeFormatter _genericFunctionTypeFormatter = GenericFunctionTypeFormatter(config, this, _formatState);
     late final GenericTypeAliasFormatter _genericTypeAliasFormatter = GenericTypeAliasFormatter(config, this, _formatState);
-    //late final GuardedPatternFormatter _guardedPatternFormatter = GuardedPatternFormatter(config, this, _formatState);
-    //late final HideCombinatorFormatter _hideCombinatorFormatter = HideCombinatorFormatter(config, this, _formatState);
-    //late final IfElementFormatter _ifElementFormatter = IfElementFormatter(config, this, _formatState);
     late final IfStatementFormatter _ifStatementFormatter = IfStatementFormatter(config, this, _formatState);
-    //late final ImplementsClauseFormatter _implementsClauseFormatter = ImplementsClauseFormatter(config, this, _formatState);
     late final ImportDirectiveFormatter _importDirectiveFormatter = ImportDirectiveFormatter(config, this, _formatState);
-    //late final ImportPrefixReferenceFormatter _importPrefixReferenceFormatter = ImportPrefixReferenceFormatter(config, this, _formatState);
-    //late final IndexExpressionFormatter _indexExpressionFormatter = IndexExpressionFormatter(config, this, _formatState);
-    //late final InstanceCreationExpressionFormatter _instanceCreationExpressionFormatter = InstanceCreationExpressionFormatter(config, this, _formatState);
-    //late final IntegerLiteralFormatter _integerLiteralFormatter = IntegerLiteralFormatter(config, this, _formatState);
-    //late final InterpolationExpressionFormatter _interpolationExpressionFormatter = InterpolationExpressionFormatter(config, this, _formatState);
-    //late final InterpolationStringFormatter _interpolationStringFormatter = InterpolationStringFormatter(config, this, _formatState);
-    //late final IsExpressionFormatter _isExpressionFormatter = IsExpressionFormatter(config, this, _formatState);
-    //late final LabelFormatter _labelFormatter = LabelFormatter(config, this, _formatState);
+    late final LibraryAugmentationDirectiveFormatter _libraryAugmentationDirectiveFormatter = LibraryAugmentationDirectiveFormatter(config, this, _formatState);
     late final LibraryDirectiveFormatter _libraryDirectiveFormatter = LibraryDirectiveFormatter(config, this, _formatState);
-    //late final LibraryIdentifierFormatter _libraryIdentifierFormatter = LibraryIdentifierFormatter(config, this, _formatState);
     late final ListLiteralFormatter _listLiteralFormatter = ListLiteralFormatter(config, this, _formatState);
-    //late final MapLiteralEntryFormatter _mapLiteralEntryFormatter = MapLiteralEntryFormatter(config, this, _formatState);
-    //late final MethodDeclarationFormatter _methodDeclarationFormatter = MethodDeclarationFormatter(config, this, _formatState);
-    //late final MethodInvocationFormatter _methodInvocationFormatter = MethodInvocationFormatter(config, this, _formatState);
-    //late final NamedExpressionFormatter _namedExpressionFormatter = NamedExpressionFormatter(config, this, _formatState);
-    //late final NamedTypeFormatter _namedTypeFormatter = NamedTypeFormatter(config, this, _formatState);
-    //late final NullLiteralFormatter _nullLiteralFormatter = NullLiteralFormatter(config, this, _formatState);
-    //late final ParenthesizedExpressionFormatter _parenthesizedExpressionFormatter = ParenthesizedExpressionFormatter(config, this, _formatState);
+    late final NativeFunctionBodyFormatter _nativeFunctionBodyFormatter = NativeFunctionBodyFormatter(config, this, _formatState);
     late final PartDirectiveFormatter _partDirectiveFormatter = PartDirectiveFormatter(config, this, _formatState);
-    //late final PostfixExpressionFormatter _postfixExpressionFormatter = PostfixExpressionFormatter(config, this, _formatState);
-    //late final PrefixedIdentifierFormatter _prefixedIdentifierFormatter = PrefixedIdentifierFormatter(config, this, _formatState);
-    //late final PrefixExpressionFormatter _prefixExpressionFormatter = PrefixExpressionFormatter(config, this, _formatState);
-    //late final PropertyAccessFormatter _propertyAccessFormatter = PropertyAccessFormatter(config, this, _formatState);
+    late final PartOfDirectiveFormatter _partOfDirectiveFormatter = PartOfDirectiveFormatter(config, this, _formatState);
+    late final PatternVariableDeclarationStatementFormatter _patternVariableDeclarationStatementFormatter = PatternVariableDeclarationStatementFormatter(config, this, _formatState);
     late final RecordLiteralFormatter _recordLiteralFormatter = RecordLiteralFormatter(config, this, _formatState);
-    //late final RethrowExpressionFormatter _rethrowExpressionFormatter = RethrowExpressionFormatter(config, this, _formatState);
     late final ReturnStatementFormatter _returnStatementFormatter = ReturnStatementFormatter(config, this, _formatState);
     late final SetOrMapLiteralFormatter _setOrMapLiteralFormatter = SetOrMapLiteralFormatter(config, this, _formatState);
     late final ShowCombinatorFormatter _showCombinatorFormatter = ShowCombinatorFormatter(config, this, _formatState);
-    //late final SimpleIdentifierFormatter _simpleIdentifierFormatter = SimpleIdentifierFormatter(config, this, _formatState);
-    //late final SimpleFormalParameterFormatter _simpleFormalParameterFormatter = SimpleFormalParameterFormatter(config, this, _formatState);
-    //late final SimpleStringLiteralFormatter _simpleStringLiteralFormatter = SimpleStringLiteralFormatter(config, this, _formatState);
-    //late final StringInterpolationFormatter _stringInterpolationFormatter = StringInterpolationFormatter(config, this, _formatState);
-    //late final SuperConstructorInvocationFormatter _superConstructorInvocationFormatter = SuperConstructorInvocationFormatter(config, this, _formatState);
-    //late final SuperExpressionFormatter _superExpressionFormatter = SuperExpressionFormatter(config, this, _formatState);
-    //late final SuperFormalParameterFormatter _superFormalParameterFormatter = SuperFormalParameterFormatter(config, this, _formatState);
     late final SwitchStatementFormatter _switchStatementFormatter = SwitchStatementFormatter(config, this, _formatState);
     late final SwitchPatternCaseFormatter _switchPatternCaseFormatter = SwitchPatternCaseFormatter(config, this, _formatState);
-    //late final ThisExpressionFormatter _thisExpressionFormatter = ThisExpressionFormatter(config, this, _formatState);
-    //late final ThrowExpressionFormatter _throwExpressionFormatter = ThrowExpressionFormatter(config, this, _formatState);
     late final TopLevelVariableDeclarationFormatter _topLevelVariableDeclarationFormatter = TopLevelVariableDeclarationFormatter(config, this, _formatState);
-    //late final TryStatementFormatter _tryStatementFormatter = TryStatementFormatter(config, this, _formatState);
     late final TypeArgumentListFormatter _typeArgumentListFormatter = TypeArgumentListFormatter(config, this, _formatState);
-    //late final TypeParameterFormatter _typeParameterFormatter = TypeParameterFormatter(config, this, _formatState);
     late final TypeParameterListFormatter _typeParameterListFormatter = TypeParameterListFormatter(config, this, _formatState);
-    //late final VariableDeclarationFormatter _variableDeclarationFormatter = VariableDeclarationFormatter(config, this, _formatState);
-    //late final VariableDeclarationListFormatter _variableDeclarationListFormatter = VariableDeclarationListFormatter(config, this, _formatState);
     late final VariableDeclarationStatementFormatter _variableDeclarationStatementFormatter = VariableDeclarationStatementFormatter(config, this, _formatState);
     late final WhileStatementFormatter _whileStatementFormatter = WhileStatementFormatter(config, this, _formatState);
-    //late final WithClauseFormatter _withClauseFormatter = WithClauseFormatter(config, this, _formatState);
-    
+    late final YieldStatementFormatter _yieldStatementFormatter = YieldStatementFormatter(config, this, _formatState);
+
     late final DefaultFormatter _defaultFormatter = DefaultFormatter(config, this, _formatState);
 
     FormatVisitor({required this.config, required FormatState formatState})
@@ -567,7 +520,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitLibraryAugmentationDirective(LibraryAugmentationDirective node)
-    => _defaultFormatter.format(node);
+    => _libraryAugmentationDirectiveFormatter.format(node);
 
     @override
     void visitLibraryDirective(LibraryDirective node)
@@ -631,7 +584,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitNativeFunctionBody(NativeFunctionBody node)
-    => _defaultFormatter.format(node);
+    => _nativeFunctionBodyFormatter.format(node);
 
     @override
     void visitNullAssertPattern(NullAssertPattern node)
@@ -667,7 +620,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitPartOfDirective(PartOfDirective node)
-    => _defaultFormatter.format(node);
+    => _partOfDirectiveFormatter.format(node);
 
     @override
     void visitPatternAssignment(PatternAssignment node)
@@ -687,7 +640,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitPatternVariableDeclarationStatement(PatternVariableDeclarationStatement node)
-    => _defaultFormatter.format(node);
+    => _patternVariableDeclarationStatementFormatter.format(node);
 
     @override
     void visitPostfixExpression(PostfixExpression node)
@@ -891,5 +844,5 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitYieldStatement(YieldStatement node)
-    => _defaultFormatter.format(node);
+    => _yieldStatementFormatter.format(node);
 }
