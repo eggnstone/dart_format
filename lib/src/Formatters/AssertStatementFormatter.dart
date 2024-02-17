@@ -23,15 +23,12 @@ class AssertStatementFormatter extends IFormatter
         if (node is! AssertStatement)
             throw FormatException('Not an AssertStatement: ${node.runtimeType}');
 
-        // TODO: create a base class for Assertion
         formatState.copyEntity(node.assertKeyword, astVisitor, '$methodName/node.assertKeyword');
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
         formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
         formatState.copyEntity(node.comma, astVisitor, '$methodName/node.comma');
         formatState.copyEntity(node.message, astVisitor, '$methodName/node.message');
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
-
-        // Only the semicolon is specific to AssertStatement
         formatState.copyEntity(node.semicolon, astVisitor, '$methodName/node.semicolon');
     }
 }

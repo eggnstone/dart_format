@@ -2,51 +2,20 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import 'Config.dart';
 import 'FormatState.dart';
-import 'Formatters/AdjacentStringsFormatter.dart';
-import 'Formatters/AnnotationFormatter.dart';
 import 'Formatters/ArgumentListFormatter.dart';
-import 'Formatters/AsExpressionFormatter.dart';
-import 'Formatters/AssertInitializerFormatter.dart';
 import 'Formatters/AssertStatementFormatter.dart';
-import 'Formatters/AssignedVariablePatternFormatter.dart';
-import 'Formatters/AssignmentExpressionFormatter.dart';
 import 'Formatters/AugmentationImportDirectiveFormatter.dart';
-import 'Formatters/AwaitExpressionFormatter.dart';
-import 'Formatters/BinaryExpressionFormatter.dart';
 import 'Formatters/BlockFormatter.dart';
-import 'Formatters/BlockFunctionBodyFormatter.dart';
-import 'Formatters/BooleanLiteralFormatter.dart';
 import 'Formatters/BreakStatementFormatter.dart';
-import 'Formatters/CascadeExpressionFormatter.dart';
-import 'Formatters/CaseClauseFormatter.dart';
-import 'Formatters/CastPatternFormatter.dart';
-import 'Formatters/CatchClauseFormatter.dart';
-import 'Formatters/CatchClauseParameterFormatter.dart';
 import 'Formatters/ClassDeclarationFormatter.dart';
 import 'Formatters/ClassTypeAliasFormatter.dart';
-import 'Formatters/CommentFormatter.dart';
-import 'Formatters/CommentReferenceFormatter.dart';
 import 'Formatters/CompilationUnitFormatter.dart';
-import 'Formatters/ConditionalExpressionFormatter.dart';
-import 'Formatters/ConfigurationFormatter.dart';
-import 'Formatters/ConstantPatternFormatter.dart';
 import 'Formatters/ConstructorDeclarationFormatter.dart';
-import 'Formatters/ConstructorFieldInitializerFormatter.dart';
-import 'Formatters/ConstructorNameFormatter.dart';
-import 'Formatters/ConstructorReferenceFormatter.dart';
-import 'Formatters/ConstructorSelectorFormatter.dart';
 import 'Formatters/ContinueStatementFormatter.dart';
-import 'Formatters/DeclaredIdentifierFormatter.dart';
-import 'Formatters/DeclaredVariablePatternFormatter.dart';
-import 'Formatters/DefaultFormalParameterFormatter.dart';
 import 'Formatters/DefaultFormatter.dart';
 import 'Formatters/DoStatementFormatter.dart';
-import 'Formatters/DottedNameFormatter.dart';
-import 'Formatters/DoubleLiteralFormatter.dart';
 import 'Formatters/EmptyFunctionBodyFormatter.dart';
 import 'Formatters/EmptyStatementFormatter.dart';
-import 'Formatters/EnumConstantArgumentsFormatter.dart';
-import 'Formatters/EnumConstantDeclarationFormatter.dart';
 import 'Formatters/EnumDeclarationFormatter.dart';
 import 'Formatters/ExportDirectiveFormatter.dart';
 import 'Formatters/ExpressionFunctionBodyFormatter.dart';
@@ -85,50 +54,50 @@ class FormatVisitor extends AstVisitor<void>
 
     late final FormatState _formatState;
 
-    late final AdjacentStringsFormatter _adjacentStringsFormatter = AdjacentStringsFormatter(config, this, _formatState);
-    late final AnnotationFormatter _annotationFormatter = AnnotationFormatter(config, this, _formatState);
+    //late final AdjacentStringsFormatter _adjacentStringsFormatter = AdjacentStringsFormatter(config, this, _formatState);
+    //late final AnnotationFormatter _annotationFormatter = AnnotationFormatter(config, this, _formatState);
     late final ArgumentListFormatter _argumentListFormatter = ArgumentListFormatter(config, this, _formatState);
-    late final AsExpressionFormatter _asExpressionFormatter = AsExpressionFormatter(config, this, _formatState);
-    late final AssertInitializerFormatter _assertInitializerFormatter = AssertInitializerFormatter(config, this, _formatState);
+    //late final AsExpressionFormatter _asExpressionFormatter = AsExpressionFormatter(config, this, _formatState);
+    //late final AssertInitializerFormatter _assertInitializerFormatter = AssertInitializerFormatter(config, this, _formatState);
     late final AssertStatementFormatter _assertStatementFormatter = AssertStatementFormatter(config, this, _formatState);
-    late final AssignmentExpressionFormatter _assignmentExpressionFormatter = AssignmentExpressionFormatter(config, this, _formatState);
-    late final AssignedVariablePatternFormatter _assignedVariablePatternFormatter = AssignedVariablePatternFormatter(config, this, _formatState);
+    //late final AssignmentExpressionFormatter _assignmentExpressionFormatter = AssignmentExpressionFormatter(config, this, _formatState);
+    //late final AssignedVariablePatternFormatter _assignedVariablePatternFormatter = AssignedVariablePatternFormatter(config, this, _formatState);
     late final AugmentationImportDirectiveFormatter _augmentationImportDirectiveFormatter = AugmentationImportDirectiveFormatter(config, this, _formatState);
-    late final AwaitExpressionFormatter _awaitExpressionFormatter = AwaitExpressionFormatter(config, this, _formatState);
-    late final BinaryExpressionFormatter _binaryExpressionFormatter = BinaryExpressionFormatter(config, this, _formatState);
+    //late final AwaitExpressionFormatter _awaitExpressionFormatter = AwaitExpressionFormatter(config, this, _formatState);
+    //late final BinaryExpressionFormatter _binaryExpressionFormatter = BinaryExpressionFormatter(config, this, _formatState);
     late final BlockFormatter _blockFormatter = BlockFormatter(config, this, _formatState);
-    late final BlockFunctionBodyFormatter _blockFunctionBodyFormatter = BlockFunctionBodyFormatter(config, this, _formatState);
-    late final BooleanLiteralFormatter _booleanLiteralFormatter = BooleanLiteralFormatter(config, this, _formatState);
+    //late final BlockFunctionBodyFormatter _blockFunctionBodyFormatter = BlockFunctionBodyFormatter(config, this, _formatState);
+    //late final BooleanLiteralFormatter _booleanLiteralFormatter = BooleanLiteralFormatter(config, this, _formatState);
     late final BreakStatementFormatter _breakStatementFormatter = BreakStatementFormatter(config, this, _formatState);
-    late final CascadeExpressionFormatter _cascadeExpressionFormatter = CascadeExpressionFormatter(config, this, _formatState);
-    late final CaseClauseFormatter _caseClauseFormatter = CaseClauseFormatter(config, this, _formatState);
-    late final CastPatternFormatter _castPatternFormatter = CastPatternFormatter(config, this, _formatState);
-    late final CatchClauseFormatter _catchClauseFormatter = CatchClauseFormatter(config, this, _formatState);
-    late final CatchClauseParameterFormatter _catchClauseParameterFormatter = CatchClauseParameterFormatter(config, this, _formatState);
+    //late final CascadeExpressionFormatter _cascadeExpressionFormatter = CascadeExpressionFormatter(config, this, _formatState);
+    //late final CaseClauseFormatter _caseClauseFormatter = CaseClauseFormatter(config, this, _formatState);
+    //late final CastPatternFormatter _castPatternFormatter = CastPatternFormatter(config, this, _formatState);
+    //late final CatchClauseFormatter _catchClauseFormatter = CatchClauseFormatter(config, this, _formatState);
+    //late final CatchClauseParameterFormatter _catchClauseParameterFormatter = CatchClauseParameterFormatter(config, this, _formatState);
     late final ClassDeclarationFormatter _classDeclarationFormatter = ClassDeclarationFormatter(config, this, _formatState);
     late final ClassTypeAliasFormatter _classTypeAliasFormatter = ClassTypeAliasFormatter(config, this, _formatState);
-    late final CommentFormatter _commentFormatter = CommentFormatter(config, this, _formatState);
-    late final CommentReferenceFormatter _commentReferenceFormatter = CommentReferenceFormatter(config, this, _formatState);
+    //late final CommentFormatter _commentFormatter = CommentFormatter(config, this, _formatState);
+    //late final CommentReferenceFormatter _commentReferenceFormatter = CommentReferenceFormatter(config, this, _formatState);
     late final CompilationUnitFormatter _compilationUnitFormatter = CompilationUnitFormatter(config, this, _formatState);
-    late final ConditionalExpressionFormatter _conditionalExpressionFormatter = ConditionalExpressionFormatter(config, this, _formatState);
-    late final ConfigurationFormatter _configurationFormatter = ConfigurationFormatter(config, this, _formatState);
-    late final ConstantPatternFormatter _constantPatternFormatter = ConstantPatternFormatter(config, this, _formatState);
+    //late final ConditionalExpressionFormatter _conditionalExpressionFormatter = ConditionalExpressionFormatter(config, this, _formatState);
+    //late final ConfigurationFormatter _configurationFormatter = ConfigurationFormatter(config, this, _formatState);
+    //late final ConstantPatternFormatter _constantPatternFormatter = ConstantPatternFormatter(config, this, _formatState);
     late final ConstructorDeclarationFormatter _constructorDeclarationFormatter = ConstructorDeclarationFormatter(config, this, _formatState);
-    late final ConstructorFieldInitializerFormatter _constructorFieldInitializerFormatter = ConstructorFieldInitializerFormatter(config, this, _formatState);
-    late final ConstructorNameFormatter _constructorNameFormatter = ConstructorNameFormatter(config, this, _formatState);
-    late final ConstructorReferenceFormatter _constructorReferenceFormatter = ConstructorReferenceFormatter(config, this, _formatState);
-    late final ConstructorSelectorFormatter _constructorSelectorFormatter = ConstructorSelectorFormatter(config, this, _formatState);
+    //late final ConstructorFieldInitializerFormatter _constructorFieldInitializerFormatter = ConstructorFieldInitializerFormatter(config, this, _formatState);
+    //late final ConstructorNameFormatter _constructorNameFormatter = ConstructorNameFormatter(config, this, _formatState);
+    //late final ConstructorReferenceFormatter _constructorReferenceFormatter = ConstructorReferenceFormatter(config, this, _formatState);
+    //late final ConstructorSelectorFormatter _constructorSelectorFormatter = ConstructorSelectorFormatter(config, this, _formatState);
     late final ContinueStatementFormatter _continueStatementFormatter = ContinueStatementFormatter(config, this, _formatState);
-    late final DeclaredIdentifierFormatter _declaredIdentifierFormatter = DeclaredIdentifierFormatter(config, this, _formatState);
-    late final DeclaredVariablePatternFormatter _declaredVariablePatternFormatter = DeclaredVariablePatternFormatter(config, this, _formatState);
-    late final DefaultFormalParameterFormatter _defaultFormalParameterFormatter = DefaultFormalParameterFormatter(config, this, _formatState);
+    //late final DeclaredIdentifierFormatter _declaredIdentifierFormatter = DeclaredIdentifierFormatter(config, this, _formatState);
+    //late final DeclaredVariablePatternFormatter _declaredVariablePatternFormatter = DeclaredVariablePatternFormatter(config, this, _formatState);
+    //late final DefaultFormalParameterFormatter _defaultFormalParameterFormatter = DefaultFormalParameterFormatter(config, this, _formatState);
     late final DoStatementFormatter _doStatementFormatter = DoStatementFormatter(config, this, _formatState);
-    late final DottedNameFormatter _dottedNameFormatter = DottedNameFormatter(config, this, _formatState);
-    late final DoubleLiteralFormatter _doubleLiteralFormatter = DoubleLiteralFormatter(config, this, _formatState);
+    //late final DottedNameFormatter _dottedNameFormatter = DottedNameFormatter(config, this, _formatState);
+    //late final DoubleLiteralFormatter _doubleLiteralFormatter = DoubleLiteralFormatter(config, this, _formatState);
     late final EmptyFunctionBodyFormatter _emptyFunctionBodyFormatter = EmptyFunctionBodyFormatter(config, this, _formatState);
     late final EmptyStatementFormatter _emptyStatementFormatter = EmptyStatementFormatter(config, this, _formatState);
-    late final EnumConstantArgumentsFormatter _enumConstantArgumentsFormatter = EnumConstantArgumentsFormatter(config, this, _formatState);
-    late final EnumConstantDeclarationFormatter _enumConstantDeclarationFormatter = EnumConstantDeclarationFormatter(config, this, _formatState);
+    //late final EnumConstantArgumentsFormatter _enumConstantArgumentsFormatter = EnumConstantArgumentsFormatter(config, this, _formatState);
+    //late final EnumConstantDeclarationFormatter _enumConstantDeclarationFormatter = EnumConstantDeclarationFormatter(config, this, _formatState);
     late final EnumDeclarationFormatter _enumDeclarationFormatter = EnumDeclarationFormatter(config, this, _formatState);
     late final ExtensionDeclarationFormatter _extensionDeclarationFormatter = ExtensionDeclarationFormatter(config, this, _formatState);
     late final ExportDirectiveFormatter _exportDirectiveFormatter = ExportDirectiveFormatter(config, this, _formatState);
@@ -168,11 +137,11 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitAdjacentStrings(AdjacentStrings node)
-    => _adjacentStringsFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitAnnotation(Annotation node)
-    => _annotationFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitArgumentList(ArgumentList node)
@@ -180,15 +149,15 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitAssignmentExpression(AssignmentExpression node)
-    => _assignmentExpressionFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitAsExpression(AsExpression node)
-    => _asExpressionFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitAssertInitializer(AssertInitializer node)
-    => _assertInitializerFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitAssertStatement(AssertStatement assertStatement)
@@ -196,7 +165,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitAssignedVariablePattern(AssignedVariablePattern node)
-    => _assignedVariablePatternFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitAugmentationImportDirective(AugmentationImportDirective node)
@@ -204,11 +173,11 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitAwaitExpression(AwaitExpression node)
-    => _awaitExpressionFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitBinaryExpression(BinaryExpression node)
-    => _binaryExpressionFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitBlock(Block node)
@@ -216,11 +185,11 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitBlockFunctionBody(BlockFunctionBody node)
-    => _blockFunctionBodyFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitBooleanLiteral(BooleanLiteral node)
-    => _booleanLiteralFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitBreakStatement(BreakStatement node)
@@ -228,23 +197,23 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitCascadeExpression(CascadeExpression node)
-    => _cascadeExpressionFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitCaseClause(CaseClause node)
-    => _caseClauseFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitCastPattern(CastPattern node)
-    => _castPatternFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitCatchClause(CatchClause node)
-    => _catchClauseFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitCatchClauseParameter(CatchClauseParameter node)
-    => _catchClauseParameterFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitClassDeclaration(ClassDeclaration node)
@@ -256,11 +225,11 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitComment(Comment node)
-    => _commentFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitCommentReference(CommentReference node)
-    => _commentReferenceFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitCompilationUnit(CompilationUnit node)
@@ -268,15 +237,15 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitConditionalExpression(ConditionalExpression node)
-    => _conditionalExpressionFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitConfiguration(Configuration node)
-    => _configurationFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitConstantPattern(ConstantPattern node)
-    => _constantPatternFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitConstructorDeclaration(ConstructorDeclaration node)
@@ -284,19 +253,19 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitConstructorFieldInitializer(ConstructorFieldInitializer node)
-    => _constructorFieldInitializerFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitConstructorName(ConstructorName node)
-    => _constructorNameFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitConstructorReference(ConstructorReference node)
-    => _constructorReferenceFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitConstructorSelector(ConstructorSelector node)
-    => _constructorSelectorFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitContinueStatement(ContinueStatement node)
@@ -304,15 +273,15 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitDeclaredIdentifier(DeclaredIdentifier node)
-    => _declaredIdentifierFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitDeclaredVariablePattern(DeclaredVariablePattern node)
-    => _declaredVariablePatternFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitDefaultFormalParameter(DefaultFormalParameter node)
-    => _defaultFormalParameterFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitDoStatement(DoStatement node)
@@ -320,11 +289,11 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitDottedName(DottedName node)
-    => _dottedNameFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitDoubleLiteral(DoubleLiteral node)
-    => _doubleLiteralFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitEmptyFunctionBody(EmptyFunctionBody node)
@@ -336,11 +305,11 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitEnumConstantArguments(EnumConstantArguments node)
-    => _enumConstantArgumentsFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitEnumConstantDeclaration(EnumConstantDeclaration node)
-    => _enumConstantDeclarationFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitEnumDeclaration(EnumDeclaration node)
