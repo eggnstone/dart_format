@@ -52,24 +52,32 @@ class LogTools
     {
         if (logInternals)
             eggnstone_dart.logDebug(message);
+
+        _logToTempFile('logInternal:  $message');
     }
 
     static void logInternalInfo(String message)
     {
         if (logInternals)
             eggnstone_dart.logInfo(message);
+
+        _logToTempFile('logInternalInfo:  $message');
     }
 
     static void logInternalWarning(String message)
     {
         if (logInternals)
             eggnstone_dart.logWarning(message);
+
+        _logToTempFile('logInternalWarning:  $message');
     }
 
     static void logInternalError(String message)
     {
         if (logInternals)
             eggnstone_dart.logError(message);
+
+        _logToTempFile('logInternalError:  $message');
     }
 
     static void logDebug(String message, {bool preventLoggingToConsole = false})
@@ -117,6 +125,8 @@ class LogTools
         if (_logFile == null)
             if (!_createLogFile())
                 return;
+
+        //s = MemoryInfo ''+s;
 
         _logFile!.writeStringSync('${_dateTimeFormatter.format(DateTime.now())} $s\n');
         _logFile!.flushSync();

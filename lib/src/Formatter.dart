@@ -50,7 +50,10 @@ class Formatter
         result = textTools.removeEmptyLines(result);
         result = textTools.addNewLineAtEndOfText(result);
 
-        return _verifyResult(sWithoutCarriageReturns, result, parseResult.lineInfo);
+        _log('### about to end');
+        final String x= _verifyResult(sWithoutCarriageReturns, result, parseResult.lineInfo);
+        _log('### about to end');
+        return x;
     }
 
     void _log(String s)
