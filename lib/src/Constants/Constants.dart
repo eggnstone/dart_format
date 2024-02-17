@@ -16,6 +16,8 @@ class Constants
 
     static const int MAX_DEBUG_LENGTH = 100;
 
+    static const int PREFERRED_PORT = 7777;
+
     static const String REMOVE_TAG = 'DART_FORMAT_REMOVE';
     static const String REMOVE_START = '<$REMOVE_TAG>';
     static const String REMOVE_END = '</$REMOVE_TAG>';

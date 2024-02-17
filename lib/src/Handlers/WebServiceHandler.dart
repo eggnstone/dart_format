@@ -46,7 +46,7 @@ class WebServiceHandler
 
             try
             {
-                server = await HttpServer.bind(InternetAddress.loopbackIPv4, 8008);
+                server = await HttpServer.bind(InternetAddress.loopbackIPv4, Constants.PREFERRED_PORT);
             }
             on SocketException
             {
@@ -98,7 +98,7 @@ class WebServiceHandler
             );
 
             while (!terminate)
-                await Future<void>.delayed(const Duration(milliseconds: 1000));
+                await Future<void>.delayed(const Duration(milliseconds: 500));
 
             if (terminateWithError)
             {
@@ -201,6 +201,9 @@ class WebServiceHandler
     Future<void> _handlePostFormat(HttpRequest request)
     async
     {
+        const String METHOD_NAME = '$CLASS_NAME._handlePostFormat';
+        logDebug('$METHOD_NAME: Request: ${request.contentLength}');
+
         try
         {
             //logDebug('Request.contentLength: request.contentLength: ${request.contentLength}');
@@ -212,8 +215,8 @@ class WebServiceHandler
             writelnToStdErr('request.headers: ${request.headers}');
             writelnToStdErr('body.length: ${body.length}');*/
 
-            final  RegExp boundaryGet = RegExp(' boundary=(.+) ');
-            final  String? contentType = request.headers['content-type']?.first;
+            final RegExp boundaryGet = RegExp(' boundary=(.+) ');
+            final String? contentType = request.headers['content-type']?.first;
             if (contentType == null)
                 throw DartFormatException.error('No content-type header found.');
 

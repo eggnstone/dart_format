@@ -11,6 +11,8 @@ import '../Tools/VersionTools.dart';
 
 class PipeHandler
 {
+    static const String CLASS_NAME = 'DefaultHandler';
+
     final String? configText;
     final bool errorsAsJson;
     final bool skipVersionCheck;
@@ -26,7 +28,8 @@ class PipeHandler
     {
         DartFormatException? dartFormatException;
 
-        _logDebug('PipeHandler.run START');
+        const String METHOD_NAME = '$CLASS_NAME.run';
+        _logDebug('$METHOD_NAME START');
 
         final bool isNewerVersionAvailable = await VersionTools().isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
         final int exitCodeForSuccess = isNewerVersionAvailable ? ExitCodes.SUCCESS_AND_NEW_VERSION_AVAILABLE : ExitCodes.SUCCESS;        
@@ -39,7 +42,7 @@ class PipeHandler
             final String formattedText = formatter.format(inputText);
             writeToStdOut(formattedText, preventLoggingToTempFile: true);
 
-            _logDebug('PipeHandler.run END with SUCCESS');
+            _logDebug('$METHOD_NAME END with SUCCESS');
             return exitCodeForSuccess;
         }
         on DartFormatException catch (e)
@@ -56,7 +59,7 @@ class PipeHandler
         else
             writelnToStdErr('${dartFormatException.type.name}: ${dartFormatException.message}');
 
-        _logDebug('PipeHandler.run END with ERROR');
+        _logDebug('$METHOD_NAME END with ERROR');
         return ExitCodes.ERROR;
     }
 

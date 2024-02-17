@@ -10,6 +10,8 @@ import '../Tools/VersionTools.dart';
 
 class DefaultHandler
 {
+    static const String CLASS_NAME = 'DefaultHandler';
+
     final String? configText;
     final List<String> fileNames;
     final bool isDryRun;
@@ -25,8 +27,10 @@ class DefaultHandler
     Future<int> run()
     async
     {
+        const String METHOD_NAME = '$CLASS_NAME.run';
+        _logDebug('$METHOD_NAME START');
+
         InfoTools.writeCopyrightToStdOut();
-        _logDebug('DefaultHandler.run START');
 
         final bool isNewerVersionAvailable = await VersionTools(writeToStdOut: true).isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
         final int exitCodeForSuccess = isNewerVersionAvailable ? ExitCodes.SUCCESS_AND_NEW_VERSION_AVAILABLE : ExitCodes.SUCCESS;
@@ -50,7 +54,7 @@ class DefaultHandler
             outputFile.writeAsStringSync(result);
         }
 
-        _logDebug('DefaultHandler.run END with SUCCESS');
+        _logDebug('$METHOD_NAME with SUCCESS');
         return exitCodeForSuccess;
     }
 
