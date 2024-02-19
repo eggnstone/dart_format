@@ -1,11 +1,11 @@
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:dart_format/src/Formatters/PartDirectiveFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';
 import '../TestTools/TestGroupConfig.dart';
 import '../TestTools/TestTools.dart';
-import '../TestTools/Visitors/TestAstVisitor.dart';
-import '../TestTools/Visitors/TestSimpleStringLiteralVisitor.dart';
+import '../TestTools/Visitors/TestVisitor.dart';
 
 void main()
 {
@@ -20,8 +20,8 @@ void main()
                 TestConfig.none(),
                 TestConfig("part'';\n")
             ],
-            astVisitors: <TestAstVisitor>[
-                TestSimpleStringLiteralVisitor(4, "''")
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleStringLiteral>(4, "''")
             ]
         )
     ];

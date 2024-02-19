@@ -1,13 +1,11 @@
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:dart_format/src/Formatters/WhileStatementFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';
 import '../TestTools/TestGroupConfig.dart';
 import '../TestTools/TestTools.dart';
-import '../TestTools/Visitors/TestAstVisitor.dart';
-import '../TestTools/Visitors/TestBlockVisitor.dart';
-import '../TestTools/Visitors/TestBooleanLiteralVisitor.dart';
-import '../TestTools/Visitors/TestEmptyStatementVisitor.dart';
+import '../TestTools/Visitors/TestVisitor.dart';
 
 void main()
 {
@@ -20,9 +18,9 @@ void main()
             inputMiddle: 'while(true)\n;',
             inputTrailing: '}',
             name: 'while(true);',
-            astVisitors: <TestAstVisitor>[
-                TestBooleanLiteralVisitor(15, 'true'),
-                TestEmptyStatementVisitor(21, ';')
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(15, 'true'),
+                TestVisitor<EmptyStatement>(21, ';')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -35,9 +33,9 @@ void main()
             inputMiddle: 'while(true){}',
             inputTrailing: '}',
             name: 'while(true){}',
-            astVisitors: <TestAstVisitor>[
-                TestBooleanLiteralVisitor(15, 'true'),
-                TestBlockVisitor(20, '{}')
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(15, 'true'),
+                TestVisitor<Block>(20, '{}')
             ]
         )
     ];

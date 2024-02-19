@@ -3,7 +3,7 @@
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestGroupConfig.dart';
 import '../TestTools/TestTools.dart';
-import '../TestTools/Visitors/TestAstVisitor.dart';
+import '../TestTools/Visitors/TestVisitor.dart';
 import '../TestTools/Visitors/TestSimpleIdentifierVisitor.dart';*/
 
 void main()

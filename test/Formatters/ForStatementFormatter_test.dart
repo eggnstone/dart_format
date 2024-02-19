@@ -1,12 +1,11 @@
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:dart_format/src/Formatters/ForStatementFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';
 import '../TestTools/TestGroupConfig.dart';
 import '../TestTools/TestTools.dart';
-import '../TestTools/Visitors/TestAstVisitor.dart';
-import '../TestTools/Visitors/TestEmptyStatementVisitor.dart';
-import '../TestTools/Visitors/TestForPartsWithExpressionVisitor.dart';
+import '../TestTools/Visitors/TestVisitor.dart';
 
 void main()
 {
@@ -19,9 +18,9 @@ void main()
             inputMiddle: 'for(;;);',
             inputTrailing: '}',
             name: 'ForStatement',
-            astVisitors: <TestAstVisitor>[
-                TestForPartsWithExpressionVisitor(13, ';;'),
-                TestEmptyStatementVisitor(16, ';')
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<ForPartsWithExpression>(13, ';;'),
+                TestVisitor<EmptyStatement>(16, ';')
             ]
         ),
         TestGroupConfig(
@@ -30,9 +29,9 @@ void main()
             inputMiddle: 'for(;;)\n;',
             inputTrailing: '}',
             name: r'ForStatement \n',
-            astVisitors: <TestAstVisitor>[
-                TestForPartsWithExpressionVisitor(13, ';;'),
-                TestEmptyStatementVisitor(17, ';')
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<ForPartsWithExpression>(13, ';;'),
+                TestVisitor<EmptyStatement>(17, ';')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

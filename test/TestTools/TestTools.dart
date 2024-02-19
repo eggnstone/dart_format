@@ -14,7 +14,6 @@ import 'TestConfig.dart';
 import 'TestGroupConfig.dart';
 import 'TestParseStringResult.dart';
 import 'Visitors/MetaAstVisitor.dart';
-import 'Visitors/TestAstVisitor.dart';
 
 // TODO: why use LogTools instead of eggnstone_dart?
 
@@ -48,7 +47,7 @@ class TestTools
         }
     }
 
-    static void runTestGroup(TestGroupConfig testGroupConfig, {CreateFormatterFunction? createFormatterFunction, String? name, StackTrace? stackTrace, List<TestAstVisitor>? astVisitors})
+    static void runTestGroup(TestGroupConfig testGroupConfig, {CreateFormatterFunction? createFormatterFunction, String? name, StackTrace? stackTrace, List<AstVisitor<void>>? astVisitors})
     {
         final String testGroupConfigName = testGroupConfig.name ?? '<Default>';
         final String groupName = name == null ? testGroupConfigName : '$name: $testGroupConfigName';
@@ -64,7 +63,7 @@ class TestTools
                         {
                             final ParseStringResult parseResult = TestParseStringResult(content: inputText, unit: inputNode.root as CompilationUnit);
                             final FormatState formatState = FormatState.test(parseResult, indentationSpacesPerLevel: testConfig.config.indentationSpacesPerLevel, leading: testGroupConfig.inputLeading, trailing: testGroupConfig.inputTrailing);
-                            final MetaAstVisitor astVisitor = MetaAstVisitor(astVisitors, formatState);
+                            final MetaAstVisitor<AstNode> astVisitor = MetaAstVisitor<AstNode>(astVisitors, formatState);
                             final IFormatter? formatter = createFormatterFunction?.call(testConfig.config, astVisitor, formatState);
 
                             final String actualText;

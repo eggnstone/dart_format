@@ -1,14 +1,11 @@
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:dart_format/src/Formatters/IfStatementFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';
 import '../TestTools/TestGroupConfig.dart';
 import '../TestTools/TestTools.dart';
-import '../TestTools/Visitors/TestAstVisitor.dart';
-import '../TestTools/Visitors/TestBlockVisitor.dart';
-import '../TestTools/Visitors/TestBooleanLiteralVisitor.dart';
-import '../TestTools/Visitors/TestEmptyStatementVisitor.dart';
-import '../TestTools/Visitors/TestIfStatementVisitor.dart';
+import '../TestTools/Visitors/TestVisitor.dart';
 
 void main()
 {
@@ -21,9 +18,9 @@ void main()
             inputMiddle: 'if (true);',
             inputTrailing: '}',
             name: 'if ;',
-            astVisitors: <TestAstVisitor>[
-                TestBooleanLiteralVisitor(13, 'true'),
-                TestEmptyStatementVisitor(18, ';')
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(13, 'true'),
+                TestVisitor<EmptyStatement>(18, ';')
             ]
         ),
         TestGroupConfig(
@@ -32,9 +29,9 @@ void main()
             inputMiddle: 'if (true)\n;',
             inputTrailing: '}',
             name: r'if \n;',
-            astVisitors: <TestAstVisitor>[
-                TestBooleanLiteralVisitor(13, 'true'),
-                TestEmptyStatementVisitor(19, ';')
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(13, 'true'),
+                TestVisitor<EmptyStatement>(19, ';')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -47,9 +44,9 @@ void main()
             inputMiddle: 'if (true){}',
             inputTrailing: '}',
             name: 'if {}',
-            astVisitors: <TestAstVisitor>[
-                TestBooleanLiteralVisitor(13, 'true'),
-                TestBlockVisitor(18, '{}')
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(13, 'true'),
+                TestVisitor<Block>(18, '{}')
             ]
         ),
         TestGroupConfig(
@@ -58,9 +55,9 @@ void main()
             inputMiddle: 'if (true)\n{}',
             inputTrailing: '}',
             name: r'if \n{}',
-            astVisitors: <TestAstVisitor>[
-                TestBooleanLiteralVisitor(13, 'true'),
-                TestBlockVisitor(19, '{}')
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(13, 'true'),
+                TestVisitor<Block>(19, '{}')
             ]
         ),
         TestGroupConfig(
@@ -69,10 +66,10 @@ void main()
             inputMiddle: 'if (true);else;',
             inputTrailing: '}',
             name: 'if ; else ;',
-            astVisitors: <TestAstVisitor>[
-                TestBooleanLiteralVisitor(13, 'true'),
-                TestEmptyStatementVisitor(18, ';'),
-                TestEmptyStatementVisitor(23, ';')
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(13, 'true'),
+                TestVisitor<EmptyStatement>(18, ';'),
+                TestVisitor<EmptyStatement>(23, ';')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -85,10 +82,10 @@ void main()
             inputMiddle: 'if (true)\n;else\n;',
             inputTrailing: '}',
             name: r'if \n; else \n;',
-            astVisitors: <TestAstVisitor>[
-                TestBooleanLiteralVisitor(13, 'true'),
-                TestEmptyStatementVisitor(19, ';'),
-                TestEmptyStatementVisitor(25, ';')
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(13, 'true'),
+                TestVisitor<EmptyStatement>(19, ';'),
+                TestVisitor<EmptyStatement>(25, ';')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -101,10 +98,10 @@ void main()
             inputMiddle: 'if (true)\n;else if(true)\n;',
             inputTrailing: '}',
             name: r'if \n ; else if \n ;',
-            astVisitors: <TestAstVisitor>[
-                TestBooleanLiteralVisitor(13, 'true'),
-                TestEmptyStatementVisitor(19, ';'),
-                TestIfStatementVisitor(25, 'if(true)\n;')
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(13, 'true'),
+                TestVisitor<EmptyStatement>(19, ';'),
+                TestVisitor<IfStatement>(25, 'if(true)\n;')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -117,10 +114,10 @@ void main()
             inputMiddle: 'if (true)\n;\nelse if(true)\n;',
             inputTrailing: '}',
             name: r'if \n ; \n else if \n ;',
-            astVisitors: <TestAstVisitor>[
-                TestBooleanLiteralVisitor(13, 'true'),
-                TestEmptyStatementVisitor(19, ';'),
-                TestIfStatementVisitor(26, 'if(true)\n;')
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(13, 'true'),
+                TestVisitor<EmptyStatement>(19, ';'),
+                TestVisitor<IfStatement>(26, 'if(true)\n;')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -133,10 +130,10 @@ void main()
             inputMiddle: 'if (true)\n;\nelse if(true)\n{\n}',
             inputTrailing: '}',
             name: r'if \n ; \n else if \n {}',
-            astVisitors: <TestAstVisitor>[
-                TestBooleanLiteralVisitor(13, 'true'),
-                TestEmptyStatementVisitor(19, ';'),
-                TestIfStatementVisitor(26, 'if(true)\n{\n}')
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(13, 'true'),
+                TestVisitor<EmptyStatement>(19, ';'),
+                TestVisitor<IfStatement>(26, 'if(true)\n{\n}')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

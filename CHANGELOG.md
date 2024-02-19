@@ -1,8 +1,8 @@
 # Changelog
 
-## 1.1.10
+## 1.1.11
 
-- More formatters.
+- Added default formatter.
 
 ## 1.1.8
 
