@@ -162,7 +162,6 @@ class FormatTools
 
     static void _logError(String s)
     {
-        if (Constants.DEBUG_FORMAT_TOOLS)
-            logInternalError(s);
+        logInternalError(s);
     }
 }

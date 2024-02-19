@@ -18,12 +18,14 @@ class ClassDeclarationFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'ClassDeclarationFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! ClassDeclaration)
             throw FormatException('Not a ClassDeclaration: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
+        //log('### NOT COPYING node.sortedCommentAndAnnotations', 0);
+
         formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword'); // covered by tests
         formatState.copyEntity(node.interfaceKeyword, astVisitor, '$methodName/node.interfaceKeyword'); // covered by tests
         formatState.copyEntity(node.classKeyword, astVisitor, '$methodName/node.classKeyword'); // covered by tests
@@ -35,5 +37,7 @@ class ClassDeclarationFormatter extends IFormatter
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket'); // covered by tests
         formatState.acceptList(node.members, astVisitor, '$methodName/node.members'); // covered by tests
         formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket'); // covered by tests
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

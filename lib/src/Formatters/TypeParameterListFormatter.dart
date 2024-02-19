@@ -18,7 +18,7 @@ class TypeParameterListFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'TypeParameterListFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! TypeParameterList)
             throw FormatException('Not a TypeParameterList: ${node.runtimeType}');
@@ -26,5 +26,7 @@ class TypeParameterListFormatter extends IFormatter
         formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
         formatState.acceptListWithComma(node.typeParameters, node.rightBracket, astVisitor, '$methodName/node.typeParameters');
         formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

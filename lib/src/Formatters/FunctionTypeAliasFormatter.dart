@@ -18,7 +18,7 @@ class FunctionTypeAliasFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'ForPartsWithExpressionFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! FunctionTypeAlias)
             throw FormatException('Not a FunctionTypeAlias: ${node.runtimeType}');
@@ -29,5 +29,7 @@ class FunctionTypeAliasFormatter extends IFormatter
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
         formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters');
         formatState.copySemicolon(node.semicolon, config, methodName);
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

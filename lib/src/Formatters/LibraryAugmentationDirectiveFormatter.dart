@@ -18,7 +18,7 @@ class LibraryAugmentationDirectiveFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'LibraryAugmentationDirectiveFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! LibraryAugmentationDirective)
             throw FormatException('Not a LibraryAugmentationDirective: ${node.runtimeType}');
@@ -28,5 +28,7 @@ class LibraryAugmentationDirectiveFormatter extends IFormatter
         formatState.copyEntity(node.augmentKeyword, astVisitor, '$methodName/node.augmentKeyword');
         formatState.copyEntity(node.uri, astVisitor, '$methodName/node.uri');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

@@ -21,43 +21,71 @@ class DefaultFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'DefaultFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER)
-            logInternal('# $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
-        if (Constants.DEBUG_FORMATTER_DEFAULT)
-            node.childEntities.forEach((SyntacticEntity child)
-                {
-                    if (child is Token)
-                        logInternal('  Will copy child: ${child.runtimeType} $child');
-                    else if (child is AstNode)
-                        logInternal('  Will accept child: ${child.runtimeType} $child');
-                    else
-                        logInternalError('  Will ignore child: ${child.runtimeType} $child');
-                }
-            );
+        /*
+        if (node is AnnotatedNode)
+        {
+        _log2('  AnnotatedNode: sortedCommentAndAnnotations');
+        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
+        }
+        else if (node is NormalFormalParameter)
+        {
+        _log2('  NormalFormalParameter: sortedCommentAndAnnotations');
+        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
+        }
+        else
+        _log2('  No sortedCommentAndAnnotations');
+        */
 
         node.childEntities.forEach((SyntacticEntity child)
             {
-                if (child is Token)
+                if (child is AstNode)
                 {
-                    if (Constants.DEBUG_FORMATTER_DEFAULT)
-                        logInternal('  Copying child: ${child.runtimeType} $child');
-                    formatState.copyEntity(child, astVisitor, '$methodName/child');
-                    if (Constants.DEBUG_FORMATTER_DEFAULT)
-                        logInternal('    ${StringTools.toDisplayString(formatState.getResult(), 50)}');
+                    _log2('! AstNode-Child: ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
+                    /*if (child is Comment)
+                    {
+                    _log2('    Ignoring "Comment"');
+                    }
+                    else */
+                    if (child is CommentReference)
+                    {
+                        _log2('    Ignoring "CommentReference"');
+                    }
+                    /*else if (child.runtimeType.toString() == 'CommentReferenceImpl')
+                    {
+                    _log2('    Ignoring "CommentReferenceImpl"');
+                    }*/
+                    else
+                    {
+                        _log2('    Accepting');
+                        child.accept(astVisitor);
+                    }
                 }
-                else if (child is AstNode)
+                else if (child is Token)
                 {
-                    if (Constants.DEBUG_FORMATTER_DEFAULT)
-                        logInternal('  Accepting child: ${child.runtimeType} $child');
-                    child.accept(astVisitor);
+                    _log2('! Token-Child:   ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
+                    if (child.runtimeType.toString() == 'DartDocToken')
+                    {
+                        _log2('    Ignoring "DartDocToken"');
+                    }
+                    else
+                    {
+                        _log2('    Copying');
+                        formatState.copyEntity(child, astVisitor, '$methodName/child=${child.runtimeType}');
+                    }
                 }
                 else
-                {
-                    if (Constants.DEBUG_FORMATTER_DEFAULT)
-                        logInternalError('  Ignoring child: ${child.runtimeType} $child');
-                }
+                    throw Exception('Unhandled type: ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
             }
         );
+
+        log('END   $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+    }
+
+    void _log2(String s)
+    {
+        if (Constants.DEBUG_FORMATTER_DEFAULT)
+            logInternal(s);
     }
 }

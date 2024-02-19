@@ -19,7 +19,7 @@ class ArgumentListFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'ArgumentListFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! ArgumentList)
             throw FormatException('Not an ArgumentList: ${node.runtimeType}');
@@ -29,5 +29,7 @@ class ArgumentListFormatter extends IFormatter
         formatState.acceptListWithComma(node.arguments, node.rightParenthesis, astVisitor, '$methodName/node.arguments');
         formatState.popLevelAndIndent();
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

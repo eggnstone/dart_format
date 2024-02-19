@@ -18,7 +18,7 @@ class ImportDirectiveFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'ImportDirectiveFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! ImportDirective)
             throw FormatException('Not an ImportDirective: ${node.runtimeType}');
@@ -31,5 +31,7 @@ class ImportDirectiveFormatter extends IFormatter
         formatState.copyEntity(node.prefix, astVisitor, '$methodName/node.prefix');
         formatState.acceptList(node.combinators, astVisitor, '$methodName/node.combinators');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

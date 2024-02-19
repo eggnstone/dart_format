@@ -26,6 +26,8 @@ class FormatState
     int _lastConsumedPosition = 0;
     String? _trailingForTests;
 
+    int logIndent = 0;
+
     CompilationUnit get compilationUnit
     => _parseResult.unit;
 
@@ -69,7 +71,7 @@ class FormatState
 
     void acceptList(List<AstNode> nodes, AstVisitor<void> astVisitor, String source)
     {
-        _log('# FormatState.acceptNodeList($source)');
+        _log('# FormatState.acceptList($source)');
         // ignore: avoid_function_literals_in_foreach_calls
         nodes.forEach((AstNode node) => node.accept(astVisitor));
     }
@@ -81,11 +83,22 @@ class FormatState
         {
             if (lastNode != null)
             {
-                final String commaText = getText(lastNode.end, node.offset);
+                // This part is necessary for situations like "} ,\nXYZ"
+                int end = lastNode.end;
+                if (_lastConsumedPosition > end)
+                {
+                    final String filler = getText(lastNode.end, _lastConsumedPosition);
+                    //logInternal('filler/1: ${StringTools.toDisplayString(filler)}');
+                    if (filler.trim().isNotEmpty)
+                        throw DartFormatException.error('filler is not empty: ${StringTools.toDisplayString(filler)}');
+                    end = _lastConsumedPosition;
+                }
+
+                final String commaText = getText(end, node.offset);
                 if (!FormatTools.isCommaText(commaText))
                     throw DartFormatException.error('commaText is not a comma: ${StringTools.toDisplayString(commaText)}');
 
-                consumeText(lastNode.end, node.offset, commaText, '$source/Comma');
+                consumeText(end, node.offset, commaText, '$source/Comma');
             }
 
             node.accept(astVisitor);
@@ -102,6 +115,7 @@ class FormatState
             if (endToken != null)
             {
                 String commaText = getText(lastNode.end, endToken.offset);
+                //logInternal('commaText/2 ${StringTools.toDisplayString(commaText)}');
                 if (FormatTools.isCommaText(commaText))
                 {
                     if (_removeTrailingCommas)
@@ -130,10 +144,17 @@ class FormatState
             return;
         }
 
-        final String filler = getText(token.end, nextToken.offset);
-        _log('  token:     ${StringTools.toDisplayString(token)}');
-        _log('  nextToken: ${StringTools.toDisplayString(nextToken)}');
-        _log('  filler:    ${StringTools.toDisplayString(filler)}');
+        final int end = nextToken.offset;
+        /*if (nextToken.precedingComments != null)
+        end = nextToken.precedingComments!.offset;*/
+
+        final String filler = getText(token.end, end);
+        _log('  token:                              ${StringTools.toDisplayString(token)}');
+        _log('  nextToken:                          ${StringTools.toDisplayString(nextToken)}');
+        _log('  nextToken.offset:                   ${nextToken.offset}');
+        _log('  nextToken.precedingComments:        ${nextToken.precedingComments}');
+        _log('  nextToken.precedingComments.offset: ${nextToken.precedingComments?.offset}');
+        _log('  filler/2:                           ${StringTools.toDisplayString(filler)}');
 
         final int pos = filler.indexOf('\n');
         _log('  pos:       $pos');
@@ -162,6 +183,10 @@ class FormatState
         if (token == null || !add)
             return;
 
+        /*int end = token.offset;
+        if (token.precedingComments != null)
+        end = token.precedingComments!.offset;*/
+
         if (lastConsumedPosition > token.offset)
             _logAndThrowError('lastConsumedPosition > token.offset');
 
@@ -180,12 +205,13 @@ class FormatState
 
         final int end = beforeComments ? token.precedingComments?.offset ?? token.offset : token.offset;
         _log('  lastConsumedPosition:            $lastConsumedPosition');
+        _log('  token.precedingComments:         ${token.precedingComments}');
         _log('  token.precedingComments?.offset: ${token.precedingComments?.offset}');
         _log('  token.offset:                    ${token.offset}');
         _log('  end:                             $end');
 
         final String filler = lastConsumedPosition >= end ? '' : getText(lastConsumedPosition, end);
-        _log('  Filler:                          ${StringTools.toDisplayString(filler)}');
+        _log('  filler/3:                        ${StringTools.toDisplayString(filler)}');
 
         if (filler.startsWith('\n'))
         {
@@ -214,18 +240,20 @@ class FormatState
     {
         const String methodName = 'consumeText';
         final String fullSource = '$source/$methodName';
-        _log('# $methodName(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
+        _log('# $methodName($offset, $end, ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
         if (offset < lastConsumedPosition)
-            _logAndThrowError('offset < lastConsumedPosition: $offset < $lastConsumedPosition ($source)');
+            _logAndThrowError('offset < lastConsumedPosition:'
+                ' $offset (${getPositionInfo(offset)}) < $lastConsumedPosition (${getPositionInfo(lastConsumedPosition)})'
+                ' ($source)');
 
         if (lastConsumedPosition < offset)
         {
             final String filler = getText(lastConsumedPosition, offset);
 
-            _log('  Filler:               ${StringTools.toDisplayString(filler)}');
-            _log('  LastConsumedPosition: $lastConsumedPosition');
-            _log('  Offset:               $offset');
+            _log('  filler/4:             ${StringTools.toDisplayString(filler)}');
+            _log('  lastConsumedPosition: $lastConsumedPosition');
+            _log('  offset:               $offset');
             _log('  Current:              ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
 
             if (!FormatTools.isEmptyOrComments(filler))
@@ -257,7 +285,7 @@ class FormatState
             return;
 
         String filler = getText(lastConsumedPosition, end);
-        _log('  Filler:                    ${StringTools.toDisplayString(filler)}');
+        _log('  filler/5:                  ${StringTools.toDisplayString(filler)}');
 
         if (_trailingForTests != null && filler.endsWith(_trailingForTests!))
         {
@@ -532,8 +560,7 @@ class FormatState
 
     void _logError(String s)
     {
-        if (Constants.DEBUG_FORMAT_STATE)
-            logInternalError(s);
+        logInternalError(s);
     }
 
     void _setLastConsumedPosition(int value, String source)

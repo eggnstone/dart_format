@@ -41,7 +41,7 @@ void writelnToStdErr(String s)
 
 class LogTools
 {
-    static bool logInternals = true;//false;
+    static bool logInternals = true;
     static bool? logToConsole;
     static bool? logToTempFile;
 
@@ -51,33 +51,25 @@ class LogTools
     static void logInternal(String message)
     {
         if (logInternals)
-            eggnstone_dart.logDebug(message);
-
-        _logToTempFile('logInternal:  $message');
+            logDebug(message);
     }
 
     static void logInternalInfo(String message)
     {
         if (logInternals)
-            eggnstone_dart.logInfo(message);
-
-        _logToTempFile('logInternalInfo:  $message');
+            logInfo(message);
     }
 
     static void logInternalWarning(String message)
     {
         if (logInternals)
-            eggnstone_dart.logWarning(message);
-
-        _logToTempFile('logInternalWarning:  $message');
+            logWarning(message);
     }
 
     static void logInternalError(String message)
     {
         if (logInternals)
-            eggnstone_dart.logError(message);
-
-        _logToTempFile('logInternalError:  $message');
+            logError(message);
     }
 
     static void logDebug(String message, {bool preventLoggingToConsole = false})
@@ -128,8 +120,11 @@ class LogTools
 
         //s = MemoryInfo ''+s;
 
+        //eggnstone_dart.logDebug('## 1');
         _logFile!.writeStringSync('${_dateTimeFormatter.format(DateTime.now())} $s\n');
+        //eggnstone_dart.logDebug('## 2');
         _logFile!.flushSync();
+        //eggnstone_dart.logDebug('## 3');
     }
 
     static void writeToStdOut(String s, {bool preventLoggingToTempFile = false})

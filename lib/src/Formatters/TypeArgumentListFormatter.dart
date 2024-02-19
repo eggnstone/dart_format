@@ -18,7 +18,7 @@ class TypeArgumentListFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'TypeArgumentListFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! TypeArgumentList)
             throw FormatException('Not a TypeArgumentList: ${node.runtimeType}');
@@ -28,5 +28,7 @@ class TypeArgumentListFormatter extends IFormatter
         formatState.acceptListWithComma(node.arguments, node.rightBracket, astVisitor, '$methodName/node.arguments');
         //formatState.popLevelAndIndent();
         formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

@@ -18,7 +18,7 @@ class TopLevelVariableDeclarationFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'TopLevelVariableDeclarationFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! TopLevelVariableDeclaration)
             throw FormatException('Not a TopLevelVariableDeclaration: ${node.runtimeType}');
@@ -26,5 +26,7 @@ class TopLevelVariableDeclarationFormatter extends IFormatter
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.variables, astVisitor, '$methodName/node.variables');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

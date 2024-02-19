@@ -18,7 +18,7 @@ class PartDirectiveFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'PartDirectiveFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! PartDirective)
             throw FormatException('Not a PartDirective: ${node.runtimeType}');
@@ -27,5 +27,7 @@ class PartDirectiveFormatter extends IFormatter
         formatState.copyEntity(node.partKeyword, astVisitor, '$methodName/node.partKeyword');
         formatState.copyEntity(node.uri, astVisitor, '$methodName/node.uri');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

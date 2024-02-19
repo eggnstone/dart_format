@@ -18,7 +18,7 @@ class ClassTypeAliasFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'ClassTypeAliasFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! ClassTypeAlias)
             throw FormatException('Not a ClassTypeAlias: ${node.runtimeType}');
@@ -40,5 +40,7 @@ class ClassTypeAliasFormatter extends IFormatter
         formatState.copyEntity(node.withClause, astVisitor, '$methodName/node.withClause');
         formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

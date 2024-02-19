@@ -18,7 +18,8 @@ class CompilationUnitFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'CompilationUnitFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('# START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent);
+        formatState.logIndent += 2;
 
         if (node is! CompilationUnit)
             throw FormatException('Not a CompilationUnit: ${node.runtimeType}');
@@ -37,5 +38,8 @@ class CompilationUnitFormatter extends IFormatter
 
         if (!formatState.getLastText().endsWith('\n'))
             formatState.addNewLineAfterToken(node.endToken, methodName, add: config.addNewLineAtEndOfText);
+
+        formatState.logIndent -= 2;
+        log('# END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent);
     }
 }

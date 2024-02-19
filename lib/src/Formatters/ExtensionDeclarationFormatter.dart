@@ -18,7 +18,7 @@ class ExtensionDeclarationFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'ExtensionDeclarationFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! ExtensionDeclaration)
             throw FormatException('Not an ExtensionDeclaration: ${node.runtimeType}');
@@ -31,5 +31,7 @@ class ExtensionDeclarationFormatter extends IFormatter
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket'); // covered by tests
         formatState.acceptList(node.members, astVisitor, '$methodName/node.members'); // covered by tests
         formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket'); // covered by tests
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

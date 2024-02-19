@@ -18,7 +18,7 @@ class DoStatementFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'DoStatementFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! DoStatement)
             throw FormatException('Not a DoStatement: ${node.runtimeType}');
@@ -30,5 +30,7 @@ class DoStatementFormatter extends IFormatter
         formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

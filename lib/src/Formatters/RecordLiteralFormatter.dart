@@ -18,7 +18,7 @@ class RecordLiteralFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'RecordLiteralFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! RecordLiteral)
             throw FormatException('Not a RecordLiteral: ${node.runtimeType}');
@@ -26,5 +26,7 @@ class RecordLiteralFormatter extends IFormatter
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
         formatState.acceptListWithComma(node.fields, node.rightParenthesis, astVisitor, '$methodName/node.fields');
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

@@ -18,12 +18,14 @@ class PatternVariableDeclarationStatementFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'PatternVariableDeclarationStatementFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! PatternVariableDeclarationStatement)
             throw FormatException('Not a PatternVariableDeclarationStatement: ${node.runtimeType}');
 
         formatState.copyEntity(node.declaration, astVisitor, '$methodName/node.declaration');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

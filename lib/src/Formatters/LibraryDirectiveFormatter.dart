@@ -18,7 +18,7 @@ class LibraryDirectiveFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'LibraryDirectiveFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! LibraryDirective)
             throw FormatException('Not a LibraryDirective: ${node.runtimeType}');
@@ -27,5 +27,7 @@ class LibraryDirectiveFormatter extends IFormatter
         formatState.copyEntity(node.libraryKeyword, astVisitor, '$methodName/node.libraryKeyword');
         formatState.copyEntity(node.name2, astVisitor, '$methodName/node.name2');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

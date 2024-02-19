@@ -18,7 +18,7 @@ class BlockFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'BlockFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! Block)
             throw FormatException('Not a Block: ${node.runtimeType}');
@@ -26,5 +26,7 @@ class BlockFormatter extends IFormatter
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket'); // covered by tests
         formatState.acceptList(node.statements, astVisitor, '$methodName/node.statements'); // covered by tests
         formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket'); // covered by tests
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

@@ -23,7 +23,8 @@ class Formatter
 
     String format(String s)
     {
-        //throw DartFormatException.error('Formatter.format() is not implemented');
+        //Analyzer().analyze(s);
+
         _log('# Formatter.format()');
         _log('  ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
         _log('  indentationSpacesPerLevel: ${config.indentationSpacesPerLevel}');
@@ -50,10 +51,7 @@ class Formatter
         result = textTools.removeEmptyLines(result);
         result = textTools.addNewLineAtEndOfText(result);
 
-        _log('### about to end');
-        final String x= _verifyResult(sWithoutCarriageReturns, result, parseResult.lineInfo);
-        _log('### about to end');
-        return x;
+        return _verifyResult(sWithoutCarriageReturns, result, parseResult.lineInfo);
     }
 
     void _log(String s)
@@ -61,12 +59,6 @@ class Formatter
         if (Constants.DEBUG_FORMATTER)
             logInternal(s);
     }
-
-    /*void _logError(String s)
-    {
-    if (Constants.DEBUG_FORMAT_STATE)
-    logInternalError(s);
-    }*/
 
     void _logWarning(String s)
     {

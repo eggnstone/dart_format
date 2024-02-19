@@ -18,7 +18,7 @@ class GenericTypeAliasFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'GenericTypeAliasFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! GenericTypeAlias)
             throw FormatException('Not a GenericTypeAlias: ${node.runtimeType}');
@@ -29,5 +29,7 @@ class GenericTypeAliasFormatter extends IFormatter
         formatState.copyEntity(node.equals, astVisitor, '$methodName/node.equals'); // covered by tests
         formatState.copyEntity(node.type, astVisitor, '$methodName/node.type'); // covered by tests
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

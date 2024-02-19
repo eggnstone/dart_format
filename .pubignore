@@ -1,6 +1,7 @@
 /all_lint_rules.yaml
 /analysis_options.yaml
 /doc/
+/lib/src/Analyser.dart
 /Publish.ps1
 /test/
 /TODO.txt

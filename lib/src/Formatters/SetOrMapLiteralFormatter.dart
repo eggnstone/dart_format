@@ -18,7 +18,7 @@ class SetOrMapLiteralFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'SetOrMapLiteralFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! SetOrMapLiteral)
             throw FormatException('Not a SetOrMapLiteral: ${node.runtimeType}');
@@ -28,5 +28,7 @@ class SetOrMapLiteralFormatter extends IFormatter
         formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
         formatState.acceptListWithComma(node.elements, node.rightBracket, astVisitor, '$methodName/node.elements');
         formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
+
+        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }
