@@ -371,7 +371,7 @@ class WebServiceHandler
             await HttpTools.flushAndClose(request);
         }
         /*// ignore: avoid_catching_errors
-        on Error catch(e, st)
+        on Error catch (e, st)
         {
         // necessary?
         logErrorObject(METHOD_NAME, e, st);

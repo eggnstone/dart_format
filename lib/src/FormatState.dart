@@ -478,7 +478,7 @@ class FormatState
         {
             return _parseResult.content.substring(offset, end);
         }
-        catch(e)
+        catch (e)
         {
             logInternal('FormatState.getText($offset, $end) $e');
             logInternal('  ${StringTools.toDisplayString(_parseResult.content)}');
