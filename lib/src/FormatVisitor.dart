@@ -14,6 +14,7 @@ import 'Formatters/ConstructorDeclarationFormatter.dart';
 import 'Formatters/ContinueStatementFormatter.dart';
 import 'Formatters/DefaultFormatter.dart';
 import 'Formatters/DoStatementFormatter.dart';
+import 'Formatters/DottedNameFormatter.dart';
 import 'Formatters/EmptyFunctionBodyFormatter.dart';
 import 'Formatters/EmptyStatementFormatter.dart';
 import 'Formatters/EnumDeclarationFormatter.dart';
@@ -65,6 +66,7 @@ class FormatVisitor extends AstVisitor<void>
     late final ConstructorDeclarationFormatter _constructorDeclarationFormatter = ConstructorDeclarationFormatter(config, this, _formatState);
     late final ContinueStatementFormatter _continueStatementFormatter = ContinueStatementFormatter(config, this, _formatState);
     late final DoStatementFormatter _doStatementFormatter = DoStatementFormatter(config, this, _formatState);
+    late final DottedNameFormatter _dottedNameFormatter = DottedNameFormatter(config, this, _formatState);
     late final EmptyFunctionBodyFormatter _emptyFunctionBodyFormatter = EmptyFunctionBodyFormatter(config, this, _formatState);
     late final EmptyStatementFormatter _emptyStatementFormatter = EmptyStatementFormatter(config, this, _formatState);
     late final EnumDeclarationFormatter _enumDeclarationFormatter = EnumDeclarationFormatter(config, this, _formatState);
@@ -258,7 +260,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitDottedName(DottedName node)
-    => _defaultFormatter.format(node);
+    => _dottedNameFormatter.format(node);
 
     @override
     void visitDoubleLiteral(DoubleLiteral node)
