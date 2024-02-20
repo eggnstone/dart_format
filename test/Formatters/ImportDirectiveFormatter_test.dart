@@ -15,17 +15,19 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createDirective,
             inputLeading: '',
-            inputMiddle: "import 'x.dart' if (a.b.c) 'y.dart' as z;",
+            inputMiddle: "import 'x.dart' if (a.b.c) 'y.dart' as z show a,b hide c,d;",
             inputTrailing: '',
             name: 'ImportDirective',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<SimpleStringLiteral>(7, "'x.dart'"),
                 TestVisitor<Configuration>(16, "if (a.b.c) 'y.dart'"),
-                TestVisitor<SimpleIdentifier>(39, 'z')
+                TestVisitor<SimpleIdentifier>(39, 'z'),
+                TestVisitor<ShowCombinator>(41, 'show a,b'),
+                TestVisitor<HideCombinator>(50, 'hide c,d')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig("import 'x.dart' if (a.b.c) 'y.dart' as z;\n")
+                TestConfig("import 'x.dart' if (a.b.c) 'y.dart' as z show a,b hide c,d;\n")
             ]
         )
     ];

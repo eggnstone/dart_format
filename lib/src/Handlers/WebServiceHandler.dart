@@ -12,8 +12,10 @@ import '../Data/JsonResponse.dart';
 import '../Data/Version.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../Formatter.dart';
+import '../Tools/ContentTypeTools.dart';
 import '../Tools/HttpTools.dart';
 import '../Tools/LogTools.dart';
+import '../Tools/StringTools.dart';
 import '../Tools/VersionTools.dart';
 
 class WebServiceHandler
@@ -101,9 +103,8 @@ class WebServiceHandler
             stdin.listen(
                 (List<int> event)
                 {
-                    final String input = utf8.decode(event);
-                    logDebug('$METHOD_NAME: Unexpected input via stdin.listen()/onData: $input');
-                    //terminate = true;
+                    final String input = systemEncoding.decode(event);
+                    logDebug('$METHOD_NAME: Unexpected input via stdin.listen()/onData: ${StringTools.toDisplayString(input, Constants.MAX_DEBUG_LENGTH)}');
                 }
                 ,
                 onDone: ()
@@ -230,22 +231,14 @@ class WebServiceHandler
         {
             //logDebug('Request.contentLength: request.contentLength: ${request.contentLength}');
 
-            /*final Stream<Uint8List> x = request;
-
-            final String body = await utf8.decodeStream(request);*/
-            /*writelnToStdErr(body);
-            writelnToStdErr('request.headers: ${request.headers}');
-            writelnToStdErr('body.length: ${body.length}');*/
-
-            final RegExp boundaryGet = RegExp(' boundary=(.+) ');
-            final String? contentType = request.headers['content-type']?.first;
+            final List<String>? contentTypeList = request.headers['content-type'];
+            //logDebug('contentTypeList: $contentTypeList');
+            final String? contentType = contentTypeList?.first;
+            //logDebug('contentType: $contentType');
             if (contentType == null)
                 throw DartFormatException.error('No content-type header found.');
 
-            //logDebug('contentType: $contentType');
-            final RegExpMatch? match = boundaryGet.firstMatch(' $contentType ');
-
-            final String? boundary = match?.group(1);
+            final String? boundary = ContentTypeTools.getBoundary(contentType);
             //logDebug('boundary: $boundary');
             if (boundary == null)
                 throw DartFormatException.error('No boundary found.');
@@ -257,8 +250,29 @@ class WebServiceHandler
             if (mimeMultiParts.length != 2)
                 throw DartFormatException.error('Expected 2 parts, got ${mimeMultiParts.length}.');
 
-            final String mimeMultiPart0 = await utf8.decodeStream(mimeMultiParts[0]);
-            final String mimeMultiPart1 = await utf8.decodeStream(mimeMultiParts[1]);
+            //logDebug('mimeMultiParts[0].headers: ${mimeMultiParts[0].headers}');
+            final String? contentType0 = mimeMultiParts[0].headers['content-type'];
+            //logDebug('contentType0: $contentType0');
+            final String? charset0 = ContentTypeTools.getCharset(contentType0);
+            //logDebug('charset0: $charset0');
+
+            //logDebug('mimeMultiParts[1].headers: ${mimeMultiParts[1].headers}');
+            final String? contentType1 = mimeMultiParts[1].headers['content-type'];
+            //logDebug('contentType1: $contentType1');
+            final String? charset1 = ContentTypeTools.getCharset(contentType1);
+            //logDebug('charset1: $charset1');
+
+            final Encoding? encoding0 = Encoding.getByName(charset0);
+            final Encoding? encoding1 = Encoding.getByName(charset1);
+
+            if (encoding0 == null)
+                throw DartFormatException.error('Cannot find decoder for charset "$charset0".');
+
+            if (encoding1 == null)
+                throw DartFormatException.error('Cannot find decoder for charset "$charset1".');
+
+            final String mimeMultiPart0 = await encoding0.decodeStream(mimeMultiParts[0]);
+            final String mimeMultiPart1 = await encoding1.decodeStream(mimeMultiParts[1]);
 
             String? configText;
             String? text;
@@ -286,6 +300,8 @@ class WebServiceHandler
                 throw DartFormatException.error('Part named "Text" is empty.');
 
             //logDebug('configText: ${StringTools.toDisplayString(configText)}');
+            //logDebug('text: ${StringTools.toDisplayString(text)}');
+
             final Config config = Config.fromJson(configText);
             final Formatter formatter = Formatter(config);
             final String formattedText = formatter.format(text);

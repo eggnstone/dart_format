@@ -30,8 +30,8 @@ class ImportDirectiveFormatter extends IFormatter
         formatState.copyEntity(node.deferredKeyword, astVisitor, '$methodName/node.deferredKeyword');
         formatState.copyEntity(node.asKeyword, astVisitor, '$methodName/node.asKeyword');
         formatState.copyEntity(node.prefix, astVisitor, '$methodName/node.prefix');
+        formatState.acceptList(node.combinators, astVisitor, '$methodName/node.combinators');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
-        // TODO: formatState.acceptList(node.combinators, astVisitor, '$methodName/node.combinators');
 
         log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
