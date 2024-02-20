@@ -3,6 +3,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../Tools/FormatTools.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -28,6 +29,22 @@ class AssertStatementFormatter extends IFormatter
         formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
         formatState.copyEntity(node.comma, astVisitor, '$methodName/node.comma');
         formatState.copyEntity(node.message, astVisitor, '$methodName/node.message');
+
+        if (node.message != null)
+        {
+            final int start = node.message!.end;
+            final int end = node.rightParenthesis.offset;
+            String commaText = formatState.getText(start, end);
+            log('commaText: ${StringTools.toDisplayString(commaText)}', formatState.logIndent - 1);
+            if (FormatTools.isCommaText(commaText))
+            {
+                if (config.removeTrailingCommas)
+                    commaText = commaText.replaceFirst(',', '${Constants.REMOVE_START},${Constants.REMOVE_END}');
+
+                formatState.consumeText(start, end, commaText, '$methodName/TrailingComma');
+            }
+        }
+
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
         formatState.copyEntity(node.semicolon, astVisitor, '$methodName/node.semicolon');
 
