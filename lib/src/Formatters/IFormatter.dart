@@ -7,10 +7,15 @@ abstract class IFormatter
 {
     void format(AstNode node);
 
-    void log(String s, int indent)
+    void log(String s, int indent, [int? offset])
     {
-        if (Constants.DEBUG_I_FORMATTER)
-            logInternal('  ' * indent +  s);
+        if (!Constants.DEBUG_I_FORMATTER)
+            return;
+
+        if (Constants.DEBUG_I_FORMATTER_OFFSETS && offset == null)
+            logInternal('${offset} ${'  ' * indent}$s');
+        else
+            logInternal('  ' * indent + s);
     }
 
     void logInfo(String s)

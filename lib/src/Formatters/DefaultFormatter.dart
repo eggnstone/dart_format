@@ -21,22 +21,7 @@ class DefaultFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'DefaultFormatter.format';
-        log('START $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        /*
-        if (node is AnnotatedNode)
-        {
-        _log2('  AnnotatedNode: sortedCommentAndAnnotations');
-        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        }
-        else if (node is NormalFormalParameter)
-        {
-        _log2('  NormalFormalParameter: sortedCommentAndAnnotations');
-        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        }
-        else
-        _log2('  No sortedCommentAndAnnotations');
-        */
+        log('START $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++, node.offset);
 
         node.childEntities.forEach((SyntacticEntity child)
             {
@@ -80,7 +65,7 @@ class DefaultFormatter extends IFormatter
             }
         );
 
-        log('END   $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        log('END   $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent, node.end);
     }
 
     void _log2(String s)

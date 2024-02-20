@@ -7,7 +7,6 @@ import '../Exceptions/DartFormatException.dart';
 import '../FormatState.dart';
 import '../Tools/FormatTools.dart';
 import '../Tools/StringTools.dart';
-import '../Types/IndentationType.dart';
 import 'IFormatter.dart';
 
 class FormalParameterListFormatter extends IFormatter
@@ -28,7 +27,7 @@ class FormalParameterListFormatter extends IFormatter
             throw FormatException('Not a FormalParameterList: ${node.runtimeType}');
 
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis'); // covered by tests
-        formatState.pushLevel('$methodName/node.leftParenthesis', IndentationType.single); // covered by tests
+        formatState.pushLevel('$methodName/node.leftParenthesis'); // covered by tests
 
         // TODO: move to FormatState
         AstNode? lastNode;
@@ -53,7 +52,7 @@ class FormalParameterListFormatter extends IFormatter
             if (shouldWriteLeftDelimiter)
             {
                 formatState.copyEntity(node.leftDelimiter, astVisitor, '$methodName/node.leftDelimiter'); // covered by tests
-                formatState.pushLevel('$methodName/node.leftDelimiter', IndentationType.single); // covered by tests
+                formatState.pushLevel('$methodName/node.leftDelimiter'); // covered by tests
                 wroteLeftDelimiter = true;
             }
 

@@ -378,7 +378,7 @@ class FormatState
         addNewLineAfterToken(token, add: addNewLineAfter, fullSource);
 
         if (pushLevel)
-            this.pushLevel(fullSource, IndentationType.multiple);
+            this.pushLevel(fullSource);
     }
 
     void _copyTokenCommentsOnly(Token? token, String source)
@@ -537,7 +537,9 @@ class FormatState
         _textBuffers.last.write(s);
     }
 
-    void pushLevel(String name, IndentationType type)
+    // TODO: remove usage of pushLevel() until covered by tests.
+    // TODO: when is IndentationType.multiple even used?
+    void pushLevel(String name, [IndentationType type = IndentationType.single])
     {
         _log('# FormatState.pushLevel(name: "$name", type: "$type")');
         //_log('  lastText: ${StringTools.toDisplayString(_textBuffers.last.lastText)}');

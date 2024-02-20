@@ -24,7 +24,7 @@ class TypeArgumentListFormatter extends IFormatter
             throw FormatException('Not a TypeArgumentList: ${node.runtimeType}');
 
         formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
-        //formatState.pushLevel('$methodName/node.leftBracket', IndentationType.single);
+        //formatState.pushLevel('$methodName/node.leftBracket');
         formatState.acceptListWithComma(node.arguments, node.rightBracket, astVisitor, '$methodName/node.arguments');
         //formatState.popLevelAndIndent();
         formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');

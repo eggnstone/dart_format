@@ -4,7 +4,6 @@ import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
-import '../Types/IndentationType.dart';
 import 'IFormatter.dart';
 
 class SwitchPatternCaseFormatter extends IFormatter
@@ -27,7 +26,7 @@ class SwitchPatternCaseFormatter extends IFormatter
         formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword'); // covered by tests
         formatState.copyEntity(node.guardedPattern, astVisitor, '$methodName/node.guardedPattern'); // covered by tests
         formatState.copyEntity(node.colon, astVisitor, '$methodName/node.colon'); // covered by tests
-        formatState.pushLevel('$methodName/node.statements', IndentationType.multiple); // covered by tests
+        formatState.pushLevel('$methodName/node.statements');
         formatState.acceptList(node.statements, astVisitor, '$methodName/node.statements'); // covered by tests
         formatState.popLevelAndIndent(); // covered by tests
 

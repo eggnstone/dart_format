@@ -4,7 +4,6 @@ import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
-import '../Types/IndentationType.dart';
 import 'IFormatter.dart';
 
 class ConstructorDeclarationFormatter extends IFormatter
@@ -31,7 +30,7 @@ class ConstructorDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.period, astVisitor, '$methodName/node.period'); // covered by tests
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name'); // covered by tests
         formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters'); // covered by tests
-        formatState.pushLevel('$methodName/node.statements', IndentationType.multiple); // covered by tests
+        formatState.pushLevel('$methodName/node.statements');
         formatState.copyEntity(node.separator, astVisitor, '$methodName/node.separator'); // covered by tests
         formatState.copyEntity(node.redirectedConstructor, astVisitor, '$methodName/node.redirectedConstructor'); // covered by tests
         formatState.acceptListWithComma(node.initializers, null, astVisitor, '$methodName/node.initializers');

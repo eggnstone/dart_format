@@ -4,7 +4,6 @@ import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
-import '../Types/IndentationType.dart';
 import 'IFormatter.dart';
 
 class ForStatementFormatter extends IFormatter
@@ -28,7 +27,7 @@ class ForStatementFormatter extends IFormatter
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis'); // covered by tests
         formatState.copyEntity(node.forLoopParts, astVisitor, '$methodName/node.forLoopParts');
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis'); // covered by tests
-        formatState.pushLevel('$methodName/node.body', IndentationType.single); // covered by tests
+        formatState.pushLevel('$methodName/node.body'); // covered by tests
         formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
         formatState.popLevelAndIndent(); // covered by tests
 

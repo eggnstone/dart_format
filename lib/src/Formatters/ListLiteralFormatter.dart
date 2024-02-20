@@ -4,7 +4,6 @@ import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
-import '../Types/IndentationType.dart';
 import 'IFormatter.dart';
 
 class ListLiteralFormatter extends IFormatter
@@ -27,7 +26,7 @@ class ListLiteralFormatter extends IFormatter
         formatState.copyEntity(node.constKeyword, astVisitor, '$methodName/node.constKeyword');
         formatState.copyEntity(node.typeArguments, astVisitor, '$methodName/node.typeArguments');
         formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
-        formatState.pushLevel('$methodName/node.leftBracket', IndentationType.single);
+        formatState.pushLevel('$methodName/node.leftBracket');
         formatState.acceptListWithComma(node.elements, node.rightBracket, astVisitor, '$methodName/node.elements');
         formatState.popLevelAndIndent();
         formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');

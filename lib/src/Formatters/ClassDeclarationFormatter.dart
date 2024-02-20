@@ -28,6 +28,7 @@ class ClassDeclarationFormatter extends IFormatter
 
         formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword'); // covered by tests
         formatState.copyEntity(node.interfaceKeyword, astVisitor, '$methodName/node.interfaceKeyword'); // covered by tests
+        formatState.copyEntity(node.finalKeyword, astVisitor, '$methodName/node.finalKeyword');
         formatState.copyEntity(node.classKeyword, astVisitor, '$methodName/node.classKeyword'); // covered by tests
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name'); // covered by tests
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters'); // covered by tests
