@@ -23,8 +23,6 @@ class Formatter
 
     String format(String s)
     {
-        //Analyzer().analyze(s);
-
         _log('# Formatter.format()');
         _log('  ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
         _log('  indentationSpacesPerLevel: ${config.indentationSpacesPerLevel}');

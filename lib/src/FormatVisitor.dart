@@ -40,6 +40,7 @@ import 'Formatters/RecordLiteralFormatter.dart';
 import 'Formatters/ReturnStatementFormatter.dart';
 import 'Formatters/SetOrMapLiteralFormatter.dart';
 import 'Formatters/ShowCombinatorFormatter.dart';
+import 'Formatters/SwitchExpressionFormatter.dart';
 import 'Formatters/SwitchPatternCaseFormatter.dart';
 import 'Formatters/SwitchStatementFormatter.dart';
 import 'Formatters/TopLevelVariableDeclarationFormatter.dart';
@@ -92,6 +93,7 @@ class FormatVisitor extends AstVisitor<void>
     late final ReturnStatementFormatter _returnStatementFormatter = ReturnStatementFormatter(config, this, _formatState);
     late final SetOrMapLiteralFormatter _setOrMapLiteralFormatter = SetOrMapLiteralFormatter(config, this, _formatState);
     late final ShowCombinatorFormatter _showCombinatorFormatter = ShowCombinatorFormatter(config, this, _formatState);
+    late final SwitchExpressionFormatter _switchExpressionFormatter = SwitchExpressionFormatter(config, this, _formatState);
     late final SwitchStatementFormatter _switchStatementFormatter = SwitchStatementFormatter(config, this, _formatState);
     late final SwitchPatternCaseFormatter _switchPatternCaseFormatter = SwitchPatternCaseFormatter(config, this, _formatState);
     late final TopLevelVariableDeclarationFormatter _topLevelVariableDeclarationFormatter = TopLevelVariableDeclarationFormatter(config, this, _formatState);
@@ -704,7 +706,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitSwitchExpression(SwitchExpression node)
-    => _defaultFormatter.format(node);
+    => _switchExpressionFormatter.format(node);
 
     @override
     void visitSwitchExpressionCase(SwitchExpressionCase node)

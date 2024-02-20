@@ -26,6 +26,7 @@ class GenericTypeAliasFormatter extends IFormatter
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.typedefKeyword, astVisitor, '$methodName/node.typedefKeyword'); // covered by tests
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name'); // covered by tests
+        formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
         formatState.copyEntity(node.equals, astVisitor, '$methodName/node.equals'); // covered by tests
         formatState.copyEntity(node.type, astVisitor, '$methodName/node.type'); // covered by tests
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
