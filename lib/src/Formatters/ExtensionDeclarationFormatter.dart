@@ -24,13 +24,13 @@ class ExtensionDeclarationFormatter extends IFormatter
             throw FormatException('Not an ExtensionDeclaration: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.extensionKeyword, astVisitor, '$methodName/node.extensionKeyword'); // covered by tests
-        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name'); // covered by tests
-        formatState.copyEntity(node.onKeyword, astVisitor, '$methodName/node.onKeyword'); // covered by tests
-        formatState.copyEntity(node.extendedType, astVisitor, '$methodName/node.extendedType'); // covered by tests
-        formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket'); // covered by tests
-        formatState.acceptList(node.members, astVisitor, '$methodName/node.members'); // covered by tests
-        formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket'); // covered by tests
+        formatState.copyEntity(node.extensionKeyword, astVisitor, '$methodName/node.extensionKeyword');
+        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
+        formatState.copyEntity(node.onKeyword, astVisitor, '$methodName/node.onKeyword');
+        formatState.copyEntity(node.extendedType, astVisitor, '$methodName/node.extendedType');
+        formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
+        formatState.acceptList(node.members, astVisitor, '$methodName/node.members');
+        formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');
 
         log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

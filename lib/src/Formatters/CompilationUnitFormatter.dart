@@ -24,7 +24,7 @@ class CompilationUnitFormatter extends IFormatter
         if (node is! CompilationUnit)
             throw FormatException('Not a CompilationUnit: ${node.runtimeType}');
 
-        node.visitChildren(astVisitor); // covered by tests
+        node.visitChildren(astVisitor);
 
         /*// TODO: tests
         if (node.declarations.isEmpty && node.directives.isEmpty)

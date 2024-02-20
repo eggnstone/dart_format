@@ -24,11 +24,11 @@ class GenericTypeAliasFormatter extends IFormatter
             throw FormatException('Not a GenericTypeAlias: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.typedefKeyword, astVisitor, '$methodName/node.typedefKeyword'); // covered by tests
-        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name'); // covered by tests
+        formatState.copyEntity(node.typedefKeyword, astVisitor, '$methodName/node.typedefKeyword');
+        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
-        formatState.copyEntity(node.equals, astVisitor, '$methodName/node.equals'); // covered by tests
-        formatState.copyEntity(node.type, astVisitor, '$methodName/node.type'); // covered by tests
+        formatState.copyEntity(node.equals, astVisitor, '$methodName/node.equals');
+        formatState.copyEntity(node.type, astVisitor, '$methodName/node.type');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

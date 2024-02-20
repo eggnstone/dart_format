@@ -24,17 +24,17 @@ class ConstructorDeclarationFormatter extends IFormatter
             throw FormatException('Not a ConstructorDeclaration: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.constKeyword, astVisitor, '$methodName/node.constKeyword'); // covered by tests
-        formatState.copyEntity(node.factoryKeyword, astVisitor, '$methodName/node.factoryKeyword'); // covered by tests
-        formatState.copyEntity(node.returnType, astVisitor, '$methodName/node.returnType'); // covered by tests
-        formatState.copyEntity(node.period, astVisitor, '$methodName/node.period'); // covered by tests
-        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name'); // covered by tests
-        formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters'); // covered by tests
+        formatState.copyEntity(node.constKeyword, astVisitor, '$methodName/node.constKeyword');
+        formatState.copyEntity(node.factoryKeyword, astVisitor, '$methodName/node.factoryKeyword');
+        formatState.copyEntity(node.returnType, astVisitor, '$methodName/node.returnType');
+        formatState.copyEntity(node.period, astVisitor, '$methodName/node.period');
+        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
+        formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters');
         formatState.pushLevel('$methodName/node.statements');
-        formatState.copyEntity(node.separator, astVisitor, '$methodName/node.separator'); // covered by tests
-        formatState.copyEntity(node.redirectedConstructor, astVisitor, '$methodName/node.redirectedConstructor'); // covered by tests
+        formatState.copyEntity(node.separator, astVisitor, '$methodName/node.separator');
+        formatState.copyEntity(node.redirectedConstructor, astVisitor, '$methodName/node.redirectedConstructor');
         formatState.acceptListWithComma(node.initializers, null, astVisitor, '$methodName/node.initializers');
-        formatState.popLevelAndIndent(); // covered by tests
+        formatState.popLevelAndIndent();
         formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
 
         log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

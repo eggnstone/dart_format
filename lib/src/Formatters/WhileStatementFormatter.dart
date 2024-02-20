@@ -23,13 +23,13 @@ class WhileStatementFormatter extends IFormatter
         if (node is! WhileStatement)
             throw FormatException('Not a WhileStatement: ${node.runtimeType}');
 
-        formatState.copyEntity(node.whileKeyword, astVisitor, '$methodName/node.whileKeyword'); // covered by tests
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis'); // covered by tests
-        formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition'); // covered by tests
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis'); // covered by tests
-        formatState.pushLevel('$methodName/node.body'); // covered by tests
-        formatState.copyEntity(node.body, astVisitor, '$methodName/node.body'); // covered by tests
-        formatState.popLevelAndIndent(); // covered by tests
+        formatState.copyEntity(node.whileKeyword, astVisitor, '$methodName/node.whileKeyword');
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
+        formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
+        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
+        formatState.pushLevel('$methodName/node.body');
+        formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
+        formatState.popLevelAndIndent();
 
         log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

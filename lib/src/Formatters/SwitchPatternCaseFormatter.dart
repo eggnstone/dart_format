@@ -23,12 +23,12 @@ class SwitchPatternCaseFormatter extends IFormatter
         if (node is! SwitchPatternCase)
             throw FormatException('Not a SwitchPatternCase: ${node.runtimeType}');
 
-        formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword'); // covered by tests
-        formatState.copyEntity(node.guardedPattern, astVisitor, '$methodName/node.guardedPattern'); // covered by tests
-        formatState.copyEntity(node.colon, astVisitor, '$methodName/node.colon'); // covered by tests
+        formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword');
+        formatState.copyEntity(node.guardedPattern, astVisitor, '$methodName/node.guardedPattern');
+        formatState.copyEntity(node.colon, astVisitor, '$methodName/node.colon');
         formatState.pushLevel('$methodName/node.statements');
-        formatState.acceptList(node.statements, astVisitor, '$methodName/node.statements'); // covered by tests
-        formatState.popLevelAndIndent(); // covered by tests
+        formatState.acceptList(node.statements, astVisitor, '$methodName/node.statements');
+        formatState.popLevelAndIndent();
 
         log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

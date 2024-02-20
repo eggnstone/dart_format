@@ -24,11 +24,11 @@ class EnumDeclarationFormatter extends IFormatter
             throw FormatException('Not an EnumDeclaration: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.enumKeyword, astVisitor, '$methodName/node.enumKeyword'); // covered by tests
-        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name'); // covered by tests
-        formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket'); // covered by tests
+        formatState.copyEntity(node.enumKeyword, astVisitor, '$methodName/node.enumKeyword');
+        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
+        formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
         formatState.acceptListWithComma(node.constants, node.rightBracket, astVisitor, '$methodName/node.constants');
-        formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket'); // covered by tests
+        formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');
 
         log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

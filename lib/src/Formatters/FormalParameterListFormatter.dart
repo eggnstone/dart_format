@@ -26,8 +26,8 @@ class FormalParameterListFormatter extends IFormatter
         if (node is! FormalParameterList)
             throw FormatException('Not a FormalParameterList: ${node.runtimeType}');
 
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis'); // covered by tests
-        formatState.pushLevel('$methodName/node.leftParenthesis'); // covered by tests
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
+        formatState.pushLevel('$methodName/node.leftParenthesis');
 
         // TODO: move to FormatState
         AstNode? lastNode;
@@ -51,12 +51,12 @@ class FormalParameterListFormatter extends IFormatter
 
             if (shouldWriteLeftDelimiter)
             {
-                formatState.copyEntity(node.leftDelimiter, astVisitor, '$methodName/node.leftDelimiter'); // covered by tests
-                formatState.pushLevel('$methodName/node.leftDelimiter'); // covered by tests
+                formatState.copyEntity(node.leftDelimiter, astVisitor, '$methodName/node.leftDelimiter');
+                formatState.pushLevel('$methodName/node.leftDelimiter');
                 wroteLeftDelimiter = true;
             }
 
-            parameter.accept(astVisitor); // covered by tests
+            parameter.accept(astVisitor);
             lastNode = parameter;
         }
 
@@ -80,12 +80,12 @@ class FormalParameterListFormatter extends IFormatter
 
         if (node.rightDelimiter != null)
         {
-            formatState.popLevelAndIndent(); // covered by tests
-            formatState.copyEntity(node.rightDelimiter, astVisitor, '$methodName/node.rightDelimiter'); // covered by tests
+            formatState.popLevelAndIndent();
+            formatState.copyEntity(node.rightDelimiter, astVisitor, '$methodName/node.rightDelimiter');
         }
 
-        formatState.popLevelAndIndent(); // covered by tests
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis'); // covered by tests
+        formatState.popLevelAndIndent();
+        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
 
         log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

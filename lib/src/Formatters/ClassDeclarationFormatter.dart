@@ -26,18 +26,18 @@ class ClassDeclarationFormatter extends IFormatter
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         //log('### NOT COPYING node.sortedCommentAndAnnotations', 0);
 
-        formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword'); // covered by tests
-        formatState.copyEntity(node.interfaceKeyword, astVisitor, '$methodName/node.interfaceKeyword'); // covered by tests
+        formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword');
+        formatState.copyEntity(node.interfaceKeyword, astVisitor, '$methodName/node.interfaceKeyword');
         formatState.copyEntity(node.finalKeyword, astVisitor, '$methodName/node.finalKeyword');
-        formatState.copyEntity(node.classKeyword, astVisitor, '$methodName/node.classKeyword'); // covered by tests
-        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name'); // covered by tests
-        formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters'); // covered by tests
-        formatState.copyEntity(node.extendsClause, astVisitor, '$methodName/node.extendsClause'); // covered by tests
-        formatState.copyEntity(node.withClause, astVisitor, '$methodName/node.withClause'); // covered by tests
-        formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause'); // covered by tests
-        formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket'); // covered by tests
-        formatState.acceptList(node.members, astVisitor, '$methodName/node.members'); // covered by tests
-        formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket'); // covered by tests
+        formatState.copyEntity(node.classKeyword, astVisitor, '$methodName/node.classKeyword');
+        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
+        formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
+        formatState.copyEntity(node.extendsClause, astVisitor, '$methodName/node.extendsClause');
+        formatState.copyEntity(node.withClause, astVisitor, '$methodName/node.withClause');
+        formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause');
+        formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
+        formatState.acceptList(node.members, astVisitor, '$methodName/node.members');
+        formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');
 
         log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
