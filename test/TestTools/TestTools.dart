@@ -62,7 +62,13 @@ class TestTools
                     Test.test('Config: ${testConfig.name}', ()
                         {
                             final ParseStringResult parseResult = TestParseStringResult(content: inputText, unit: inputNode.root as CompilationUnit);
-                            final FormatState formatState = FormatState.test(parseResult, indentationSpacesPerLevel: testConfig.config.indentationSpacesPerLevel, leading: testGroupConfig.inputLeading, trailing: testGroupConfig.inputTrailing);
+                            final FormatState formatState = FormatState.test(
+                                parseResult,
+                                indentationSpacesPerLevel: testConfig.config.indentationSpacesPerLevel,
+                                removeTrailingCommas: testConfig.config.removeTrailingCommas,
+                                leading: testGroupConfig.inputLeading,
+                                trailing: testGroupConfig.inputTrailing
+                            );
                             final MetaAstVisitor<AstNode> astVisitor = MetaAstVisitor<AstNode>(astVisitors, formatState);
                             final IFormatter? formatter = createFormatterFunction?.call(testConfig.config, astVisitor, formatState);
 

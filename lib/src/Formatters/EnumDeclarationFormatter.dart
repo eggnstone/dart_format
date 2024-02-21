@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/ast/token.dart';
 
 import '../Config.dart';
 import '../Constants/Constants.dart';
@@ -27,7 +28,9 @@ class EnumDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.enumKeyword, astVisitor, '$methodName/node.enumKeyword');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
-        formatState.acceptListWithComma(node.constants, node.rightBracket, astVisitor, '$methodName/node.constants');
+        final Token endTokenForConstants = node.semicolon ?? node.rightBracket;
+        formatState.acceptListWithComma(node.constants, endTokenForConstants, astVisitor, '$methodName/node.constants');
+        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
         formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');
 
         log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

@@ -35,18 +35,27 @@ class FormatState
     => _lastConsumedPosition;
 
     FormatState(
-        ParseStringResult parseResult,         {
+        ParseStringResult parseResult, {
             required int indentationSpacesPerLevel,
-            required bool removeTrailingCommas}
+            required bool removeTrailingCommas
+        }
     )
         : _indentationSpacesPerLevel = indentationSpacesPerLevel,
         _removeTrailingCommas = removeTrailingCommas,
         _parseResult = parseResult;
 
     factory FormatState.test(ParseStringResult parseResult, {
-            required int indentationSpacesPerLevel, String? leading,
-            String? trailing})
-    => FormatState(parseResult, indentationSpacesPerLevel: indentationSpacesPerLevel, removeTrailingCommas : true)
+            required int indentationSpacesPerLevel, 
+            required bool removeTrailingCommas,
+            String? leading,
+            String? trailing
+        }
+    )
+    => FormatState(
+        parseResult,
+        indentationSpacesPerLevel: indentationSpacesPerLevel,
+        removeTrailingCommas : removeTrailingCommas
+    )
     .._lastConsumedPosition = leading?.length ?? 0
     .._trailingForTests = trailing;
 
@@ -220,7 +229,9 @@ class FormatState
         }
 
         if (filler.trim().isNotEmpty)
-            _logAndThrowError('Internal error: Upcoming trimmed filler is not empty/whitespace-only: ${StringTools.toDisplayString(filler)}');
+            _logAndThrowError('Internal error: Upcoming trimmed filler is not empty/whitespace-only:'
+                ' $lastConsumedPosition (${getPositionInfo(lastConsumedPosition)})'
+                ' ${StringTools.toDisplayString(filler)}');
 
         _log('  Replacing empty or whitespace-only filler with line break because upcoming filler does not contain line break.');
         consumeText(lastConsumedPosition, end, '', fullSource);
