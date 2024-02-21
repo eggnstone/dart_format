@@ -24,6 +24,8 @@ import 'Formatters/ExpressionFunctionBodyFormatter.dart';
 import 'Formatters/ExpressionStatementFormatter.dart';
 import 'Formatters/ExtensionDeclarationFormatter.dart';
 import 'Formatters/FieldDeclarationFormatter.dart';
+import 'Formatters/ForPartsWithDeclarationsFormatter.dart';
+import 'Formatters/ForPartsWithExpressionFormatter.dart';
 import 'Formatters/ForStatementFormatter.dart';
 import 'Formatters/FormalParameterListFormatter.dart';
 import 'Formatters/FunctionTypeAliasFormatter.dart';
@@ -89,6 +91,8 @@ class FormatVisitor extends AstVisitor<void>
     late final ExpressionStatementFormatter _expressionStatementFormatter = ExpressionStatementFormatter(config, this, _formatState);
     late final FieldDeclarationFormatter _fieldDeclarationFormatter = FieldDeclarationFormatter(config, this, _formatState);
     late final FormalParameterListFormatter _formalParameterListFormatter = FormalParameterListFormatter(config, this, _formatState);
+    late final ForPartsWithDeclarationsFormatter _forPartsWithDeclarationsFormatter = ForPartsWithDeclarationsFormatter(config, this, _formatState);
+    late final ForPartsWithExpressionFormatter _forPartsWithExpressionFormatter = ForPartsWithExpressionFormatter(config, this, _formatState);
     late final ForStatementFormatter _forStatementFormatter = ForStatementFormatter(config, this, _formatState);
     late final FunctionTypeAliasFormatter _functionTypeAliasFormatter = FunctionTypeAliasFormatter(config, this, _formatState);
     late final GenericTypeAliasFormatter _genericTypeAliasFormatter = GenericTypeAliasFormatter(config, this, _formatState);
@@ -368,11 +372,11 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitForPartsWithDeclarations(ForPartsWithDeclarations node)
-    => _defaultFormatter.format(node);
+    => _forPartsWithDeclarationsFormatter.format(node);
 
     @override
     void visitForPartsWithExpression(ForPartsWithExpression node)
-    => _defaultFormatter.format(node);
+    => _forPartsWithExpressionFormatter.format(node);
 
     @override
     void visitForPartsWithPattern(ForPartsWithPattern node)

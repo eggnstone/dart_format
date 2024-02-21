@@ -54,14 +54,14 @@ class AstCreator
     static FieldDeclaration createFieldDeclarationInClass(String s)
     => createClassMember(s) as FieldDeclaration;
 
+    static ForLoopParts createForLoopPartsInForStatementInFunction(String s)
+    => createForStatementInFunction(s).forLoopParts;
+
     static FormalParameter createFormalParameterInFunction(String s)
     => createFormalParameterListInFunction(s).parameters[0];
 
     static FormalParameterList createFormalParameterListInFunction(String s)
     => createFunctionExpression(s).parameters!;
-
-    static ForLoopParts createForLoopPartsInForStatementInFunction(String s)
-    => createForStatementInFunction(s).forLoopParts;
 
     static ForStatement createForStatementInFunction(String s)
     => createStatementInFunction(s) as ForStatement;
