@@ -23,6 +23,7 @@ class IndexExpressionFormatter extends IFormatter
         if (node is! IndexExpression)
             throw FormatException('Not an IndexExpression: ${node.runtimeType}');
 
+        formatState.copyEntity(node.period, astVisitor, '$methodName/node.period');
         formatState.copyEntity(node.target, astVisitor, '$methodName/node.target');
         formatState.copyEntity(node.question, astVisitor, '$methodName/node.question');
         formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');

@@ -9,6 +9,12 @@ class AstCreator
     static Block createBlockInFunction(String s)
     => createBlockFunctionBody(s).block;
 
+    static CascadeExpression createCascadeExpressionInVariableDeclarationInClass(String s)
+    => createInitializerInVariableDeclarationInClass(s) as CascadeExpression;
+
+    static Expression createCascadeSectionInVariableDeclarationInClass(String s)
+    => createCascadeExpressionInVariableDeclarationInClass(s).cascadeSections[0];
+
     static CatchClause createCatchClauseInFunction(String s)
     => createTryStatementInFunction(s).catchClauses[0];
 
@@ -75,6 +81,9 @@ class AstCreator
     static FunctionExpression createFunctionExpression(String s)
     => createFunctionDeclaration(s).functionExpression;
 
+    static Expression createInitializerInVariableDeclarationInClass(String s)
+    => createVariableDeclarationInClass(s).initializer!;
+
     static TypeAnnotation createNamedTypeOfTopLevelVariable(String s)
     => createTopLevelVariableList(s).type!;
 
@@ -107,6 +116,9 @@ class AstCreator
 
     static TypeAnnotation createTypeAnnotationInFunctionParameter(String s)
     => createSimpleFormalParameterInFunction(s).type!;
+
+    static VariableDeclaration createVariableDeclarationInClass(String s)
+    => createVariableDeclarationListInClass(s).variables[0];
 
     static VariableDeclarationList createVariableDeclarationListInClass(String s)
     => createFieldDeclarationInClass(s).fields;

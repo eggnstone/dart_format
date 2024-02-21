@@ -14,7 +14,7 @@ void main()
     // TODO: move tests with different existing indentations to a separate test group.
 
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
-        /*TestGroupConfig(
+        TestGroupConfig(
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'enum E{x,y,}',
             name: 'EnumDeclaration in 1 line with trailing comma',
@@ -26,7 +26,7 @@ void main()
                 TestConfig.none(),
                 TestConfig('enum E\n{\n    x,y\n}\n')
             ]
-        ),*/
+        ), 
         TestGroupConfig(
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'enum E{x,y,/**/}',
@@ -37,10 +37,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-               // TestConfig('enum E\n{\n    x,y/**/\n}\n')
+                TestConfig('enum E\n{\n    x,y/**/\n}\n')
             ]
         ),
-        /*TestGroupConfig(
+        TestGroupConfig(
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'enum E{x,y;}',
             name: 'EnumDeclaration in 1 line with trailing semicolon',
@@ -106,7 +106,7 @@ void main()
                 TestConfig.none('enum E{\nx,\ny,\nz}'),
                 TestConfig('enum E\n{\n    x,\n    y,\n    z\n}\n')
             ]
-        )*/
+        )
     ];
 
     TestTools.runTestGroupsForFormatter(testGroupConfigs, 'EnumDeclarationFormatter', EnumDeclarationFormatter.new, StackTrace.current);
