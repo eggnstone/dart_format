@@ -28,6 +28,15 @@ void main()
                 TestConfig.none(),
                 TestConfig('@a abstract interface class C<T> extends E with W implements I\n{\n    C();\n}\n')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createDeclaration,
+            inputMiddle: 'abstract mixin class C{}',
+            name: 'ClassDeclaration / abstract mixin class C{}',
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('abstract mixin class C\n{\n}\n')
+            ]
         )
     ];
 
