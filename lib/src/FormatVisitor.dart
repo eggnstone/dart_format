@@ -31,6 +31,7 @@ import 'Formatters/GenericTypeAliasFormatter.dart';
 import 'Formatters/HideCombinatorFormatter.dart';
 import 'Formatters/IfStatementFormatter.dart';
 import 'Formatters/ImportDirectiveFormatter.dart';
+import 'Formatters/IndexExpressionFormatter.dart';
 import 'Formatters/LibraryAugmentationDirectiveFormatter.dart';
 import 'Formatters/LibraryDirectiveFormatter.dart';
 import 'Formatters/LibraryIdentifierFormatter.dart';
@@ -92,6 +93,7 @@ class FormatVisitor extends AstVisitor<void>
     late final HideCombinatorFormatter _hideCombinatorFormatter = HideCombinatorFormatter(config, this, _formatState);
     late final IfStatementFormatter _ifStatementFormatter = IfStatementFormatter(config, this, _formatState);
     late final ImportDirectiveFormatter _importDirectiveFormatter = ImportDirectiveFormatter(config, this, _formatState);
+    late final IndexExpressionFormatter _indexExpressionFormatter = IndexExpressionFormatter(config, this, _formatState);
     late final LibraryAugmentationDirectiveFormatter _libraryAugmentationDirectiveFormatter = LibraryAugmentationDirectiveFormatter(config, this, _formatState);
     late final LibraryDirectiveFormatter _libraryDirectiveFormatter = LibraryDirectiveFormatter(config, this, _formatState);
     late final LibraryIdentifierFormatter _libraryIdentifierFormatter = LibraryIdentifierFormatter(config, this, _formatState);
@@ -446,7 +448,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitIndexExpression(IndexExpression node)
-    => _defaultFormatter.format(node);
+    => _indexExpressionFormatter.format(node);
 
     @override
     void visitInstanceCreationExpression(InstanceCreationExpression node)
