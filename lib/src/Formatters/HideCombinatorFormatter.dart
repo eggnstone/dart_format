@@ -6,25 +6,25 @@ import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
-class ShowCombinatorFormatter extends IFormatter
+class HideCombinatorFormatter extends IFormatter
 {
     final AstVisitor<void> astVisitor;
     final Config config;
     final FormatState formatState;
 
-    ShowCombinatorFormatter(this.config, this.astVisitor, this.formatState);
+    HideCombinatorFormatter(this.config, this.astVisitor, this.formatState);
 
     @override
     void format(AstNode node)
     {
-        const String methodName = 'ShowCombinatorFormatter.format';
+        const String methodName = 'HideCombinatorFormatter.format';
         log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
-        if (node is! ShowCombinator)
-            throw FormatException('Not a ShowCombinator: ${node.runtimeType}');
+        if (node is! HideCombinator)
+            throw FormatException('Not a HideCombinator: ${node.runtimeType}');
 
         formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword');
-        formatState.acceptListWithComma(node.shownNames, null, astVisitor, '$methodName/node.shownNames');
+        formatState.acceptListWithComma(node.hiddenNames, null, astVisitor, '$methodName/node.hiddenNames');
 
         log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

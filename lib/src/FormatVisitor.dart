@@ -3,6 +3,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'Config.dart';
 import 'FormatState.dart';
 import 'Formatters/ArgumentListFormatter.dart';
+import 'Formatters/AssertInitializerFormatter.dart';
 import 'Formatters/AssertStatementFormatter.dart';
 import 'Formatters/AugmentationImportDirectiveFormatter.dart';
 import 'Formatters/BlockFormatter.dart';
@@ -27,6 +28,7 @@ import 'Formatters/ForStatementFormatter.dart';
 import 'Formatters/FormalParameterListFormatter.dart';
 import 'Formatters/FunctionTypeAliasFormatter.dart';
 import 'Formatters/GenericTypeAliasFormatter.dart';
+import 'Formatters/HideCombinatorFormatter.dart';
 import 'Formatters/IfStatementFormatter.dart';
 import 'Formatters/ImportDirectiveFormatter.dart';
 import 'Formatters/LibraryAugmentationDirectiveFormatter.dart';
@@ -57,6 +59,7 @@ class FormatVisitor extends AstVisitor<void>
     late final FormatState _formatState;
 
     late final ArgumentListFormatter _argumentListFormatter = ArgumentListFormatter(config, this, _formatState);
+    late final AssertInitializerFormatter _assertInitializerFormatter = AssertInitializerFormatter(config, this, _formatState);
     late final AssertStatementFormatter _assertStatementFormatter = AssertStatementFormatter(config, this, _formatState);
     late final AugmentationImportDirectiveFormatter _augmentationImportDirectiveFormatter = AugmentationImportDirectiveFormatter(config, this, _formatState);
     late final BlockFormatter _blockFormatter = BlockFormatter(config, this, _formatState);
@@ -80,6 +83,7 @@ class FormatVisitor extends AstVisitor<void>
     late final ForStatementFormatter _forStatementFormatter = ForStatementFormatter(config, this, _formatState);
     late final FunctionTypeAliasFormatter _functionTypeAliasFormatter = FunctionTypeAliasFormatter(config, this, _formatState);
     late final GenericTypeAliasFormatter _genericTypeAliasFormatter = GenericTypeAliasFormatter(config, this, _formatState);
+    late final HideCombinatorFormatter _hideCombinatorFormatter = HideCombinatorFormatter(config, this, _formatState);
     late final IfStatementFormatter _ifStatementFormatter = IfStatementFormatter(config, this, _formatState);
     late final ImportDirectiveFormatter _importDirectiveFormatter = ImportDirectiveFormatter(config, this, _formatState);
     late final LibraryAugmentationDirectiveFormatter _libraryAugmentationDirectiveFormatter = LibraryAugmentationDirectiveFormatter(config, this, _formatState);
@@ -130,7 +134,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitAssertInitializer(AssertInitializer node)
-    => _defaultFormatter.format(node);
+    => _assertInitializerFormatter.format(node);
 
     @override
     void visitAssertStatement(AssertStatement assertStatement)
@@ -402,7 +406,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitHideCombinator(HideCombinator node)
-    => _defaultFormatter.format(node);
+    => _hideCombinatorFormatter.format(node);
 
     @override
     void visitIfElement(IfElement node)
