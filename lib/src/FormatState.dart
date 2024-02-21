@@ -268,7 +268,9 @@ class FormatState
             _log('  Current:              ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
 
             if (!FormatTools.isEmptyOrComments(filler))
-                _logAndThrowError('Missed some text: (${getPositionInfo(lastConsumedPosition)}) - (${getPositionInfo(offset)}): ${StringTools.toDisplayString(filler, 100)} Source: $source');
+                _logAndThrowError('Missed some text:'
+                    ' (${getPositionInfo(lastConsumedPosition)}) - (${getPositionInfo(offset)}): ${StringTools.toDisplayString(filler, 100)}'
+                    ' Source: $source');
 
             final String fixedFiller = _removeLeadingWhitespace(filler);
             _log('  Filler w/o leadingWS: ${StringTools.toDisplayString(fixedFiller)}');

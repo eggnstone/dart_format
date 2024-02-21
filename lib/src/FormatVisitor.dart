@@ -42,6 +42,7 @@ import 'Formatters/PartDirectiveFormatter.dart';
 import 'Formatters/PartOfDirectiveFormatter.dart';
 import 'Formatters/PatternVariableDeclarationStatementFormatter.dart';
 import 'Formatters/RecordLiteralFormatter.dart';
+import 'Formatters/RecordPatternFormatter.dart';
 import 'Formatters/ReturnStatementFormatter.dart';
 import 'Formatters/SetOrMapLiteralFormatter.dart';
 import 'Formatters/ShowCombinatorFormatter.dart';
@@ -100,6 +101,7 @@ class FormatVisitor extends AstVisitor<void>
     late final PartOfDirectiveFormatter _partOfDirectiveFormatter = PartOfDirectiveFormatter(config, this, _formatState);
     late final PatternVariableDeclarationStatementFormatter _patternVariableDeclarationStatementFormatter = PatternVariableDeclarationStatementFormatter(config, this, _formatState);
     late final RecordLiteralFormatter _recordLiteralFormatter = RecordLiteralFormatter(config, this, _formatState);
+    late final RecordPatternFormatter _recordPatternFormatter = RecordPatternFormatter(config, this, _formatState);
     late final ReturnStatementFormatter _returnStatementFormatter = ReturnStatementFormatter(config, this, _formatState);
     late final SetOrMapLiteralFormatter _setOrMapLiteralFormatter = SetOrMapLiteralFormatter(config, this, _formatState);
     late final ShowCombinatorFormatter _showCombinatorFormatter = ShowCombinatorFormatter(config, this, _formatState);
@@ -616,7 +618,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitRecordPattern(RecordPattern node)
-    => _defaultFormatter.format(node);
+    => _recordPatternFormatter.format(node);
 
     @override
     void visitRecordTypeAnnotation(RecordTypeAnnotation node)
