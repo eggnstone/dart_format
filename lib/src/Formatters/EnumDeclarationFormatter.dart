@@ -31,6 +31,7 @@ class EnumDeclarationFormatter extends IFormatter
         final Token endTokenForConstants = node.semicolon ?? node.rightBracket;
         formatState.acceptListWithComma(node.constants, endTokenForConstants, astVisitor, '$methodName/node.constants');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+        formatState.acceptList(node.members, astVisitor, '$methodName/node.members');
         formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');
 
         log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

@@ -43,6 +43,20 @@ void main()
         ),
         TestGroupConfig(
             inputNodeCreator: AstCreator.createDeclaration,
+            inputMiddle: 'enum E{x,y;void m();}',
+            name: 'EnumDeclaration in 1 line with trailing semicolon and method',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<EnumConstantDeclaration>(7, 'x'),
+                TestVisitor<EnumConstantDeclaration>(9, 'y'),
+                TestVisitor<MethodDeclaration>(11, 'void m();')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('enum E\n{\n    x,y;\n    void m();\n}\n')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'enum E{x,\ny}',
             name: 'EnumDeclaration in 2 lines',
             astVisitors: <TestVisitor<void>>[

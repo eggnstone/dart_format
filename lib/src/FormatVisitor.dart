@@ -57,6 +57,7 @@ import 'Formatters/TypeArgumentListFormatter.dart';
 import 'Formatters/TypeParameterListFormatter.dart';
 import 'Formatters/VariableDeclarationStatementFormatter.dart';
 import 'Formatters/WhileStatementFormatter.dart';
+import 'Formatters/WithClauseFormatter.dart';
 import 'Formatters/YieldStatementFormatter.dart';
 
 class FormatVisitor extends AstVisitor<void>
@@ -119,6 +120,7 @@ class FormatVisitor extends AstVisitor<void>
     late final TypeParameterListFormatter _typeParameterListFormatter = TypeParameterListFormatter(config, this, _formatState);
     late final VariableDeclarationStatementFormatter _variableDeclarationStatementFormatter = VariableDeclarationStatementFormatter(config, this, _formatState);
     late final WhileStatementFormatter _whileStatementFormatter = WhileStatementFormatter(config, this, _formatState);
+    late final WithClauseFormatter _withClauseFormatter = WithClauseFormatter(config, this, _formatState);
     late final YieldStatementFormatter _yieldStatementFormatter = YieldStatementFormatter(config, this, _formatState);
 
     late final DefaultFormatter _defaultFormatter = DefaultFormatter(config, this, _formatState);
@@ -800,7 +802,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitWithClause(WithClause node)
-    => _defaultFormatter.format(node);
+    => _withClauseFormatter.format(node);
 
     @override
     void visitYieldStatement(YieldStatement node)
