@@ -26,6 +26,7 @@ class FieldDeclarationFormatter extends IFormatter
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         //log('### NOT COPYING node.sortedCommentAndAnnotations', 0);
 
+        formatState.copyEntity(node.externalKeyword, astVisitor, '$methodName/node.externalKeyword');
         formatState.copyEntity(node.staticKeyword, astVisitor, '$methodName/node.staticKeyword');
         formatState.copyEntity(node.fields, astVisitor, '$methodName/node.fields');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');

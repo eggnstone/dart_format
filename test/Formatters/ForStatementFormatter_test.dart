@@ -17,7 +17,7 @@ void main()
             inputLeading: 'void f(){',
             inputMiddle: 'for(;;);',
             inputTrailing: '}',
-            name: 'ForStatement',
+            name: 'ForStatement for(;;);',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<ForPartsWithExpression>(13, ';;'),
                 TestVisitor<EmptyStatement>(16, ';')
@@ -28,7 +28,7 @@ void main()
             inputLeading: 'void f(){',
             inputMiddle: 'for(;;)\n;',
             inputTrailing: '}',
-            name: r'ForStatement \n',
+            name: r'ForStatement for(;;)\n;',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<ForPartsWithExpression>(13, ';;'),
                 TestVisitor<EmptyStatement>(17, ';')
@@ -36,6 +36,17 @@ void main()
             testConfigs: <TestConfig>[
                 TestConfig.none(),
                 TestConfig('for(;;)\n    ;')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createStatementInFunction,
+            inputLeading: 'void f()async{',
+            inputMiddle: 'await for(a in b);',
+            inputTrailing: '}',
+            name: 'ForStatement await for(a in b);',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<ForEachPartsWithIdentifier>(24, 'a in b'),
+                TestVisitor<EmptyStatement>(31, ';')
             ]
         )
     ];

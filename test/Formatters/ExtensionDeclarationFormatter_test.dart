@@ -14,15 +14,16 @@ void main()
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
         TestGroupConfig(
             inputNodeCreator: AstCreator.createDeclaration,
-            inputMiddle: 'extension E on C{void m(){}}',
+            inputMiddle: 'extension E<T1,T2> on C<T1,T2>{void m(){}}',
             name: 'ExtensionDeclaration',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<NamedType>(15, 'C'),
-                TestVisitor<MethodDeclaration>(17, 'void m(){}')
+                TestVisitor<TypeParameterList>(11, '<T1,T2>'),
+                TestVisitor<NamedType>(22, 'C<T1,T2>'),
+                TestVisitor<MethodDeclaration>(31, 'void m(){}')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('extension E on C\n{\n    void m(){}\n}\n')
+                TestConfig('extension E<T1,T2> on C<T1,T2>\n{\n    void m(){}\n}\n')
             ]
         )
     ];

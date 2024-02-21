@@ -23,6 +23,7 @@ class ForStatementFormatter extends IFormatter
         if (node is! ForStatement)
             throw FormatException('Not a ForStatement: ${node.runtimeType}');
 
+        formatState.copyEntity(node.awaitKeyword, astVisitor, '$methodName/node.awaitKeyword');
         formatState.copyEntity(node.forKeyword, astVisitor, '$methodName/node.forKeyword');
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
         formatState.copyEntity(node.forLoopParts, astVisitor, '$methodName/node.forLoopParts');

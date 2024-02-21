@@ -33,6 +33,7 @@ import 'Formatters/IfStatementFormatter.dart';
 import 'Formatters/ImportDirectiveFormatter.dart';
 import 'Formatters/LibraryAugmentationDirectiveFormatter.dart';
 import 'Formatters/LibraryDirectiveFormatter.dart';
+import 'Formatters/LibraryIdentifierFormatter.dart';
 import 'Formatters/ListLiteralFormatter.dart';
 import 'Formatters/NativeFunctionBodyFormatter.dart';
 import 'Formatters/PartDirectiveFormatter.dart';
@@ -88,6 +89,7 @@ class FormatVisitor extends AstVisitor<void>
     late final ImportDirectiveFormatter _importDirectiveFormatter = ImportDirectiveFormatter(config, this, _formatState);
     late final LibraryAugmentationDirectiveFormatter _libraryAugmentationDirectiveFormatter = LibraryAugmentationDirectiveFormatter(config, this, _formatState);
     late final LibraryDirectiveFormatter _libraryDirectiveFormatter = LibraryDirectiveFormatter(config, this, _formatState);
+    late final LibraryIdentifierFormatter _libraryIdentifierFormatter = LibraryIdentifierFormatter(config, this, _formatState);
     late final ListLiteralFormatter _listLiteralFormatter = ListLiteralFormatter(config, this, _formatState);
     late final NativeFunctionBodyFormatter _nativeFunctionBodyFormatter = NativeFunctionBodyFormatter(config, this, _formatState);
     late final PartDirectiveFormatter _partDirectiveFormatter = PartDirectiveFormatter(config, this, _formatState);
@@ -474,7 +476,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitLibraryIdentifier(LibraryIdentifier node)
-    => _defaultFormatter.format(node);
+    => _libraryIdentifierFormatter.format(node);
 
     @override
     void visitListLiteral(ListLiteral node)

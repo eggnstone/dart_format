@@ -357,8 +357,8 @@ class WebServiceHandler
         const String METHOD_NAME = '$CLASS_NAME._handleRequest';
         final DateTime startTime = DateTime.now();
 
-        _requestCount++;
-        logDebug('$METHOD_NAME START #$_requestCount: ${request.method} ${request.uri}');
+        final int requestCount = ++_requestCount;
+        logDebug('$METHOD_NAME START #$requestCount: ${request.method} ${request.uri}');
 
         // TODO: timeout?
         try
@@ -394,7 +394,7 @@ class WebServiceHandler
         }*/
         finally
         {
-            logDebug('$METHOD_NAME END   #$_requestCount: ${request.method} ${request.uri} took ${DateTime.now().difference(startTime).inMilliseconds / 1000}s');
+            logDebug('$METHOD_NAME END   #$requestCount: ${request.method} ${request.uri} took ${DateTime.now().difference(startTime).inMilliseconds / 1000}s');
         }
     }
 
