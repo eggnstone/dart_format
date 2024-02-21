@@ -43,6 +43,8 @@ import 'Formatters/PartOfDirectiveFormatter.dart';
 import 'Formatters/PatternVariableDeclarationStatementFormatter.dart';
 import 'Formatters/RecordLiteralFormatter.dart';
 import 'Formatters/RecordPatternFormatter.dart';
+import 'Formatters/RecordTypeAnnotationFormatter.dart';
+import 'Formatters/RecordTypeAnnotationNamedFieldsFormatter.dart';
 import 'Formatters/ReturnStatementFormatter.dart';
 import 'Formatters/SetOrMapLiteralFormatter.dart';
 import 'Formatters/ShowCombinatorFormatter.dart';
@@ -102,6 +104,8 @@ class FormatVisitor extends AstVisitor<void>
     late final PatternVariableDeclarationStatementFormatter _patternVariableDeclarationStatementFormatter = PatternVariableDeclarationStatementFormatter(config, this, _formatState);
     late final RecordLiteralFormatter _recordLiteralFormatter = RecordLiteralFormatter(config, this, _formatState);
     late final RecordPatternFormatter _recordPatternFormatter = RecordPatternFormatter(config, this, _formatState);
+    late final RecordTypeAnnotationFormatter _recordTypeAnnotationFormatter = RecordTypeAnnotationFormatter(config, this, _formatState);
+    late final RecordTypeAnnotationNamedFieldsFormatter _recordTypeAnnotationNamedFieldsFormatter = RecordTypeAnnotationNamedFieldsFormatter(config, this, _formatState);
     late final ReturnStatementFormatter _returnStatementFormatter = ReturnStatementFormatter(config, this, _formatState);
     late final SetOrMapLiteralFormatter _setOrMapLiteralFormatter = SetOrMapLiteralFormatter(config, this, _formatState);
     late final ShowCombinatorFormatter _showCombinatorFormatter = ShowCombinatorFormatter(config, this, _formatState);
@@ -622,7 +626,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitRecordTypeAnnotation(RecordTypeAnnotation node)
-    => _defaultFormatter.format(node);
+    => _recordTypeAnnotationFormatter.format(node);
 
     @override
     void visitRecordTypeAnnotationNamedField(RecordTypeAnnotationNamedField node)
@@ -630,7 +634,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitRecordTypeAnnotationNamedFields(RecordTypeAnnotationNamedFields node)
-    => _defaultFormatter.format(node);
+    => _recordTypeAnnotationNamedFieldsFormatter.format(node);
 
     @override
     void visitRecordTypeAnnotationPositionalField(RecordTypeAnnotationPositionalField node)
