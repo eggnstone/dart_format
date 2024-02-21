@@ -28,7 +28,8 @@ class EnumDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.enumKeyword, astVisitor, '$methodName/node.enumKeyword');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
-        final Token endTokenForConstants = node.semicolon ?? node.rightBracket;
+        // TODO: precedingComments: on semicolon, too. Check other formatters, too.
+        final Token endTokenForConstants = node.semicolon ?? node.rightBracket.precedingComments ?? node.rightBracket;
         formatState.acceptListWithComma(node.constants, endTokenForConstants, astVisitor, '$methodName/node.constants');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
         formatState.acceptList(node.members, astVisitor, '$methodName/node.members');

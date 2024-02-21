@@ -230,7 +230,7 @@ class FormatState
 
         if (filler.trim().isNotEmpty)
             _logAndThrowError('Internal error: Upcoming trimmed filler is not empty/whitespace-only:'
-                ' $lastConsumedPosition (${getPositionInfo(lastConsumedPosition)})'
+                ' (${getPositionInfo(lastConsumedPosition)})'
                 ' ${StringTools.toDisplayString(filler)}');
 
         _log('  Replacing empty or whitespace-only filler with line break because upcoming filler does not contain line break.');
@@ -254,8 +254,8 @@ class FormatState
         _log('# $methodName($offset, $end, ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
         if (offset < lastConsumedPosition)
-            _logAndThrowError('offset < lastConsumedPosition:'
-                ' $offset (${getPositionInfo(offset)}) < $lastConsumedPosition (${getPositionInfo(lastConsumedPosition)})'
+            _logAndThrowError('Internal error: offset < lastConsumedPosition:'
+                ' (${getPositionInfo(offset)}) < (${getPositionInfo(lastConsumedPosition)})'
                 ' ($source)');
 
         if (lastConsumedPosition < offset)
@@ -268,8 +268,9 @@ class FormatState
             _log('  Current:              ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
 
             if (!FormatTools.isEmptyOrComments(filler))
-                _logAndThrowError('Missed some text:'
-                    ' (${getPositionInfo(lastConsumedPosition)}) - (${getPositionInfo(offset)}): ${StringTools.toDisplayString(filler, 100)}'
+                _logAndThrowError('Internal error: Missed some text:'
+                    ' (${getPositionInfo(lastConsumedPosition)}) - (${getPositionInfo(offset)}):'
+                    ' ${StringTools.toDisplayString(filler, 100)}'
                     ' Source: $source');
 
             final String fixedFiller = _removeLeadingWhitespace(filler);
@@ -309,7 +310,9 @@ class FormatState
         if (!FormatTools.isEmptyOrComments(filler))
         {
             _log('  Current:                   ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
-            _logAndThrowError('Missed some text: (${getPositionInfo(lastConsumedPosition)}) - (${getPositionInfo(end)}): ${StringTools.toDisplayString(filler, 100)} Source: $source');
+            _logAndThrowError('Internal error: Missed some text:'
+                ' (${getPositionInfo(lastConsumedPosition)}) - (${getPositionInfo(end)}):'
+                ' ${StringTools.toDisplayString(filler, 100)} Source: $source');
         }
 
         _log('+ ${StringTools.toDisplayString(filler, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
