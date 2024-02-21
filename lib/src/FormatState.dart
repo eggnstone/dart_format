@@ -453,6 +453,17 @@ class FormatState
             return;
         }
 
+        if (end < _lastConsumedPosition)
+        {
+            final String alreadyConsumedText = getText(end, _lastConsumedPosition);
+            //logDebug('alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
+            if (alreadyConsumedText.trim().isEmpty)
+            {
+                // TODO: Find a better way!
+                end = _lastConsumedPosition;
+            }
+        }
+
         copyText(end, token.end, fullSource);
     }
 
