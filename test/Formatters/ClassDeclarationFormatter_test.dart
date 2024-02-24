@@ -15,7 +15,7 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: '@a abstract interface class C<T> extends E with W implements I{C();}',
-            name: 'ClassDeclaration / empty constructor',
+            name: 'ClassDeclaration / @a abstract interface class C<T> extends E with W implements I{C();}',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<Annotation>(0, '@a'),
                 TestVisitor<TypeParameterList>(29, '<T>'),
@@ -27,6 +27,18 @@ void main()
             testConfigs: <TestConfig>[
                 TestConfig.none(),
                 TestConfig('@a abstract interface class C<T> extends E with W implements I\n{\n    C();\n}\n')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createDeclaration,
+            inputMiddle: '@a sealed class C{}',
+            name: 'ClassDeclaration / @a sealed class C{}',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<Annotation>(0, '@a')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('@a sealed class C\n{\n}\n')
             ]
         ),
         TestGroupConfig(
