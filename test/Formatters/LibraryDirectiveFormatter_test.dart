@@ -17,12 +17,12 @@ void main()
             inputNodeCreator: AstCreator.createDirective,
             inputMiddle: 'library l;',
             name: 'End of text',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<LibraryIdentifier>(8, 'l')
+            ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
                 TestConfig('library l;\n')
-            ],
-            astVisitors: <TestVisitor<void>>[
-                TestVisitor<LibraryIdentifier>(8, 'l')
             ]
         ),
         TestGroupConfig(

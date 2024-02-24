@@ -84,11 +84,17 @@ class AstCreator
     static Expression createInitializerInVariableDeclarationInClass(String s)
     => createVariableDeclarationInClass(s).initializer!;
 
+    static MixinDeclaration createMixinDeclaration(String s)
+    => createDeclaration(s) as MixinDeclaration;
+
     static TypeAnnotation createNamedTypeOfTopLevelVariable(String s)
     => createTopLevelVariableList(s).type!;
 
     static NamespaceDirective createNamespaceDirective(String s)
     => createDirective(s) as NamespaceDirective;
+
+    static OnClause createOnClauseInMixinDeclaration(String s)
+    => createMixinDeclaration(s).onClause!;
 
     static SimpleFormalParameter createSimpleFormalParameterInFunction(String s)
     => createFormalParameterInFunction(s) as SimpleFormalParameter;
