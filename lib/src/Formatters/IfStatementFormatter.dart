@@ -1,10 +1,11 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
-import '../Types/IndentationType.dart';
 import 'IFormatter.dart';
 
 class IfStatementFormatter extends IFormatter
@@ -19,32 +20,35 @@ class IfStatementFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'IfStatementFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! IfStatement)
             throw FormatException('Not an IfStatement: ${node.runtimeType}');
 
-        formatState.copyEntity(node.ifKeyword, astVisitor, '$methodName/node.ifKeyword'); // covered by tests
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis'); // covered by tests
-        formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression'); // covered by tests
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis'); // covered by tests
+        formatState.copyEntity(node.ifKeyword, astVisitor, '$methodName/node.ifKeyword');
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
+        formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');
+        formatState.copyEntity(node.caseClause, astVisitor, '$methodName/node.caseClause');
+        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
 
-        formatState.pushLevel('$methodName/node.thenStatement', IndentationType.single); // covered by tests
-        formatState.copyEntity(node.thenStatement, astVisitor, '$methodName/node.thenStatement'); // covered by tests
-        formatState.popLevelAndIndent(); // covered by tests
+        formatState.pushLevel('$methodName/node.thenStatement');
+        formatState.copyEntity(node.thenStatement, astVisitor, '$methodName/node.thenStatement');
+        formatState.popLevelAndIndent();
 
         if (node.elseKeyword == null)
             return;
 
-        final bool indentElse = node.elseStatement is! IfStatement; // covered by tests
+        final bool indentElse = node.elseStatement is! IfStatement;
 
-        formatState.copyEntity(node.elseKeyword, astVisitor, '$methodName/node.elseKeyword'); // covered by tests
-        if (indentElse) // covered by tests
-            formatState.pushLevel('$methodName/node.elseKeyword', IndentationType.single); // covered by tests
+        formatState.copyEntity(node.elseKeyword, astVisitor, '$methodName/node.elseKeyword');
+        if (indentElse)
+            formatState.pushLevel('$methodName/node.elseKeyword');
 
-        formatState.copyEntity(node.elseStatement, astVisitor, '$methodName/node.elseStatement'); // covered by tests
+        formatState.copyEntity(node.elseStatement, astVisitor, '$methodName/node.elseStatement');
 
-        if (indentElse) // covered by tests
-            formatState.popLevelAndIndent(); // covered by tests
+        if (indentElse)
+            formatState.popLevelAndIndent();
+
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

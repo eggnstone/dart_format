@@ -12,7 +12,10 @@ import '../Data/JsonResponse.dart';
 import '../Data/Version.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../Formatter.dart';
+import '../Tools/ContentTypeTools.dart';
+import '../Tools/HttpTools.dart';
 import '../Tools/LogTools.dart';
+import '../Tools/StringTools.dart';
 import '../Tools/VersionTools.dart';
 
 class WebServiceHandler
@@ -59,11 +62,11 @@ class WebServiceHandler
             final String message = '$protocol://${server.address.address}:${server.port}';
             final String currentVersion = VersionConstants.VERSION.toString();
             final JsonResponse jsonResponse = JsonResponse(
-                statusCode: 200, 
-                status: 'OK', 
+                statusCode: 200,
+                status: 'OK',
                 currentVersion: currentVersion,
                 latestVersion: latestVersion?.toString(),
-                message: message 
+                message: message
             );
             writelnToStdOut(jsonEncode(jsonResponse.toJson()));
 
@@ -88,17 +91,38 @@ class WebServiceHandler
                 }
             );
 
-            stdin.handleError(
-                (Object error, StackTrace stackTrace)
+            /*stdin.handleError(
+            (Object error, StackTrace stackTrace)
+            {
+            logError('$METHOD_NAME: Quitting because stdin.handleError()/onError called: $error');
+            terminate = true;
+            terminateWithError = true;
+            }
+            );*/
+
+            stdin.listen(
+                (List<int> event)
                 {
-                    logError('$METHOD_NAME: Quitting because stdin.handleError()/onError called: $error');
+                    final String input = systemEncoding.decode(event);
+                    logDebug('$METHOD_NAME: Unexpected input via stdin.listen()/onData: ${StringTools.toDisplayString(input, Constants.MAX_DEBUG_LENGTH)}');
+                }
+                ,
+                onDone: ()
+                {
+                    logDebug('$METHOD_NAME: Quitting because stdin.listen()/onDone called.');
+                    terminate = true;
+                }
+                ,
+                onError: (Object error, StackTrace stackTrace)
+                {
+                    logError('$METHOD_NAME: Quitting because stdin.listen()/onError called: $error');
                     terminate = true;
                     terminateWithError = true;
                 }
             );
 
             while (!terminate)
-                await Future<void>.delayed(const Duration(milliseconds: 500));
+                await Future<void>.delayed(const Duration(milliseconds: Constants.WEB_SERVICE_HANDLER_WAIT_FOR_TERMINATE_IN_MILLISECONDS));
 
             if (terminateWithError)
             {
@@ -136,7 +160,7 @@ class WebServiceHandler
             return _handleGetQuit(request, onQuit: onQuit);
 
         request.response.statusCode = HttpStatus.notFound;
-        await request.response.close();
+        return HttpTools.flushAndClose(request);
     }
 
     Future<void> _handleGetFavIcon(HttpRequest request)
@@ -145,7 +169,7 @@ class WebServiceHandler
         request.response.statusCode = HttpStatus.ok;
         request.response.headers.contentType = ContentType.binary;
         await request.response.addStream(File('assets/favicon.ico').openRead());
-        await request.response.close();
+        return HttpTools.flushAndClose(request);
     }
 
     Future<void> _handleGetFormat(HttpRequest request)
@@ -154,7 +178,7 @@ class WebServiceHandler
         request.response.statusCode = HttpStatus.ok;
         request.response.headers.contentType = ContentType.text;
         request.response.writeln('You need to use POST to access /format');
-        await request.response.close();
+        return HttpTools.flushAndClose(request);
     }
 
     Future<void> _handleGetStatus(HttpRequest request)
@@ -167,7 +191,7 @@ class WebServiceHandler
         request.response.writeln('<p>Started at: $_startTime</p>');
         request.response.writeln('<p>Uptime: ${DateTime.now().difference(_startTime)}</p>');
         request.response.writeln(_getHtmlEnd());
-        await request.response.close();
+        return HttpTools.flushAndClose(request);
     }
 
     Future<void> _handleGetQuit(HttpRequest request, {Function()? onQuit})
@@ -178,8 +202,7 @@ class WebServiceHandler
         request.response.writeln(_getHtmlStart('Quit'));
         request.response.writeln('<b>dart_format is terminating ...</b>');
         request.response.writeln(_getHtmlEnd());
-        await request.response.close();
-        await Future<void>.delayed(const Duration(milliseconds: 100));
+        await HttpTools.flushAndClose(request);
         onQuit?.call();
     }
 
@@ -195,35 +218,27 @@ class WebServiceHandler
             return _handlePostFormat(request);
 
         request.response.statusCode = HttpStatus.notFound;
-        await request.response.close();
+        return HttpTools.flushAndClose(request);
     }
 
     Future<void> _handlePostFormat(HttpRequest request)
     async
     {
         const String METHOD_NAME = '$CLASS_NAME._handlePostFormat';
-        logDebug('$METHOD_NAME: Request: ${request.contentLength}');
+        //logDebug('$METHOD_NAME: Request: ${request.contentLength}');
 
         try
         {
             //logDebug('Request.contentLength: request.contentLength: ${request.contentLength}');
 
-            /*final Stream<Uint8List> x = request;
-
-            final String body = await utf8.decodeStream(request);*/
-            /*writelnToStdErr(body);
-            writelnToStdErr('request.headers: ${request.headers}');
-            writelnToStdErr('body.length: ${body.length}');*/
-
-            final RegExp boundaryGet = RegExp(' boundary=(.+) ');
-            final String? contentType = request.headers['content-type']?.first;
+            final List<String>? contentTypeList = request.headers['content-type'];
+            //logDebug('contentTypeList: $contentTypeList');
+            final String? contentType = contentTypeList?.first;
+            //logDebug('contentType: $contentType');
             if (contentType == null)
                 throw DartFormatException.error('No content-type header found.');
 
-            //logDebug('contentType: $contentType');
-            final RegExpMatch? match = boundaryGet.firstMatch(' $contentType ');
-
-            final String? boundary = match?.group(1);
+            final String? boundary = ContentTypeTools.getBoundary(contentType);
             //logDebug('boundary: $boundary');
             if (boundary == null)
                 throw DartFormatException.error('No boundary found.');
@@ -235,8 +250,29 @@ class WebServiceHandler
             if (mimeMultiParts.length != 2)
                 throw DartFormatException.error('Expected 2 parts, got ${mimeMultiParts.length}.');
 
-            final String mimeMultiPart0 = await utf8.decodeStream(mimeMultiParts[0]);
-            final String mimeMultiPart1 = await utf8.decodeStream(mimeMultiParts[1]);
+            //logDebug('mimeMultiParts[0].headers: ${mimeMultiParts[0].headers}');
+            final String? contentType0 = mimeMultiParts[0].headers['content-type'];
+            //logDebug('contentType0: $contentType0');
+            final String? charset0 = ContentTypeTools.getCharset(contentType0);
+            //logDebug('charset0: $charset0');
+
+            //logDebug('mimeMultiParts[1].headers: ${mimeMultiParts[1].headers}');
+            final String? contentType1 = mimeMultiParts[1].headers['content-type'];
+            //logDebug('contentType1: $contentType1');
+            final String? charset1 = ContentTypeTools.getCharset(contentType1);
+            //logDebug('charset1: $charset1');
+
+            final Encoding? encoding0 = Encoding.getByName(charset0);
+            final Encoding? encoding1 = Encoding.getByName(charset1);
+
+            if (encoding0 == null)
+                throw DartFormatException.error('Cannot find decoder for charset "$charset0".');
+
+            if (encoding1 == null)
+                throw DartFormatException.error('Cannot find decoder for charset "$charset1".');
+
+            final String mimeMultiPart0 = await encoding0.decodeStream(mimeMultiParts[0]);
+            final String mimeMultiPart1 = await encoding1.decodeStream(mimeMultiParts[1]);
 
             String? configText;
             String? text;
@@ -264,6 +300,8 @@ class WebServiceHandler
                 throw DartFormatException.error('Part named "Text" is empty.');
 
             //logDebug('configText: ${StringTools.toDisplayString(configText)}');
+            //logDebug('text: ${StringTools.toDisplayString(text)}');
+
             final Config config = Config.fromJson(configText);
             final Formatter formatter = Formatter(config);
             final String formattedText = formatter.format(text);
@@ -277,23 +315,40 @@ class WebServiceHandler
             request.response.headers.add('X-DartFormat-Result', 'OK');
             request.response.write(formattedText);
         }
-        on DartFormatException catch (e)
+        on DartFormatException catch (e, st)
         {
+            logErrorObject(METHOD_NAME, e, st);
             request.response.statusCode = HttpStatus.ok;
             request.response.headers.contentType = ContentType.text;
             request.response.headers.add('X-DartFormat-Result', 'Fail');
             request.response.headers.add('X-DartFormat-Exception', jsonEncode(e.toJson()));
         }
-        on Exception catch (e)
+        on Exception catch (e, st)
         {
+            logErrorObject(METHOD_NAME, e, st);
             final DartFormatException dartFormatException = DartFormatException.error(e.toString());
             request.response.statusCode = HttpStatus.ok;
             request.response.headers.contentType = ContentType.text;
             request.response.headers.add('X-DartFormat-Result', 'Fail');
             request.response.headers.add('X-DartFormat-Exception', jsonEncode(dartFormatException.toJson()));
         }
+        /*// ignore: avoid_catching_errors
+        on Error catch (e, st)
+        {
+        // necessary?
+        logErrorObject(METHOD_NAME, e, st);
 
-        await request.response.close();
+        final DartFormatException dartFormatException = DartFormatException.error(e.toString());
+        request.response.statusCode = HttpStatus.ok;
+        request.response.headers.contentType = ContentType.text;
+        request.response.headers.add('X-DartFormat-Result', 'Fail');
+        request.response.headers.add('X-DartFormat-Exception', jsonEncode(dartFormatException.toJson()));
+        }*/
+        finally
+        {
+            //logDebug('$METHOD_NAME: Calling flushAndClose');
+            await HttpTools.flushAndClose(request);
+        }
     }
 
     Future<void> _handleRequest(HttpRequest request, {Function()? onQuit})
@@ -302,32 +357,45 @@ class WebServiceHandler
         const String METHOD_NAME = '$CLASS_NAME._handleRequest';
         final DateTime startTime = DateTime.now();
 
-        _requestCount++;
-        logDebug('$METHOD_NAME START #$_requestCount: ${request.method} ${request.uri}');
+        final int requestCount = ++_requestCount;
+        logDebug('$METHOD_NAME START #$requestCount: ${request.method} ${request.uri}');
 
         // TODO: timeout?
         try
         {
             if (request.method == 'GET')
-                return _handleGet(request, onQuit: onQuit);
-
-            if (request.method == 'POST')
-                return _handlePost(request);
-
-            request.response.statusCode = HttpStatus.badRequest;
-            await request.response.close();
+            {
+                await _handleGet(request, onQuit: onQuit);
+            }
+            else if (request.method == 'POST')
+            {
+                await _handlePost(request);
+            }
+            else
+            {
+                request.response.statusCode = HttpStatus.badRequest;
+                await HttpTools.flushAndClose(request);
+            }
         }
         on Exception catch (e)
         {
+            logError('$METHOD_NAME Exception: $e');
             writelnToStdErr('Exception: $e');
             request.response.statusCode = HttpStatus.internalServerError;
             request.response.headers.contentType = ContentType.text;
             request.response.writeln('Exception: $e');
-            await request.response.close();
+            await HttpTools.flushAndClose(request);
         }
+        /*// ignore: avoid_catching_errors
+        on Error catch (e, st)
+        {
+        // necessary?
+        logErrorObject(METHOD_NAME, e, st);
+        }*/
         finally
         {
-            logDebug('$METHOD_NAME END   #$_requestCount: ${request.method} ${request.uri} took ${DateTime.now().difference(startTime).inMilliseconds / 1000}s');
+            final double seconds = DateTime.now().difference(startTime).inMilliseconds / 1000;
+            logDebug('$METHOD_NAME END   #$requestCount: ${request.method} ${request.uri} took ${seconds}s');
         }
     }
 
@@ -352,7 +420,7 @@ class WebServiceHandler
         request.response.writeln('</ul></li>');
         request.response.writeln('</ul>');
         request.response.writeln(_getHtmlEnd());
-        await request.response.close();
+        await HttpTools.flushAndClose(request);
     }
 
     void _handleServerError(Object error, StackTrace stackTrace)

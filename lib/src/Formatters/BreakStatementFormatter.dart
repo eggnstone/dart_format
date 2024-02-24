@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Config.dart';
@@ -18,12 +20,14 @@ class BreakStatementFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'BreakStatementFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! BreakStatement)
             throw FormatException('Not a BreakStatement: ${node.runtimeType}');
 
-        formatState.copyEntity(node.breakKeyword,astVisitor, '$methodName/node.breakKeyword'); // covered by tests
+        formatState.copyEntity(node.breakKeyword,astVisitor, '$methodName/node.breakKeyword');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

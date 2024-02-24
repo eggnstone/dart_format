@@ -1,12 +1,11 @@
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:dart_format/src/Formatters/SwitchStatementFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';
 import '../TestTools/TestGroupConfig.dart';
 import '../TestTools/TestTools.dart';
-import '../TestTools/Visitors/TestAstVisitor.dart';
-import '../TestTools/Visitors/TestSimpleIdentifierVisitor.dart';
-import '../TestTools/Visitors/TestSwitchPatternCaseVisitor.dart';
+import '../TestTools/Visitors/TestVisitor.dart';
 
 void main()
 {
@@ -19,9 +18,9 @@ void main()
             inputMiddle: 'switch(i){case 0:;}',
             inputTrailing: '}',
             name: 'SwitchStatement',
-            astVisitors: <TestAstVisitor>[
-                TestSimpleIdentifierVisitor(16, 'i'),
-                TestSwitchPatternCaseVisitor(19, 'case 0:;')
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleIdentifier>(16, 'i'),
+                TestVisitor<SwitchPatternCase>(19, 'case 0:;')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

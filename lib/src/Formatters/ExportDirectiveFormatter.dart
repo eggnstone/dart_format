@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Config.dart';
@@ -18,16 +20,18 @@ class ExportDirectiveFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'ExportDirectiveFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! ExportDirective)
             throw FormatException('Not an ExportDirective: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.exportKeyword, astVisitor, '$methodName/node.exportKeyword'); // covered by tests
-        formatState.copyEntity(node.uri, astVisitor, '$methodName/node.uri'); // covered by tests
+        formatState.copyEntity(node.exportKeyword, astVisitor, '$methodName/node.exportKeyword');
+        formatState.copyEntity(node.uri, astVisitor, '$methodName/node.uri');
         formatState.acceptList(node.combinators, astVisitor, '$methodName/node.combinators');
         formatState.acceptList(node.configurations, astVisitor, '$methodName/node.configurations');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

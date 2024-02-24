@@ -1,10 +1,11 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
-import '../Types/IndentationType.dart';
 import 'IFormatter.dart';
 
 class ListLiteralFormatter extends IFormatter
@@ -19,7 +20,7 @@ class ListLiteralFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'ListLiteralFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! ListLiteral)
             throw FormatException('Not a ListLiteral: ${node.runtimeType}');
@@ -27,9 +28,11 @@ class ListLiteralFormatter extends IFormatter
         formatState.copyEntity(node.constKeyword, astVisitor, '$methodName/node.constKeyword');
         formatState.copyEntity(node.typeArguments, astVisitor, '$methodName/node.typeArguments');
         formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
-        formatState.pushLevel('$methodName/node.leftBracket', IndentationType.single);
+        formatState.pushLevel('$methodName/node.leftBracket');
         formatState.acceptListWithComma(node.elements, node.rightBracket, astVisitor, '$methodName/node.elements');
         formatState.popLevelAndIndent();
         formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
+
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

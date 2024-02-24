@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Config.dart';
@@ -18,7 +20,7 @@ class NativeFunctionBodyFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'NativeFunctionBodyFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! NativeFunctionBody)
             throw FormatException('Not a NativeFunctionBody: ${node.runtimeType}');
@@ -26,5 +28,7 @@ class NativeFunctionBodyFormatter extends IFormatter
         formatState.copyEntity(node.nativeKeyword, astVisitor, '$methodName/node.nativeKeyword');
         formatState.copyEntity(node.stringLiteral, astVisitor, '$methodName/node.stringLiteral');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

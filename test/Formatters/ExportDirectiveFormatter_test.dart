@@ -1,11 +1,11 @@
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:dart_format/src/Formatters/ExportDirectiveFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';
 import '../TestTools/TestGroupConfig.dart';
 import '../TestTools/TestTools.dart';
-import '../TestTools/Visitors/TestAstVisitor.dart';
-import '../TestTools/Visitors/TestSimpleStringLiteralVisitor.dart';
+import '../TestTools/Visitors/TestVisitor.dart';
 
 void main()
 {
@@ -14,14 +14,15 @@ void main()
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
         TestGroupConfig(
             inputNodeCreator: AstCreator.createDirective,
-            inputMiddle: "export 'e.dart';",
+            inputMiddle: "export 'x.dart' if (a.b.c) 'y.dart';",
             name: 'ExportDirective',
-            astVisitors: <TestAstVisitor>[
-                TestSimpleStringLiteralVisitor(7, "'e.dart'")
+            astVisitors: <AstVisitor<void>>[
+                TestVisitor<SimpleStringLiteral>(7, "'x.dart'"),
+                TestVisitor<Configuration>(16, "if (a.b.c) 'y.dart'")
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig("export 'e.dart';\n")
+                TestConfig("export 'x.dart' if (a.b.c) 'y.dart';\n")
             ]
         )
     ];

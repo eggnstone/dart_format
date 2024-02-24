@@ -1,12 +1,11 @@
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:dart_format/src/Formatters/GenericTypeAliasFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';
 import '../TestTools/TestGroupConfig.dart';
 import '../TestTools/TestTools.dart';
-import '../TestTools/Visitors/TestAstVisitor.dart';
-import '../TestTools/Visitors/TestGenericFunctionTypeVisitor.dart';
-import '../TestTools/Visitors/TestNamedTypeVisitor.dart';
+import '../TestTools/Visitors/TestVisitor.dart';
 
 void main()
 {
@@ -21,8 +20,8 @@ void main()
                 TestConfig.none(),
                 TestConfig('typedef X=Y;\n')
             ],
-            astVisitors: <TestAstVisitor>[
-                TestNamedTypeVisitor(10, 'Y')
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(10, 'Y')
             ]
         ),
         TestGroupConfig(
@@ -33,8 +32,8 @@ void main()
                 TestConfig.none(),
                 TestConfig('typedef F=void Function();\n')
             ],
-            astVisitors: <TestAstVisitor>[
-                TestGenericFunctionTypeVisitor(10, 'void Function()')
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<GenericFunctionType>(10, 'void Function()')
             ]
         )
     ];

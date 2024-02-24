@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/syntactic_entity.dart';
 import 'package:analyzer/dart/ast/token.dart';
@@ -21,43 +23,46 @@ class DefaultFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'DefaultFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER)
-            logInternal('# $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
-
-        if (Constants.DEBUG_FORMATTER_DEFAULT)
-            node.childEntities.forEach((SyntacticEntity child)
-                {
-                    if (child is Token)
-                        logInternal('  Will copy child: ${child.runtimeType} $child');
-                    else if (child is AstNode)
-                        logInternal('  Will accept child: ${child.runtimeType} $child');
-                    else
-                        logInternalError('  Will ignore child: ${child.runtimeType} $child');
-                }
-            );
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++, node.offset);
 
         node.childEntities.forEach((SyntacticEntity child)
             {
-                if (child is Token)
+                if (child is AstNode)
                 {
-                    if (Constants.DEBUG_FORMATTER_DEFAULT)
-                        logInternal('  Copying child: ${child.runtimeType} $child');
-                    formatState.copyEntity(child, astVisitor, '$methodName/child');
-                    if (Constants.DEBUG_FORMATTER_DEFAULT)
-                        logInternal('    ${StringTools.toDisplayString(formatState.getResult(), 50)}');
+                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('! AstNode-Child: ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
+                    if (child is CommentReference)
+                    {
+                        if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Ignoring "CommentReference"');
+                    }
+                    else
+                    {
+                        if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Accepting');
+                        child.accept(astVisitor);
+                    }
                 }
-                else if (child is AstNode)
+                else if (child is Token)
                 {
-                    if (Constants.DEBUG_FORMATTER_DEFAULT)
-                        logInternal('  Accepting child: ${child.runtimeType} $child');
-                    child.accept(astVisitor);
+                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('! Token-Child:   ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
+                    if (child.runtimeType.toString() == 'DartDocToken')
+                    {
+                        if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Ignoring "DartDocToken"');
+                    }
+                    else
+                    {
+                        if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Copying');
+                        formatState.copyEntity(child, astVisitor, '$methodName/child=${child.runtimeType}');
+                    }
                 }
                 else
-                {
-                    if (Constants.DEBUG_FORMATTER_DEFAULT)
-                        logInternalError('  Ignoring child: ${child.runtimeType} $child');
-                }
+                    throw Exception('Unhandled type: ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
             }
         );
+
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent, node.end);
     }
+
+    /*void _log2Old(String s)
+    {
+        if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal(s);
+    }*/
 }

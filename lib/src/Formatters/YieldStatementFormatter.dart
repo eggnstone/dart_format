@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Config.dart';
@@ -18,7 +20,7 @@ class YieldStatementFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'YieldStatementFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! YieldStatement)
             throw FormatException('Not a YieldStatement: ${node.runtimeType}');
@@ -27,5 +29,7 @@ class YieldStatementFormatter extends IFormatter
         formatState.copyEntity(node.star, astVisitor, '$methodName/node.star');
         formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

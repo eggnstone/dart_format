@@ -3,38 +3,20 @@ import 'package:analyzer/src/dart/ast/ast.dart';
 
 class AstCreator
 {
-    static VariableDeclarationList createVariableDeclarationListInClass(String s)
-    => createFieldDeclarationInClass(s).fields;
-
-    static FieldDeclaration createFieldDeclarationInClass(String s)
-    => createDeclarationInClass(s) as FieldDeclaration;
-
-    static ClassMember createDeclarationInClass(String s)
-    => createClassDeclaration(s).members[0];
-
-    static TypeAnnotation createTypeAnnotationInFunctionParameter(String s)
-    => createSimpleFormalParameterInFunction(s).type!;
-
-    static SimpleFormalParameter createSimpleFormalParameterInFunction(String s)
-    => createFormalParameterInFunction(s) as SimpleFormalParameter;
-
-    static FormalParameter createFormalParameterInFunction(String s)
-    => createFormalParameterListInFunction(s).parameters[0];
-
-    static TopLevelVariableDeclaration createTopLevelVariableDeclaration(String s)
-    => createDeclaration(s) as TopLevelVariableDeclaration;
-
-    static VariableDeclarationList createTopLevelVariableList(String s)
-    => createTopLevelVariableDeclaration(s).variables;
-
-    static TypeAnnotation createNamedTypeOfTopLevelVariable(String s)
-    => createTopLevelVariableList(s).type!;
+    static BlockFunctionBody createBlockFunctionBody(String s)
+    => createFunctionExpression(s).body as BlockFunctionBody;
 
     static Block createBlockInFunction(String s)
-    => _createBlockFunctionBodyInFunction(s).block;
+    => createBlockFunctionBody(s).block;
+
+    static CascadeExpression createCascadeExpressionInVariableDeclarationInClass(String s)
+    => createInitializerInVariableDeclarationInClass(s) as CascadeExpression;
+
+    static Expression createCascadeSectionInVariableDeclarationInClass(String s)
+    => createCascadeExpressionInVariableDeclarationInClass(s).cascadeSections[0];
 
     static CatchClause createCatchClauseInFunction(String s)
-    => _createTryStatementInFunction(s).catchClauses[0];
+    => createTryStatementInFunction(s).catchClauses[0];
 
     static ClassDeclaration createClassDeclaration(String s)
     => createDeclaration(s) as ClassDeclaration;
@@ -42,20 +24,20 @@ class AstCreator
     static ClassMember createClassMember(String s)
     => createClassDeclaration(s).members[0];
 
-    /*static ConstructorDeclaration createConstructorDeclarationInClass(String s)
-    => createClassMember(s) as ConstructorDeclaration;*/
-
-    /*static FormalParameterList createFormalParameterListInConstructorInClass(String s)
-    => createConstructorDeclarationInClass(s).parameters;*/
-
-    static FormalParameterList createFormalParameterListInFunction(String s)
-    => createFunctionExpression(s).parameters!;
-
-    static CompilationUnit createCompilationUnit(String s)
-    => AnalyzerUtilities.parseString(content: s).unit;
+    static Combinator createCombinatorInNamespaceDirective(String s)
+    => createNamespaceDirective(s).combinators[0];
 
     static AstNode createCommentBeforeClassDeclaration(String s)
     => createClassDeclaration(s).sortedCommentAndAnnotations[0];
+
+    static ConstructorDeclaration createConstructorDeclaration(String s)
+    => createClassMember(s) as ConstructorDeclaration;
+
+    static ConstructorInitializer createConstructorInitializer(String s)
+    => createConstructorDeclaration(s).initializers[0];
+
+    static CompilationUnit createCompilationUnit(String s)
+    => AnalyzerUtilities.parseString(content: s).unit;
 
     static Declaration createDeclaration(String s)
     => createCompilationUnit(s).declarations[0];
@@ -64,49 +46,89 @@ class AstCreator
     => createCompilationUnit(s).directives[0];
 
     static EnumConstantDeclaration createEnumConstantDeclaration(String s)
-    => _createEnumDeclaration(s).constants[0];
+    => createEnumDeclaration(s).constants[0];
+
+    static EnumDeclaration createEnumDeclaration(String s)
+    => createDeclaration(s) as EnumDeclaration;
 
     static Expression createExpressionInFunction(String s)
-    => _createExpressionStatementInFunction(s).expression;
+    => createExpressionStatementInFunction(s).expression;
+
+    static ExpressionStatement createExpressionStatementInFunction(String s)
+    => createStatementInFunction(s) as ExpressionStatement;
+
+    static FieldDeclaration createFieldDeclarationInClass(String s)
+    => createClassMember(s) as FieldDeclaration;
+
+    static ForLoopParts createForLoopPartsInForStatementInFunction(String s)
+    => createForStatementInFunction(s).forLoopParts;
+
+    static FormalParameter createFormalParameterInFunction(String s)
+    => createFormalParameterListInFunction(s).parameters[0];
+
+    static FormalParameterList createFormalParameterListInFunction(String s)
+    => createFunctionExpression(s).parameters!;
+
+    static ForStatement createForStatementInFunction(String s)
+    => createStatementInFunction(s) as ForStatement;
 
     static FunctionBody createFunctionBodyInFunction(String s)
     => createFunctionExpression(s).body;
 
-    static ForLoopParts createForLoopPartsInForStatementInFunction(String s)
-    => _createForStatementInFunction(s).forLoopParts;
+    static FunctionDeclaration createFunctionDeclaration(String s)
+    => createDeclaration(s) as FunctionDeclaration;
 
     static FunctionExpression createFunctionExpression(String s)
-    => _createFunctionDeclaration(s).functionExpression;
+    => createFunctionDeclaration(s).functionExpression;
+
+    static Expression createInitializerInVariableDeclarationInClass(String s)
+    => createVariableDeclarationInClass(s).initializer!;
+
+    static MixinDeclaration createMixinDeclaration(String s)
+    => createDeclaration(s) as MixinDeclaration;
+
+    static TypeAnnotation createNamedTypeOfTopLevelVariable(String s)
+    => createTopLevelVariableList(s).type!;
+
+    static NamespaceDirective createNamespaceDirective(String s)
+    => createDirective(s) as NamespaceDirective;
+
+    static OnClause createOnClauseInMixinDeclaration(String s)
+    => createMixinDeclaration(s).onClause!;
+
+    static SimpleFormalParameter createSimpleFormalParameterInFunction(String s)
+    => createFormalParameterInFunction(s) as SimpleFormalParameter;
 
     static Statement createStatementInFunction(String s)
     => createBlockInFunction(s).statements[0];
 
     static Statement createStatementInWhileInFunction(String s)
-    => _createWhileStatementInFunction(s).body;
+    => createWhileStatementInFunction(s).body;
+
+    static SwitchStatement createSwitchStatementInFunction(String s)
+    => createStatementInFunction(s) as SwitchStatement;
 
     static SwitchMember createSwitchStatementMemberInFunction(String s)
-    => (createStatementInFunction(s) as SwitchStatement).members[0];
+    => createSwitchStatementInFunction(s).members[0];
 
-    //
+    static TopLevelVariableDeclaration createTopLevelVariableDeclaration(String s)
+    => createDeclaration(s) as TopLevelVariableDeclaration;
 
-    static BlockFunctionBody _createBlockFunctionBodyInFunction(String s)
-    => createFunctionExpression(s).body as BlockFunctionBody;
+    static VariableDeclarationList createTopLevelVariableList(String s)
+    => createTopLevelVariableDeclaration(s).variables;
 
-    static EnumDeclaration _createEnumDeclaration(String s)
-    => createDeclaration(s) as EnumDeclaration;
-
-    static ExpressionStatement _createExpressionStatementInFunction(String s)
-    => createStatementInFunction(s) as ExpressionStatement;
-
-    static ForStatement _createForStatementInFunction(String s)
-    => createStatementInFunction(s) as ForStatement;
-
-    static FunctionDeclaration _createFunctionDeclaration(String s)
-    => createDeclaration(s) as FunctionDeclaration;
-
-    static TryStatement _createTryStatementInFunction(String s)
+    static TryStatement createTryStatementInFunction(String s)
     => createStatementInFunction(s) as TryStatement;
 
-    static WhileStatement _createWhileStatementInFunction(String s)
+    static TypeAnnotation createTypeAnnotationInFunctionParameter(String s)
+    => createSimpleFormalParameterInFunction(s).type!;
+
+    static VariableDeclaration createVariableDeclarationInClass(String s)
+    => createVariableDeclarationListInClass(s).variables[0];
+
+    static VariableDeclarationList createVariableDeclarationListInClass(String s)
+    => createFieldDeclarationInClass(s).fields;
+
+    static WhileStatement createWhileStatementInFunction(String s)
     => createStatementInFunction(s) as WhileStatement;
 }

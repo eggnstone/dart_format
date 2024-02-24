@@ -1,3 +1,4 @@
+// ignore_for_file: always_put_control_body_on_new_line
 
 import '../Constants/Constants.dart';
 import '../Data/IntTuple.dart';
@@ -42,14 +43,17 @@ class StringTools
     {
         final StringBuffer sb = StringBuffer();
 
-        _log('removeLeadingWhitespace');
-        _log('IN:  ${StringTools.toDisplayString(s)}');
+        if (Constants.DEBUG_STRING_TOOLS)
+        {
+            logInternal('removeLeadingWhitespace');
+            logInternal('IN:  ${StringTools.toDisplayString(s)}');
+        }
 
         final List<String> lines = s.split('\n');
         for (int i = 0; i < lines.length; i++)
         {
             final String line = lines[i];
-            _log('    #$i: ${StringTools.toDisplayString(line)}');
+            if (Constants.DEBUG_STRING_TOOLS) logInternal('    #$i: ${StringTools.toDisplayString(line)}');
 
             if (i == 0)
             {
@@ -62,7 +66,7 @@ class StringTools
             }
         }
 
-        _log('OUT: ${StringTools.toDisplayString(sb.toString())}');
+        if (Constants.DEBUG_STRING_TOOLS) logInternal('OUT: ${StringTools.toDisplayString(sb.toString())}');
         return sb.toString();
     }
 
@@ -72,6 +76,7 @@ class StringTools
     static String shorten50(String s)
     => shorten(s, 50);
 
+    //throw UnimplementedError();
     static String toDisplayString(Object? o, [int maxLength = -1])
     => '"${toSafeString(o, maxLength)}"';
 
@@ -111,11 +116,5 @@ class StringTools
             r = r.substring(0, r.length - 1);
 
         return r;
-    }
-
-    static void _log(String s)
-    {
-        if (Constants.DEBUG_STRING_TOOLS)
-            logInternal(s);
     }
 }

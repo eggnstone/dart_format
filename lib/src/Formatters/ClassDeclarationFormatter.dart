@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Config.dart';
@@ -18,22 +20,29 @@ class ClassDeclarationFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'ClassDeclarationFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! ClassDeclaration)
             throw FormatException('Not a ClassDeclaration: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword'); // covered by tests
-        formatState.copyEntity(node.interfaceKeyword, astVisitor, '$methodName/node.interfaceKeyword'); // covered by tests
-        formatState.copyEntity(node.classKeyword, astVisitor, '$methodName/node.classKeyword'); // covered by tests
-        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name'); // covered by tests
-        formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters'); // covered by tests
-        formatState.copyEntity(node.extendsClause, astVisitor, '$methodName/node.extendsClause'); // covered by tests
-        formatState.copyEntity(node.withClause, astVisitor, '$methodName/node.withClause'); // covered by tests
-        formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause'); // covered by tests
-        formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket'); // covered by tests
-        formatState.acceptList(node.members, astVisitor, '$methodName/node.members'); // covered by tests
-        formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket'); // covered by tests
+        //log('### NOT COPYING node.sortedCommentAndAnnotations', 0);
+
+        formatState.copyEntity(node.sealedKeyword, astVisitor, '$methodName/node.abstractKeyword');
+        formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword');
+        formatState.copyEntity(node.mixinKeyword, astVisitor, '$methodName/node.mixinKeyword');
+        formatState.copyEntity(node.interfaceKeyword, astVisitor, '$methodName/node.interfaceKeyword');
+        formatState.copyEntity(node.finalKeyword, astVisitor, '$methodName/node.finalKeyword');
+        formatState.copyEntity(node.classKeyword, astVisitor, '$methodName/node.classKeyword');
+        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
+        formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
+        formatState.copyEntity(node.extendsClause, astVisitor, '$methodName/node.extendsClause');
+        formatState.copyEntity(node.withClause, astVisitor, '$methodName/node.withClause');
+        formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause');
+        formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
+        formatState.acceptList(node.members, astVisitor, '$methodName/node.members');
+        formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');
+
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

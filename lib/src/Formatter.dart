@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/analysis/utilities.dart' as AnalyzerUtilities; // ignore: library_prefixes
 import 'package:analyzer/error/error.dart';
@@ -23,11 +25,13 @@ class Formatter
 
     String format(String s)
     {
-        //throw DartFormatException.error('Formatter.format() is not implemented');
-        _log('# Formatter.format()');
-        _log('  ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
-        _log('  indentationSpacesPerLevel: ${config.indentationSpacesPerLevel}');
-        _log('  maxEmptyLines: ${config.maxEmptyLines}');
+        if (Constants.DEBUG_FORMATTER)
+        {
+            logInternal('# Formatter.format()');
+            logInternal('  ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
+            logInternal('  indentationSpacesPerLevel: ${config.indentationSpacesPerLevel}');
+            logInternal('  maxEmptyLines: ${config.maxEmptyLines}');
+        }
 
         final String sWithoutCarriageReturns = s.replaceAll('\r', '');
 
@@ -53,18 +57,6 @@ class Formatter
         return _verifyResult(sWithoutCarriageReturns, result, parseResult.lineInfo);
     }
 
-    void _log(String s)
-    {
-        if (Constants.DEBUG_FORMATTER)
-            logInternal(s);
-    }
-
-    /*void _logError(String s)
-    {
-    if (Constants.DEBUG_FORMAT_STATE)
-    logInternalError(s);
-    }*/
-
     void _logWarning(String s)
     {
         if (Constants.DEBUG_FORMAT_STATE)
@@ -79,10 +71,10 @@ class Formatter
         final String condensedResultWithoutIgnores = FormatTools.removeIgnoreTagsOnly(condensedResultWithIgnores);
         if (condensedResultWithoutIgnores == condensedInput)
         {
-            _log('  result: ${StringTools.toDisplayString(result, Constants.MAX_DEBUG_LENGTH)}"');
+            if (Constants.DEBUG_FORMATTER) logInternal('  result: ${StringTools.toDisplayString(result, Constants.MAX_DEBUG_LENGTH)}"');
 
             final String resultWithoutIgnores = FormatTools.removeIgnoreTagsCompletely(result);
-            _log('  resultWithoutIgnores: ${StringTools.toDisplayString(resultWithoutIgnores, Constants.MAX_DEBUG_LENGTH)}"');
+            if (Constants.DEBUG_FORMATTER) logInternal('  resultWithoutIgnores: ${StringTools.toDisplayString(resultWithoutIgnores, Constants.MAX_DEBUG_LENGTH)}"');
             return resultWithoutIgnores;
         }
 
@@ -108,7 +100,7 @@ class Formatter
             'Result: ${StringTools.toDisplayString(result.substring(positions.item2), Constants.MAX_DEBUG_LENGTH)}';
         }
 
-        _log('$message1\n$message2');
+        if (Constants.DEBUG_FORMATTER) logInternal('$message1\n$message2');
 
         if (Constants.DEBUG_FORMATTER)
         {
@@ -119,7 +111,7 @@ class Formatter
                 'Same:                       ${StringTools.toDisplayStringCutAtEnd(condensedResultWithIgnores.substring(0, positions2.item2), Constants.MAX_DEBUG_LENGTH)}\n'
                 'condensedInput:             ${StringTools.toDisplayString(condensedInput.substring(positions2.item1), Constants.MAX_DEBUG_LENGTH)}\n'
                 'condensedResultWithIgnores: ${StringTools.toDisplayString(condensedResultWithIgnores.substring(positions2.item2), Constants.MAX_DEBUG_LENGTH)}';
-                _log('\n$message2a');
+                if (Constants.DEBUG_FORMATTER) logInternal('\n$message2a');
             }
         }
 

@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/token.dart';
 
@@ -7,7 +9,6 @@ import '../Exceptions/DartFormatException.dart';
 import '../FormatState.dart';
 import '../Tools/FormatTools.dart';
 import '../Tools/StringTools.dart';
-import '../Types/IndentationType.dart';
 import 'IFormatter.dart';
 
 class FormalParameterListFormatter extends IFormatter
@@ -22,13 +23,13 @@ class FormalParameterListFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'FormalParameterListFormatter.format';
-        log('# $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! FormalParameterList)
             throw FormatException('Not a FormalParameterList: ${node.runtimeType}');
 
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis'); // covered by tests
-        formatState.pushLevel('$methodName/node.leftParenthesis', IndentationType.single); // covered by tests
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
+        formatState.pushLevel('$methodName/node.leftParenthesis');
 
         // TODO: move to FormatState
         AstNode? lastNode;
@@ -52,12 +53,12 @@ class FormalParameterListFormatter extends IFormatter
 
             if (shouldWriteLeftDelimiter)
             {
-                formatState.copyEntity(node.leftDelimiter, astVisitor, '$methodName/node.leftDelimiter'); // covered by tests
-                formatState.pushLevel('$methodName/node.leftDelimiter', IndentationType.single); // covered by tests
+                formatState.copyEntity(node.leftDelimiter, astVisitor, '$methodName/node.leftDelimiter');
+                formatState.pushLevel('$methodName/node.leftDelimiter');
                 wroteLeftDelimiter = true;
             }
 
-            parameter.accept(astVisitor); // covered by tests
+            parameter.accept(astVisitor);
             lastNode = parameter;
         }
 
@@ -81,11 +82,13 @@ class FormalParameterListFormatter extends IFormatter
 
         if (node.rightDelimiter != null)
         {
-            formatState.popLevelAndIndent(); // covered by tests
-            formatState.copyEntity(node.rightDelimiter, astVisitor, '$methodName/node.rightDelimiter'); // covered by tests
+            formatState.popLevelAndIndent();
+            formatState.copyEntity(node.rightDelimiter, astVisitor, '$methodName/node.rightDelimiter');
         }
 
-        formatState.popLevelAndIndent(); // covered by tests
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis'); // covered by tests
+        formatState.popLevelAndIndent();
+        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
+
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

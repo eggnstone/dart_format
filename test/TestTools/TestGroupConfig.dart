@@ -1,7 +1,6 @@
 import 'package:analyzer/dart/ast/ast.dart';
 
 import 'TestConfig.dart';
-import 'Visitors/TestAstVisitor.dart';
 
 typedef CreateInputNodeFunction = AstNode Function(String s);
 
@@ -13,7 +12,7 @@ class TestGroupConfig
     final String inputTrailing;
     final String? name;
     final List<TestConfig>? testConfigs;
-    final List<TestAstVisitor>? astVisitors;
+    final List<AstVisitor<void>>? astVisitors;
 
     TestGroupConfig({
         required this.inputMiddle,
