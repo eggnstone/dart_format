@@ -32,6 +32,7 @@ import 'Formatters/FunctionTypeAliasFormatter.dart';
 import 'Formatters/GenericTypeAliasFormatter.dart';
 import 'Formatters/HideCombinatorFormatter.dart';
 import 'Formatters/IfStatementFormatter.dart';
+import 'Formatters/ImplementsClauseFormatter.dart';
 import 'Formatters/ImportDirectiveFormatter.dart';
 import 'Formatters/IndexExpressionFormatter.dart';
 import 'Formatters/LibraryAugmentationDirectiveFormatter.dart';
@@ -100,6 +101,7 @@ class FormatVisitor extends AstVisitor<void>
     late final GenericTypeAliasFormatter _genericTypeAliasFormatter = GenericTypeAliasFormatter(config, this, _formatState);
     late final HideCombinatorFormatter _hideCombinatorFormatter = HideCombinatorFormatter(config, this, _formatState);
     late final IfStatementFormatter _ifStatementFormatter = IfStatementFormatter(config, this, _formatState);
+    late final ImplementsClauseFormatter _implementsClauseFormatter = ImplementsClauseFormatter(config, this, _formatState);
     late final ImportDirectiveFormatter _importDirectiveFormatter = ImportDirectiveFormatter(config, this, _formatState);
     late final IndexExpressionFormatter _indexExpressionFormatter = IndexExpressionFormatter(config, this, _formatState);
     late final LibraryAugmentationDirectiveFormatter _libraryAugmentationDirectiveFormatter = LibraryAugmentationDirectiveFormatter(config, this, _formatState);
@@ -444,7 +446,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitImplementsClause(ImplementsClause node)
-    => _defaultFormatter.format(node);
+    => _implementsClauseFormatter.format(node);
 
     @override
     void visitImplicitCallReference(ImplicitCallReference node)
