@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Config.dart';
@@ -18,7 +20,7 @@ class TypeArgumentListFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'TypeArgumentListFormatter.format';
-        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! TypeArgumentList)
             throw FormatException('Not a TypeArgumentList: ${node.runtimeType}');
@@ -29,6 +31,6 @@ class TypeArgumentListFormatter extends IFormatter
         //formatState.popLevelAndIndent();
         formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
 
-        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

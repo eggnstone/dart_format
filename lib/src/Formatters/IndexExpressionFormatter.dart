@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Config.dart';
@@ -18,7 +20,7 @@ class IndexExpressionFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'IndexExpressionFormatter.format';
-        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! IndexExpression)
             throw FormatException('Not an IndexExpression: ${node.runtimeType}');
@@ -30,6 +32,6 @@ class IndexExpressionFormatter extends IFormatter
         formatState.copyEntity(node.index, astVisitor, '$methodName/node.index');
         formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
 
-        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

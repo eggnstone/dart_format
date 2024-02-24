@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/syntactic_entity.dart';
 import 'package:analyzer/dart/ast/token.dart';
@@ -21,42 +23,33 @@ class DefaultFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'DefaultFormatter.format';
-        log('START $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++, node.offset);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++, node.offset);
 
         node.childEntities.forEach((SyntacticEntity child)
             {
                 if (child is AstNode)
                 {
-                    _log2('! AstNode-Child: ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
-                    /*if (child is Comment)
-                    {
-                    _log2('    Ignoring "Comment"');
-                    }
-                    else */
+                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('! AstNode-Child: ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
                     if (child is CommentReference)
                     {
-                        _log2('    Ignoring "CommentReference"');
+                        if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Ignoring "CommentReference"');
                     }
-                    /*else if (child.runtimeType.toString() == 'CommentReferenceImpl')
-                    {
-                    _log2('    Ignoring "CommentReferenceImpl"');
-                    }*/
                     else
                     {
-                        _log2('    Accepting');
+                        if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Accepting');
                         child.accept(astVisitor);
                     }
                 }
                 else if (child is Token)
                 {
-                    _log2('! Token-Child:   ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
+                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('! Token-Child:   ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
                     if (child.runtimeType.toString() == 'DartDocToken')
                     {
-                        _log2('    Ignoring "DartDocToken"');
+                        if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Ignoring "DartDocToken"');
                     }
                     else
                     {
-                        _log2('    Copying');
+                        if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Copying');
                         formatState.copyEntity(child, astVisitor, '$methodName/child=${child.runtimeType}');
                     }
                 }
@@ -65,12 +58,11 @@ class DefaultFormatter extends IFormatter
             }
         );
 
-        log('END   $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent, node.end);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent, node.end);
     }
 
-    void _log2(String s)
+    /*void _log2Old(String s)
     {
-        if (Constants.DEBUG_FORMATTER_DEFAULT)
-            logInternal(s);
-    }
+        if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal(s);
+    }*/
 }

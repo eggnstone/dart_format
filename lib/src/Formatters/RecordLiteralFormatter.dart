@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Config.dart';
@@ -18,7 +20,7 @@ class RecordLiteralFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'RecordLiteralFormatter.format';
-        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! RecordLiteral)
             throw FormatException('Not a RecordLiteral: ${node.runtimeType}');
@@ -27,6 +29,6 @@ class RecordLiteralFormatter extends IFormatter
         formatState.acceptListWithComma(node.fields, node.rightParenthesis, astVisitor, '$methodName/node.fields');
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
 
-        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

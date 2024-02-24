@@ -62,11 +62,11 @@ class WebServiceHandler
             final String message = '$protocol://${server.address.address}:${server.port}';
             final String currentVersion = VersionConstants.VERSION.toString();
             final JsonResponse jsonResponse = JsonResponse(
-                statusCode: 200, 
-                status: 'OK', 
+                statusCode: 200,
+                status: 'OK',
                 currentVersion: currentVersion,
                 latestVersion: latestVersion?.toString(),
-                message: message 
+                message: message
             );
             writelnToStdOut(jsonEncode(jsonResponse.toJson()));
 
@@ -394,7 +394,8 @@ class WebServiceHandler
         }*/
         finally
         {
-            logDebug('$METHOD_NAME END   #$requestCount: ${request.method} ${request.uri} took ${DateTime.now().difference(startTime).inMilliseconds / 1000}s');
+            final double seconds = DateTime.now().difference(startTime).inMilliseconds / 1000;
+            logDebug('$METHOD_NAME END   #$requestCount: ${request.method} ${request.uri} took ${seconds}s');
         }
     }
 

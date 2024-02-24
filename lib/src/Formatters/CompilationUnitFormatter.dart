@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Config.dart';
@@ -18,7 +20,7 @@ class CompilationUnitFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'CompilationUnitFormatter.format';
-        log('# START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('# START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent);
         formatState.logIndent += 2;
 
         if (node is! CompilationUnit)
@@ -40,6 +42,6 @@ class CompilationUnitFormatter extends IFormatter
             formatState.addNewLineAfterToken(node.endToken, methodName, add: config.addNewLineAtEndOfText);
 
         formatState.logIndent -= 2;
-        log('# END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('# END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent);
     }
 }

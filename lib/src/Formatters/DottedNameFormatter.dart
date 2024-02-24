@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Config.dart';
@@ -18,7 +20,7 @@ class DottedNameFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'DottedNameFormatter.format';
-        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! DottedName)
             throw FormatException('Not a DottedName: ${node.runtimeType}');
@@ -27,6 +29,6 @@ class DottedNameFormatter extends IFormatter
         // The dots were missing then!
         formatState.acceptListWithPeriod(node.components, astVisitor, '$methodName/node.components');
 
-        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

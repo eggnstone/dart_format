@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/syntactic_entity.dart';
@@ -80,7 +82,7 @@ class FormatState
 
     void acceptList(List<AstNode> nodes, AstVisitor<void> astVisitor, String source)
     {
-        _log('# FormatState.acceptList($source)');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# FormatState.acceptList($source)');
         // ignore: avoid_function_literals_in_foreach_calls
         nodes.forEach((AstNode node) => node.accept(astVisitor));
     }
@@ -140,8 +142,8 @@ class FormatState
     {
         const String methodName = 'addNewLineAfterToken';
         final String fullSource = '$source/$methodName';
-        _log('# $methodName(add=$add, ${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
-        //_log('  sb: ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(add=$add, ${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
+        //if (Constants.DEBUG_FORMAT_STATE) logInternal('  sb: ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
 
         if (token == null || !add)
             return;
@@ -158,15 +160,18 @@ class FormatState
         end = nextToken.precedingComments!.offset;*/
 
         final String filler = getText(token.end, end);
-        _log('  token:                              ${StringTools.toDisplayString(token)}');
-        _log('  nextToken:                          ${StringTools.toDisplayString(nextToken)}');
-        _log('  nextToken.offset:                   ${nextToken.offset}');
-        _log('  nextToken.precedingComments:        ${nextToken.precedingComments}');
-        _log('  nextToken.precedingComments.offset: ${nextToken.precedingComments?.offset}');
-        _log('  filler/2:                           ${StringTools.toDisplayString(filler)}');
+        if (Constants.DEBUG_FORMAT_STATE)
+        {
+            logInternal('  token:                              ${StringTools.toDisplayString(token)}');
+            logInternal('  nextToken:                          ${StringTools.toDisplayString(nextToken)}');
+            logInternal('  nextToken.offset:                   ${nextToken.offset}');
+            logInternal('  nextToken.precedingComments:        ${nextToken.precedingComments}');
+            logInternal('  nextToken.precedingComments.offset: ${nextToken.precedingComments?.offset}');
+            logInternal('  filler/2:                           ${StringTools.toDisplayString(filler)}');
+        }
 
         final int pos = filler.indexOf('\n');
-        _log('  pos:       $pos');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  pos:       $pos');
         if (pos >= 0)
             return;
 
@@ -185,9 +190,9 @@ class FormatState
     {
         const String methodName = 'addNewLineBeforeToken';
         final String fullSource = '$source/$methodName';
-        _log('# $methodName(add=$add, beforeComments=$beforeComments, ${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
-        //_log('  sb: ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
-        //_log('  sb.lastText: ${StringTools.toDisplayString(getLastText())}');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(add=$add, beforeComments=$beforeComments, ${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
+        //if (Constants.DEBUG_FORMAT_STATE) logInternal('  sb: ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
+        //if (Constants.DEBUG_FORMAT_STATE) logInternal('  sb.lastText: ${StringTools.toDisplayString(getLastText())}');
 
         if (token == null || !add)
             return;
@@ -201,30 +206,33 @@ class FormatState
 
         if (getLastText().endsWith('\n'))
         {
-            _log('  Skipping line break because already in SB.');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  Skipping line break because already in SB.');
             return;
         }
 
         if (lastConsumedPosition == token.offset)
         {
-            _log('  Adding line break because no upcoming filler / not already in SB.');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  Adding line break because no upcoming filler / not already in SB.');
             addText('\n', fullSource);
             return;
         }
 
         final int end = beforeComments ? token.precedingComments?.offset ?? token.offset : token.offset;
-        _log('  lastConsumedPosition:            $lastConsumedPosition');
-        _log('  token.precedingComments:         ${token.precedingComments}');
-        _log('  token.precedingComments?.offset: ${token.precedingComments?.offset}');
-        _log('  token.offset:                    ${token.offset}');
-        _log('  end:                             $end');
+        if (Constants.DEBUG_FORMAT_STATE)
+        {
+            logInternal('  lastConsumedPosition:            $lastConsumedPosition');
+            logInternal('  token.precedingComments:         ${token.precedingComments}');
+            logInternal('  token.precedingComments?.offset: ${token.precedingComments?.offset}');
+            logInternal('  token.offset:                    ${token.offset}');
+            logInternal('  end:                             $end');
+        }
 
         final String filler = lastConsumedPosition >= end ? '' : getText(lastConsumedPosition, end);
-        _log('  filler/3:                        ${StringTools.toDisplayString(filler)}');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  filler/3:                        ${StringTools.toDisplayString(filler)}');
 
         if (filler.startsWith('\n'))
         {
-            _log('  Skipping line break because already in upcoming combined filler.');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  Skipping line break because already in upcoming combined filler.');
             return;
         }
 
@@ -233,7 +241,7 @@ class FormatState
                 ' (${getPositionInfo(lastConsumedPosition)})'
                 ' ${StringTools.toDisplayString(filler)}');
 
-        _log('  Replacing empty or whitespace-only filler with line break because upcoming filler does not contain line break.');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  Replacing empty or whitespace-only filler with line break because upcoming filler does not contain line break.');
         consumeText(lastConsumedPosition, end, '', fullSource);
         addText('\n', fullSource);
     }
@@ -242,7 +250,7 @@ class FormatState
     {
         const String methodName = 'addText';
         final String fullSource = '$source/$methodName';
-        _log('# $methodName(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
         consumeText(lastConsumedPosition, lastConsumedPosition, s, fullSource);
     }
@@ -251,7 +259,7 @@ class FormatState
     {
         const String methodName = 'consumeText';
         final String fullSource = '$source/$methodName';
-        _log('# $methodName($offset, $end, ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
         if (offset < lastConsumedPosition)
             _logAndThrowError('Internal error: offset < lastConsumedPosition:'
@@ -262,10 +270,13 @@ class FormatState
         {
             final String filler = getText(lastConsumedPosition, offset);
 
-            _log('  filler/4:             ${StringTools.toDisplayString(filler)}');
-            _log('  lastConsumedPosition: $lastConsumedPosition');
-            _log('  offset:               $offset');
-            _log('  Current:              ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
+            if (Constants.DEBUG_FORMAT_STATE)
+            {
+                logInternal('  filler/4:             ${StringTools.toDisplayString(filler)}');
+                logInternal('  lastConsumedPosition: $lastConsumedPosition');
+                logInternal('  offset:               $offset');
+                logInternal('  Current:              ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
+            }
 
             if (!FormatTools.isEmptyOrComments(filler))
                 _logAndThrowError('Internal error: Missed some text:'
@@ -274,16 +285,20 @@ class FormatState
                     ' Source: $source');
 
             final String fixedFiller = _removeLeadingWhitespace(filler);
-            _log('  Filler w/o leadingWS: ${StringTools.toDisplayString(fixedFiller)}');
-            _log('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
+            if (Constants.DEBUG_FORMAT_STATE)
+            {
+                logInternal('  Filler w/o leadingWS: ${StringTools.toDisplayString(fixedFiller)}');
+                logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
+            }
+
             write(fixedFiller);
         }
         else
-            _log('  No filler');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  No filler');
 
-        _log('+ ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
         final String fixedS = _removeLeadingWhitespace(s);
-        _log('  S w/o leading ws:     ${StringTools.toDisplayString(fixedS)}');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  S w/o leading ws:     ${StringTools.toDisplayString(fixedS)}');
         write(fixedS);
 
         _setLastConsumedPosition(end, fullSource);
@@ -293,29 +308,29 @@ class FormatState
     {
         const String methodName = 'consumeTill';
         final String fullSource = '$source/$methodName';
-        _log('# $methodName($end, $source)');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($end, $source)');
 
         if (lastConsumedPosition >= end)
             return;
 
         String filler = getText(lastConsumedPosition, end);
-        _log('  filler/5:                  ${StringTools.toDisplayString(filler)}');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  filler/5:                  ${StringTools.toDisplayString(filler)}');
 
         if (_trailingForTests != null && filler.endsWith(_trailingForTests!))
         {
             filler = filler.substring(0, filler.length - _trailingForTests!.length);
-            _log('  Filler (without trailing): ${StringTools.toDisplayString(filler)}');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  Filler (without trailing): ${StringTools.toDisplayString(filler)}');
         }
 
         if (!FormatTools.isEmptyOrComments(filler))
         {
-            _log('  Current:                   ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  Current:                   ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
             _logAndThrowError('Internal error: Missed some text:'
                 ' (${getPositionInfo(lastConsumedPosition)}) - (${getPositionInfo(end)}):'
                 ' ${StringTools.toDisplayString(filler, 100)} Source: $source');
         }
 
-        _log('+ ${StringTools.toDisplayString(filler, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(filler, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
         write(filler);
 
         _setLastConsumedPosition(end, fullSource);
@@ -346,10 +361,12 @@ class FormatState
     {
         const String methodName = 'copyEntity';
         final String fullSource = '$source/$methodName';
-        _log('# $methodName(${StringTools.toDisplayString(entity, Constants.MAX_DEBUG_LENGTH)}, $source)');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(entity, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
         if (entity == null)
-            _log('+ <null> ($fullSource)');
+        {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <null> ($fullSource)');
+        }
         else if (entity is AstNode)
             entity.accept(astVisitor);
         else
@@ -367,7 +384,7 @@ class FormatState
     {
         const String methodName = 'copyText';
         final String fullSource = '$source/$methodName';
-        _log('# $methodName($offset, $end, $source)');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, $source)');
 
         final String s = getText(offset, end);
         consumeText(offset, end, s, fullSource);
@@ -382,7 +399,7 @@ class FormatState
     {
         const String methodName = 'copyToken';
         final String fullSource = '$source/$methodName';
-        _log('# $methodName(${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, addNewLineBefore=$addNewLineBefore, addNewLineAfter=$addNewLineAfter, pushLevel: $pushLevel, popLevel: $popLevel, $source)');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, addNewLineBefore=$addNewLineBefore, addNewLineAfter=$addNewLineAfter, pushLevel: $pushLevel, popLevel: $popLevel, $source)');
 
         _copyTokenCommentsOnly(token, fullSource);
         _addNewLineBeforeToken(token, add: addNewLineBefore, beforeComments: false, fullSource);
@@ -401,11 +418,11 @@ class FormatState
     {
         const String methodName = 'copyTokenCommentsOnly';
         final String fullSource = '$source/$methodName';
-        _log('# $methodName(${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
         if (token == null)
         {
-            _log('+ <null> ($fullSource)');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <null> ($fullSource)');
             return;
         }
 
@@ -420,7 +437,7 @@ class FormatState
 
         if (commentsOffset == null || commentsEnd == null)
         {
-            _log('+ <no comments> ($fullSource)');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <no comments> ($fullSource)');
             return;
         }
 
@@ -431,11 +448,11 @@ class FormatState
     {
         const String methodName = 'copyTokenWithoutComments';
         final String fullSource = '$source/$methodName';
-        _log('# $methodName(${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
         if (token == null)
         {
-            _log('+ <null> ($fullSource)');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <null> ($fullSource)');
             return;
         }
 
@@ -515,14 +532,17 @@ class FormatState
 
     void popLevelAndIndent()
     {
-        _log('# FormatState.popLevelAndIndent()');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# FormatState.popLevelAndIndent()');
 
         final Indentation lastLevel = _indentations.removeLast();
-        _log('  Popped Level: name: "${lastLevel.name}" type: "${lastLevel.type}"');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  Popped Level: name: "${lastLevel.name}" type: "${lastLevel.type}"');
 
         final StringBufferEx poppedStringBuffer = _textBuffers.removeLast();
-        _log('  Popped StringBuffer: lastText: ${StringTools.toDisplayString(poppedStringBuffer.lastText)}');
-        _log('  Popped StringBuffer: allText:  ${StringTools.toDisplayString(poppedStringBuffer.toString())}');
+        if (Constants.DEBUG_FORMAT_STATE)
+        {
+            logInternal('  Popped StringBuffer: lastText: ${StringTools.toDisplayString(poppedStringBuffer.lastText)}');
+            logInternal('  Popped StringBuffer: allText:  ${StringTools.toDisplayString(poppedStringBuffer.toString())}');
+        }
 
         if (_indentationSpacesPerLevel < 0)
         {
@@ -531,9 +551,9 @@ class FormatState
         }
 
         final bool previousTextEndsWithNewLine = _textBuffers.last.lastText.endsWith('\n');
-        _log('  previousTextEndsWithNewLine: $previousTextEndsWithNewLine');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  previousTextEndsWithNewLine: $previousTextEndsWithNewLine');
         String s = (previousTextEndsWithNewLine ? '\n' : '') + poppedStringBuffer.toString();
-        _log('  s: ${StringTools.toDisplayString(s)}');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  s: ${StringTools.toDisplayString(s)}');
 
         String indentation = '';
         if (lastLevel.type == IndentationType.single)
@@ -546,7 +566,7 @@ class FormatState
             indentation = ' ' * _indentationSpacesPerLevel;
         }
 
-        _log('  indentation: ${StringTools.toDisplayString(indentation)}');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  indentation: ${StringTools.toDisplayString(indentation)}');
         final bool endsWithNewLine = s.endsWith('\n');
         if (endsWithNewLine)
             s = s.substring(0, s.length - 1);
@@ -560,7 +580,7 @@ class FormatState
         if (previousTextEndsWithNewLine)
             s = s.substring(1);
 
-        _log('  indentedText: ${StringTools.toDisplayString(s)}');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  indentedText: ${StringTools.toDisplayString(s)}');
         _textBuffers.last.write(s);
     }
 
@@ -568,9 +588,12 @@ class FormatState
     // TODO: when is IndentationType.multiple even used?
     void pushLevel(String name, [IndentationType type = IndentationType.single])
     {
-        _log('# FormatState.pushLevel(name: "$name", type: "$type")');
-        //_log('  lastText: ${StringTools.toDisplayString(_textBuffers.last.lastText)}');
-        //_log('  allText:  ${StringTools.toDisplayString(_textBuffers.last)}');
+        if (Constants.DEBUG_FORMAT_STATE)
+        {
+            logInternal('# FormatState.pushLevel(name: "$name", type: "$type")');
+            //logInternal('  lastText: ${StringTools.toDisplayString(_textBuffers.last.lastText)}');
+            //logInternal('  allText:  ${StringTools.toDisplayString(_textBuffers.last)}');
+        }
         _indentations.add(Indentation(name: name, type: type));
         _textBuffers.add(StringBufferEx(lastText: _textBuffers.last.lastText));
     }
@@ -578,14 +601,8 @@ class FormatState
     void write(String s)
     {
         _textBuffers.last.write(s);
-        _log('= ${StringTools.toDisplayString(getResult())}');
-    }
-
-    void _log(String s)
-    {
-        if (Constants.DEBUG_FORMAT_STATE)
-            logInternal(s);
-    }
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('= ${StringTools.toDisplayString(getResult())}');
+    } 
 
     void _logError(String s)
     {

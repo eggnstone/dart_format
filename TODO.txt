@@ -15,6 +15,7 @@ TODO
 - Own lint rule: don't return Future<void>s.
 - simplify TestAstVisitor
 - ensure DEBUG is off when publishing
+- safety: don't accept result if length is 0 or very short, e.g. when throwing UnimplementedError in StringTools.
 
 DONE (I think)
 ==============

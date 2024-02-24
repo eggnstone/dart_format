@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Config.dart';
@@ -18,7 +20,7 @@ class ExpressionFunctionBodyFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'ExpressionFunctionBodyFormatter.format';
-        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! ExpressionFunctionBody)
             throw FormatException('Not an ExpressionFunctionBody: ${node.runtimeType}');
@@ -28,6 +30,6 @@ class ExpressionFunctionBodyFormatter extends IFormatter
         formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
-        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

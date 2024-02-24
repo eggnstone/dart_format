@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Config.dart';
@@ -18,7 +20,7 @@ class GenericTypeAliasFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'GenericTypeAliasFormatter.format';
-        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! GenericTypeAlias)
             throw FormatException('Not a GenericTypeAlias: ${node.runtimeType}');
@@ -31,6 +33,6 @@ class GenericTypeAliasFormatter extends IFormatter
         formatState.copyEntity(node.type, astVisitor, '$methodName/node.type');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
-        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

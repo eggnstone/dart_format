@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/syntactic_entity.dart';
 
@@ -20,7 +22,7 @@ class AssertStatementFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'AssertStatementFormatter.format';
-        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! AssertStatement)
             throw FormatException('Not an AssertStatement: ${node.runtimeType}');
@@ -32,13 +34,17 @@ class AssertStatementFormatter extends IFormatter
         formatState.copyEntity(node.message, astVisitor, '$methodName/node.message');
 
         final SyntacticEntity nodeBeforeRightParenthesis = node.message ?? node.comma ?? node.condition;
-        log('node.comma: ${node.comma}', formatState.logIndent);
-        log('node.message: ${node.message}', formatState.logIndent);
-        log('node.nodeBeforeRightParenthesis: $nodeBeforeRightParenthesis', formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER)
+        {
+            log('node.comma: ${node.comma}', formatState.logIndent);
+            log('node.message: ${node.message}', formatState.logIndent);
+            log('node.nodeBeforeRightParenthesis: $nodeBeforeRightParenthesis', formatState.logIndent);
+        }
+
         final int start = nodeBeforeRightParenthesis.end;
         final int end = node.rightParenthesis.offset;
         String commaText = formatState.getText(start, end);
-        log('commaText: ${StringTools.toDisplayString(commaText)}', formatState.logIndent - 1);
+        if (Constants.DEBUG_I_FORMATTER) log('commaText: ${StringTools.toDisplayString(commaText)}', formatState.logIndent - 1);
         if (FormatTools.isCommaText(commaText))
         {
             if (config.removeTrailingCommas)
@@ -50,6 +56,6 @@ class AssertStatementFormatter extends IFormatter
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
-        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

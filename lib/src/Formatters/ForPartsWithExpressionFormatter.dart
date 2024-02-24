@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Config.dart';
@@ -18,7 +20,7 @@ class ForPartsWithExpressionFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'ForPartsWithExpressionFormatter.format';
-        log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! ForPartsWithExpression)
             throw FormatException('Not a ForPartsWithExpression: ${node.runtimeType}');
@@ -29,6 +31,6 @@ class ForPartsWithExpressionFormatter extends IFormatter
         formatState.copyEntity(node.rightSeparator, astVisitor, '$methodName/node.rightSeparator');
         formatState.acceptListWithComma(node.updaters, null, astVisitor, '$methodName/node.updaters');
 
-        log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }
