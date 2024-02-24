@@ -28,6 +28,7 @@ class IfStatementFormatter extends IFormatter
         formatState.copyEntity(node.ifKeyword, astVisitor, '$methodName/node.ifKeyword');
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
         formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');
+        formatState.copyEntity(node.caseClause, astVisitor, '$methodName/node.caseClause');
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
 
         formatState.pushLevel('$methodName/node.thenStatement');

@@ -40,6 +40,7 @@ import 'Formatters/LibraryDirectiveFormatter.dart';
 import 'Formatters/LibraryIdentifierFormatter.dart';
 import 'Formatters/ListLiteralFormatter.dart';
 import 'Formatters/ListPatternFormatter.dart';
+import 'Formatters/MapPatternFormatter.dart';
 import 'Formatters/MixinDeclarationFormatter.dart';
 import 'Formatters/NativeFunctionBodyFormatter.dart';
 import 'Formatters/ObjectPatternFormatter.dart';
@@ -57,6 +58,7 @@ import 'Formatters/ShowCombinatorFormatter.dart';
 import 'Formatters/SwitchExpressionFormatter.dart';
 import 'Formatters/SwitchPatternCaseFormatter.dart';
 import 'Formatters/SwitchStatementFormatter.dart';
+import 'Formatters/SymbolLiteralFormatter.dart';
 import 'Formatters/TopLevelVariableDeclarationFormatter.dart';
 import 'Formatters/TypeArgumentListFormatter.dart';
 import 'Formatters/TypeParameterListFormatter.dart';
@@ -109,6 +111,7 @@ class FormatVisitor extends AstVisitor<void>
     late final LibraryIdentifierFormatter _libraryIdentifierFormatter = LibraryIdentifierFormatter(config, this, _formatState);
     late final ListLiteralFormatter _listLiteralFormatter = ListLiteralFormatter(config, this, _formatState);
     late final ListPatternFormatter _listPatternFormatter = ListPatternFormatter(config, this, _formatState);
+    late final MapPatternFormatter _mapPatternFormatter = MapPatternFormatter(config, this, _formatState);
     late final MixinDeclarationFormatter _mixinDeclarationFormatter = MixinDeclarationFormatter(config, this, _formatState);
     late final NativeFunctionBodyFormatter _nativeFunctionBodyFormatter = NativeFunctionBodyFormatter(config, this, _formatState);
     late final ObjectPatternFormatter _objectPatternFormatter = ObjectPatternFormatter(config, this, _formatState);
@@ -126,6 +129,7 @@ class FormatVisitor extends AstVisitor<void>
     late final SwitchExpressionFormatter _switchExpressionFormatter = SwitchExpressionFormatter(config, this, _formatState);
     late final SwitchStatementFormatter _switchStatementFormatter = SwitchStatementFormatter(config, this, _formatState);
     late final SwitchPatternCaseFormatter _switchPatternCaseFormatter = SwitchPatternCaseFormatter(config, this, _formatState);
+    late final SymbolLiteralFormatter _symbolLiteralFormatter = SymbolLiteralFormatter(config, this, _formatState);
     late final TopLevelVariableDeclarationFormatter _topLevelVariableDeclarationFormatter = TopLevelVariableDeclarationFormatter(config, this, _formatState);
     late final TypeArgumentListFormatter _typeArgumentListFormatter = TypeArgumentListFormatter(config, this, _formatState);
     late final TypeParameterListFormatter _typeParameterListFormatter = TypeParameterListFormatter(config, this, _formatState);
@@ -526,7 +530,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitMapPattern(MapPattern node)
-    => _defaultFormatter.format(node);
+    => _mapPatternFormatter.format(node);
 
     @override
     void visitMapPatternEntry(MapPatternEntry node)
@@ -754,7 +758,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitSymbolLiteral(SymbolLiteral node)
-    => _defaultFormatter.format(node);
+    => _symbolLiteralFormatter.format(node);
 
     @override
     void visitThisExpression(ThisExpression node)

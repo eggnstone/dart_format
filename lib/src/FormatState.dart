@@ -80,6 +80,25 @@ class FormatState
         }
     }
 
+    void acceptTokenListWithPeriod(List<Token> tokens, AstVisitor<void> astVisitor, String source)
+    {
+        Token? lastToken;
+        for (final Token token in tokens)
+        {
+            if (lastToken != null)
+            {
+                final String periodText = getText(lastToken.end, token.offset);
+                if (!FormatTools.isPeriodText(periodText))
+                    throw DartFormatException.error('periodText is not a period: ${StringTools.toDisplayString(periodText)}');
+
+                consumeText(lastToken.end, token.offset, periodText, '$source/Period');
+            }
+
+            copyToken(token, source, addNewLineBefore: false, addNewLineAfter: false);
+            lastToken = token;
+        }
+    }
+
     void acceptList(List<AstNode> nodes, AstVisitor<void> astVisitor, String source)
     {
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# FormatState.acceptList($source)');

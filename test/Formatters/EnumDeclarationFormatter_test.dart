@@ -16,6 +16,19 @@ void main()
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
         TestGroupConfig(
             inputNodeCreator: AstCreator.createDeclaration,
+            inputMiddle: 'enum E implements F{x}',
+            name: 'EnumDeclaration: enum E implements F{x}',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<ImplementsClause>(7, 'implements F'),
+              TestVisitor<EnumConstantDeclaration>(20, 'x'),
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('enum E implements F\n{\n    x\n}\n')
+            ]
+        ), 
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'enum E{x,y,}',
             name: 'EnumDeclaration in 1 line with trailing comma',
             astVisitors: <TestVisitor<void>>[
@@ -26,7 +39,7 @@ void main()
                 TestConfig.none(),
                 TestConfig('enum E\n{\n    x,y\n}\n')
             ]
-        ), 
+        ),
         TestGroupConfig(
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'enum E{x,y,/**/}',
