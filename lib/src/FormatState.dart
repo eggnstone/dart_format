@@ -108,6 +108,8 @@ class FormatState
 
     void acceptListWithComma(NodeList<AstNode> nodes, Token? endToken, AstVisitor<void> astVisitor, String source)
     {
+        const String methodName = 'acceptListWithComma';
+
         AstNode? lastNode;
         for (final AstNode node in nodes)
         {
@@ -151,7 +153,19 @@ class FormatState
                     if (_removeTrailingCommas)
                         commaText = commaText.replaceFirst(',', '${Constants.REMOVE_START},${Constants.REMOVE_END}');
 
-                    consumeText(lastNode.end, endToken.offset, commaText, '$source/TrailingComma');
+                    int? end = lastNode.end;
+                    if (end < _lastConsumedPosition)
+                    {
+                        final String alreadyConsumedText = getText(end, _lastConsumedPosition);
+                        if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
+                        if (alreadyConsumedText.trim().isEmpty)
+                        {
+                            // TODO: Find a better way!
+                            end = _lastConsumedPosition;
+                        }
+                    }
+
+                    consumeText(end, endToken.offset, commaText, '$source/TrailingComma');
                 }
             }
         }
@@ -492,7 +506,7 @@ class FormatState
         if (end < _lastConsumedPosition)
         {
             final String alreadyConsumedText = getText(end, _lastConsumedPosition);
-            //logDebug('alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
+            if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
             if (alreadyConsumedText.trim().isEmpty)
             {
                 // TODO: Find a better way!
