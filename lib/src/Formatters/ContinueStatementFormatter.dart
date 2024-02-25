@@ -1,7 +1,6 @@
 // ignore_for_file: always_put_control_body_on_new_line
 
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:eggnstone_dart/eggnstone_dart.dart';
 
 import '../Config.dart';
 import '../Constants/Constants.dart';
