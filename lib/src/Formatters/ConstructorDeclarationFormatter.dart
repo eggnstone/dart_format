@@ -26,6 +26,7 @@ class ConstructorDeclarationFormatter extends IFormatter
             throw FormatException('Not a ConstructorDeclaration: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
+        formatState.copyEntity(node.externalKeyword, astVisitor, '$methodName/node.externalKeyword');
         formatState.copyEntity(node.constKeyword, astVisitor, '$methodName/node.constKeyword');
         formatState.copyEntity(node.factoryKeyword, astVisitor, '$methodName/node.factoryKeyword');
         formatState.copyEntity(node.returnType, astVisitor, '$methodName/node.returnType');

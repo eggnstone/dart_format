@@ -25,6 +25,7 @@ class SwitchPatternCaseFormatter extends IFormatter
         if (node is! SwitchPatternCase)
             throw FormatException('Not a SwitchPatternCase: ${node.runtimeType}');
 
+        formatState.acceptList(node.labels, astVisitor, '$methodName/node.labels');
         formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword');
         formatState.copyEntity(node.guardedPattern, astVisitor, '$methodName/node.guardedPattern');
         formatState.copyEntity(node.colon, astVisitor, '$methodName/node.colon');

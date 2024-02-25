@@ -1,6 +1,7 @@
 // ignore_for_file: always_put_control_body_on_new_line
 
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:eggnstone_dart/eggnstone_dart.dart';
 
 import '../Config.dart';
 import '../Constants/Constants.dart';
@@ -25,7 +26,8 @@ class ContinueStatementFormatter extends IFormatter
         if (node is! ContinueStatement)
             throw FormatException('Not a ContinueStatement: ${node.runtimeType}');
 
-        formatState.copyEntity(node.continueKeyword,astVisitor, '$methodName/node.continueKeyword');
+        formatState.copyEntity(node.continueKeyword, astVisitor, '$methodName/node.continueKeyword');
+        formatState.copyEntity(node.label, astVisitor, '$methodName/node.label');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
