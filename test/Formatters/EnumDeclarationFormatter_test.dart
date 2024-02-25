@@ -20,7 +20,7 @@ void main()
             name: 'EnumDeclaration: enum E implements F{x}',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<ImplementsClause>(7, 'implements F'),
-              TestVisitor<EnumConstantDeclaration>(20, 'x'),
+                TestVisitor<EnumConstantDeclaration>(20, 'x')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

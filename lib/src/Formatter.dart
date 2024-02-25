@@ -123,10 +123,4 @@ class Formatter
         _logWarning(message);
         throw DartFormatException.warning(message, location);
     }
-
-    /*void _logAndThrowError(String message)
-    {
-    _logError(message);
-    throw DartFormatException.error(message);
-    }*/
 }

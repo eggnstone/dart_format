@@ -30,7 +30,6 @@ class MapPatternFormatter extends IFormatter
         formatState.acceptListWithComma(node.elements, node.rightBracket, astVisitor, '$methodName/node.elements');
         formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
 
-
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

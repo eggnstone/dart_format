@@ -60,9 +60,4 @@ class DefaultFormatter extends IFormatter
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent, node.end);
     }
-
-    /*void _log2Old(String s)
-    {
-        if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal(s);
-    }*/
 }
