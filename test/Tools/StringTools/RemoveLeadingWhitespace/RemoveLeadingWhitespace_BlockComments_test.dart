@@ -9,12 +9,32 @@ void main()
 
     group('RemoveLeadingWhitespace (Block Comments)', ()
         {
-            const String DUMMY_SPACE = '          ';
-            const String SPACE4 = '    ';
+            final String dummySpace = ' ' * 10;
+            final String space4 = ' ' * 4;
+
+            test('Exact whitespace as needed, with empty line', ()
+                {
+                    final String inputText =
+                        '$dummySpace/*START\n'
+                        '\n'
+                        '${space4}END*/$dummySpace';
+                    final String expectedText =
+                        '$dummySpace/*START\n'
+                        '\n'
+                        'END*/$dummySpace';
+
+                    final String actualText = StringTools.removeLeadingWhitespace(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
 
             test('Exact whitespace as needed, content more indented than end', ()
                 {
-                    const String inputText = '$DUMMY_SPACE/*\n${SPACE4}a\n*/$DUMMY_SPACE';
+                    final String inputText =
+                        '$dummySpace/*\n'
+                        '${space4}a\n'
+                        '*/$dummySpace';
 
                     final String actualText = StringTools.removeLeadingWhitespace(inputText);
 
@@ -24,7 +44,10 @@ void main()
 
             test('Exact whitespace as needed, content less indented than end', ()
                 {
-                    const String inputText = '$DUMMY_SPACE/*\na\n${SPACE4}*/$DUMMY_SPACE';
+                    final String inputText =
+                        '$dummySpace/*\n'
+                        'a\n'
+                        '${space4}*/$dummySpace';
 
                     final String actualText = StringTools.removeLeadingWhitespace(inputText);
 
@@ -34,8 +57,14 @@ void main()
 
             test('More whitespace than needed, content more indented than end', ()
                 {
-                    const String inputText = '$DUMMY_SPACE/*\n${SPACE4}${SPACE4}a\n${SPACE4}*/$DUMMY_SPACE';
-                    const String expectedText = '$DUMMY_SPACE/*\n${SPACE4}a\n*/$DUMMY_SPACE';
+                    final String inputText =
+                        '$dummySpace/*\n'
+                        '${space4}${space4}a\n'
+                        '${space4}*/$dummySpace';
+                    final String expectedText =
+                        '$dummySpace/*\n'
+                        '${space4}a\n'
+                        '*/$dummySpace';
 
                     final String actualText = StringTools.removeLeadingWhitespace(inputText);
 
@@ -45,8 +74,14 @@ void main()
 
             test('More whitespace than needed, content less indented than end', ()
                 {
-                    const String inputText = '$DUMMY_SPACE/*\n${SPACE4}a\n${SPACE4}${SPACE4}*/$DUMMY_SPACE';
-                    const String expectedText = '$DUMMY_SPACE/*\na\n${SPACE4}*/$DUMMY_SPACE';
+                    final String inputText =
+                        '$dummySpace/*\n'
+                        '${space4}a\n'
+                        '${space4}${space4}*/$dummySpace';
+                    final String expectedText =
+                        '$dummySpace/*\n'
+                        'a\n'
+                        '${space4}*/$dummySpace';
 
                     final String actualText = StringTools.removeLeadingWhitespace(inputText);
 

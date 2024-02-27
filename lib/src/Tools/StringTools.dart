@@ -74,18 +74,24 @@ class StringTools
         if (lines.length < 2)
             return s;
 
-        int minIndentation = 0;
+        int minIndentation = -1;
         // Start at index 1 to skip the first line.
         for (int i = 1; i < lines.length; i++)
         {
-            final int indentation = lines[i].length - lines[i].trimLeft().length;
-            if (i == 1 || indentation < minIndentation)
-                minIndentation = indentation;
+            final String line = lines[i];
+            if (line.trim().isNotEmpty)
+            {
+                final int indentation = line.length - line.trimLeft().length;
+                if (minIndentation == -1 || indentation < minIndentation)
+                    minIndentation = indentation;
+            }
         }
 
+        if (minIndentation == -1)
+            //return s;
+            minIndentation =0;
+
         if (Constants.DEBUG_STRING_TOOLS) logInternal('minIndentation: $minIndentation');
-        //final String minIndentationString = ' ' * minIndentation;
-        //if (Constants.DEBUG_STRING_TOOLS) logInternal('minIndentationString: ${StringTools.toDisplayString(minIndentationString)}');
 
         for (int i = 0; i < lines.length; i++)
         {
@@ -101,8 +107,9 @@ class StringTools
             {
                 sb.write('\n');
                 if (Constants.DEBUG_STRING_TOOLS) logInternal('<   #$i: \\n');
-                sb.write(line.substring(minIndentation));
-                if (Constants.DEBUG_STRING_TOOLS) logInternal('<   #$i: ${StringTools.toDisplayString(line.substring(minIndentation))}');
+                final String shortenedLine = line.length <= minIndentation ? '' : line.substring(minIndentation);
+                sb.write(shortenedLine);
+                if (Constants.DEBUG_STRING_TOOLS) logInternal('<   #$i: ${StringTools.toDisplayString(shortenedLine)}');
             }
         }
 

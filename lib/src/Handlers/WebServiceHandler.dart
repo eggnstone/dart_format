@@ -92,12 +92,12 @@ class WebServiceHandler
             );
 
             /*stdin.handleError(
-            (Object error, StackTrace stackTrace)
-            {
-            logError('$METHOD_NAME: Quitting because stdin.handleError()/onError called: $error');
-            terminate = true;
-            terminateWithError = true;
-            }
+                (Object error, StackTrace stackTrace)
+                {
+                    logError('$METHOD_NAME: Quitting because stdin.handleError()/onError called: $error');
+                    terminate = true;
+                    terminateWithError = true;
+                }
             );*/
 
             stdin.listen(
@@ -335,14 +335,14 @@ class WebServiceHandler
         /*// ignore: avoid_catching_errors
         on Error catch (e, st)
         {
-        // necessary?
-        logErrorObject(METHOD_NAME, e, st);
+            // necessary?
+            logErrorObject(METHOD_NAME, e, st);
 
-        final DartFormatException dartFormatException = DartFormatException.error(e.toString());
-        request.response.statusCode = HttpStatus.ok;
-        request.response.headers.contentType = ContentType.text;
-        request.response.headers.add('X-DartFormat-Result', 'Fail');
-        request.response.headers.add('X-DartFormat-Exception', jsonEncode(dartFormatException.toJson()));
+            final DartFormatException dartFormatException = DartFormatException.error(e.toString());
+            request.response.statusCode = HttpStatus.ok;
+            request.response.headers.contentType = ContentType.text;
+            request.response.headers.add('X-DartFormat-Result', 'Fail');
+            request.response.headers.add('X-DartFormat-Exception', jsonEncode(dartFormatException.toJson()));
         }*/
         finally
         {
@@ -389,8 +389,8 @@ class WebServiceHandler
         /*// ignore: avoid_catching_errors
         on Error catch (e, st)
         {
-        // necessary?
-        logErrorObject(METHOD_NAME, e, st);
+            // necessary?
+            logErrorObject(METHOD_NAME, e, st);
         }*/
         finally
         {
