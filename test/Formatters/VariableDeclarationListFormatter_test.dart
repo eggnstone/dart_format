@@ -17,7 +17,7 @@ void main()
             inputMiddle: 'late final int i = 0',
             inputTrailing: ';}',
             name: 'VariableDeclarationList late final int i = 0;',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<NamedType>(19, 'int'),
                 TestVisitor<VariableDeclaration>(23, 'i = 0')
             ]

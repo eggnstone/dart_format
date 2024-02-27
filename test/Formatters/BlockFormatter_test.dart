@@ -17,7 +17,7 @@ void main()
             inputLeading: 'void f()',
             inputMiddle: '{a;\nb;}',
             name: 'Block with 2 statements on 2 lines',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<ExpressionStatement>(9, 'a;'),
                 TestVisitor<ExpressionStatement>(12, 'b;')
             ],
@@ -31,7 +31,7 @@ void main()
             inputLeading: 'void f()',
             inputMiddle: '{\n/*Comment1*/\n/*Comment2*/a;/*Comment3*/\n/*Comment4*/b;/*Comment5*/\n/*Comment6*/}',
             name: 'Block with 2 statements on multiple lines (with comments)',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<ExpressionStatement>(9, '\n/*Comment1*/\n/*Comment2*/a;'),
                 TestVisitor<ExpressionStatement>(37, '/*Comment3*/\n/*Comment4*/b;')
             ],

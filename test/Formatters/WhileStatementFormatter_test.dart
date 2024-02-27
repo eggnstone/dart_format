@@ -18,7 +18,7 @@ void main()
             inputMiddle: 'while(true)\n;',
             inputTrailing: '}',
             name: 'while(true);',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<BooleanLiteral>(15, 'true'),
                 TestVisitor<EmptyStatement>(21, ';')
             ],
@@ -33,7 +33,7 @@ void main()
             inputMiddle: 'while(true){}',
             inputTrailing: '}',
             name: 'while(true){}',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<BooleanLiteral>(15, 'true'),
                 TestVisitor<Block>(20, '{}')
             ]

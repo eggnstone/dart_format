@@ -18,7 +18,7 @@ void main()
             inputMiddle: "import 'x.dart' if (a.b.c) 'y.dart' as z show a,b hide c,d;",
             inputTrailing: '',
             name: 'ImportDirective',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleStringLiteral>(7, "'x.dart'"),
                 TestVisitor<Configuration>(16, "if (a.b.c) 'y.dart'"),
                 TestVisitor<SimpleIdentifier>(39, 'z'),

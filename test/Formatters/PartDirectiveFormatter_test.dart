@@ -20,7 +20,7 @@ void main()
                 TestConfig.none(),
                 TestConfig("part'';\n")
             ],
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleStringLiteral>(4, "''")
             ]
         )

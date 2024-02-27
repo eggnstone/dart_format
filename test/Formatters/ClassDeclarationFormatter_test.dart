@@ -16,7 +16,7 @@ void main()
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: '@a abstract interface class C<T> extends E with W implements I{C();}',
             name: 'ClassDeclaration / @a abstract interface class C<T> extends E with W implements I{C();}',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<Annotation>(0, '@a'),
                 TestVisitor<TypeParameterList>(29, '<T>'),
                 TestVisitor<ExtendsClause>(33, 'extends E'),
@@ -33,7 +33,7 @@ void main()
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: '@a sealed class C{}',
             name: 'ClassDeclaration / @a sealed class C{}',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<Annotation>(0, '@a')
             ],
             testConfigs: <TestConfig>[

@@ -18,7 +18,7 @@ void main()
             inputMiddle: 'if (true);',
             inputTrailing: '}',
             name: 'if ;',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<BooleanLiteral>(13, 'true'),
                 TestVisitor<EmptyStatement>(18, ';')
             ]
@@ -29,7 +29,7 @@ void main()
             inputMiddle: 'if (true)\n;',
             inputTrailing: '}',
             name: r'if \n;',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<BooleanLiteral>(13, 'true'),
                 TestVisitor<EmptyStatement>(19, ';')
             ],
@@ -44,7 +44,7 @@ void main()
             inputMiddle: 'if (true){}',
             inputTrailing: '}',
             name: 'if {}',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<BooleanLiteral>(13, 'true'),
                 TestVisitor<Block>(18, '{}')
             ]
@@ -55,7 +55,7 @@ void main()
             inputMiddle: 'if (true)\n{}',
             inputTrailing: '}',
             name: r'if \n{}',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<BooleanLiteral>(13, 'true'),
                 TestVisitor<Block>(19, '{}')
             ]
@@ -66,7 +66,7 @@ void main()
             inputMiddle: 'if (true);else;',
             inputTrailing: '}',
             name: 'if ; else ;',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<BooleanLiteral>(13, 'true'),
                 TestVisitor<EmptyStatement>(18, ';'),
                 TestVisitor<EmptyStatement>(23, ';')
@@ -82,7 +82,7 @@ void main()
             inputMiddle: 'if (true)\n;else\n;',
             inputTrailing: '}',
             name: r'if \n; else \n;',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<BooleanLiteral>(13, 'true'),
                 TestVisitor<EmptyStatement>(19, ';'),
                 TestVisitor<EmptyStatement>(25, ';')
@@ -98,7 +98,7 @@ void main()
             inputMiddle: 'if (true)\n;else if(true)\n;',
             inputTrailing: '}',
             name: r'if \n ; else if \n ;',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<BooleanLiteral>(13, 'true'),
                 TestVisitor<EmptyStatement>(19, ';'),
                 TestVisitor<IfStatement>(25, 'if(true)\n;')
@@ -114,7 +114,7 @@ void main()
             inputMiddle: 'if (true)\n;\nelse if(true)\n;',
             inputTrailing: '}',
             name: r'if \n ; \n else if \n ;',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<BooleanLiteral>(13, 'true'),
                 TestVisitor<EmptyStatement>(19, ';'),
                 TestVisitor<IfStatement>(26, 'if(true)\n;')
@@ -130,7 +130,7 @@ void main()
             inputMiddle: 'if (true)\n;\nelse if(true)\n{\n}',
             inputTrailing: '}',
             name: r'if \n ; \n else if \n {}',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<BooleanLiteral>(13, 'true'),
                 TestVisitor<EmptyStatement>(19, ';'),
                 TestVisitor<IfStatement>(26, 'if(true)\n{\n}')

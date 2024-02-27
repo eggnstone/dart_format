@@ -18,7 +18,7 @@ void main()
             inputMiddle: 'switch(i){case 0:;}',
             inputTrailing: '}',
             name: 'SwitchStatement',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleIdentifier>(16, 'i'),
                 TestVisitor<SwitchPatternCase>(19, 'case 0:;')
             ],

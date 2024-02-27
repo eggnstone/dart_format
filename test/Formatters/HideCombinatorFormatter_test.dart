@@ -17,7 +17,7 @@ void main()
             inputMiddle: 'hide c,d',
             inputTrailing: ';',
             name: 'HideCombinator',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleIdentifier>(21, 'c'),
                 TestVisitor<SimpleIdentifier>(23, 'd')
             ]

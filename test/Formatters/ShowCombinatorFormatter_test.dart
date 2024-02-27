@@ -17,7 +17,7 @@ void main()
             inputMiddle: 'show c,d',
             inputTrailing: ';',
             name: 'ShowCombinator',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleIdentifier>(21, 'c'),
                 TestVisitor<SimpleIdentifier>(23, 'd')
             ]

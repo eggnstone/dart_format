@@ -18,7 +18,7 @@ void main()
             inputMiddle: 'case 0:\n;\n;',
             inputTrailing: '}}',
             name: 'SwitchPatternCase',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<GuardedPattern>(24, '0'),
                 TestVisitor<EmptyStatement>(27, ';'),
                 TestVisitor<EmptyStatement>(29, ';')

@@ -16,7 +16,7 @@ void main()
             inputNodeCreator: AstCreator.createDirective,
             inputMiddle: "export 'x.dart' if (a.b.c) 'y.dart';",
             name: 'ExportDirective',
-            astVisitors: <AstVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleStringLiteral>(7, "'x.dart'"),
                 TestVisitor<Configuration>(16, "if (a.b.c) 'y.dart'")
             ],

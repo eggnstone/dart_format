@@ -18,7 +18,7 @@ void main()
             inputMiddle: 'const C();',
             inputTrailing: '}',
             name: 'const / no params',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleIdentifier>(14, 'C'),
                 TestVisitor<FormalParameterList>(15, '()'),
                 TestVisitor<EmptyFunctionBody>(17, ';')
@@ -30,7 +30,7 @@ void main()
             inputMiddle: 'const C(int i);',
             inputTrailing: '}',
             name: 'const / 1 param',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleIdentifier>(14, 'C'),
                 TestVisitor<FormalParameterList>(15, '(int i)'),
                 TestVisitor<EmptyFunctionBody>(22, ';')
@@ -42,7 +42,7 @@ void main()
             inputMiddle: 'const C({int i});',
             inputTrailing: '}',
             name: 'const / 1 named param',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleIdentifier>(14, 'C'),
                 TestVisitor<FormalParameterList>(15, '({int i})'),
                 TestVisitor<EmptyFunctionBody>(24, ';')
@@ -54,7 +54,7 @@ void main()
             inputMiddle: '@a factory C(){}',
             inputTrailing: '}',
             name: 'With annotated factory with class name only',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<Annotation>(8, '@a'),
                 TestVisitor<SimpleIdentifier>(19, 'C'),                
                 TestVisitor<FormalParameterList>(20, '()'),
@@ -67,7 +67,7 @@ void main()
             inputMiddle: 'factory C.f(){}',
             inputTrailing: '}',
             name: 'With factory with class+factory name',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleIdentifier>(16, 'C'),
                 TestVisitor<FormalParameterList>(19, '()'),
                 TestVisitor<BlockFunctionBody>(21, '{}')
@@ -79,7 +79,7 @@ void main()
             inputMiddle: 'const factory C()=_C;',
             inputTrailing: '}',
             name: 'With factory with redirect',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleIdentifier>(22, 'C'),
                 TestVisitor<FormalParameterList>(23, '()'),
                 TestVisitor<ConstructorName>(26, '_C'),
@@ -92,7 +92,7 @@ void main()
             inputMiddle:  'C():super(){}',
             inputTrailing: '}',
             name: 'With super',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleIdentifier>(8, 'C'),
                 TestVisitor<FormalParameterList>(9, '()'),
                 TestVisitor<SuperConstructorInvocation>(12, 'super()'),
@@ -105,7 +105,7 @@ void main()
             inputMiddle:  'const C():super();',
             inputTrailing: '}',
             name: 'Const with super',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleIdentifier>(14, 'C'),
                 TestVisitor<FormalParameterList>(15, '()'),
                 TestVisitor<SuperConstructorInvocation>(18, 'super()'),
@@ -118,7 +118,7 @@ void main()
             inputMiddle: 'const C():a=0,b=0;',
             inputTrailing: '}',
             name: 'With initializers (1 line)',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleIdentifier>(14, 'C'),
                 TestVisitor<FormalParameterList>(15, '()'),
                 TestVisitor<ConstructorFieldInitializer>(18, 'a=0'),
@@ -132,7 +132,7 @@ void main()
             inputMiddle: 'const C()\n:a=0,b=0;',
             inputTrailing: '}',
             name: 'With initializers (2 lines)',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleIdentifier>(14, 'C'),
                 TestVisitor<FormalParameterList>(15, '()'),
                 TestVisitor<ConstructorFieldInitializer>(19, 'a=0'),
@@ -150,7 +150,7 @@ void main()
             inputMiddle: 'const C()\n:a=0,\nb=0;',
             inputTrailing: '}',
             name: 'With initializers (3 lines)',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleIdentifier>(14, 'C'),
                 TestVisitor<FormalParameterList>(15, '()'),
                 TestVisitor<ConstructorFieldInitializer>(19, 'a=0'),

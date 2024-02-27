@@ -8,6 +8,7 @@ import 'Formatters/AssertStatementFormatter.dart';
 import 'Formatters/AugmentationImportDirectiveFormatter.dart';
 import 'Formatters/BlockFormatter.dart';
 import 'Formatters/BreakStatementFormatter.dart';
+import 'Formatters/CascadeExpressionFormatter.dart';
 import 'Formatters/ClassDeclarationFormatter.dart';
 import 'Formatters/ClassTypeAliasFormatter.dart';
 import 'Formatters/CompilationUnitFormatter.dart';
@@ -80,6 +81,7 @@ class FormatVisitor extends AstVisitor<void>
     late final AugmentationImportDirectiveFormatter _augmentationImportDirectiveFormatter = AugmentationImportDirectiveFormatter(config, this, _formatState);
     late final BlockFormatter _blockFormatter = BlockFormatter(config, this, _formatState);
     late final BreakStatementFormatter _breakStatementFormatter = BreakStatementFormatter(config, this, _formatState);
+    late final CascadeExpressionFormatter _cascadeExpressionFormatter = CascadeExpressionFormatter(config, this, _formatState);
     late final ClassDeclarationFormatter _classDeclarationFormatter = ClassDeclarationFormatter(config, this, _formatState);
     late final ClassTypeAliasFormatter _classTypeAliasFormatter = ClassTypeAliasFormatter(config, this, _formatState);
     late final CompilationUnitFormatter _compilationUnitFormatter = CompilationUnitFormatter(config, this, _formatState);
@@ -206,7 +208,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitCascadeExpression(CascadeExpression node)
-    => _defaultFormatter.format(node);
+    => _cascadeExpressionFormatter.format(node);
 
     @override
     void visitCaseClause(CaseClause node)

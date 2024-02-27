@@ -17,7 +17,7 @@ void main()
             inputNodeCreator: AstCreator.createDirective,
             inputMiddle: 'library l;',
             name: 'End of text',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<LibraryIdentifier>(8, 'l')
             ],
             testConfigs: <TestConfig>[
@@ -30,7 +30,7 @@ void main()
             inputMiddle: 'library l;',
             inputTrailing: '//Comment\n',
             name: 'End of text with comment',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<LibraryIdentifier>(8, 'l')
             ]
         ),
@@ -39,7 +39,7 @@ void main()
             inputMiddle: 'library l;',
             inputTrailing: '//Comment',
             name: 'End of text with comment but no NewLine',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<LibraryIdentifier>(8, 'l')
             ],
             testConfigs: <TestConfig>[

@@ -17,7 +17,7 @@ void main()
             inputMiddle: 'a[0]',
             inputTrailing: ';}',
             name: 'IndexExpression a[0]',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleIdentifier>(9, 'a'),
                 TestVisitor<IntegerLiteral>(11, '0')
             ]
@@ -28,7 +28,7 @@ void main()
             inputMiddle: '..[0]',
             inputTrailing: ';}',
             name: 'IndexExpression a..[0]',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<IntegerLiteral>(13, '0')
             ]
         ),
@@ -38,7 +38,7 @@ void main()
             inputMiddle: '..[0]',
             inputTrailing: ';}',
             name: 'IndexExpression a..[0]',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<IntegerLiteral>(14, '0')
             ]
         )

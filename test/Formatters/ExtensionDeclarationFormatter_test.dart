@@ -16,7 +16,7 @@ void main()
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'extension E<T1,T2> on C<T1,T2>{void m(){}}',
             name: 'ExtensionDeclaration',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<TypeParameterList>(11, '<T1,T2>'),
                 TestVisitor<NamedType>(22, 'C<T1,T2>'),
                 TestVisitor<MethodDeclaration>(31, 'void m(){}')

@@ -18,7 +18,7 @@ void main()
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'enum E implements F{x}',
             name: 'EnumDeclaration: enum E implements F{x}',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<ImplementsClause>(7, 'implements F'),
                 TestVisitor<EnumConstantDeclaration>(20, 'x')
             ],
@@ -31,7 +31,7 @@ void main()
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'enum E{x,y,}',
             name: 'EnumDeclaration in 1 line with trailing comma',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<EnumConstantDeclaration>(7, 'x'),
                 TestVisitor<EnumConstantDeclaration>(9, 'y')
             ],
@@ -44,7 +44,7 @@ void main()
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'enum E{x,y,/**/}',
             name: 'EnumDeclaration in 1 line with trailing comma and comment',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<EnumConstantDeclaration>(7, 'x'),
                 TestVisitor<EnumConstantDeclaration>(9, 'y')
             ],
@@ -57,7 +57,7 @@ void main()
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'enum E{x,y;}',
             name: 'EnumDeclaration in 1 line with trailing semicolon',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<EnumConstantDeclaration>(7, 'x'),
                 TestVisitor<EnumConstantDeclaration>(9, 'y')
             ],
@@ -70,7 +70,7 @@ void main()
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'enum E{x,y;void m();}',
             name: 'EnumDeclaration in 1 line with trailing semicolon and method',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<EnumConstantDeclaration>(7, 'x'),
                 TestVisitor<EnumConstantDeclaration>(9, 'y'),
                 TestVisitor<MethodDeclaration>(11, 'void m();')
@@ -84,7 +84,7 @@ void main()
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'enum E{x,\ny}',
             name: 'EnumDeclaration in 2 lines',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<EnumConstantDeclaration>(7, 'x'),
                 TestVisitor<EnumConstantDeclaration>(10, 'y')
             ],
@@ -97,7 +97,7 @@ void main()
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'enum E{\nx,\ny}',
             name: 'EnumDeclaration in 3 lines',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<EnumConstantDeclaration>(8, 'x'),
                 TestVisitor<EnumConstantDeclaration>(11, 'y')
             ],
@@ -110,7 +110,7 @@ void main()
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'enum E{\nx,\ny,\nz}',
             name: 'EnumDeclaration in 4 lines',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<EnumConstantDeclaration>(8, 'x'),
                 TestVisitor<EnumConstantDeclaration>(11, 'y'),
                 TestVisitor<EnumConstantDeclaration>(14, 'z')

@@ -18,7 +18,7 @@ void main()
             inputMiddle: '@a int i;',
             inputTrailing: '}',
             name: 'FieldDeclaration @a int i;',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<Annotation>(8, '@a'),
                 TestVisitor<VariableDeclarationList>(11, 'int i')
             ],

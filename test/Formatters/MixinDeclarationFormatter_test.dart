@@ -16,7 +16,7 @@ void main()
             inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'mixin M on A, B{}',
             name: 'MixinDeclaration / mixin M on A, B{}',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<OnClause>(8, 'on A, B')
             ],
             testConfigs: <TestConfig>[

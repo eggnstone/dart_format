@@ -20,7 +20,7 @@ void main()
                 TestConfig.none(),
                 TestConfig('typedef X=Y;\n')
             ],
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<NamedType>(10, 'Y')
             ]
         ),
@@ -32,7 +32,7 @@ void main()
                 TestConfig.none(),
                 TestConfig('typedef F=void Function();\n')
             ],
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<GenericFunctionType>(10, 'void Function()')
             ]
         )

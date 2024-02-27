@@ -18,7 +18,7 @@ void main()
             inputMiddle: 'assert(true,);',
             inputTrailing: '}',
             name: 'AssertStatement',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<BooleanLiteral>(16, 'true')
             ],
             testConfigs: <TestConfig>[
@@ -32,7 +32,7 @@ void main()
             inputMiddle: "assert(true,'message',);",
             inputTrailing: '}',
             name: 'AssertStatement with message',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<BooleanLiteral>(16, 'true'),
                 TestVisitor<SimpleStringLiteral>(21, "'message'")
             ],

@@ -17,7 +17,7 @@ void main()
             inputMiddle: 'on A, B',
             inputTrailing: '{}',
             name: 'OnClause',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<NamedType>(11, 'A'),
                 TestVisitor<NamedType>(14, 'B')
             ]

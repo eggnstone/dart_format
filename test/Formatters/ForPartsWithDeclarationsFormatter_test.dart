@@ -17,7 +17,7 @@ void main()
             inputMiddle: 'int i=0,j=0;;i++,j--',
             inputTrailing: ');}',
             name: 'ForPartsWithDeclarations: int i=0,j=0;;i++,j--',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<VariableDeclarationList>(13, 'int i=0,j=0'),
                 TestVisitor<PostfixExpression>(26, 'i++'),
                 TestVisitor<PostfixExpression>(30, 'j--')

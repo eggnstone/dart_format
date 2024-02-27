@@ -17,7 +17,7 @@ void main()
             inputMiddle: ';;i++,j--',
             inputTrailing: ');}',
             name: 'ForPartsWithExpression ;;i++,j--',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<PostfixExpression>(15, 'i++'),
                 TestVisitor<PostfixExpression>(19, 'j--')
             ]

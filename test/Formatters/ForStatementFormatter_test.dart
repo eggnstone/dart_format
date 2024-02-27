@@ -18,7 +18,7 @@ void main()
             inputMiddle: 'for(;;);',
             inputTrailing: '}',
             name: 'ForStatement for(;;);',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<ForPartsWithExpression>(13, ';;'),
                 TestVisitor<EmptyStatement>(16, ';')
             ]
@@ -29,7 +29,7 @@ void main()
             inputMiddle: 'for(;;)\n;',
             inputTrailing: '}',
             name: r'ForStatement for(;;)\n;',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<ForPartsWithExpression>(13, ';;'),
                 TestVisitor<EmptyStatement>(17, ';')
             ],
@@ -44,7 +44,7 @@ void main()
             inputMiddle: 'await for(a in b);',
             inputTrailing: '}',
             name: 'ForStatement await for(a in b);',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<ForEachPartsWithIdentifier>(24, 'a in b'),
                 TestVisitor<EmptyStatement>(31, ';')
             ]

@@ -25,7 +25,7 @@ void main()
             inputMiddle: '(int i,int j,)',
             inputTrailing: '{}',
             name: '2 param, single lines, trailing comma',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleFormalParameter>(7, 'int i'),
                 TestVisitor<SimpleFormalParameter>(13, 'int j')
             ],
@@ -40,7 +40,7 @@ void main()
             inputMiddle: '(\nint i\n)',
             inputTrailing: '{}',
             name: '1 param, multiple lines',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleFormalParameter>(8, 'int i')
             ],
             testConfigs: <TestConfig>[
@@ -54,7 +54,7 @@ void main()
             inputMiddle: '(\nint i,\nint j\n)',
             inputTrailing: '{}',
             name: '2 params, multiple lines',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleFormalParameter>(8, 'int i'),
                 TestVisitor<SimpleFormalParameter>(15, 'int j')
             ],
@@ -69,7 +69,7 @@ void main()
             inputMiddle: '({\nint i\n})',
             inputTrailing: '{}',
             name: '1 named param, multiple lines',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<DefaultFormalParameter>(9, 'int i')
             ],
             testConfigs: <TestConfig>[
@@ -83,7 +83,7 @@ void main()
             inputMiddle: '(int i,{int j})',
             inputTrailing: '{}',
             name: '2 params, 1 normal, 1 named, single line',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleFormalParameter>(7, 'int i'),
                 TestVisitor<DefaultFormalParameter>(14, 'int j')
             ]
@@ -94,7 +94,7 @@ void main()
             inputMiddle: '(int i,[int j])',
             inputTrailing: '{}',
             name: '2 params, 1 normal, 1 optional, single line',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<SimpleFormalParameter>(7, 'int i'),
                 TestVisitor<DefaultFormalParameter>(14, 'int j')
             ]

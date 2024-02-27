@@ -18,7 +18,7 @@ void main()
             inputMiddle: '(a:1,b:2,)',
             inputTrailing: ';}',
             name: 'ArgumentList (only named arguments)',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<NamedExpression>(11, 'a:1'),
                 TestVisitor<NamedExpression>(15, 'b:2')
             ],
@@ -33,7 +33,7 @@ void main()
             inputMiddle: '(1,b:2,3,d:4,)',
             inputTrailing: ';}',
             name: 'ArgumentList (positional and named arguments mixed 1)',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<IntegerLiteral>(11, '1'),
                 TestVisitor<NamedExpression>(13, 'b:2'),
                 TestVisitor<IntegerLiteral>(17, '3'),
@@ -50,7 +50,7 @@ void main()
             inputMiddle: '(a:1,2,c:3,4,)',
             inputTrailing: ';}',
             name: 'ArgumentList (positional and named arguments mixed 2)',
-            astVisitors: <TestVisitor<void>>[
+            astVisitors: <TestVisitor<AstNode>>[
                 TestVisitor<NamedExpression>(11, 'a:1'),
                 TestVisitor<IntegerLiteral>(15, '2'),
                 TestVisitor<NamedExpression>(17, 'c:3'),
