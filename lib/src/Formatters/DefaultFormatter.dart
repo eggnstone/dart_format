@@ -6,6 +6,7 @@ import 'package:analyzer/dart/ast/token.dart';
 
 import '../Config.dart';
 import '../Constants/Constants.dart';
+import '../Exceptions/DartFormatException.dart';
 import '../FormatState.dart';
 import '../Tools/LogTools.dart';
 import '../Tools/StringTools.dart';
@@ -54,7 +55,7 @@ class DefaultFormatter extends IFormatter
                     }
                 }
                 else
-                    throw Exception('Unhandled type: ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
+                    throw DartFormatException.error('Unhandled type: ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
             }
         );
 

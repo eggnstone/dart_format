@@ -9,4 +9,4 @@ pubspec.lock
 # Manually added
 /.idea/libraries/Dart_Packages.xml
 /doc/
-/test/Sandbox.dart
+/test/Sandbox*.dart

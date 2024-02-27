@@ -204,7 +204,7 @@ class FormatState
             logInternal('  token:                              ${StringTools.toDisplayString(token)}');
             logInternal('  nextToken:                          ${StringTools.toDisplayString(nextToken)}');
             logInternal('  nextToken.offset:                   ${nextToken.offset}');
-            logInternal('  nextToken.precedingComments:        ${nextToken.precedingComments}');
+            logInternal('  nextToken.precedingComments:        ${StringTools.toDisplayString(nextToken.precedingComments)}');
             logInternal('  nextToken.precedingComments.offset: ${nextToken.precedingComments?.offset}');
             logInternal('  filler/2:                           ${StringTools.toDisplayString(filler)}');
         }
@@ -317,7 +317,7 @@ class FormatState
                     ' ${StringTools.toDisplayString(filler, 100)}'
                     ' Source: $source');
 
-            final String fixedFiller = _removeLeadingWhitespace(filler);
+            final String fixedFiller = _removeLeadingWhitespace(filler, source);
             if (Constants.DEBUG_FORMAT_STATE)
             {
                 logInternal('  Filler w/o leadingWS: ${StringTools.toDisplayString(fixedFiller)}');
@@ -330,7 +330,7 @@ class FormatState
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  No filler');
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
-        final String fixedS = _removeLeadingWhitespace(s);
+        final String fixedS = _removeLeadingWhitespace(s, source);
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  S w/o leading ws:     ${StringTools.toDisplayString(fixedS)}');
         write(fixedS);
 
@@ -658,11 +658,11 @@ class FormatState
         throw DartFormatException.error(message);
     }
 
-    String _removeLeadingWhitespace(String s)
+    String _removeLeadingWhitespace(String s, String source)
     {
-        if (_indentationSpacesPerLevel< 0)
+        if (_indentationSpacesPerLevel < 0)
             return s;
 
-        return StringTools.removeLeadingWhitespace(s);
+        return StringTools.removeLeadingWhitespace(s, source);
     }
 }

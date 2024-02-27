@@ -6,6 +6,7 @@ import 'package:analyzer/dart/ast/token.dart';
 import 'package:eggnstone_dart/eggnstone_dart.dart';
 
 import 'Constants/Constants.dart';
+import 'Exceptions/DartFormatException.dart';
 import 'Tools/StringTools.dart';
 
 class Analyzer
@@ -45,7 +46,7 @@ class Analyzer
             }
             else
             {
-                throw Exception('Unhandled type: ${item.runtimeType} ${StringTools.toDisplayString(item, Constants.MAX_DEBUG_LENGTH)}');
+                throw DartFormatException.error('Unhandled type: ${item.runtimeType} ${StringTools.toDisplayString(item, Constants.MAX_DEBUG_LENGTH)}');
             }
         }
     }

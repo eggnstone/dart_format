@@ -15,8 +15,7 @@ TODO
 - Own lint rule: don't return Future<void>s.
 - ensure DEBUG is off when publishing
 - safety: don't accept result if length is 0 or very short, e.g. when throwing UnimplementedError in StringTools.
-- no empty lines after/before braces
-- indent cascades
+- no empty lines after/before braces/parentheses
 
 DONE
 ====
@@ -24,3 +23,4 @@ DONE
 - WebService: Shut down if calling process dies.
 - quit doesn't work anymore
 - simplify TestAstVisitor
+- indent cascades

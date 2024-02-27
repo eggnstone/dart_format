@@ -10,7 +10,6 @@ class StringTools
     {
         int indexInput = 0;
         int indexResult = 0;
-        //bool diffFound = false;
 
         while (true)
         {
@@ -24,10 +23,7 @@ class StringTools
                 break;
 
             if (s1[indexInput] != s2[indexResult])
-            {
-                //diffFound = true;
                 break;
-            }
 
             indexInput++;
             indexResult++;
@@ -39,21 +35,20 @@ class StringTools
         return IntTuple(indexInput, indexResult);
     }
 
-    static String removeLeadingWhitespace(String s)
+    static String _removeLeadingWhitespaceNonComment(String s)
     {
+        if (Constants.DEBUG_STRING_TOOLS) logInternal('_removeLeadingWhitespaceNonComment: ${StringTools.toDisplayString(s)}');
+
         final StringBuffer sb = StringBuffer();
 
-        if (Constants.DEBUG_STRING_TOOLS)
-        {
-            logInternal('removeLeadingWhitespace');
-            logInternal('IN:  ${StringTools.toDisplayString(s)}');
-        }
-
         final List<String> lines = s.split('\n');
+        if (lines.length < 2)
+            return s;
+
         for (int i = 0; i < lines.length; i++)
         {
             final String line = lines[i];
-            if (Constants.DEBUG_STRING_TOOLS) logInternal('    #$i: ${StringTools.toDisplayString(line)}');
+            //if (Constants.DEBUG_STRING_TOOLS) logInternal('    #$i: ${StringTools.toDisplayString(line)}');
 
             if (i == 0)
             {
@@ -66,8 +61,70 @@ class StringTools
             }
         }
 
-        if (Constants.DEBUG_STRING_TOOLS) logInternal('OUT: ${StringTools.toDisplayString(sb.toString())}');
         return sb.toString();
+    }
+
+    static String _removeLeadingWhitespaceComment(String s)
+    {
+        if (Constants.DEBUG_STRING_TOOLS) logInternal('_removeLeadingWhitespaceComment:    ${StringTools.toDisplayString(s)}');
+
+        final StringBuffer sb = StringBuffer();
+
+        final List<String> lines = s.split('\n');
+        if (lines.length < 2)
+            return s;
+
+        int minIndentation = 0;
+        // Start at index 1 to skip the first line.
+        for (int i = 1; i < lines.length; i++)
+        {
+            final int indentation = lines[i].length - lines[i].trimLeft().length;
+            if (i == 1 || indentation < minIndentation)
+                minIndentation = indentation;
+        }
+
+        if (Constants.DEBUG_STRING_TOOLS) logInternal('minIndentation: $minIndentation');
+        //final String minIndentationString = ' ' * minIndentation;
+        //if (Constants.DEBUG_STRING_TOOLS) logInternal('minIndentationString: ${StringTools.toDisplayString(minIndentationString)}');
+
+        for (int i = 0; i < lines.length; i++)
+        {
+            final String line = lines[i];
+            if (Constants.DEBUG_STRING_TOOLS) logInternal('>   #$i: ${StringTools.toDisplayString(line)}');
+
+            if (i == 0)
+            {
+                sb.write(line);
+                if (Constants.DEBUG_STRING_TOOLS) logInternal('<   #$i: ${StringTools.toDisplayString(line)}');
+            }
+            else
+            {
+                sb.write('\n');
+                if (Constants.DEBUG_STRING_TOOLS) logInternal('<   #$i: \\n');
+                sb.write(line.substring(minIndentation));
+                if (Constants.DEBUG_STRING_TOOLS) logInternal('<   #$i: ${StringTools.toDisplayString(line.substring(minIndentation))}');
+            }
+        }
+
+        return sb.toString();
+    }
+
+    static String removeLeadingWhitespace(String s, [String source = 'TEST'])
+    {
+        if (Constants.DEBUG_STRING_TOOLS)
+        {
+            logInternal('removeLeadingWhitespace($source)');
+            logInternal('IN:  ${StringTools.toDisplayString(s)}');
+        }
+
+        final String fixedS = s.splitMapJoin(
+            RegExp(r'/\*.*?\*/', dotAll: true),
+            onMatch: (Match m) => _removeLeadingWhitespaceComment(m.group(0)!),
+            onNonMatch: _removeLeadingWhitespaceNonComment
+        );
+
+        if (Constants.DEBUG_STRING_TOOLS) logInternal('OUT: ${StringTools.toDisplayString(fixedS)}');
+        return fixedS;
     }
 
     static String shorten(String s, int maxLength)
