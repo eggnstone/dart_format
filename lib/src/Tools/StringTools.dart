@@ -1,5 +1,6 @@
 // ignore_for_file: always_put_control_body_on_new_line
 
+import '../../dart_format.dart';
 import '../Constants/Constants.dart';
 import '../Data/IntTuple.dart';
 import 'LogTools.dart';
@@ -35,15 +36,22 @@ class StringTools
         return IntTuple(indexInput, indexResult);
     }
 
-    static String _removeLeadingWhitespaceNonComment(String s)
+    static StringBuffer _removeLeadingWhitespaceInCode(String s)
     {
-        if (Constants.DEBUG_STRING_TOOLS) logInternal('_removeLeadingWhitespaceNonComment: ${StringTools.toDisplayString(s)}');
-
-        final StringBuffer sb = StringBuffer();
+        if (Constants.DEBUG_STRING_TOOLS)
+        {
+            logInternal('  _removeLeadingWhitespaceInCode:            ${StringTools.toDisplayString(s)}');
+            logInternal('    IN:  ${StringTools.toDisplayString(s)}');
+        }
 
         final List<String> lines = s.split('\n');
         if (lines.length < 2)
-            return s;
+        {
+            if (Constants.DEBUG_STRING_TOOLS) logInternal('    OUT: ${StringTools.toDisplayString(s)}');
+            return StringBuffer(s);
+        }
+
+        final StringBuffer sb = StringBuffer();
 
         for (int i = 0; i < lines.length; i++)
         {
@@ -61,18 +69,26 @@ class StringTools
             }
         }
 
-        return sb.toString();
+        if (Constants.DEBUG_STRING_TOOLS) logInternal('    OUT: ${StringTools.toDisplayString(sb.toString())}');
+        return sb;
     }
 
-    static String _removeLeadingWhitespaceComment(String s)
+    static StringBuffer _removeLeadingWhitespaceInBlockComment(String s)
     {
-        if (Constants.DEBUG_STRING_TOOLS) logInternal('_removeLeadingWhitespaceComment:    ${StringTools.toDisplayString(s)}');
-
-        final StringBuffer sb = StringBuffer();
+        if (Constants.DEBUG_STRING_TOOLS)
+        {
+            logInternal('  _removeLeadingWhitespaceInBlockComment:    ${StringTools.toDisplayString(s)}');
+            logInternal('    IN:  ${StringTools.toDisplayString(s)}');
+        }
 
         final List<String> lines = s.split('\n');
         if (lines.length < 2)
-            return s;
+        {
+            if (Constants.DEBUG_STRING_TOOLS) logInternal('    OUT: ${StringTools.toDisplayString(s)}');
+            return StringBuffer(s);
+        }
+
+        final StringBuffer sb = StringBuffer();
 
         int minIndentation = -1;
         // Start at index 1 to skip the first line.
@@ -88,32 +104,32 @@ class StringTools
         }
 
         if (minIndentation == -1)
-            //return s;
-            minIndentation =0;
+            minIndentation = 0;
 
-        if (Constants.DEBUG_STRING_TOOLS) logInternal('minIndentation: $minIndentation');
+        //if (Constants.DEBUG_STRING_TOOLS) logInternal('minIndentation: $minIndentation');
 
         for (int i = 0; i < lines.length; i++)
         {
             final String line = lines[i];
-            if (Constants.DEBUG_STRING_TOOLS) logInternal('>   #$i: ${StringTools.toDisplayString(line)}');
+            //if (Constants.DEBUG_STRING_TOOLS) logInternal('>   #$i: ${StringTools.toDisplayString(line)}');
 
             if (i == 0)
             {
                 sb.write(line);
-                if (Constants.DEBUG_STRING_TOOLS) logInternal('<   #$i: ${StringTools.toDisplayString(line)}');
+                //if (Constants.DEBUG_STRING_TOOLS) logInternal('<   #$i: ${StringTools.toDisplayString(line)}');
             }
             else
             {
                 sb.write('\n');
-                if (Constants.DEBUG_STRING_TOOLS) logInternal('<   #$i: \\n');
+                //if (Constants.DEBUG_STRING_TOOLS) logInternal('<   #$i: \\n');
                 final String shortenedLine = line.length <= minIndentation ? '' : line.substring(minIndentation);
                 sb.write(shortenedLine);
-                if (Constants.DEBUG_STRING_TOOLS) logInternal('<   #$i: ${StringTools.toDisplayString(shortenedLine)}');
+                //if (Constants.DEBUG_STRING_TOOLS) logInternal('<   #$i: ${StringTools.toDisplayString(shortenedLine)}');
             }
         }
 
-        return sb.toString();
+        if (Constants.DEBUG_STRING_TOOLS) logInternal('    OUT: ${StringTools.toDisplayString(sb.toString())}');
+        return sb;
     }
 
     static String removeLeadingWhitespace(String s, [String source = 'TEST'])
@@ -124,10 +140,9 @@ class StringTools
             logInternal('IN:  ${StringTools.toDisplayString(s)}');
         }
 
-        final String fixedS = s.splitMapJoin(
-            RegExp(r'/\*.*?\*/', dotAll: true),
-            onMatch: (Match m) => _removeLeadingWhitespaceComment(m.group(0)!),
-            onNonMatch: _removeLeadingWhitespaceNonComment
+        final String fixedS = _splitBlockCommentsAndJoin(s,
+            onMatch:  _removeLeadingWhitespaceInBlockComment,
+            onNonMatch: _removeLeadingWhitespaceInCode
         );
 
         if (Constants.DEBUG_STRING_TOOLS) logInternal('OUT: ${StringTools.toDisplayString(fixedS)}');
@@ -180,5 +195,57 @@ class StringTools
             r = r.substring(0, r.length - 1);
 
         return r;
+    }
+
+    static String _splitBlockCommentsAndJoin(String s, {
+            required StringBuffer Function(String s) onMatch, 
+            required StringBuffer Function(String s) onNonMatch})
+    {
+        if (s.isEmpty)
+            return s;
+
+        final StringBuffer sb = StringBuffer();
+
+        final StringBuffer currentBlock = StringBuffer();
+        int commentDepth = 0;
+        for (int i = 0; i< s.length; i++)
+        {
+            if (s[i] == '/' && i + 1 < s.length && s[i + 1] == '*')
+            {
+                if (commentDepth == 0 && currentBlock.isNotEmpty)
+                {
+                    sb.write(onNonMatch(currentBlock.toString()));
+                    currentBlock.clear();
+                }
+
+                commentDepth++;
+                currentBlock.write(s[i]);
+            }
+            else if (s[i] == '*' && i + 1 < s.length && s[i + 1] == '/')
+            {
+                if (commentDepth <= 0)
+                    throw DartFormatException.error('Unbalanced block comments: commentDepth <= 0: $commentDepth');
+
+                commentDepth--;
+                if (commentDepth == 0 && currentBlock.isNotEmpty)
+                {
+                    sb.write(onMatch('$currentBlock*/'));
+                    currentBlock.clear();
+                    i++;
+                }
+                else
+                    currentBlock.write(s[i]);
+            }
+            else
+                currentBlock.write(s[i]);
+        }
+
+        if (commentDepth > 0)
+            throw DartFormatException.error('Unbalanced block comments: commentDepth > 0: $commentDepth');
+
+        if (currentBlock.isNotEmpty)
+            sb.write(onNonMatch(currentBlock.toString()));
+
+        return sb.toString();
     }
 }
