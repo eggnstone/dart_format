@@ -58,8 +58,8 @@ class FormatState
         indentationSpacesPerLevel: indentationSpacesPerLevel,
         removeTrailingCommas : removeTrailingCommas
     )
-    .._lastConsumedPosition = leading?.length ?? 0
-    .._trailingForTests = trailing;
+        .._lastConsumedPosition = leading?.length ?? 0
+        .._trailingForTests = trailing;
 
     void acceptListWithPeriod(List<AstNode> nodes, AstVisitor<void> astVisitor, String source)
     {
