@@ -11,25 +11,35 @@ void main()
     TestTools.init();
 
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
-        /*TestGroupConfig(
-        inputNodeCreator: AstCreator.createInitializerInVariableDeclarationInClass,
-        inputLeading: 'class C{int i=',
-        inputMiddle: 'a[0]',
-        inputTrailing: ';}',
-        name: 'IndexExpression a[0]',
-        astVisitors: <TestVisitor<void>>[
-        TestVisitor<SimpleIdentifier>(14, 'a'),
-        TestVisitor<IntegerLiteral>(16, '0')
-        ]
-        ),*/
         TestGroupConfig(
-            inputNodeCreator: AstCreator.createCascadeSectionInVariableDeclarationInClass,
-            inputLeading: 'class C{int i=a',
+            inputNodeCreator: AstCreator.createExpressionInExpressionStatementInFunction,
+            inputLeading: 'void f(){',
+            inputMiddle: 'a[0]',
+            inputTrailing: ';}',
+            name: 'IndexExpression a[0]',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleIdentifier>(9, 'a'),
+                TestVisitor<IntegerLiteral>(11, '0')
+            ]
+        ), 
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createCascadeSectionInStatementInFunction,
+            inputLeading: 'void f(){a',
             inputMiddle: '..[0]',
             inputTrailing: ';}',
             name: 'IndexExpression a..[0]',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<IntegerLiteral>(18, '0')
+                TestVisitor<IntegerLiteral>(13, '0')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createCascadeSectionInStatementInFunction,
+            inputLeading: 'void f(){a\n',
+            inputMiddle: '..[0]',
+            inputTrailing: ';}',
+            name: 'IndexExpression a..[0]',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<IntegerLiteral>(14, '0')
             ]
         )
     ];

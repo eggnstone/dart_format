@@ -12,8 +12,14 @@ class AstCreator
     static Block createBlockInFunction(String s)
     => createBlockFunctionBody(s).block;
 
+    static CascadeExpression createCascadeExpressionInStatementInFunction(String s)
+    => createExpressionInExpressionStatementInFunction(s) as CascadeExpression;
+
     static CascadeExpression createCascadeExpressionInVariableDeclarationInClass(String s)
     => createInitializerInVariableDeclarationInClass(s) as CascadeExpression;
+
+    static Expression createCascadeSectionInStatementInFunction(String s)
+    => createCascadeExpressionInStatementInFunction(s).cascadeSections[0];
 
     static Expression createCascadeSectionInVariableDeclarationInClass(String s)
     => createCascadeExpressionInVariableDeclarationInClass(s).cascadeSections[0];
@@ -54,7 +60,7 @@ class AstCreator
     static EnumDeclaration createEnumDeclaration(String s)
     => createDeclaration(s) as EnumDeclaration;
 
-    static Expression createExpressionInFunction(String s)
+    static Expression createExpressionInExpressionStatementInFunction(String s)
     => createExpressionStatementInFunction(s).expression;
 
     static ExpressionStatement createExpressionStatementInFunction(String s)
@@ -88,7 +94,7 @@ class AstCreator
     => createVariableDeclarationInClass(s).initializer!;
 
     static MethodInvocation createMethodInvocationInFunction(String s)
-    => createExpressionInFunction(s) as MethodInvocation;
+    => createExpressionInExpressionStatementInFunction(s) as MethodInvocation;
 
     static MixinDeclaration createMixinDeclaration(String s)
     => createDeclaration(s) as MixinDeclaration;

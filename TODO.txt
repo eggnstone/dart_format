@@ -13,12 +13,14 @@ TODO
 - Own lint rule: don't return Futures in a try-catch block.
 - Own lint rule: don't call unawaited stuff in a try-catch block.
 - Own lint rule: don't return Future<void>s.
-- simplify TestAstVisitor
 - ensure DEBUG is off when publishing
 - safety: don't accept result if length is 0 or very short, e.g. when throwing UnimplementedError in StringTools.
+- no empty lines after/before braces
+- indent cascades
 
-DONE (I think)
-==============
+DONE
+====
 - Method params: indent when multiline with "(" and "({"
 - WebService: Shut down if calling process dies.
 - quit doesn't work anymore
+- simplify TestAstVisitor

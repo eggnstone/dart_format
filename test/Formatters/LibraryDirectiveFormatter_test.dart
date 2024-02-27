@@ -39,12 +39,12 @@ void main()
             inputMiddle: 'library l;',
             inputTrailing: '//Comment',
             name: 'End of text with comment but no NewLine',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<LibraryIdentifier>(8, 'l')
+            ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
                 TestConfig('library l;//Comment\n', '')
-            ],
-            astVisitors: <TestVisitor<void>>[
-                TestVisitor<LibraryIdentifier>(8, 'l')
             ]
         )
     ];
