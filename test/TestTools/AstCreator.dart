@@ -3,6 +3,9 @@ import 'package:analyzer/src/dart/ast/ast.dart';
 
 class AstCreator
 {
+    static ArgumentList createArgumentListInMethodInvocationInFunction(String s)
+    => createMethodInvocationInFunction(s).argumentList;
+
     static BlockFunctionBody createBlockFunctionBody(String s)
     => createFunctionExpression(s).body as BlockFunctionBody;
 
@@ -83,6 +86,9 @@ class AstCreator
 
     static Expression createInitializerInVariableDeclarationInClass(String s)
     => createVariableDeclarationInClass(s).initializer!;
+
+    static MethodInvocation createMethodInvocationInFunction(String s)
+    => createExpressionInFunction(s) as MethodInvocation;
 
     static MixinDeclaration createMixinDeclaration(String s)
     => createDeclaration(s) as MixinDeclaration;

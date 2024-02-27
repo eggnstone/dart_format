@@ -120,7 +120,14 @@ class FormatState
                 if (_lastConsumedPosition > end)
                 {
                     final String filler = getText(lastNode.end, _lastConsumedPosition);
-                    //logInternal('filler/1: ${StringTools.toDisplayString(filler)}');
+                    if (Constants.DEBUG_FORMAT_STATE)
+                    {
+                        logInternal('filler/1:');
+                        logInternal('  lastNode.end:          ${lastNode.end}: ${StringTools.toDisplayString(getText(lastNode.end, lastNode.end + 10, safe: true))}');
+                        logInternal('  _lastConsumedPosition: $_lastConsumedPosition: ${StringTools.toDisplayString(getText(_lastConsumedPosition, _lastConsumedPosition + 10, safe: true))}');
+                        logInternal('  filler (lN.e - _lCP):  ${StringTools.toDisplayString(filler)}');
+                    }
+
                     if (filler.trim().isNotEmpty)
                         throw DartFormatException.error('filler is not empty: ${StringTools.toDisplayString(filler)}');
                     end = _lastConsumedPosition;
@@ -147,7 +154,7 @@ class FormatState
             if (endToken != null)
             {
                 String commaText = getText(lastNode.end, endToken.offset);
-                //logInternal('commaText/2 ${StringTools.toDisplayString(commaText)}');
+                if (Constants.DEBUG_FORMAT_STATE) logInternal('commaText/2 ${StringTools.toDisplayString(commaText)}');
                 if (FormatTools.isCommaText(commaText))
                 {
                     if (_removeTrailingCommas)
@@ -176,7 +183,6 @@ class FormatState
         const String methodName = 'addNewLineAfterToken';
         final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(add=$add, ${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
-        //if (Constants.DEBUG_FORMAT_STATE) logInternal('  sb: ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
 
         if (token == null || !add)
             return;
@@ -224,15 +230,9 @@ class FormatState
         const String methodName = 'addNewLineBeforeToken';
         final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(add=$add, beforeComments=$beforeComments, ${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
-        //if (Constants.DEBUG_FORMAT_STATE) logInternal('  sb: ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
-        //if (Constants.DEBUG_FORMAT_STATE) logInternal('  sb.lastText: ${StringTools.toDisplayString(getLastText())}');
 
         if (token == null || !add)
             return;
-
-        /*int end = token.offset;
-        if (token.precedingComments != null)
-        end = token.precedingComments!.offset;*/
 
         if (lastConsumedPosition > token.offset)
             _logAndThrowError('lastConsumedPosition > token.offset');
@@ -549,10 +549,12 @@ class FormatState
         return sb.toString();
     }
 
-    String getText(int offset, int end)
+    String getText(int offset, int end, {bool safe = false})
     {
         try
         {
+            if (safe && end >= _parseResult.content.length)
+                return _parseResult.content.substring(offset);
             return _parseResult.content.substring(offset, end);
         }
         catch (e)
