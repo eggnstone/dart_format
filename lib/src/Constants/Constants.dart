@@ -5,12 +5,13 @@ class Constants
 
     static const bool DEBUG_ANALYZER = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_DART_FORMAT_HANDLERS = (DEBUG && false) || DEBUG_ALL;
-    static const bool DEBUG_FORMAT_STATE = (DEBUG && true) || DEBUG_ALL;
+    static const bool DEBUG_FORMAT_STATE = (DEBUG && false) || DEBUG_ALL;
+    static const bool DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_FORMAT_TOOLS_IS_COMMA_TEXT = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_FORMAT_TOOLS_IS_EMPTY_OR_COMMENTS = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_FORMATTER = (DEBUG && false) || DEBUG_ALL;
-    static const bool DEBUG_FORMATTER_DEFAULT = (DEBUG && true) || DEBUG_ALL;
-    static const bool DEBUG_I_FORMATTER = (DEBUG && true) || DEBUG_ALL;
+    static const bool DEBUG_FORMATTER_DEFAULT = (DEBUG && false) || DEBUG_ALL;
+    static const bool DEBUG_I_FORMATTER = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_I_FORMATTER_OFFSETS = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_STRING_TOOLS_REMOVE_LEADING_WHITESPACE = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_STRING_TOOLS_SPLIT_BLOCK_COMMENTS_AND_JOIN = (DEBUG && false) || DEBUG_ALL;

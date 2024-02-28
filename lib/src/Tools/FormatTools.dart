@@ -46,6 +46,46 @@ class FormatTools
         return true;
     }
 
+    // TODO: comma in comments
+    static String? getMaxCommaText(String s)
+    {
+        const String methodName = 'FormatTools.getMaxCommaText';
+        if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT) logInternal('# $methodName(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)})');
+
+            final int commaPos = s.indexOf(',');
+        if (commaPos == -1)
+        {
+            if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT) logInternal('  No comma found: ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
+            return null;
+        }
+
+        final String textBeforeComma = s.substring(0, commaPos);
+        final String maxCommaText = '$textBeforeComma,';
+            if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT)
+            {
+              logInternal('  commaPos:        $commaPos');
+              logInternal('  textBeforeComma: ${StringTools.toDisplayString(textBeforeComma, Constants.MAX_DEBUG_LENGTH)}');
+              logInternal('  maxCommaText:    ${StringTools.toDisplayString(maxCommaText, Constants.MAX_DEBUG_LENGTH)}');
+            }
+
+        if (textBeforeComma.trim().isEmpty)
+        {
+            if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT) logInternal('  textBeforeComma is empty: ${StringTools.toDisplayString(textBeforeComma, Constants.MAX_DEBUG_LENGTH)}');
+            return maxCommaText;
+        }
+
+        if (isEmptyOrComments(textBeforeComma))
+        {
+            if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT) logInternal('  textBeforeComma is empty or comments: ${StringTools.toDisplayString(textBeforeComma, Constants.MAX_DEBUG_LENGTH)}');
+            return maxCommaText;
+        }
+
+
+
+        if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT) logInternal('  textBeforeComma is neither empty nor comments: ${StringTools.toDisplayString(textBeforeComma, Constants.MAX_DEBUG_LENGTH)}');
+        return null;
+    }
+
     static bool isEmptyOrComments(String s)
     {
         const String methodName = 'FormatTools.isEmptyOrComments';

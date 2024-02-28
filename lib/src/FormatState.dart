@@ -165,9 +165,26 @@ class FormatState
 
             if (endToken != null)
             {
-                String trailingCommaText = getText(lastNode.end, endToken.offset);
+                final String trailingCommaText = getText(lastNode.end, endToken.offset);
                 if (Constants.DEBUG_FORMAT_STATE) logInternal('trailingCommaText ${StringTools.toDisplayString(trailingCommaText)}');
-                if (FormatTools.isCommaText(trailingCommaText))
+
+                final String? maxTrailingCommaText = FormatTools.getMaxCommaText(trailingCommaText);
+                if (Constants.DEBUG_FORMAT_STATE) logInternal('maxTrailingCommaText: ${StringTools.toDisplayString(maxTrailingCommaText, Constants.MAX_DEBUG_LENGTH)}');
+
+                if (maxTrailingCommaText != null)
+                {
+                    String fixedMaxTrailingCommaText = maxTrailingCommaText;
+                    if (_removeTrailingCommas)
+                    {
+                        // TODO: comma in comments
+                        fixedMaxTrailingCommaText = maxTrailingCommaText.replaceFirst(',', '${Constants.REMOVE_START},${Constants.REMOVE_END}');
+                    }
+
+                    // TODO: expectComments?
+                    consumeText(lastNode.end, lastNode.end + maxTrailingCommaText.length, fixedMaxTrailingCommaText, '$source/TrailingComma');
+                }
+
+                /*if (FormatTools.isCommaText(trailingCommaText))
                 {
                     if (_removeTrailingCommas)
                         trailingCommaText = trailingCommaText.replaceFirst(',', '${Constants.REMOVE_START},${Constants.REMOVE_END}');
@@ -187,7 +204,7 @@ class FormatState
 
                     // TODO: expectComments?
                     consumeText(end, endToken.offset, trailingCommaText, '$source/TrailingComma');
-                }
+                }*/
             }
         }
     }
