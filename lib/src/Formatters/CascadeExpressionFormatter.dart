@@ -25,7 +25,7 @@ class CascadeExpressionFormatter extends IFormatter
         if (node is! CascadeExpression)
             throw FormatException('Not a CascadeExpression: ${node.runtimeType}');
 
-        formatState.copyEntity(node.target, astVisitor, '$methodName.node.target');
+        formatState.copyEntity(node.target, astVisitor, onGetSource: ()=>'$methodName.node.target');
 
         formatState.pushLevel('$methodName/node.cascadeSections');
         formatState.acceptList(node.cascadeSections, astVisitor, '$methodName/node.cascadeSections');

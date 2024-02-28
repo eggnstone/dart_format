@@ -25,10 +25,10 @@ class ObjectPatternFormatter extends IFormatter
         if (node is! ObjectPattern)
             throw FormatException('Not an ObjectPattern: ${node.runtimeType}');
 
-        formatState.copyEntity(node.type, astVisitor, '$methodName/node.type');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
+        formatState.copyEntity(node.type, astVisitor, onGetSource: ()=>'$methodName/node.type');
+        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.leftParenthesis');
         formatState.acceptListWithComma(node.fields, node.rightParenthesis, astVisitor, '$methodName/node.fields');
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
+        formatState.copyEntity(node.rightParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.rightParenthesis');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

@@ -28,17 +28,17 @@ class ClassDeclarationFormatter extends IFormatter
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         //log('### NOT COPYING node.sortedCommentAndAnnotations', 0);
 
-        formatState.copyEntity(node.sealedKeyword, astVisitor, '$methodName/node.abstractKeyword');
-        formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword');
-        formatState.copyEntity(node.mixinKeyword, astVisitor, '$methodName/node.mixinKeyword');
-        formatState.copyEntity(node.interfaceKeyword, astVisitor, '$methodName/node.interfaceKeyword');
-        formatState.copyEntity(node.finalKeyword, astVisitor, '$methodName/node.finalKeyword');
-        formatState.copyEntity(node.classKeyword, astVisitor, '$methodName/node.classKeyword');
-        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
-        formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
-        formatState.copyEntity(node.extendsClause, astVisitor, '$methodName/node.extendsClause');
-        formatState.copyEntity(node.withClause, astVisitor, '$methodName/node.withClause');
-        formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause');
+        formatState.copyEntity(node.sealedKeyword, astVisitor, onGetSource: ()=>'$methodName/node.abstractKeyword');
+        formatState.copyEntity(node.abstractKeyword, astVisitor, onGetSource: ()=>'$methodName/node.abstractKeyword');
+        formatState.copyEntity(node.mixinKeyword, astVisitor, onGetSource: ()=>'$methodName/node.mixinKeyword');
+        formatState.copyEntity(node.interfaceKeyword, astVisitor, onGetSource: ()=>'$methodName/node.interfaceKeyword');
+        formatState.copyEntity(node.finalKeyword, astVisitor, onGetSource: ()=>'$methodName/node.finalKeyword');
+        formatState.copyEntity(node.classKeyword, astVisitor, onGetSource: ()=>'$methodName/node.classKeyword');
+        formatState.copyEntity(node.name, astVisitor, onGetSource: ()=>'$methodName/node.name');
+        formatState.copyEntity(node.typeParameters, astVisitor, onGetSource: ()=>'$methodName/node.typeParameters');
+        formatState.copyEntity(node.extendsClause, astVisitor, onGetSource: ()=>'$methodName/node.extendsClause');
+        formatState.copyEntity(node.withClause, astVisitor, onGetSource: ()=>'$methodName/node.withClause');
+        formatState.copyEntity(node.implementsClause, astVisitor, onGetSource: ()=>'$methodName/node.implementsClause');
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
         formatState.acceptList(node.members, astVisitor, '$methodName/node.members');
         formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');

@@ -26,7 +26,7 @@ class TopLevelVariableDeclarationFormatter extends IFormatter
             throw FormatException('Not a TopLevelVariableDeclaration: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.variables, astVisitor, '$methodName/node.variables');
+        formatState.copyEntity(node.variables, astVisitor, onGetSource: ()=>'$methodName/node.variables');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

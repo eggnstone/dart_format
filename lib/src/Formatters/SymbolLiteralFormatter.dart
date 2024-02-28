@@ -25,7 +25,7 @@ class SymbolLiteralFormatter extends IFormatter
         if (node is! SymbolLiteral)
             throw FormatException('Not a SymbolLiteral: ${node.runtimeType}');
 
-        formatState.copyEntity(node.poundSign, astVisitor, '$methodName/node.poundSign');
+        formatState.copyEntity(node.poundSign, astVisitor, onGetSource: ()=>'$methodName/node.poundSign');
         formatState.acceptTokenListWithPeriod(node.components, astVisitor, '$methodName/node.components');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

@@ -26,9 +26,9 @@ class AugmentationImportDirectiveFormatter extends IFormatter
             throw FormatException('Not an AugmentationImportDirective: ${node.runtimeType}');
 
         formatState.acceptList(node.metadata, astVisitor, '$methodName/node.metadata');
-        formatState.copyEntity(node.importKeyword, astVisitor, '$methodName/node.importKeyword');
-        formatState.copyEntity(node.augmentKeyword, astVisitor, '$methodName/node.augmentKeyword');
-        formatState.copyEntity(node.uri, astVisitor, '$methodName/node.uri');
+        formatState.copyEntity(node.importKeyword, astVisitor, onGetSource: ()=>'$methodName/node.importKeyword');
+        formatState.copyEntity(node.augmentKeyword, astVisitor, onGetSource: ()=>'$methodName/node.augmentKeyword');
+        formatState.copyEntity(node.uri, astVisitor, onGetSource: ()=>'$methodName/node.uri');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

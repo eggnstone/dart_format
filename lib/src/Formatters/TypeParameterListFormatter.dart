@@ -25,9 +25,9 @@ class TypeParameterListFormatter extends IFormatter
         if (node is! TypeParameterList)
             throw FormatException('Not a TypeParameterList: ${node.runtimeType}');
 
-        formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
+        formatState.copyEntity(node.leftBracket, astVisitor, onGetSource: ()=>'$methodName/node.leftBracket');
         formatState.acceptListWithComma(node.typeParameters, node.rightBracket, astVisitor, '$methodName/node.typeParameters');
-        formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
+        formatState.copyEntity(node.rightBracket, astVisitor,onGetSource: ()=> '$methodName/node.rightBracket');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

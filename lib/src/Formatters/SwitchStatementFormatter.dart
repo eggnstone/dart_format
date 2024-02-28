@@ -25,10 +25,10 @@ class SwitchStatementFormatter extends IFormatter
         if (node is! SwitchStatement)
             throw FormatException('Not a SwitchStatement: ${node.runtimeType}');
 
-        formatState.copyEntity(node.switchKeyword, astVisitor, '$methodName/node.switchKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
-        formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
+        formatState.copyEntity(node.switchKeyword, astVisitor, onGetSource: ()=>'$methodName/node.switchKeyword');
+        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.leftParenthesis');
+        formatState.copyEntity(node.expression, astVisitor, onGetSource: ()=>'$methodName/node.expression');
+        formatState.copyEntity(node.rightParenthesis, astVisitor,onGetSource: ()=> '$methodName/node.rightParenthesis');
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
         formatState.acceptList(node.members, astVisitor, '$methodName/node.members');
         formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');

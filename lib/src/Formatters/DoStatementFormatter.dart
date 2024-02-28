@@ -25,12 +25,12 @@ class DoStatementFormatter extends IFormatter
         if (node is! DoStatement)
             throw FormatException('Not a DoStatement: ${node.runtimeType}');
 
-        formatState.copyEntity(node.doKeyword, astVisitor, '$methodName/node.doKeyword');
-        formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
-        formatState.copyEntity(node.whileKeyword, astVisitor, '$methodName/node.whileKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
-        formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
+        formatState.copyEntity(node.doKeyword, astVisitor, onGetSource: ()=>'$methodName/node.doKeyword');
+        formatState.copyEntity(node.body, astVisitor, onGetSource: ()=>'$methodName/node.body');
+        formatState.copyEntity(node.whileKeyword, astVisitor, onGetSource: ()=>'$methodName/node.whileKeyword');
+        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.leftParenthesis');
+        formatState.copyEntity(node.condition, astVisitor, onGetSource: ()=>'$methodName/node.condition');
+        formatState.copyEntity(node.rightParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.rightParenthesis');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

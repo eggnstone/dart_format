@@ -25,7 +25,7 @@ class OnClauseFormatter extends IFormatter
         if (node is! OnClause)
             throw FormatException('Not an OnClause: ${node.runtimeType}');
 
-        formatState.copyEntity(node.onKeyword, astVisitor, '$methodName/onClause');
+        formatState.copyEntity(node.onKeyword, astVisitor, onGetSource: ()=>'$methodName/onClause');
         formatState.acceptListWithComma(node.superclassConstraints, null, astVisitor, '$methodName/superclassConstraints');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

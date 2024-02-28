@@ -16,7 +16,8 @@ void main()
                 {
                     const String inputText = '<html>';
 
-                    expect(() => formatter.format(inputText), throwsA(isA<DartFormatException>()));
+                    void f() =>  formatter.format(inputText);
+                    expect(f, throwsA(isA<DartFormatException>()));
                 }
             );
 
@@ -24,7 +25,8 @@ void main()
                 {
                     const String inputText = 'x;';
 
-                    expect(() => formatter.format(inputText), throwsA(isA<DartFormatException>()));
+                    void f() => formatter.format(inputText);
+                    expect(f, throwsA(isA<DartFormatException>()));
                 }
             );
         }

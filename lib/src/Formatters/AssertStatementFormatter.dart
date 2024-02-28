@@ -27,11 +27,11 @@ class AssertStatementFormatter extends IFormatter
         if (node is! AssertStatement)
             throw FormatException('Not an AssertStatement: ${node.runtimeType}');
 
-        formatState.copyEntity(node.assertKeyword, astVisitor, '$methodName/node.assertKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
-        formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
-        formatState.copyEntity(node.comma, astVisitor, '$methodName/node.comma');
-        formatState.copyEntity(node.message, astVisitor, '$methodName/node.message');
+        formatState.copyEntity(node.assertKeyword, astVisitor, onGetSource: ()=>'$methodName/node.assertKeyword');
+        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.leftParenthesis');
+        formatState.copyEntity(node.condition, astVisitor, onGetSource: ()=>'$methodName/node.condition');
+        formatState.copyEntity(node.comma, astVisitor, onGetSource: ()=>'$methodName/node.comma');
+        formatState.copyEntity(node.message, astVisitor, onGetSource: ()=>'$methodName/node.message');
 
         final SyntacticEntity nodeBeforeRightParenthesis = node.message ?? node.comma ?? node.condition;
         if (Constants.DEBUG_I_FORMATTER)
@@ -53,7 +53,7 @@ class AssertStatementFormatter extends IFormatter
             formatState.consumeText(start, end, commaText, '$methodName/TrailingComma');
         }
 
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
+        formatState.copyEntity(node.rightParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.rightParenthesis');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

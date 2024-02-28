@@ -25,13 +25,13 @@ class ForStatementFormatter extends IFormatter
         if (node is! ForStatement)
             throw FormatException('Not a ForStatement: ${node.runtimeType}');
 
-        formatState.copyEntity(node.awaitKeyword, astVisitor, '$methodName/node.awaitKeyword');
-        formatState.copyEntity(node.forKeyword, astVisitor, '$methodName/node.forKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
-        formatState.copyEntity(node.forLoopParts, astVisitor, '$methodName/node.forLoopParts');
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
+        formatState.copyEntity(node.awaitKeyword, astVisitor, onGetSource: ()=>'$methodName/node.awaitKeyword');
+        formatState.copyEntity(node.forKeyword, astVisitor, onGetSource: ()=>'$methodName/node.forKeyword');
+        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.leftParenthesis');
+        formatState.copyEntity(node.forLoopParts, astVisitor, onGetSource: ()=>'$methodName/node.forLoopParts');
+        formatState.copyEntity(node.rightParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.rightParenthesis');
         formatState.pushLevel('$methodName/node.body');
-        formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
+        formatState.copyEntity(node.body, astVisitor, onGetSource: ()=>'$methodName/node.body');
         formatState.popLevelAndIndent();
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

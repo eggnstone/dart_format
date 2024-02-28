@@ -25,7 +25,7 @@ class FormatState
     final List<StringBufferEx> _textBuffers = <StringBufferEx>[StringBufferEx()];
     final List<Indentation> _indentations = <Indentation>[];
 
-    int _lastConsumedPosition = 0;
+    int _lastConsumedPositionUnsafe = 0;
     String? _trailingForTests;
 
     int logIndent = 0;
@@ -34,7 +34,7 @@ class FormatState
     => _parseResult.unit;
 
     int get lastConsumedPosition
-    => _lastConsumedPosition;
+    => _lastConsumedPositionUnsafe;
 
     FormatState(
         ParseStringResult parseResult, {
@@ -58,7 +58,7 @@ class FormatState
         indentationSpacesPerLevel: indentationSpacesPerLevel,
         removeTrailingCommas : removeTrailingCommas
     )
-        .._lastConsumedPosition = leading?.length ?? 0
+        .._lastConsumedPositionUnsafe = leading?.length ?? 0
         .._trailingForTests = trailing;
 
     void acceptListWithPeriod(List<AstNode> nodes, AstVisitor<void> astVisitor, String source)
@@ -109,34 +109,38 @@ class FormatState
     void acceptListWithComma(NodeList<AstNode> nodes, Token? endToken, AstVisitor<void> astVisitor, String source)
     {
         const String methodName = 'acceptListWithComma';
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('$methodName($source)');
 
         AstNode? lastNode;
         for (final AstNode node in nodes)
         {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('$methodName: node: ${node.runtimeType}');
+
             if (lastNode != null)
             {
-                // This part is necessary for situations like "} ,\nXYZ"
                 int end = lastNode.end;
-                if (_lastConsumedPosition > end)
+                if (lastConsumedPosition > end)
                 {
-                    final String filler = getText(lastNode.end, _lastConsumedPosition);
+                    // This part is necessary for situations like "} ,\nXYZ"
+                    final String filler = getText(lastNode.end, lastConsumedPosition);
                     if (Constants.DEBUG_FORMAT_STATE)
                     {
                         logInternal('filler/1:');
-                        logInternal('  lastNode.end:          ${lastNode.end}: ${StringTools.toDisplayString(getText(lastNode.end, lastNode.end + 10, safe: true))}');
-                        logInternal('  _lastConsumedPosition: $_lastConsumedPosition: ${StringTools.toDisplayString(getText(_lastConsumedPosition, _lastConsumedPosition + 10, safe: true))}');
-                        logInternal('  filler (lN.e - _lCP):  ${StringTools.toDisplayString(filler)}');
+                        logInternal('  lastNode.end:         ${lastNode.end}: ${StringTools.toDisplayString(getText(lastNode.end, lastNode.end + 10, safe: true))}');
+                        logInternal('  lastConsumedPosition: $lastConsumedPosition: ${StringTools.toDisplayString(getText(lastConsumedPosition, lastConsumedPosition + 10, safe: true))}');
+                        logInternal('  filler (lN.e - lCP):  ${StringTools.toDisplayString(filler)}');
                     }
 
                     if (filler.trim().isNotEmpty)
                         throw DartFormatException.error('filler is not empty: ${StringTools.toDisplayString(filler)}');
-                    end = _lastConsumedPosition;
+                    end = lastConsumedPosition;
                 }
 
                 final String commaText = getText(end, node.offset);
                 if (!FormatTools.isCommaText(commaText))
                     throw DartFormatException.error('commaText is not a comma: ${StringTools.toDisplayString(commaText)}');
 
+                // TODO: expectComments?
                 consumeText(end, node.offset, commaText, '$source/Comma');
             }
 
@@ -147,32 +151,42 @@ class FormatState
         // Check for trailing comma
         if (lastNode != null)
         {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('$methodName: Check for trailing comma: lastNode: ${lastNode.runtimeType}');
+
+            if (lastConsumedPosition > lastNode.end)
+            {
+                // This part is necessary for situations like "} ,\nXYZ"
+                logWarning('TODO');
+            }
+
             final AstNode? parentNode = lastNode.parent;
             if (parentNode == null)
                 throw DartFormatException.error('parentNode is null');
 
             if (endToken != null)
             {
-                String commaText = getText(lastNode.end, endToken.offset);
-                if (Constants.DEBUG_FORMAT_STATE) logInternal('commaText/2 ${StringTools.toDisplayString(commaText)}');
-                if (FormatTools.isCommaText(commaText))
+                String trailingCommaText = getText(lastNode.end, endToken.offset);
+                if (Constants.DEBUG_FORMAT_STATE) logInternal('trailingCommaText ${StringTools.toDisplayString(trailingCommaText)}');
+                if (FormatTools.isCommaText(trailingCommaText))
                 {
                     if (_removeTrailingCommas)
-                        commaText = commaText.replaceFirst(',', '${Constants.REMOVE_START},${Constants.REMOVE_END}');
+                        trailingCommaText = trailingCommaText.replaceFirst(',', '${Constants.REMOVE_START},${Constants.REMOVE_END}');
 
                     int? end = lastNode.end;
-                    if (end < _lastConsumedPosition)
+                    if (end < lastConsumedPosition)
                     {
-                        final String alreadyConsumedText = getText(end, _lastConsumedPosition);
-                        if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
+                        final String alreadyConsumedText = getText(end, lastConsumedPosition);
+                        if (Constants.DEBUG_FORMAT_STATE || Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
                         if (alreadyConsumedText.trim().isEmpty)
                         {
                             // TODO: Find a better way!
-                            end = _lastConsumedPosition;
+                            if (Constants.DEBUG_FORMAT_STATE || Constants.DEBUG_TODOS) logWarning('end = lastConsumedPosition;');
+                            end = lastConsumedPosition;
                         }
                     }
 
-                    consumeText(end, endToken.offset, commaText, '$source/TrailingComma');
+                    // TODO: expectComments?
+                    consumeText(end, endToken.offset, trailingCommaText, '$source/TrailingComma');
                 }
             }
         }
@@ -194,19 +208,16 @@ class FormatState
             return;
         }
 
-        final int end = nextToken.offset;
-        /*if (nextToken.precedingComments != null)
-        end = nextToken.precedingComments!.offset;*/
-
-        final String filler = getText(token.end, end);
+        final String filler = getText(token.end, nextToken.offset);
         if (Constants.DEBUG_FORMAT_STATE)
         {
+            logInternal('filler/2:');
             logInternal('  token:                              ${StringTools.toDisplayString(token)}');
             logInternal('  nextToken:                          ${StringTools.toDisplayString(nextToken)}');
             logInternal('  nextToken.offset:                   ${nextToken.offset}');
             logInternal('  nextToken.precedingComments:        ${StringTools.toDisplayString(nextToken.precedingComments)}');
             logInternal('  nextToken.precedingComments.offset: ${nextToken.precedingComments?.offset}');
-            logInternal('  filler/2:                           ${StringTools.toDisplayString(filler)}');
+            logInternal('  filler (t.e - nT.o):                ${StringTools.toDisplayString(filler)}');
         }
 
         final int pos = filler.indexOf('\n');
@@ -217,6 +228,7 @@ class FormatState
         if (nextToken.offset == _parseResult.content.length)
         {
             // EOF
+            // TODO: expectComments?
             consumeText(token.end, nextToken.offset, filler, fullSource);
             _addNewLineBeforeToken(nextToken, add: add, beforeComments: false, fullSource);
             return;
@@ -225,36 +237,76 @@ class FormatState
         _addNewLineBeforeToken(nextToken, add: add, beforeComments: true, fullSource);
     }
 
-    void consumeText(int offset, int end, String s, String source, {bool expectComments = false})
+    void consumeText(int initialOffset, int end, String s, String source, {bool expectComments = false})
     {
         const String methodName = 'consumeText';
         final String fullSource = '$source/$methodName';
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, expectComments=$expectComments, ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
-
-        if (offset < lastConsumedPosition)
-            _logAndThrowError('Internal error: offset < lastConsumedPosition:'
-                ' (${getPositionInfo(offset)}) < (${getPositionInfo(lastConsumedPosition)})'
-                ' ($source)');
-
-        if (lastConsumedPosition < offset)
+        if (Constants.DEBUG_FORMAT_STATE)
         {
-            final String filler = getText(lastConsumedPosition, offset);
+            logInternal('# $methodName($initialOffset, $end, expectComments=$expectComments, ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
+            if (!expectComments && (s.contains('/*') || s.contains('*/')))
+                logWarning('$methodName: No comments expected but s contains block comment start/end: ${StringTools.toDisplayString(s)}');
+        }
+
+        int finalOffset = initialOffset;
+        if (initialOffset < lastConsumedPosition)
+        {
+            final String alreadyConsumedText = getText(initialOffset, lastConsumedPosition);
+            if (Constants.DEBUG_FORMAT_STATE || Constants.DEBUG_TODOS)
+              logDebug('$methodName: initialOffset < lastConsumedPosition: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
+
+            if (alreadyConsumedText.trim().isEmpty)
+            {
+                // TODO: Find a better way!
+                if (Constants.DEBUG_FORMAT_STATE || Constants.DEBUG_TODOS) logInfo('Correcting because alreadyConsumedText is empty: ${StringTools.toDisplayString(alreadyConsumedText)}');
+                if (Constants.DEBUG_FORMAT_STATE || Constants.DEBUG_TODOS) logWarning('finalOffset = lastConsumedPosition;');
+                finalOffset = lastConsumedPosition;
+            }
+            else
+            {
+                if (Constants.DEBUG_FORMAT_STATE || Constants.DEBUG_TODOS) logWarning('Could not correct because alreadyConsumedText is not empty: ${StringTools.toDisplayString(alreadyConsumedText)}');
+                if (FormatTools.isEmptyOrComments(alreadyConsumedText))
+                {
+                    // TODO: Find a better way!
+                if (Constants.DEBUG_FORMAT_STATE || Constants.DEBUG_TODOS) logInfo('Correcting because alreadyConsumedText is either empty or comments: ${StringTools.toDisplayString(alreadyConsumedText)}');
+                    if (Constants.DEBUG_FORMAT_STATE || Constants.DEBUG_TODOS) logWarning('finalOffset = lastConsumedPosition;');
+                    finalOffset = lastConsumedPosition;
+                }
+                else
+                {
+                if (Constants.DEBUG_FORMAT_STATE || Constants.DEBUG_TODOS) logWarning('Could not correct because alreadyConsumedText is neither empty nor comments: ${StringTools.toDisplayString(alreadyConsumedText)}');
+                  _logAndThrowError('Internal error: initialOffset < lastConsumedPosition:'
+                    ' (${getPositionInfo(initialOffset)}) < (${getPositionInfo(lastConsumedPosition)})'
+                    ' ($source)');
+                }
+            }
+        }
+
+        if (lastConsumedPosition < finalOffset)
+        {
+            final String filler = getText(lastConsumedPosition, finalOffset);
 
             if (Constants.DEBUG_FORMAT_STATE)
             {
-                logInternal('  filler/4:             ${StringTools.toDisplayString(filler)}');
+                logInternal('filler/4:');
+                logInternal('  filler (lCP - o):     ${StringTools.toDisplayString(filler)}');
                 logInternal('  lastConsumedPosition: $lastConsumedPosition');
-                logInternal('  offset:               $offset');
+                logInternal('  finalOffset:          $finalOffset');
                 logInternal('  Current:              ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
             }
 
             if (!FormatTools.isEmptyOrComments(filler))
                 _logAndThrowError('Internal error: Missed some text:'
-                    ' (${getPositionInfo(lastConsumedPosition)}) - (${getPositionInfo(offset)}):'
+                    ' (${getPositionInfo(lastConsumedPosition)}) - (${getPositionInfo(finalOffset)}):'
                     ' ${StringTools.toDisplayString(filler, 100)}'
                     ' Source: $source');
 
-            final String fixedFiller = _removeLeadingWhitespace(filler, source, expectComments: expectComments);
+            final String fixedFiller = _removeLeadingWhitespace(filler,
+                source:source,
+                expectComments: expectComments,
+                position: lastConsumedPosition,
+                onGetPositionInfo: getPositionInfo
+            );
             if (Constants.DEBUG_FORMAT_STATE)
             {
                 logInternal('  Filler w/o leadingWS: ${StringTools.toDisplayString(fixedFiller)}');
@@ -265,11 +317,16 @@ class FormatState
         }
         else
         {
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('  No filler');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  No filler/4');
         }
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
-        final String fixedS = _removeLeadingWhitespace(s, source, expectComments: expectComments);
+        final String fixedS = _removeLeadingWhitespace(s,
+            source:source,
+            expectComments: expectComments,
+            position: finalOffset,
+            onGetPositionInfo: getPositionInfo
+        );
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  S w/o leading ws:     ${StringTools.toDisplayString(fixedS)}');
         _write(fixedS);
 
@@ -286,7 +343,11 @@ class FormatState
             return;
 
         String filler = getText(lastConsumedPosition, end);
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  filler/5:                  ${StringTools.toDisplayString(filler)}');
+        if (Constants.DEBUG_FORMAT_STATE)
+        {
+            logInternal('filler/5:');
+            logInternal('  filler (lCP - e):          ${StringTools.toDisplayString(filler)}');
+        }
 
         if (_trailingForTests != null && filler.endsWith(_trailingForTests!))
         {
@@ -329,20 +390,23 @@ class FormatState
         );
     }
 
-    void copyEntity(SyntacticEntity? entity, AstVisitor<void> astVisitor, String source)
+    void copyEntity(SyntacticEntity? entity, AstVisitor<void> astVisitor, {required String Function() onGetSource})
     {
         const String methodName = 'copyEntity';
-        final String fullSource = '$source/$methodName';
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(entity, Constants.MAX_DEBUG_LENGTH)}, $source)');
+
+        String getFullSource()
+        => '${onGetSource()}/$methodName';
+
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(entity, Constants.MAX_DEBUG_LENGTH)}, ${onGetSource()})');
 
         if (entity == null)
         {
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <null> ($fullSource)');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <null> (${getFullSource()})');
         }
         else if (entity is AstNode)
             entity.accept(astVisitor);
         else if (entity is Token)
-            _copyToken(entity, fullSource, addNewLineBefore: false, addNewLineAfter: false);
+            _copyToken(entity, getFullSource() , addNewLineBefore: false, addNewLineAfter: false);
         else
             throw DartFormatException.error('Unhandled type: ${entity.runtimeType} ${StringTools.toDisplayString(entity, Constants.MAX_DEBUG_LENGTH)}');
         //copyText(entity.offset, entity.end, fullSource);
@@ -507,7 +571,11 @@ class FormatState
         }
 
         final String filler = lastConsumedPosition >= end ? '' : getText(lastConsumedPosition, end);
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  filler/3:                        ${StringTools.toDisplayString(filler)}');
+        if (Constants.DEBUG_FORMAT_STATE)
+        {
+          logInternal('filler/3:');
+          logInternal('  filler (lCP - e):                ${StringTools.toDisplayString(filler)}');
+        }
 
         if (filler.startsWith('\n'))
         {
@@ -624,14 +692,15 @@ class FormatState
             return;
         }
 
-        if (end < _lastConsumedPosition)
+        if (end < lastConsumedPosition)
         {
-            final String alreadyConsumedText = getText(end, _lastConsumedPosition);
-            if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
+            final String alreadyConsumedText = getText(end, lastConsumedPosition);
+            if (Constants.DEBUG_FORMAT_STATE || Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
             if (alreadyConsumedText.trim().isEmpty)
             {
                 // TODO: Find a better way!
-                end = _lastConsumedPosition;
+                if (Constants.DEBUG_FORMAT_STATE || Constants.DEBUG_TODOS) logWarning('end = lastConsumedPosition;');
+                end = lastConsumedPosition;
             }
         }
 
@@ -649,20 +718,39 @@ class FormatState
         logInternalError(s);
     }
 
-    String _removeLeadingWhitespace(String s, String source, {bool expectComments = false})
+    String _removeLeadingWhitespace(String s, {
+            required String source,
+            required int position,
+            required String Function(int offset) onGetPositionInfo,
+            bool expectComments = false
+        })
     {
         if (_indentationSpacesPerLevel < 0)
             return s;
 
-        return StringTools.removeLeadingWhitespace(s, source: source, expectComments: expectComments);
+        return StringTools.removeLeadingWhitespace(s,
+            source: source,
+            expectComments: expectComments,
+            position: position,
+            onGetPositionInfo: onGetPositionInfo
+        );
     }
 
     void _setLastConsumedPosition(int value, String source)
     {
-        if (value < _lastConsumedPosition)
-            _logAndThrowError('FormatState:_setLastConsumedPosition: value < _lastConsumedPosition: $value < $_lastConsumedPosition ($source)');
+        if (value < lastConsumedPosition)
+        {
+            if (Constants.DEBUG_FORMAT_STATE)
+            {
+              logInternal('_setLastConsumedPosition($source)');
+              logInternal('  Text at old value: ${StringTools.toDisplayString(getText(_lastConsumedPositionUnsafe, _lastConsumedPositionUnsafe + 10, safe: true))}');
+              logInternal('  Text at new value: ${StringTools.toDisplayString(getText(value, value + 10, safe: true))}');
+            }
 
-        _lastConsumedPosition = value;
+          _logAndThrowError('FormatState:_setLastConsumedPosition: value < _lastConsumedPosition: $value < $lastConsumedPosition ($source)');
+        }
+
+        _lastConsumedPositionUnsafe = value;
     }
 
     void _write(String s)

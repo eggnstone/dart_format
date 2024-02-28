@@ -27,9 +27,9 @@ class EnumDeclarationFormatter extends IFormatter
             throw FormatException('Not an EnumDeclaration: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.enumKeyword, astVisitor, '$methodName/node.enumKeyword');
-        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
-        formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause');
+        formatState.copyEntity(node.enumKeyword, astVisitor, onGetSource: ()=>'$methodName/node.enumKeyword');
+        formatState.copyEntity(node.name, astVisitor, onGetSource: ()=>'$methodName/node.name');
+        formatState.copyEntity(node.implementsClause, astVisitor, onGetSource: ()=>'$methodName/node.implementsClause');
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
         // TODO: precedingComments: on semicolon, too. Check other formatters, too.
         final Token endTokenForConstants = node.semicolon ?? node.rightBracket.precedingComments ?? node.rightBracket;

@@ -26,8 +26,8 @@ class LibraryDirectiveFormatter extends IFormatter
             throw FormatException('Not a LibraryDirective: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.libraryKeyword, astVisitor, '$methodName/node.libraryKeyword');
-        formatState.copyEntity(node.name2, astVisitor, '$methodName/node.name2');
+        formatState.copyEntity(node.libraryKeyword, astVisitor, onGetSource: ()=>'$methodName/node.libraryKeyword');
+        formatState.copyEntity(node.name2, astVisitor,onGetSource: ()=> '$methodName/node.name2');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

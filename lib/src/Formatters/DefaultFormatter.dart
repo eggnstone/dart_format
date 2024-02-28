@@ -50,8 +50,13 @@ class DefaultFormatter extends IFormatter
                     }
                     else
                     {
-                        if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Copying');
-                        formatState.copyEntity(child, astVisitor, '$methodName/child=${child.runtimeType}');
+                        if (Constants.DEBUG_FORMATTER_DEFAULT)
+                            logInternal('    Copying');
+
+                        String getSource()
+                        => '$methodName/child=${child.runtimeType}=${StringTools.toDisplayString(child, 10)}';
+
+                        formatState.copyEntity(child, astVisitor, onGetSource: getSource);
                     }
                 }
                 else

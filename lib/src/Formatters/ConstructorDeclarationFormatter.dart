@@ -26,19 +26,19 @@ class ConstructorDeclarationFormatter extends IFormatter
             throw FormatException('Not a ConstructorDeclaration: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.externalKeyword, astVisitor, '$methodName/node.externalKeyword');
-        formatState.copyEntity(node.constKeyword, astVisitor, '$methodName/node.constKeyword');
-        formatState.copyEntity(node.factoryKeyword, astVisitor, '$methodName/node.factoryKeyword');
-        formatState.copyEntity(node.returnType, astVisitor, '$methodName/node.returnType');
-        formatState.copyEntity(node.period, astVisitor, '$methodName/node.period');
-        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
-        formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters');
+        formatState.copyEntity(node.externalKeyword, astVisitor, onGetSource: ()=>'$methodName/node.externalKeyword');
+        formatState.copyEntity(node.constKeyword, astVisitor, onGetSource: ()=>'$methodName/node.constKeyword');
+        formatState.copyEntity(node.factoryKeyword, astVisitor, onGetSource: ()=>'$methodName/node.factoryKeyword');
+        formatState.copyEntity(node.returnType, astVisitor, onGetSource: ()=>'$methodName/node.returnType');
+        formatState.copyEntity(node.period, astVisitor, onGetSource: ()=>'$methodName/node.period');
+        formatState.copyEntity(node.name, astVisitor, onGetSource: ()=>'$methodName/node.name');
+        formatState.copyEntity(node.parameters, astVisitor, onGetSource: ()=>'$methodName/node.parameters');
         formatState.pushLevel('$methodName/node.statements');
-        formatState.copyEntity(node.separator, astVisitor, '$methodName/node.separator');
-        formatState.copyEntity(node.redirectedConstructor, astVisitor, '$methodName/node.redirectedConstructor');
+        formatState.copyEntity(node.separator, astVisitor, onGetSource: ()=>'$methodName/node.separator');
+        formatState.copyEntity(node.redirectedConstructor, astVisitor, onGetSource: ()=>'$methodName/node.redirectedConstructor');
         formatState.acceptListWithComma(node.initializers, null, astVisitor, '$methodName/node.initializers');
         formatState.popLevelAndIndent();
-        formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
+        formatState.copyEntity(node.body, astVisitor, onGetSource: ()=>'$methodName/node.body');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

@@ -27,15 +27,15 @@ class SwitchExpressionFormatter extends IFormatter
 
         // Why does this not work with the default formatter?
         // The commas were missing then!
-        formatState.copyEntity(node.switchKeyword, astVisitor, '$methodName/node.switchKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
-        formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
-        formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
+        formatState.copyEntity(node.switchKeyword, astVisitor, onGetSource: ()=>'$methodName/node.switchKeyword');
+        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.leftParenthesis');
+        formatState.copyEntity(node.expression, astVisitor, onGetSource: ()=>'$methodName/node.expression');
+        formatState.copyEntity(node.rightParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.rightParenthesis');
+        formatState.copyEntity(node.leftBracket, astVisitor, onGetSource: ()=>'$methodName/node.leftBracket');
         //formatState.pushLevel('$methodName/node.members');
         formatState.acceptListWithComma(node.cases, node.rightBracket, astVisitor, '$methodName/node.cases');
         //formatState.popLevelAndIndent();
-        formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
+        formatState.copyEntity(node.rightBracket, astVisitor, onGetSource: ()=>'$methodName/node.rightBracket');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

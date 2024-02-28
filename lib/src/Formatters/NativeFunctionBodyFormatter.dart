@@ -25,8 +25,8 @@ class NativeFunctionBodyFormatter extends IFormatter
         if (node is! NativeFunctionBody)
             throw FormatException('Not a NativeFunctionBody: ${node.runtimeType}');
 
-        formatState.copyEntity(node.nativeKeyword, astVisitor, '$methodName/node.nativeKeyword');
-        formatState.copyEntity(node.stringLiteral, astVisitor, '$methodName/node.stringLiteral');
+        formatState.copyEntity(node.nativeKeyword, astVisitor, onGetSource: ()=>'$methodName/node.nativeKeyword');
+        formatState.copyEntity(node.stringLiteral, astVisitor, onGetSource: ()=>'$methodName/node.stringLiteral');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

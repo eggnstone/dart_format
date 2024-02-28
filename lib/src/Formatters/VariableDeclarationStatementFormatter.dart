@@ -25,7 +25,7 @@ class VariableDeclarationStatementFormatter extends IFormatter
         if (node is! VariableDeclarationStatement)
             throw FormatException('Not a VariableDeclarationStatement: ${node.runtimeType}');
 
-        formatState.copyEntity(node.variables, astVisitor, '$methodName/node.variables');
+        formatState.copyEntity(node.variables, astVisitor, onGetSource: ()=>'$methodName/node.variables');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

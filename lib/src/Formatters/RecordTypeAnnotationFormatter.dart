@@ -26,14 +26,14 @@ class RecordTypeAnnotationFormatter extends IFormatter
         if (node is! RecordTypeAnnotation)
             throw FormatException('Not a RecordTypeAnnotation: ${node.runtimeType}');
 
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
+        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.leftParenthesis');
 
         final Token endTokenForPositionalFields = node.namedFields?.beginToken  ?? node.rightParenthesis;
         formatState.acceptListWithComma(node.positionalFields, endTokenForPositionalFields, astVisitor, '$methodName/node.positionalFields');
-        formatState.copyEntity(node.namedFields, astVisitor, '$methodName/node.namedFields');
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
+        formatState.copyEntity(node.namedFields, astVisitor, onGetSource: ()=>'$methodName/node.namedFields');
+        formatState.copyEntity(node.rightParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.rightParenthesis');
 
-        formatState.copyEntity(node.question, astVisitor, '$methodName/node.question');
+        formatState.copyEntity(node.question, astVisitor, onGetSource: ()=>'$methodName/node.question');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

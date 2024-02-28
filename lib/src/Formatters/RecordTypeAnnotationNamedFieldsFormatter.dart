@@ -25,9 +25,9 @@ class RecordTypeAnnotationNamedFieldsFormatter extends IFormatter
         if (node is! RecordTypeAnnotationNamedFields)
             throw FormatException('Not a RecordTypeAnnotationNamedFields: ${node.runtimeType}');
 
-        formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
+        formatState.copyEntity(node.leftBracket, astVisitor, onGetSource: ()=>'$methodName/node.leftBracket');
         formatState.acceptListWithComma(node.fields, node.rightBracket, astVisitor, '$methodName/node.fields');
-        formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
+        formatState.copyEntity(node.rightBracket, astVisitor, onGetSource: ()=>'$methodName/node.rightBracket');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

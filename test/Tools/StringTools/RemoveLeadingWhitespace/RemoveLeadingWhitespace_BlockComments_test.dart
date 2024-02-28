@@ -13,16 +13,6 @@ void main()
             final String dummySpace = ' ' * 10;
             final String space4 = ' ' * 4;
 
-            /*test('Ignore block comments in single quote strings', ()
-                {
-                    const String inputText = "String s = '/ *'";
-
-                    final String actualText = StringTools.removeLeadingWhitespace(inputText);
-
-                    TestTools.expect(actualText, equals(inputText));
-                }
-            );*/
-
             test('Ignore ending block comment when expectComments=false', ()
                 {
                     const String inputText = '*/';
@@ -38,7 +28,8 @@ void main()
                 {
                     const String inputText = '*/';
 
-                    expect(() => StringTools.removeLeadingWhitespace(inputText, expectComments: true), throwsA(isA<DartFormatException>()));
+                    void f() => StringTools.removeLeadingWhitespace(inputText, expectComments: true);
+                    expect(f, throwsA(isA<DartFormatException>()));
                 }
             );
 

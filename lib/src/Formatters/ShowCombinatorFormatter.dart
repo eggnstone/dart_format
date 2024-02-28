@@ -25,7 +25,7 @@ class ShowCombinatorFormatter extends IFormatter
         if (node is! ShowCombinator)
             throw FormatException('Not a ShowCombinator: ${node.runtimeType}');
 
-        formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword');
+        formatState.copyEntity(node.keyword, astVisitor, onGetSource: ()=>'$methodName/node.keyword');
         formatState.acceptListWithComma(node.shownNames, null, astVisitor, '$methodName/node.shownNames');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

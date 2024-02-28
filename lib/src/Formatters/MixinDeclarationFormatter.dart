@@ -28,11 +28,11 @@ class MixinDeclarationFormatter extends IFormatter
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         //log('### NOT COPYING node.sortedCommentAndAnnotations', 0);
 
-        formatState.copyEntity(node.mixinKeyword, astVisitor, '$methodName/node.mixinKeyword');
-        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
-        formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
-        formatState.copyEntity(node.onClause, astVisitor, '$methodName/node.onClause');
-        formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause');
+        formatState.copyEntity(node.mixinKeyword, astVisitor, onGetSource: ()=>'$methodName/node.mixinKeyword');
+        formatState.copyEntity(node.name, astVisitor, onGetSource: ()=>'$methodName/node.name');
+        formatState.copyEntity(node.typeParameters, astVisitor, onGetSource: ()=>'$methodName/node.typeParameters');
+        formatState.copyEntity(node.onClause, astVisitor, onGetSource: ()=>'$methodName/node.onClause');
+        formatState.copyEntity(node.implementsClause, astVisitor, onGetSource: ()=>'$methodName/node.implementsClause');
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
         formatState.acceptList(node.members, astVisitor, '$methodName/node.members');
         formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');

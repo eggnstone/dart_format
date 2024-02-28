@@ -35,7 +35,8 @@ void main()
                         final String actualText = formatter.format(inputText);
 
                         TestTools.expectX(actualText, equals(expectedText));
-                    });*/
+                    }
+                );*/
 
                 test('Comment before annotation before class declaration', ()
                     {
@@ -112,17 +113,19 @@ void main()
                         final String actualText = formatter.format(inputText);
 
                         TestTools.expectX(actualText, equals(expectedText));
-                    });
+                    }
+                );
 
                 test('Comment before newline after class declaration', ()
-                {
-                final String inputText = 'class C{}$comment\n';
-                final String expectedText = 'class C{}$comment\n';
+                    {
+                        final String inputText = 'class C{}$comment\n';
+                        final String expectedText = 'class C{}$comment\n';
 
-                final String actualText = formatter.format(inputText);
+                        final String actualText = formatter.format(inputText);
 
-                TestTools.expectX(actualText, equals(expectedText));
-                });*/
+                        TestTools.expectX(actualText, equals(expectedText));
+                    }
+                );*/
             }
         );
 }

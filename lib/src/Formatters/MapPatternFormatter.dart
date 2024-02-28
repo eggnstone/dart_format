@@ -25,10 +25,10 @@ class MapPatternFormatter extends IFormatter
         if (node is! MapPattern)
             throw FormatException('Not a MapPattern: ${node.runtimeType}');
 
-        formatState.copyEntity(node.typeArguments, astVisitor, '$methodName/node.typeArguments');
-        formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
+        formatState.copyEntity(node.typeArguments, astVisitor, onGetSource: ()=>'$methodName/node.typeArguments');
+        formatState.copyEntity(node.leftBracket, astVisitor, onGetSource: ()=>'$methodName/node.leftBracket');
         formatState.acceptListWithComma(node.elements, node.rightBracket, astVisitor, '$methodName/node.elements');
-        formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
+        formatState.copyEntity(node.rightBracket, astVisitor, onGetSource: ()=>'$methodName/node.rightBracket');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

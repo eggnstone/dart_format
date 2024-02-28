@@ -26,12 +26,12 @@ class ImportDirectiveFormatter extends IFormatter
             throw FormatException('Not an ImportDirective: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.importKeyword, astVisitor, '$methodName/node.importKeyword');
-        formatState.copyEntity(node.uri, astVisitor, '$methodName/node.uri');
+        formatState.copyEntity(node.importKeyword, astVisitor, onGetSource: ()=>'$methodName/node.importKeyword');
+        formatState.copyEntity(node.uri, astVisitor, onGetSource: ()=>'$methodName/node.uri');
         formatState.acceptList(node.configurations, astVisitor, '$methodName/node.configurations');
-        formatState.copyEntity(node.deferredKeyword, astVisitor, '$methodName/node.deferredKeyword');
-        formatState.copyEntity(node.asKeyword, astVisitor, '$methodName/node.asKeyword');
-        formatState.copyEntity(node.prefix, astVisitor, '$methodName/node.prefix');
+        formatState.copyEntity(node.deferredKeyword, astVisitor, onGetSource: ()=>'$methodName/node.deferredKeyword');
+        formatState.copyEntity(node.asKeyword, astVisitor, onGetSource: ()=>'$methodName/node.asKeyword');
+        formatState.copyEntity(node.prefix, astVisitor, onGetSource: ()=>'$methodName/node.prefix');
         formatState.acceptList(node.combinators, astVisitor, '$methodName/node.combinators');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
