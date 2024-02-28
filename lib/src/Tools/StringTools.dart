@@ -132,13 +132,16 @@ class StringTools
         return sb;
     }
 
-    static String removeLeadingWhitespace(String s, [String source = 'TEST'])
+    static String removeLeadingWhitespace(String s, {bool expectComments = false, String source = 'TEST'})
     {
         if (Constants.DEBUG_STRING_TOOLS)
         {
-            logInternal('removeLeadingWhitespace($source)');
+            logInternal('removeLeadingWhitespace(expectComments=$expectComments, $source)');
             logInternal('IN:  ${StringTools.toDisplayString(s)}');
         }
+
+        if (!expectComments)
+            return _removeLeadingWhitespaceInCode(s).toString();
 
         final String fixedS = _splitBlockCommentsAndJoin(s,
             onMatch:  _removeLeadingWhitespaceInBlockComment,
@@ -207,9 +210,49 @@ class StringTools
         final StringBuffer sb = StringBuffer();
 
         final StringBuffer currentBlock = StringBuffer();
+
         int commentDepth = 0;
-        for (int i = 0; i< s.length; i++)
+        /*bool isInSingleQuoteString = false;
+        bool isInDoubleQuoteString = false; */
+
+        for (int i = 0; i < s.length; i++)
         {
+            /*if (isInSingleQuoteString || isInDoubleQuoteString)
+            {
+                if (s[i] == "'" && isInSingleQuoteString)
+                {
+                    isInSingleQuoteString = false;
+                    if (Constants.DEBUG_STRING_TOOLS) logInternal('Now not in single quote string anymore: ${toDisplayString(s.substring(0, i+1))}');
+                }
+                else if (s[i] == '"' && isInDoubleQuoteString)
+                {
+                    isInDoubleQuoteString = false;
+                    if (Constants.DEBUG_STRING_TOOLS) logInternal('Now not in double quote string anymore: ${toDisplayString(s.substring(0, i+1))}');
+                }
+
+                currentBlock.write(s[i]);
+                continue;
+            }*/
+
+            /*if (commentDepth == 0)
+            {
+                if (s[i] == "'")
+                {
+                    isInSingleQuoteString = true;
+                    if (Constants.DEBUG_STRING_TOOLS) logInternal('Now in single quote string: ${toDisplayString(s.substring(0, i+1))}');
+                    currentBlock.write(s[i]);
+                    continue;
+                }
+
+                if (s[i] == '"')
+                {
+                    isInDoubleQuoteString = true;
+                    if (Constants.DEBUG_STRING_TOOLS) logInternal('Now in double quote string: ${toDisplayString(s.substring(0, i+1))}');
+                    currentBlock.write(s[i]);
+                    continue;
+                }
+            }*/
+
             if (s[i] == '/' && i + 1 < s.length && s[i + 1] == '*')
             {
                 if (commentDepth == 0 && currentBlock.isNotEmpty)
@@ -224,7 +267,7 @@ class StringTools
             else if (s[i] == '*' && i + 1 < s.length && s[i + 1] == '/')
             {
                 if (commentDepth <= 0)
-                    throw DartFormatException.error('Unbalanced block comments: commentDepth <= 0: $commentDepth');
+                    throw DartFormatException.error('Unbalanced block comments: commentDepth ($commentDepth) <= 0: ${toDisplayString(s)}');
 
                 commentDepth--;
                 if (commentDepth == 0 && currentBlock.isNotEmpty)
@@ -241,7 +284,7 @@ class StringTools
         }
 
         if (commentDepth > 0)
-            throw DartFormatException.error('Unbalanced block comments: commentDepth > 0: $commentDepth');
+            throw DartFormatException.error('Unbalanced block comments: commentDepth ($commentDepth) > 0: ${toDisplayString(s)}');
 
         if (currentBlock.isNotEmpty)
             sb.write(onNonMatch(currentBlock.toString()));

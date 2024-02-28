@@ -94,7 +94,7 @@ class FormatState
                 consumeText(lastToken.end, token.offset, periodText, '$source/Period');
             }
 
-            copyToken(token, source, addNewLineBefore: false, addNewLineAfter: false);
+            _copyToken(token, source, addNewLineBefore: false, addNewLineAfter: false);
             lastToken = token;
         }
     }
@@ -225,74 +225,11 @@ class FormatState
         _addNewLineBeforeToken(nextToken, add: add, beforeComments: true, fullSource);
     }
 
-    void _addNewLineBeforeToken(Token? token, String source, {required bool add, required bool beforeComments})
-    {
-        const String methodName = 'addNewLineBeforeToken';
-        final String fullSource = '$source/$methodName';
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(add=$add, beforeComments=$beforeComments, ${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
-
-        if (token == null || !add)
-            return;
-
-        if (lastConsumedPosition > token.offset)
-            _logAndThrowError('lastConsumedPosition > token.offset');
-
-        if (getLastText().endsWith('\n'))
-        {
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('  Skipping line break because already in SB.');
-            return;
-        }
-
-        if (lastConsumedPosition == token.offset)
-        {
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('  Adding line break because no upcoming filler / not already in SB.');
-            addText('\n', fullSource);
-            return;
-        }
-
-        final int end = beforeComments ? token.precedingComments?.offset ?? token.offset : token.offset;
-        if (Constants.DEBUG_FORMAT_STATE)
-        {
-            logInternal('  lastConsumedPosition:            $lastConsumedPosition');
-            logInternal('  token.precedingComments:         ${token.precedingComments}');
-            logInternal('  token.precedingComments?.offset: ${token.precedingComments?.offset}');
-            logInternal('  token.offset:                    ${token.offset}');
-            logInternal('  end:                             $end');
-        }
-
-        final String filler = lastConsumedPosition >= end ? '' : getText(lastConsumedPosition, end);
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  filler/3:                        ${StringTools.toDisplayString(filler)}');
-
-        if (filler.startsWith('\n'))
-        {
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('  Skipping line break because already in upcoming combined filler.');
-            return;
-        }
-
-        if (filler.trim().isNotEmpty)
-            _logAndThrowError('Internal error: Upcoming trimmed filler is not empty/whitespace-only:'
-                ' (${getPositionInfo(lastConsumedPosition)})'
-                ' ${StringTools.toDisplayString(filler)}');
-
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  Replacing empty or whitespace-only filler with line break because upcoming filler does not contain line break.');
-        consumeText(lastConsumedPosition, end, '', fullSource);
-        addText('\n', fullSource);
-    }
-
-    void addText(String s, String source)
-    {
-        const String methodName = 'addText';
-        final String fullSource = '$source/$methodName';
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
-
-        consumeText(lastConsumedPosition, lastConsumedPosition, s, fullSource);
-    }
-
-    void consumeText(int offset, int end, String s, String source)
+    void consumeText(int offset, int end, String s, String source, {bool expectComments = false})
     {
         const String methodName = 'consumeText';
         final String fullSource = '$source/$methodName';
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, expectComments=$expectComments, ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
         if (offset < lastConsumedPosition)
             _logAndThrowError('Internal error: offset < lastConsumedPosition:'
@@ -317,22 +254,24 @@ class FormatState
                     ' ${StringTools.toDisplayString(filler, 100)}'
                     ' Source: $source');
 
-            final String fixedFiller = _removeLeadingWhitespace(filler, source);
+            final String fixedFiller = _removeLeadingWhitespace(filler, source, expectComments: expectComments);
             if (Constants.DEBUG_FORMAT_STATE)
             {
                 logInternal('  Filler w/o leadingWS: ${StringTools.toDisplayString(fixedFiller)}');
                 logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
             }
 
-            write(fixedFiller);
+            _write(fixedFiller);
         }
         else
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  No filler');
+        {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  No filler');
+        }
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
-        final String fixedS = _removeLeadingWhitespace(s, source);
+        final String fixedS = _removeLeadingWhitespace(s, source, expectComments: expectComments);
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  S w/o leading ws:     ${StringTools.toDisplayString(fixedS)}');
-        write(fixedS);
+        _write(fixedS);
 
         _setLastConsumedPosition(end, fullSource);
     }
@@ -364,7 +303,7 @@ class FormatState
         }
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(filler, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
-        write(filler);
+        _write(filler);
 
         _setLastConsumedPosition(end, fullSource);
     }
@@ -373,7 +312,7 @@ class FormatState
     => consumeTill(_parseResult.unit.end, source);
 
     void copyClosingBraceAndPopLevel(Token token, Config config, String source)
-    => copyToken(token, source,
+    => _copyToken(token, source,
         addNewLineBefore: config.addNewLineBeforeClosingBrace,
         addNewLineAfter: config.addNewLineAfterClosingBrace,
         popLevel: true
@@ -384,7 +323,7 @@ class FormatState
         if (token == null)
             return;
 
-        copyToken(token, source,
+        _copyToken(token, source,
             addNewLineBefore: false,
             addNewLineAfter: config.addNewLineAfterSemicolon
         );
@@ -402,120 +341,19 @@ class FormatState
         }
         else if (entity is AstNode)
             entity.accept(astVisitor);
+        else if (entity is Token)
+            _copyToken(entity, fullSource, addNewLineBefore: false, addNewLineAfter: false);
         else
-            copyText(entity.offset, entity.end, fullSource);
+            throw DartFormatException.error('Unhandled type: ${entity.runtimeType} ${StringTools.toDisplayString(entity, Constants.MAX_DEBUG_LENGTH)}');
+        //copyText(entity.offset, entity.end, fullSource);
     }
 
     void copyOpeningBraceAndPushLevel(Token token, Config config, String source)
-    => copyToken(token, source,
+    => _copyToken(token, source,
         addNewLineBefore: config.addNewLineBeforeOpeningBrace,
         addNewLineAfter: config.addNewLineAfterOpeningBrace,
         pushLevel: true
     );
-
-    void copyText(int offset, int end, String source)
-    {
-        const String methodName = 'copyText';
-        final String fullSource = '$source/$methodName';
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, $source)');
-
-        final String s = getText(offset, end);
-        consumeText(offset, end, s, fullSource);
-    }
-
-    void copyToken(Token token, String source, {
-            required bool addNewLineBefore,
-            required bool addNewLineAfter,
-            bool pushLevel = false,
-            bool popLevel = false
-        })
-    {
-        const String methodName = 'copyToken';
-        final String fullSource = '$source/$methodName';
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, addNewLineBefore=$addNewLineBefore, addNewLineAfter=$addNewLineAfter, pushLevel: $pushLevel, popLevel: $popLevel, $source)');
-
-        _copyTokenCommentsOnly(token, fullSource);
-        _addNewLineBeforeToken(token, add: addNewLineBefore, beforeComments: false, fullSource);
-
-        if (popLevel)
-            popLevelAndIndent();
-
-        _copyTokenWithoutComments(token, fullSource);
-        addNewLineAfterToken(token, add: addNewLineAfter, fullSource);
-
-        if (pushLevel)
-            this.pushLevel(fullSource);
-    }
-
-    void _copyTokenCommentsOnly(Token? token, String source)
-    {
-        const String methodName = 'copyTokenCommentsOnly';
-        final String fullSource = '$source/$methodName';
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
-
-        if (token == null)
-        {
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <null> ($fullSource)');
-            return;
-        }
-
-        Token? commentToken = token.precedingComments;
-        final int? commentsOffset = commentToken?.offset;
-        int? commentsEnd = commentToken?.end;
-        while (commentToken != null)
-        {
-            commentsEnd = commentToken.end;
-            commentToken = commentToken.next;
-        }
-
-        if (commentsOffset == null || commentsEnd == null)
-        {
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <no comments> ($fullSource)');
-            return;
-        }
-
-        copyText(commentsOffset, commentsEnd, fullSource);
-    }
-
-    void _copyTokenWithoutComments(Token? token, String source)
-    {
-        const String methodName = 'copyTokenWithoutComments';
-        final String fullSource = '$source/$methodName';
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
-
-        if (token == null)
-        {
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <null> ($fullSource)');
-            return;
-        }
-
-        Token? commentToken = token.precedingComments;
-        int? end = commentToken?.end;
-        while (commentToken != null)
-        {
-            end = commentToken.end;
-            commentToken = commentToken.next;
-        }
-
-        if (end == null)
-        {
-            copyText(token.offset, token.end, fullSource);
-            return;
-        }
-
-        if (end < _lastConsumedPosition)
-        {
-            final String alreadyConsumedText = getText(end, _lastConsumedPosition);
-            if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
-            if (alreadyConsumedText.trim().isEmpty)
-            {
-                // TODO: Find a better way!
-                end = _lastConsumedPosition;
-            }
-        }
-
-        copyText(end, token.end, fullSource);
-    }
 
     String getLastText()
     => _textBuffers.last.lastText;
@@ -633,15 +471,190 @@ class FormatState
         _textBuffers.add(StringBufferEx(lastText: _textBuffers.last.lastText));
     }
 
-    void write(String s)
+    void _addNewLineBeforeToken(Token? token, String source, {required bool add, required bool beforeComments})
     {
-        _textBuffers.last.write(s);
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('= ${StringTools.toDisplayString(getResult())}');
-    } 
+        const String methodName = 'addNewLineBeforeToken';
+        final String fullSource = '$source/$methodName';
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(add=$add, beforeComments=$beforeComments, ${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
+
+        if (token == null || !add)
+            return;
+
+        if (lastConsumedPosition > token.offset)
+            _logAndThrowError('lastConsumedPosition > token.offset');
+
+        if (getLastText().endsWith('\n'))
+        {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  Skipping line break because already in SB.');
+            return;
+        }
+
+        if (lastConsumedPosition == token.offset)
+        {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  Adding line break because no upcoming filler / not already in SB.');
+            _addText('\n', fullSource);
+            return;
+        }
+
+        final int end = beforeComments ? token.precedingComments?.offset ?? token.offset : token.offset;
+        if (Constants.DEBUG_FORMAT_STATE)
+        {
+            logInternal('  lastConsumedPosition:            $lastConsumedPosition');
+            logInternal('  token.precedingComments:         ${token.precedingComments}');
+            logInternal('  token.precedingComments?.offset: ${token.precedingComments?.offset}');
+            logInternal('  token.offset:                    ${token.offset}');
+            logInternal('  end:                             $end');
+        }
+
+        final String filler = lastConsumedPosition >= end ? '' : getText(lastConsumedPosition, end);
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  filler/3:                        ${StringTools.toDisplayString(filler)}');
+
+        if (filler.startsWith('\n'))
+        {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  Skipping line break because already in upcoming combined filler.');
+            return;
+        }
+
+        if (filler.trim().isNotEmpty)
+            _logAndThrowError('Internal error: Upcoming trimmed filler is not empty/whitespace-only:'
+                ' (${getPositionInfo(lastConsumedPosition)})'
+                ' ${StringTools.toDisplayString(filler)}');
+
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  Replacing empty or whitespace-only filler with line break because upcoming filler does not contain line break.');
+        consumeText(lastConsumedPosition, end, '', fullSource);
+        _addText('\n', fullSource);
+    }
+
+    void _addText(String s, String source)
+    {
+        const String methodName = 'addText';
+        final String fullSource = '$source/$methodName';
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
+
+        consumeText(lastConsumedPosition, lastConsumedPosition, s, fullSource);
+    }
+
+    void _copyText(int offset, int end, String source, {bool expectComments = false})
+    {
+        const String methodName = 'copyText';
+        final String fullSource = '$source/$methodName';
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, expectComments=$expectComments, $source)');
+
+        final String s = getText(offset, end);
+        consumeText(offset, end, s, fullSource, expectComments: expectComments);
+    }
+
+    void _copyToken(Token token, String source, {
+            required bool addNewLineBefore,
+            required bool addNewLineAfter,
+            bool pushLevel = false,
+            bool popLevel = false
+        })
+    {
+        const String methodName = 'copyToken';
+        final String fullSource = '$source/$methodName';
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, addNewLineBefore=$addNewLineBefore, addNewLineAfter=$addNewLineAfter, pushLevel: $pushLevel, popLevel: $popLevel, $source)');
+
+        _copyTokenCommentsOnly(token, fullSource);
+        _addNewLineBeforeToken(token, add: addNewLineBefore, beforeComments: false, fullSource);
+
+        if (popLevel)
+            popLevelAndIndent();
+
+        _copyTokenWithoutComments(token, fullSource);
+        addNewLineAfterToken(token, add: addNewLineAfter, fullSource);
+
+        if (pushLevel)
+            this.pushLevel(fullSource);
+    }
+
+    void _copyTokenCommentsOnly(Token? token, String source)
+    {
+        const String methodName = 'copyTokenCommentsOnly';
+        final String fullSource = '$source/$methodName';
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
+
+        if (token == null)
+        {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <null> ($fullSource)');
+            return;
+        }
+
+        Token? commentToken = token.precedingComments;
+        final int? commentsOffset = commentToken?.offset;
+        int? commentsEnd = commentToken?.end;
+        while (commentToken != null)
+        {
+            commentsEnd = commentToken.end;
+            commentToken = commentToken.next;
+        }
+
+        if (commentsOffset == null || commentsEnd == null)
+        {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <no comments> ($fullSource)');
+            return;
+        }
+
+        _copyText(commentsOffset, commentsEnd, fullSource, expectComments: true);
+    }
+
+    void _copyTokenWithoutComments(Token? token, String source)
+    {
+        const String methodName = 'copyTokenWithoutComments';
+        final String fullSource = '$source/$methodName';
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
+
+        if (token == null)
+        {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <null> ($fullSource)');
+            return;
+        }
+
+        Token? commentToken = token.precedingComments;
+        int? end = commentToken?.end;
+        while (commentToken != null)
+        {
+            end = commentToken.end;
+            commentToken = commentToken.next;
+        }
+
+        if (end == null)
+        {
+            _copyText(token.offset, token.end, fullSource);
+            return;
+        }
+
+        if (end < _lastConsumedPosition)
+        {
+            final String alreadyConsumedText = getText(end, _lastConsumedPosition);
+            if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
+            if (alreadyConsumedText.trim().isEmpty)
+            {
+                // TODO: Find a better way!
+                end = _lastConsumedPosition;
+            }
+        }
+
+        _copyText(end, token.end, fullSource);
+    }
+
+    void _logAndThrowError(String message)
+    {
+        _logError(message);
+        throw DartFormatException.error(message);
+    }
 
     void _logError(String s)
     {
         logInternalError(s);
+    }
+
+    String _removeLeadingWhitespace(String s, String source, {bool expectComments = false})
+    {
+        if (_indentationSpacesPerLevel < 0)
+            return s;
+
+        return StringTools.removeLeadingWhitespace(s, source: source, expectComments: expectComments);
     }
 
     void _setLastConsumedPosition(int value, String source)
@@ -652,17 +665,9 @@ class FormatState
         _lastConsumedPosition = value;
     }
 
-    void _logAndThrowError(String message)
+    void _write(String s)
     {
-        _logError(message);
-        throw DartFormatException.error(message);
-    }
-
-    String _removeLeadingWhitespace(String s, String source)
-    {
-        if (_indentationSpacesPerLevel < 0)
-            return s;
-
-        return StringTools.removeLeadingWhitespace(s, source);
+        _textBuffers.last.write(s);
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('= ${StringTools.toDisplayString(getResult())}');
     }
 }

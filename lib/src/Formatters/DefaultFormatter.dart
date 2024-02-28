@@ -30,7 +30,7 @@ class DefaultFormatter extends IFormatter
             {
                 if (child is AstNode)
                 {
-                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('! AstNode-Child: ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
+                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('! AstNode-Child: ${child.runtimeType} ${StringTools.toDisplayString(child, Constants.MAX_DEBUG_LENGTH)}');
                     if (child is CommentReference)
                     {
                         if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Ignoring "CommentReference"');
@@ -43,7 +43,7 @@ class DefaultFormatter extends IFormatter
                 }
                 else if (child is Token)
                 {
-                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('! Token-Child:   ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
+                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('! Token-Child:   ${child.runtimeType} ${StringTools.toDisplayString(child, Constants.MAX_DEBUG_LENGTH)}');
                     if (child.runtimeType.toString() == 'DartDocToken')
                     {
                         if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Ignoring "DartDocToken"');
@@ -55,7 +55,7 @@ class DefaultFormatter extends IFormatter
                     }
                 }
                 else
-                    throw DartFormatException.error('Unhandled type: ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
+                    throw DartFormatException.error('Unhandled type: ${child.runtimeType} ${StringTools.toDisplayString(child, Constants.MAX_DEBUG_LENGTH)}');
             }
         );
 
