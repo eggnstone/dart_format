@@ -95,7 +95,7 @@ class Formatter
             final CharacterLocation location2 = lineInfo.getLocation(positions.item2);
             message1 = 'Internal error: Invalid changes detected at index ${location1.lineNumber},${location1.columnNumber} / ${location2.lineNumber},${location2.columnNumber}';
             message2 =
-            'Same:   ${StringTools.toDisplayStringCutAtEnd(result.substring(0, positions.item2))}\n'
+            'Same:   ${StringTools.toDisplayStringCutEnd(result.substring(0, positions.item2))}\n'
             'Input:  ${StringTools.toDisplayString(s.substring(positions.item1))}\n'
             'Result: ${StringTools.toDisplayString(result.substring(positions.item2))}';
         }
@@ -108,7 +108,7 @@ class Formatter
             if (positions2 != createEmptyIntTuple())
             {
                 final String message2a =
-                'Same:                       ${StringTools.toDisplayStringCutAtEnd(condensedResultWithIgnores.substring(0, positions2.item2))}\n'
+                'Same:                       ${StringTools.toDisplayStringCutEnd(condensedResultWithIgnores.substring(0, positions2.item2))}\n'
                 'condensedInput:             ${StringTools.toDisplayString(condensedInput.substring(positions2.item1))}\n'
                 'condensedResultWithIgnores: ${StringTools.toDisplayString(condensedResultWithIgnores.substring(positions2.item2))}';
                 if (Constants.DEBUG_FORMATTER) logInternal('\n$message2a');

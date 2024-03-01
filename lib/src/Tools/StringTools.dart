@@ -182,25 +182,13 @@ class StringTools
     static String shorten50(String s)
     => shorten(s, 50);
 
-    static String toDisplayString(Object? o, [int maxLength = Constants.MAX_DEBUG_LENGTH])
-    //throw UnimplementedError();
+    static String toDisplayString(Object? o)
+    => toDisplayStringCutMiddle(o);
+
+    static String toDisplayStringCutStart(Object? o, [int maxLength = Constants.MAX_DEBUG_LENGTH])
     => '"${toSafeString(o, maxLength)}"';
 
-    static String toSafeString(Object? o, [int maxLength = -1])
-    {
-        if (o == null)
-            return '<null>';
-
-        final String s = o.toString();
-
-        String r = s.replaceAll('\n', r'\n').replaceAll('\r', r'\r').replaceAll('\t', r'\t');
-        if (maxLength >= 0 && r.length > maxLength)
-            r = '${r.substring(0, maxLength)}...';
-
-        return r;
-    }
-
-    static String toDisplayStringCutAtEnd(Object? o, [int maxLength = -1])
+    static String toDisplayStringCutEnd(Object? o, [int maxLength = Constants.MAX_DEBUG_LENGTH])
     {
         if (o == null)
             return '<null>';
@@ -212,6 +200,36 @@ class StringTools
             r = '...${r.substring(r.length - maxLength)}';
 
         return '"$r"';
+    }
+
+    static String toDisplayStringCutMiddle(Object? o, [int maxLength = Constants.MAX_DEBUG_LENGTH])
+    {
+        if (o == null)
+            return '<null>';
+
+        final String s = o.toString();
+
+        String r = s.replaceAll('\n', r'\n').replaceAll('\r', r'\r').replaceAll('\t', r'\t');
+        if (maxLength >= 0 && r.length > maxLength)
+            r = '${r.substring(0, maxLength ~/ 2)}...${r.substring(r.length - maxLength ~/ 2)}';
+
+        return '"$r"';
+    }
+
+    static String toSafeString(Object? o, [int maxLength = -1])
+    {
+        //throw UnimplementedError();
+
+        if (o == null)
+            return '<null>';
+
+        final String s = o.toString();
+
+        String r = s.replaceAll('\n', r'\n').replaceAll('\r', r'\r').replaceAll('\t', r'\t');
+        if (maxLength >= 0 && r.length > maxLength)
+            r = '${r.substring(0, maxLength)}...';
+
+        return r;
     }
 
     static String trimEndExceptNewLines(String s)

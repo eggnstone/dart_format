@@ -54,7 +54,7 @@ class DefaultFormatter extends IFormatter
                             logInternal('    Copying');
 
                         String getSource()
-                        => '$methodName/child=${child.runtimeType}=${StringTools.toDisplayString(child, 10)}';
+                        => '$methodName/child=${child.runtimeType}=${StringTools.toDisplayStringCutStart(child, 10)}';
 
                         formatState.copyEntity(child, astVisitor, onGetSource: getSource);
                     }
