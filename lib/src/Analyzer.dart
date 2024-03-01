@@ -24,7 +24,7 @@ class Analyzer
         {
             if (item is AstNode)
             {
-                _log('${_getSpacer(logIndent)}AstNode: ${item.runtimeType} ${StringTools.toDisplayString(item, Constants.MAX_DEBUG_LENGTH)}');
+                _log('${_getSpacer(logIndent)}AstNode: ${item.runtimeType} ${StringTools.toDisplayString(item)}');
                 if (item is Comment)
                 {
                     _log('!!${_getSpacer(logIndent - 1)}  Ignoring "Comment" in favour of precedingComments');
@@ -36,17 +36,17 @@ class Analyzer
             }
             else if (item is Token)
             {
-                _log('${_getSpacer(logIndent)}Token:   ${item.runtimeType} ${StringTools.toDisplayString(item, Constants.MAX_DEBUG_LENGTH)}');
+                _log('${_getSpacer(logIndent)}Token:   ${item.runtimeType} ${StringTools.toDisplayString(item)}');
                 Token? ct = item.precedingComments;
                 while (ct != null)
                 {
-                    _log('!!${_getSpacer(logIndent - 1)}  precedingComment: ${StringTools.toDisplayString(ct, Constants.MAX_DEBUG_LENGTH)}');
+                    _log('!!${_getSpacer(logIndent - 1)}  precedingComment: ${StringTools.toDisplayString(ct)}');
                     ct = ct.next;
                 }
             }
             else
             {
-                throw DartFormatException.error('Unhandled type: ${item.runtimeType} ${StringTools.toDisplayString(item, Constants.MAX_DEBUG_LENGTH)}');
+                throw DartFormatException.error('Unhandled type: ${item.runtimeType} ${StringTools.toDisplayString(item)}');
             }
         }
     }

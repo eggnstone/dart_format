@@ -13,36 +13,36 @@ class FormatTools
     static bool isCommaText(String s)
     {
         const String methodName = 'FormatTools.isCommaText';
-        if (Constants.DEBUG_FORMAT_TOOLS_IS_COMMA_TEXT) logInternal('# $methodName(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)})');
+        if (Constants.DEBUG_FORMAT_TOOLS_IS_COMMA_TEXT) logInternal('# $methodName(${StringTools.toDisplayString(s)})');
 
         if (s.trim() == ',')
         {
-            if (Constants.DEBUG_FORMAT_TOOLS_IS_COMMA_TEXT) logInternal('  Simple comma found: ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
+            if (Constants.DEBUG_FORMAT_TOOLS_IS_COMMA_TEXT) logInternal('  Simple comma found: ${StringTools.toDisplayString(s)}');
             return true;
         }
 
         final int commaPos = s.indexOf(',');
         if (commaPos == -1)
         {
-            if (Constants.DEBUG_FORMAT_TOOLS_IS_COMMA_TEXT) logInternal('  No comma found: ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
+            if (Constants.DEBUG_FORMAT_TOOLS_IS_COMMA_TEXT) logInternal('  No comma found: ${StringTools.toDisplayString(s)}');
             return false;
         }
 
         final String beforeComma = s.substring(0, commaPos);
         if (!isEmptyOrComments(beforeComma))
         {
-            if (Constants.DEBUG_FORMAT_TOOLS_IS_COMMA_TEXT) logInternal('  beforeComma is not empty or comments: ${StringTools.toDisplayString(beforeComma, Constants.MAX_DEBUG_LENGTH)}');
+            if (Constants.DEBUG_FORMAT_TOOLS_IS_COMMA_TEXT) logInternal('  beforeComma is not empty or comments: ${StringTools.toDisplayString(beforeComma)}');
             return false;
         }
 
         final String afterComma = s.substring(commaPos + 1);
         if (!isEmptyOrComments(afterComma))
         {
-            if (Constants.DEBUG_FORMAT_TOOLS_IS_COMMA_TEXT) logInternal('  afterComma is not empty or comments: ${StringTools.toDisplayString(afterComma, Constants.MAX_DEBUG_LENGTH)}');
+            if (Constants.DEBUG_FORMAT_TOOLS_IS_COMMA_TEXT) logInternal('  afterComma is not empty or comments: ${StringTools.toDisplayString(afterComma)}');
             return false;
         }
 
-        if (Constants.DEBUG_FORMAT_TOOLS_IS_COMMA_TEXT) logInternal('  Comma surrounded by comments found: ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
+        if (Constants.DEBUG_FORMAT_TOOLS_IS_COMMA_TEXT) logInternal('  Comma surrounded by comments found: ${StringTools.toDisplayString(s)}');
         return true;
     }
 
@@ -50,46 +50,44 @@ class FormatTools
     static String? getMaxCommaText(String s)
     {
         const String methodName = 'FormatTools.getMaxCommaText';
-        if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT) logInternal('# $methodName(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)})');
+        if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT) logInternal('# $methodName(${StringTools.toDisplayString(s)})');
 
-            final int commaPos = s.indexOf(',');
+        final int commaPos = s.indexOf(',');
         if (commaPos == -1)
         {
-            if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT) logInternal('  No comma found: ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
+            if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT) logInternal('  No comma found: ${StringTools.toDisplayString(s)}');
             return null;
         }
 
         final String textBeforeComma = s.substring(0, commaPos);
         final String maxCommaText = '$textBeforeComma,';
-            if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT)
-            {
-              logInternal('  commaPos:        $commaPos');
-              logInternal('  textBeforeComma: ${StringTools.toDisplayString(textBeforeComma, Constants.MAX_DEBUG_LENGTH)}');
-              logInternal('  maxCommaText:    ${StringTools.toDisplayString(maxCommaText, Constants.MAX_DEBUG_LENGTH)}');
-            }
+        if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT)
+        {
+            logInternal('  commaPos:        $commaPos');
+            logInternal('  textBeforeComma: ${StringTools.toDisplayString(textBeforeComma)}');
+            logInternal('  maxCommaText:    ${StringTools.toDisplayString(maxCommaText)}');
+        }
 
         if (textBeforeComma.trim().isEmpty)
         {
-            if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT) logInternal('  textBeforeComma is empty: ${StringTools.toDisplayString(textBeforeComma, Constants.MAX_DEBUG_LENGTH)}');
+            if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT) logInternal('  textBeforeComma is empty: ${StringTools.toDisplayString(textBeforeComma)}');
             return maxCommaText;
         }
 
         if (isEmptyOrComments(textBeforeComma))
         {
-            if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT) logInternal('  textBeforeComma is empty or comments: ${StringTools.toDisplayString(textBeforeComma, Constants.MAX_DEBUG_LENGTH)}');
+            if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT) logInternal('  textBeforeComma is empty or comments: ${StringTools.toDisplayString(textBeforeComma)}');
             return maxCommaText;
         }
 
-
-
-        if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT) logInternal('  textBeforeComma is neither empty nor comments: ${StringTools.toDisplayString(textBeforeComma, Constants.MAX_DEBUG_LENGTH)}');
+        if (Constants.DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT) logInternal('  textBeforeComma is neither empty nor comments: ${StringTools.toDisplayString(textBeforeComma)}');
         return null;
     }
 
     static bool isEmptyOrComments(String s)
     {
         const String methodName = 'FormatTools.isEmptyOrComments';
-        if (Constants.DEBUG_FORMAT_TOOLS_IS_EMPTY_OR_COMMENTS) logInternal('# $methodName(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)})');
+        if (Constants.DEBUG_FORMAT_TOOLS_IS_EMPTY_OR_COMMENTS) logInternal('# $methodName(${StringTools.toDisplayString(s)})');
 
         bool isInEndOfLineComment = false;
         int blockCommentDepth = 0;

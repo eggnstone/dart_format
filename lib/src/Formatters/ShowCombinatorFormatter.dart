@@ -20,7 +20,7 @@ class ShowCombinatorFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'ShowCombinatorFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! ShowCombinator)
             throw FormatException('Not a ShowCombinator: ${node.runtimeType}');
@@ -28,6 +28,6 @@ class ShowCombinatorFormatter extends IFormatter
         formatState.copyEntity(node.keyword, astVisitor, onGetSource: ()=>'$methodName/node.keyword');
         formatState.acceptListWithComma(node.shownNames, null, astVisitor, '$methodName/node.shownNames');
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

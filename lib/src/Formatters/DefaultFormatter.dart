@@ -24,13 +24,13 @@ class DefaultFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'DefaultFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++, node.offset);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node)})', formatState.logIndent++, node.offset);
 
         node.childEntities.forEach((SyntacticEntity child)
             {
                 if (child is AstNode)
                 {
-                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('! AstNode-Child: ${child.runtimeType} ${StringTools.toDisplayString(child, Constants.MAX_DEBUG_LENGTH)}');
+                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('! AstNode-Child: ${child.runtimeType} ${StringTools.toDisplayString(child)}');
                     if (child is CommentReference)
                     {
                         if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Ignoring "CommentReference"');
@@ -43,7 +43,7 @@ class DefaultFormatter extends IFormatter
                 }
                 else if (child is Token)
                 {
-                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('! Token-Child:   ${child.runtimeType} ${StringTools.toDisplayString(child, Constants.MAX_DEBUG_LENGTH)}');
+                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('! Token-Child:   ${child.runtimeType} ${StringTools.toDisplayString(child)}');
                     if (child.runtimeType.toString() == 'DartDocToken')
                     {
                         if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Ignoring "DartDocToken"');
@@ -60,10 +60,10 @@ class DefaultFormatter extends IFormatter
                     }
                 }
                 else
-                    throw DartFormatException.error('Unhandled type: ${child.runtimeType} ${StringTools.toDisplayString(child, Constants.MAX_DEBUG_LENGTH)}');
+                    throw DartFormatException.error('Unhandled type: ${child.runtimeType} ${StringTools.toDisplayString(child)}');
             }
         );
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent, node.end);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node)})', --formatState.logIndent, node.end);
     }
 }

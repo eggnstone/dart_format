@@ -20,7 +20,7 @@ class FieldDeclarationFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'FieldDeclarationFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! FieldDeclaration)
             throw FormatException('Not a FieldDeclaration: ${node.runtimeType}');
@@ -33,6 +33,6 @@ class FieldDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.fields, astVisitor, onGetSource: ()=>'$methodName/node.fields');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

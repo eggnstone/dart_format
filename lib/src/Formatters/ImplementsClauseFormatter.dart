@@ -20,7 +20,7 @@ class ImplementsClauseFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'ImplementsClauseFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! ImplementsClause)
             throw FormatException('Not an ImplementsClause: ${node.runtimeType}');
@@ -28,6 +28,6 @@ class ImplementsClauseFormatter extends IFormatter
         formatState.copyEntity(node.implementsKeyword, astVisitor, onGetSource: ()=>'$methodName/implementsKeyword');
         formatState.acceptListWithComma(node.interfaces, null, astVisitor, '$methodName/interfaces');
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

@@ -20,7 +20,7 @@ class ContinueStatementFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'ContinueStatementFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! ContinueStatement)
             throw FormatException('Not a ContinueStatement: ${node.runtimeType}');
@@ -29,6 +29,6 @@ class ContinueStatementFormatter extends IFormatter
         formatState.copyEntity(node.label, astVisitor, onGetSource: ()=>'$methodName/node.label');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

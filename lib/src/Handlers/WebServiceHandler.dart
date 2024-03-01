@@ -104,7 +104,7 @@ class WebServiceHandler
                 (List<int> event)
                 {
                     final String input = systemEncoding.decode(event);
-                    logDebug('$METHOD_NAME: Unexpected input via stdin.listen()/onData: ${StringTools.toDisplayString(input, Constants.MAX_DEBUG_LENGTH)}');
+                    logDebug('$METHOD_NAME: Unexpected input via stdin.listen()/onData: ${StringTools.toDisplayString(input)}');
                 }
                 ,
                 onDone: ()
@@ -308,7 +308,7 @@ class WebServiceHandler
             if (formattedText.isEmpty)
                 throw DartFormatException.error('No output generated.');
 
-            //logDebug('Sending formatted text: ${StringTools.toDisplayString(formattedText, Constants.MAX_DEBUG_LENGTH)}');
+            //logDebug('Sending formatted text: ${StringTools.toDisplayString(formattedText)}');
 
             request.response.statusCode = HttpStatus.ok;
             request.response.headers.contentType = ContentType.text;

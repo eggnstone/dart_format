@@ -20,7 +20,7 @@ class WithClauseFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'WithClauseFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! WithClause)
             throw FormatException('Not a WithClause: ${node.runtimeType}');
@@ -28,6 +28,6 @@ class WithClauseFormatter extends IFormatter
         formatState.copyEntity(node.withKeyword, astVisitor, onGetSource: ()=>'$methodName/node.withKeyword');
         formatState.acceptListWithComma(node.mixinTypes, null, astVisitor, '$methodName/node.mixinTypes');
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

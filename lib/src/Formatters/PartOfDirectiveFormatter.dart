@@ -20,7 +20,7 @@ class PartOfDirectiveFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'PartOfDirectiveFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! PartOfDirective)
             throw FormatException('Not a PartOfDirective: ${node.runtimeType}');
@@ -32,6 +32,6 @@ class PartOfDirectiveFormatter extends IFormatter
         formatState.copyEntity(node.libraryName, astVisitor, onGetSource: ()=>'$methodName/node.libraryName');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

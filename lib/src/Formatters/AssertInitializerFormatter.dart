@@ -22,7 +22,7 @@ class AssertInitializerFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'AssertInitializerFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! AssertInitializer)
             throw FormatException('Not an AssertInitializer: ${node.runtimeType}');
@@ -55,6 +55,6 @@ class AssertInitializerFormatter extends IFormatter
         formatState.copyEntity(node.rightParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.rightParenthesis');
         //formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

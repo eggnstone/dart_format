@@ -20,7 +20,7 @@ class IfStatementFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'IfStatementFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! IfStatement)
             throw FormatException('Not an IfStatement: ${node.runtimeType}');
@@ -49,6 +49,6 @@ class IfStatementFormatter extends IFormatter
         if (indentElse)
             formatState.popLevelAndIndent();
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

@@ -20,7 +20,7 @@ class DottedNameFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'DottedNameFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! DottedName)
             throw FormatException('Not a DottedName: ${node.runtimeType}');
@@ -29,6 +29,6 @@ class DottedNameFormatter extends IFormatter
         // The dots were missing then!
         formatState.acceptListWithPeriod(node.components, astVisitor, '$methodName/node.components');
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

@@ -20,7 +20,7 @@ class RecordTypeAnnotationNamedFieldsFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'RecordTypeAnnotationNamedFieldsFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! RecordTypeAnnotationNamedFields)
             throw FormatException('Not a RecordTypeAnnotationNamedFields: ${node.runtimeType}');
@@ -29,6 +29,6 @@ class RecordTypeAnnotationNamedFieldsFormatter extends IFormatter
         formatState.acceptListWithComma(node.fields, node.rightBracket, astVisitor, '$methodName/node.fields');
         formatState.copyEntity(node.rightBracket, astVisitor, onGetSource: ()=>'$methodName/node.rightBracket');
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

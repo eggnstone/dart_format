@@ -20,7 +20,7 @@ class VariableDeclarationListFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'VariableDeclarationListFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! VariableDeclarationList)
             throw FormatException('Not a VariableDeclarationList: ${node.runtimeType}');
@@ -30,6 +30,6 @@ class VariableDeclarationListFormatter extends IFormatter
         formatState.copyEntity(node.type, astVisitor, onGetSource: ()=>'$methodName/node.type');
         formatState.acceptListWithComma(node.variables, null, astVisitor, '$methodName/node.variables');
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

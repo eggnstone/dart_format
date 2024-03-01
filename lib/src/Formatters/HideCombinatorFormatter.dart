@@ -20,7 +20,7 @@ class HideCombinatorFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'HideCombinatorFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! HideCombinator)
             throw FormatException('Not a HideCombinator: ${node.runtimeType}');
@@ -28,6 +28,6 @@ class HideCombinatorFormatter extends IFormatter
         formatState.copyEntity(node.keyword, astVisitor, onGetSource: ()=>'$methodName/node.keyword');
         formatState.acceptListWithComma(node.hiddenNames, null, astVisitor, '$methodName/node.hiddenNames');
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

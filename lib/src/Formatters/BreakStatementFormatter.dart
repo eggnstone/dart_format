@@ -20,7 +20,7 @@ class BreakStatementFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'BreakStatementFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! BreakStatement)
             throw FormatException('Not a BreakStatement: ${node.runtimeType}');
@@ -28,6 +28,6 @@ class BreakStatementFormatter extends IFormatter
         formatState.copyEntity(node.breakKeyword,astVisitor, onGetSource: ()=>'$methodName/node.breakKeyword');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

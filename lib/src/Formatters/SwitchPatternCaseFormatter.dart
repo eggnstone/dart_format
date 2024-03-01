@@ -20,7 +20,7 @@ class SwitchPatternCaseFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'SwitchPatternCaseFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! SwitchPatternCase)
             throw FormatException('Not a SwitchPatternCase: ${node.runtimeType}');
@@ -33,6 +33,6 @@ class SwitchPatternCaseFormatter extends IFormatter
         formatState.acceptList(node.statements, astVisitor, '$methodName/node.statements');
         formatState.popLevelAndIndent();
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

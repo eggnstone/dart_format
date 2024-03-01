@@ -28,7 +28,7 @@ class Formatter
         if (Constants.DEBUG_FORMATTER)
         {
             logInternal('# Formatter.format()');
-            logInternal('  ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
+            logInternal('  ${StringTools.toDisplayString(s)}');
             logInternal('  indentationSpacesPerLevel: ${config.indentationSpacesPerLevel}');
             logInternal('  maxEmptyLines: ${config.maxEmptyLines}');
         }
@@ -71,10 +71,10 @@ class Formatter
         final String condensedResultWithoutIgnores = FormatTools.removeIgnoreTagsOnly(condensedResultWithIgnores);
         if (condensedResultWithoutIgnores == condensedInput)
         {
-            if (Constants.DEBUG_FORMATTER) logInternal('  result: ${StringTools.toDisplayString(result, Constants.MAX_DEBUG_LENGTH)}"');
+            if (Constants.DEBUG_FORMATTER) logInternal('  result: ${StringTools.toDisplayString(result)}"');
 
             final String resultWithoutIgnores = FormatTools.removeIgnoreTagsCompletely(result);
-            if (Constants.DEBUG_FORMATTER) logInternal('  resultWithoutIgnores: ${StringTools.toDisplayString(resultWithoutIgnores, Constants.MAX_DEBUG_LENGTH)}"');
+            if (Constants.DEBUG_FORMATTER) logInternal('  resultWithoutIgnores: ${StringTools.toDisplayString(resultWithoutIgnores)}"');
             return resultWithoutIgnores;
         }
 
@@ -86,8 +86,8 @@ class Formatter
         {
             message1 = 'Internal error: Invalid changes detected but no differences to show.';
             message2 =
-            'Input:  ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}\n'
-            'Result: ${StringTools.toDisplayString(result, Constants.MAX_DEBUG_LENGTH)}';
+            'Input:  ${StringTools.toDisplayString(s)}\n'
+            'Result: ${StringTools.toDisplayString(result)}';
         }
         else
         {
@@ -95,9 +95,9 @@ class Formatter
             final CharacterLocation location2 = lineInfo.getLocation(positions.item2);
             message1 = 'Internal error: Invalid changes detected at index ${location1.lineNumber},${location1.columnNumber} / ${location2.lineNumber},${location2.columnNumber}';
             message2 =
-            'Same:   ${StringTools.toDisplayStringCutAtEnd(result.substring(0, positions.item2), Constants.MAX_DEBUG_LENGTH)}\n'
-            'Input:  ${StringTools.toDisplayString(s.substring(positions.item1), Constants.MAX_DEBUG_LENGTH)}\n'
-            'Result: ${StringTools.toDisplayString(result.substring(positions.item2), Constants.MAX_DEBUG_LENGTH)}';
+            'Same:   ${StringTools.toDisplayStringCutAtEnd(result.substring(0, positions.item2))}\n'
+            'Input:  ${StringTools.toDisplayString(s.substring(positions.item1))}\n'
+            'Result: ${StringTools.toDisplayString(result.substring(positions.item2))}';
         }
 
         if (Constants.DEBUG_FORMATTER) logInternal('$message1\n$message2');
@@ -108,9 +108,9 @@ class Formatter
             if (positions2 != createEmptyIntTuple())
             {
                 final String message2a =
-                'Same:                       ${StringTools.toDisplayStringCutAtEnd(condensedResultWithIgnores.substring(0, positions2.item2), Constants.MAX_DEBUG_LENGTH)}\n'
-                'condensedInput:             ${StringTools.toDisplayString(condensedInput.substring(positions2.item1), Constants.MAX_DEBUG_LENGTH)}\n'
-                'condensedResultWithIgnores: ${StringTools.toDisplayString(condensedResultWithIgnores.substring(positions2.item2), Constants.MAX_DEBUG_LENGTH)}';
+                'Same:                       ${StringTools.toDisplayStringCutAtEnd(condensedResultWithIgnores.substring(0, positions2.item2))}\n'
+                'condensedInput:             ${StringTools.toDisplayString(condensedInput.substring(positions2.item1))}\n'
+                'condensedResultWithIgnores: ${StringTools.toDisplayString(condensedResultWithIgnores.substring(positions2.item2))}';
                 if (Constants.DEBUG_FORMATTER) logInternal('\n$message2a');
             }
         }

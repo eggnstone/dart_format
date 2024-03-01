@@ -20,7 +20,7 @@ class WhileStatementFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'WhileStatementFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! WhileStatement)
             throw FormatException('Not a WhileStatement: ${node.runtimeType}');
@@ -33,6 +33,6 @@ class WhileStatementFormatter extends IFormatter
         formatState.copyEntity(node.body, astVisitor, onGetSource: ()=>'$methodName/node.body');
         formatState.popLevelAndIndent();
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

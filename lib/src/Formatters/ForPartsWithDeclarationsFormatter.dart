@@ -20,7 +20,7 @@ class ForPartsWithDeclarationsFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'ForPartsWithDeclarationsFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! ForPartsWithDeclarations)
             throw FormatException('Not a ForPartsWithDeclarations: ${node.runtimeType}');
@@ -31,6 +31,6 @@ class ForPartsWithDeclarationsFormatter extends IFormatter
         formatState.copyEntity(node.rightSeparator, astVisitor, onGetSource: ()=>'$methodName/node.rightSeparator');
         formatState.acceptListWithComma(node.updaters, null, astVisitor, '$methodName/node.updaters');
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

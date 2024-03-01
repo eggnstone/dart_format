@@ -20,7 +20,7 @@ class SymbolLiteralFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'SymbolLiteralFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node)})', formatState.logIndent++);
 
         if (node is! SymbolLiteral)
             throw FormatException('Not a SymbolLiteral: ${node.runtimeType}');
@@ -28,6 +28,6 @@ class SymbolLiteralFormatter extends IFormatter
         formatState.copyEntity(node.poundSign, astVisitor, onGetSource: ()=>'$methodName/node.poundSign');
         formatState.acceptTokenListWithPeriod(node.components, astVisitor, '$methodName/node.components');
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }
 }

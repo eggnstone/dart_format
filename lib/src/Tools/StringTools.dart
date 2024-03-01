@@ -182,8 +182,8 @@ class StringTools
     static String shorten50(String s)
     => shorten(s, 50);
 
+    static String toDisplayString(Object? o, [int maxLength = Constants.MAX_DEBUG_LENGTH])
     //throw UnimplementedError();
-    static String toDisplayString(Object? o, [int maxLength = -1])
     => '"${toSafeString(o, maxLength)}"';
 
     static String toSafeString(Object? o, [int maxLength = -1])
