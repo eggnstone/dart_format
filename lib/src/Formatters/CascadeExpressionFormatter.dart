@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,7 +26,7 @@ class CascadeExpressionFormatter extends IFormatter
         if (node is! CascadeExpression)
             throw FormatException('Not a CascadeExpression: ${node.runtimeType}');
 
-        formatState.copyEntity(node.target, astVisitor, onGetSource: ()=>'$methodName.node.target');
+        formatState.copyEntity(node.target, astVisitor, onGetStack: () => SimpleStack('$methodName/node.target'));
 
         formatState.pushLevel('$methodName/node.cascadeSections');
         formatState.acceptList(node.cascadeSections, astVisitor, '$methodName/node.cascadeSections');

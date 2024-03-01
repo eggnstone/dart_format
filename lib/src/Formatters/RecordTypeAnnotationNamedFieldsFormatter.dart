@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,9 +26,9 @@ class RecordTypeAnnotationNamedFieldsFormatter extends IFormatter
         if (node is! RecordTypeAnnotationNamedFields)
             throw FormatException('Not a RecordTypeAnnotationNamedFields: ${node.runtimeType}');
 
-        formatState.copyEntity(node.leftBracket, astVisitor, onGetSource: ()=>'$methodName/node.leftBracket');
+        formatState.copyEntity(node.leftBracket, astVisitor, onGetStack: () => SimpleStack('$methodName/node.leftBracket'));
         formatState.acceptListWithComma(node.fields, node.rightBracket, astVisitor, '$methodName/node.fields');
-        formatState.copyEntity(node.rightBracket, astVisitor, onGetSource: ()=>'$methodName/node.rightBracket');
+        formatState.copyEntity(node.rightBracket, astVisitor, onGetStack: () => SimpleStack('$methodName/node.rightBracket'));
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }

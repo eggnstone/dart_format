@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -26,8 +27,8 @@ class LibraryDirectiveFormatter extends IFormatter
             throw FormatException('Not a LibraryDirective: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.libraryKeyword, astVisitor, onGetSource: ()=>'$methodName/node.libraryKeyword');
-        formatState.copyEntity(node.name2, astVisitor,onGetSource: ()=> '$methodName/node.name2');
+        formatState.copyEntity(node.libraryKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.libraryKeyword'));
+        formatState.copyEntity(node.name2, astVisitor,onGetStack: () => SimpleStack('$methodName/node.name2'));
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

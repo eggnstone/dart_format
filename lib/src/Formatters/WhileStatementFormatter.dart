@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,12 +26,12 @@ class WhileStatementFormatter extends IFormatter
         if (node is! WhileStatement)
             throw FormatException('Not a WhileStatement: ${node.runtimeType}');
 
-        formatState.copyEntity(node.whileKeyword, astVisitor, onGetSource: ()=>'$methodName/node.whileKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.leftParenthesis');
-        formatState.copyEntity(node.condition, astVisitor, onGetSource: ()=>'$methodName/node.condition');
-        formatState.copyEntity(node.rightParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.rightParenthesis');
+        formatState.copyEntity(node.whileKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.whileKeyword'));
+        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetStack: () => SimpleStack('$methodName/node.leftParenthesis'));
+        formatState.copyEntity(node.condition, astVisitor, onGetStack: () => SimpleStack('$methodName/node.condition'));
+        formatState.copyEntity(node.rightParenthesis, astVisitor, onGetStack: () => SimpleStack('$methodName/node.rightParenthesis'));
         formatState.pushLevel('$methodName/node.body');
-        formatState.copyEntity(node.body, astVisitor, onGetSource: ()=>'$methodName/node.body');
+        formatState.copyEntity(node.body, astVisitor, onGetStack: () => SimpleStack('$methodName/node.body'));
         formatState.popLevelAndIndent();
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

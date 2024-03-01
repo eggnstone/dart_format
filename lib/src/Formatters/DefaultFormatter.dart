@@ -8,6 +8,7 @@ import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/LogTools.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -53,10 +54,10 @@ class DefaultFormatter extends IFormatter
                         if (Constants.DEBUG_FORMATTER_DEFAULT)
                             logInternal('    Copying');
 
-                        String getSource()
-                        => '$methodName/child=${child.runtimeType}=${StringTools.toDisplayStringCutStart(child, 10)}';
+                        SimpleStack getStack()
+                        => SimpleStack('$methodName/child=${child.runtimeType}=${StringTools.toDisplayStringCutStart(child, 10)}');
 
-                        formatState.copyEntity(child, astVisitor, onGetSource: getSource);
+                        formatState.copyEntity(child, astVisitor, onGetStack: getStack);
                     }
                 }
                 else

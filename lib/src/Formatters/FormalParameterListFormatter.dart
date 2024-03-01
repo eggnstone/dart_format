@@ -7,6 +7,7 @@ import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/FormatTools.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -28,7 +29,7 @@ class FormalParameterListFormatter extends IFormatter
         if (node is! FormalParameterList)
             throw FormatException('Not a FormalParameterList: ${node.runtimeType}');
 
-        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.leftParenthesis');
+        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetStack: () => SimpleStack('$methodName/node.leftParenthesis'));
         formatState.pushLevel('$methodName/node.leftParenthesis');
 
         // TODO: move to FormatState
@@ -53,7 +54,7 @@ class FormalParameterListFormatter extends IFormatter
 
             if (shouldWriteLeftDelimiter)
             {
-                formatState.copyEntity(node.leftDelimiter, astVisitor, onGetSource: ()=>'$methodName/node.leftDelimiter');
+                formatState.copyEntity(node.leftDelimiter, astVisitor, onGetStack: () => SimpleStack('$methodName/node.leftDelimiter'));
                 formatState.pushLevel('$methodName/node.leftDelimiter');
                 wroteLeftDelimiter = true;
             }
@@ -83,11 +84,11 @@ class FormalParameterListFormatter extends IFormatter
         if (node.rightDelimiter != null)
         {
             formatState.popLevelAndIndent();
-            formatState.copyEntity(node.rightDelimiter, astVisitor, onGetSource: ()=>'$methodName/node.rightDelimiter');
+            formatState.copyEntity(node.rightDelimiter, astVisitor, onGetStack: () => SimpleStack('$methodName/node.rightDelimiter'));
         }
 
         formatState.popLevelAndIndent();
-        formatState.copyEntity(node.rightParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.rightParenthesis');
+        formatState.copyEntity(node.rightParenthesis, astVisitor, onGetStack: () => SimpleStack('$methodName/node.rightParenthesis'));
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }

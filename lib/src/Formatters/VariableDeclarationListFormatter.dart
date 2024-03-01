@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,9 +26,9 @@ class VariableDeclarationListFormatter extends IFormatter
         if (node is! VariableDeclarationList)
             throw FormatException('Not a VariableDeclarationList: ${node.runtimeType}');
 
-        formatState.copyEntity(node.lateKeyword, astVisitor, onGetSource: ()=>'$methodName/node.lateKeyword');
-        formatState.copyEntity(node.keyword, astVisitor, onGetSource: ()=>'$methodName/node.keyword');
-        formatState.copyEntity(node.type, astVisitor, onGetSource: ()=>'$methodName/node.type');
+        formatState.copyEntity(node.lateKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.lateKeyword'));
+        formatState.copyEntity(node.keyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.keyword'));
+        formatState.copyEntity(node.type, astVisitor, onGetStack: () => SimpleStack('$methodName/node.type'));
         formatState.acceptListWithComma(node.variables, null, astVisitor, '$methodName/node.variables');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

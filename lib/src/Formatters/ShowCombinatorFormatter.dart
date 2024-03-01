@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,7 +26,7 @@ class ShowCombinatorFormatter extends IFormatter
         if (node is! ShowCombinator)
             throw FormatException('Not a ShowCombinator: ${node.runtimeType}');
 
-        formatState.copyEntity(node.keyword, astVisitor, onGetSource: ()=>'$methodName/node.keyword');
+        formatState.copyEntity(node.keyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.keyword'));
         formatState.acceptListWithComma(node.shownNames, null, astVisitor, '$methodName/node.shownNames');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

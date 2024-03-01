@@ -6,6 +6,7 @@ import 'package:analyzer/dart/ast/syntactic_entity.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/FormatTools.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -27,11 +28,11 @@ class AssertInitializerFormatter extends IFormatter
         if (node is! AssertInitializer)
             throw FormatException('Not an AssertInitializer: ${node.runtimeType}');
 
-        formatState.copyEntity(node.assertKeyword, astVisitor, onGetSource: ()=>'$methodName/node.assertKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.leftParenthesis');
-        formatState.copyEntity(node.condition, astVisitor, onGetSource: ()=>'$methodName/node.condition');
-        formatState.copyEntity(node.comma, astVisitor, onGetSource: ()=>'$methodName/node.comma');
-        formatState.copyEntity(node.message, astVisitor, onGetSource: ()=>'$methodName/node.message');
+        formatState.copyEntity(node.assertKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.assertKeyword'));
+        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetStack: () => SimpleStack('$methodName/node.leftParenthesis'));
+        formatState.copyEntity(node.condition, astVisitor, onGetStack: () => SimpleStack('$methodName/node.condition'));
+        formatState.copyEntity(node.comma, astVisitor, onGetStack: () => SimpleStack('$methodName/node.comma'));
+        formatState.copyEntity(node.message, astVisitor, onGetStack: () => SimpleStack('$methodName/node.message'));
 
         final SyntacticEntity nodeBeforeRightParenthesis = node.message ?? node.comma ?? node.condition;
         if (Constants.DEBUG_I_FORMATTER)
@@ -52,7 +53,7 @@ class AssertInitializerFormatter extends IFormatter
             formatState.consumeText(start, end, commaText, '$methodName/TrailingComma');
         }
 
-        formatState.copyEntity(node.rightParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.rightParenthesis');
+        formatState.copyEntity(node.rightParenthesis, astVisitor, onGetStack: () => SimpleStack('$methodName/node.rightParenthesis'));
         //formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

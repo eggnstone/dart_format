@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,8 +26,8 @@ class ContinueStatementFormatter extends IFormatter
         if (node is! ContinueStatement)
             throw FormatException('Not a ContinueStatement: ${node.runtimeType}');
 
-        formatState.copyEntity(node.continueKeyword, astVisitor, onGetSource: ()=>'$methodName/node.continueKeyword');
-        formatState.copyEntity(node.label, astVisitor, onGetSource: ()=>'$methodName/node.label');
+        formatState.copyEntity(node.continueKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.continueKeyword'));
+        formatState.copyEntity(node.label, astVisitor, onGetStack: () => SimpleStack('$methodName/node.label'));
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

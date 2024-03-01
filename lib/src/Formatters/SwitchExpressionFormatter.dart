@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -27,15 +28,15 @@ class SwitchExpressionFormatter extends IFormatter
 
         // Why does this not work with the default formatter?
         // The commas were missing then!
-        formatState.copyEntity(node.switchKeyword, astVisitor, onGetSource: ()=>'$methodName/node.switchKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.leftParenthesis');
-        formatState.copyEntity(node.expression, astVisitor, onGetSource: ()=>'$methodName/node.expression');
-        formatState.copyEntity(node.rightParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.rightParenthesis');
-        formatState.copyEntity(node.leftBracket, astVisitor, onGetSource: ()=>'$methodName/node.leftBracket');
+        formatState.copyEntity(node.switchKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.switchKeyword'));
+        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetStack: () => SimpleStack('$methodName/node.leftParenthesis'));
+        formatState.copyEntity(node.expression, astVisitor, onGetStack: () => SimpleStack('$methodName/node.expression'));
+        formatState.copyEntity(node.rightParenthesis, astVisitor, onGetStack: () => SimpleStack('$methodName/node.rightParenthesis'));
+        formatState.copyEntity(node.leftBracket, astVisitor, onGetStack: () => SimpleStack('$methodName/node.leftBracket'));
         //formatState.pushLevel('$methodName/node.members');
         formatState.acceptListWithComma(node.cases, node.rightBracket, astVisitor, '$methodName/node.cases');
         //formatState.popLevelAndIndent();
-        formatState.copyEntity(node.rightBracket, astVisitor, onGetSource: ()=>'$methodName/node.rightBracket');
+        formatState.copyEntity(node.rightBracket, astVisitor, onGetStack: () => SimpleStack('$methodName/node.rightBracket'));
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }

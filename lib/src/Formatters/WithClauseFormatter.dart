@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,7 +26,7 @@ class WithClauseFormatter extends IFormatter
         if (node is! WithClause)
             throw FormatException('Not a WithClause: ${node.runtimeType}');
 
-        formatState.copyEntity(node.withKeyword, astVisitor, onGetSource: ()=>'$methodName/node.withKeyword');
+        formatState.copyEntity(node.withKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.withKeyword'));
         formatState.acceptListWithComma(node.mixinTypes, null, astVisitor, '$methodName/node.mixinTypes');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

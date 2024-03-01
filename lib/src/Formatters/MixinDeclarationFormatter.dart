@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -28,11 +29,11 @@ class MixinDeclarationFormatter extends IFormatter
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         //log('### NOT COPYING node.sortedCommentAndAnnotations', 0);
 
-        formatState.copyEntity(node.mixinKeyword, astVisitor, onGetSource: ()=>'$methodName/node.mixinKeyword');
-        formatState.copyEntity(node.name, astVisitor, onGetSource: ()=>'$methodName/node.name');
-        formatState.copyEntity(node.typeParameters, astVisitor, onGetSource: ()=>'$methodName/node.typeParameters');
-        formatState.copyEntity(node.onClause, astVisitor, onGetSource: ()=>'$methodName/node.onClause');
-        formatState.copyEntity(node.implementsClause, astVisitor, onGetSource: ()=>'$methodName/node.implementsClause');
+        formatState.copyEntity(node.mixinKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.mixinKeyword'));
+        formatState.copyEntity(node.name, astVisitor, onGetStack: () => SimpleStack('$methodName/node.name'));
+        formatState.copyEntity(node.typeParameters, astVisitor, onGetStack: () => SimpleStack('$methodName/node.typeParameters'));
+        formatState.copyEntity(node.onClause, astVisitor, onGetStack: () => SimpleStack('$methodName/node.onClause'));
+        formatState.copyEntity(node.implementsClause, astVisitor, onGetStack: () => SimpleStack('$methodName/node.implementsClause'));
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
         formatState.acceptList(node.members, astVisitor, '$methodName/node.members');
         formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');

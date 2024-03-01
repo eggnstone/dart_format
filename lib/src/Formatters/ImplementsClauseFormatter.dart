@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,7 +26,7 @@ class ImplementsClauseFormatter extends IFormatter
         if (node is! ImplementsClause)
             throw FormatException('Not an ImplementsClause: ${node.runtimeType}');
 
-        formatState.copyEntity(node.implementsKeyword, astVisitor, onGetSource: ()=>'$methodName/implementsKeyword');
+        formatState.copyEntity(node.implementsKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.implementsKeyword'));
         formatState.acceptListWithComma(node.interfaces, null, astVisitor, '$methodName/interfaces');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

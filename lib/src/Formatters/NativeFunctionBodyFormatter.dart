@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,8 +26,8 @@ class NativeFunctionBodyFormatter extends IFormatter
         if (node is! NativeFunctionBody)
             throw FormatException('Not a NativeFunctionBody: ${node.runtimeType}');
 
-        formatState.copyEntity(node.nativeKeyword, astVisitor, onGetSource: ()=>'$methodName/node.nativeKeyword');
-        formatState.copyEntity(node.stringLiteral, astVisitor, onGetSource: ()=>'$methodName/node.stringLiteral');
+        formatState.copyEntity(node.nativeKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.nativeKeyword'));
+        formatState.copyEntity(node.stringLiteral, astVisitor, onGetStack: () => SimpleStack('$methodName/node.stringLiteral'));
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

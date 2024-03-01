@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,10 +26,10 @@ class ForPartsWithDeclarationsFormatter extends IFormatter
         if (node is! ForPartsWithDeclarations)
             throw FormatException('Not a ForPartsWithDeclarations: ${node.runtimeType}');
 
-        formatState.copyEntity(node.variables, astVisitor, onGetSource: ()=>'$methodName/node.variables');
-        formatState.copyEntity(node.leftSeparator, astVisitor, onGetSource: ()=>'$methodName/node.leftSeparator');
-        formatState.copyEntity(node.condition, astVisitor, onGetSource: ()=>'$methodName/node.condition');
-        formatState.copyEntity(node.rightSeparator, astVisitor, onGetSource: ()=>'$methodName/node.rightSeparator');
+        formatState.copyEntity(node.variables, astVisitor, onGetStack: () => SimpleStack('$methodName/node.variables'));
+        formatState.copyEntity(node.leftSeparator, astVisitor, onGetStack: () => SimpleStack('$methodName/node.leftSeparator'));
+        formatState.copyEntity(node.condition, astVisitor, onGetStack: () => SimpleStack('$methodName/node.condition'));
+        formatState.copyEntity(node.rightSeparator, astVisitor, onGetStack: () => SimpleStack('$methodName/node.rightSeparator'));
         formatState.acceptListWithComma(node.updaters, null, astVisitor, '$methodName/node.updaters');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

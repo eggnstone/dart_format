@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,12 +26,12 @@ class IndexExpressionFormatter extends IFormatter
         if (node is! IndexExpression)
             throw FormatException('Not an IndexExpression: ${node.runtimeType}');
 
-        formatState.copyEntity(node.period, astVisitor, onGetSource: ()=>'$methodName/node.period');
-        formatState.copyEntity(node.target, astVisitor, onGetSource: ()=>'$methodName/node.target');
-        formatState.copyEntity(node.question, astVisitor, onGetSource: ()=>'$methodName/node.question');
-        formatState.copyEntity(node.leftBracket, astVisitor, onGetSource: ()=>'$methodName/node.leftBracket');
-        formatState.copyEntity(node.index, astVisitor, onGetSource: ()=>'$methodName/node.index');
-        formatState.copyEntity(node.rightBracket, astVisitor, onGetSource: ()=>'$methodName/node.rightBracket');
+        formatState.copyEntity(node.period, astVisitor, onGetStack: () => SimpleStack('$methodName/node.period'));
+        formatState.copyEntity(node.target, astVisitor, onGetStack: () => SimpleStack('$methodName/node.target'));
+        formatState.copyEntity(node.question, astVisitor, onGetStack: () => SimpleStack('$methodName/node.question'));
+        formatState.copyEntity(node.leftBracket, astVisitor, onGetStack: () => SimpleStack('$methodName/node.leftBracket'));
+        formatState.copyEntity(node.index, astVisitor, onGetStack: () => SimpleStack('$methodName/node.index'));
+        formatState.copyEntity(node.rightBracket, astVisitor, onGetStack: () => SimpleStack('$methodName/node.rightBracket'));
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }

@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -26,9 +27,9 @@ class SwitchPatternCaseFormatter extends IFormatter
             throw FormatException('Not a SwitchPatternCase: ${node.runtimeType}');
 
         formatState.acceptList(node.labels, astVisitor, '$methodName/node.labels');
-        formatState.copyEntity(node.keyword, astVisitor, onGetSource: ()=>'$methodName/node.keyword');
-        formatState.copyEntity(node.guardedPattern, astVisitor, onGetSource: ()=>'$methodName/node.guardedPattern');
-        formatState.copyEntity(node.colon, astVisitor, onGetSource: ()=>'$methodName/node.colon');
+        formatState.copyEntity(node.keyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.keyword'));
+        formatState.copyEntity(node.guardedPattern, astVisitor, onGetStack: () => SimpleStack('$methodName/node.guardedPattern'));
+        formatState.copyEntity(node.colon, astVisitor, onGetStack: () => SimpleStack('$methodName/node.colon'));
         formatState.pushLevel('$methodName/node.statements');
         formatState.acceptList(node.statements, astVisitor, '$methodName/node.statements');
         formatState.popLevelAndIndent();

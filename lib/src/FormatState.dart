@@ -10,6 +10,7 @@ import 'Config.dart';
 import 'Constants/Constants.dart';
 import 'Data/Indentation.dart';
 import 'Exceptions/DartFormatException.dart';
+import 'SimpleStack.dart';
 import 'StringBufferEx.dart';
 import 'Tools/FormatTools.dart';
 import 'Tools/LogTools.dart';
@@ -415,14 +416,14 @@ class FormatState
         );
     }
 
-    void copyEntity(SyntacticEntity? entity, AstVisitor<void> astVisitor, {required String Function() onGetSource})
+    void copyEntity(SyntacticEntity? entity, AstVisitor<void> astVisitor, {required SimpleStack Function() onGetStack})
     {
         const String methodName = 'copyEntity';
 
         String getFullSource()
-        => '${onGetSource()}/$methodName';
+        => '${onGetStack()}/$methodName';
 
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(entity)}, ${onGetSource()})');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(entity)}, ${onGetStack()})');
 
         if (entity == null)
         {

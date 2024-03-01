@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,13 +26,13 @@ class ForStatementFormatter extends IFormatter
         if (node is! ForStatement)
             throw FormatException('Not a ForStatement: ${node.runtimeType}');
 
-        formatState.copyEntity(node.awaitKeyword, astVisitor, onGetSource: ()=>'$methodName/node.awaitKeyword');
-        formatState.copyEntity(node.forKeyword, astVisitor, onGetSource: ()=>'$methodName/node.forKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.leftParenthesis');
-        formatState.copyEntity(node.forLoopParts, astVisitor, onGetSource: ()=>'$methodName/node.forLoopParts');
-        formatState.copyEntity(node.rightParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.rightParenthesis');
+        formatState.copyEntity(node.awaitKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.awaitKeyword'));
+        formatState.copyEntity(node.forKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.forKeyword'));
+        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetStack: () => SimpleStack('$methodName/node.leftParenthesis'));
+        formatState.copyEntity(node.forLoopParts, astVisitor, onGetStack: () => SimpleStack('$methodName/node.forLoopParts'));
+        formatState.copyEntity(node.rightParenthesis, astVisitor, onGetStack: () => SimpleStack('$methodName/node.rightParenthesis'));
         formatState.pushLevel('$methodName/node.body');
-        formatState.copyEntity(node.body, astVisitor, onGetSource: ()=>'$methodName/node.body');
+        formatState.copyEntity(node.body, astVisitor, onGetStack: () => SimpleStack('$methodName/node.body'));
         formatState.popLevelAndIndent();
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

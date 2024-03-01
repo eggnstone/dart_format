@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,7 +26,7 @@ class OnClauseFormatter extends IFormatter
         if (node is! OnClause)
             throw FormatException('Not an OnClause: ${node.runtimeType}');
 
-        formatState.copyEntity(node.onKeyword, astVisitor, onGetSource: ()=>'$methodName/onClause');
+        formatState.copyEntity(node.onKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.onClause'));
         formatState.acceptListWithComma(node.superclassConstraints, null, astVisitor, '$methodName/superclassConstraints');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

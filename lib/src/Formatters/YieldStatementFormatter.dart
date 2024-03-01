@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,9 +26,9 @@ class YieldStatementFormatter extends IFormatter
         if (node is! YieldStatement)
             throw FormatException('Not a YieldStatement: ${node.runtimeType}');
 
-        formatState.copyEntity(node.yieldKeyword, astVisitor, onGetSource: ()=>'$methodName/node.yieldKeyword');
-        formatState.copyEntity(node.star, astVisitor, onGetSource: ()=>'$methodName/node.star');
-        formatState.copyEntity(node.expression, astVisitor, onGetSource: ()=>'$methodName/node.expression');
+        formatState.copyEntity(node.yieldKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.yieldKeyword'));
+        formatState.copyEntity(node.star, astVisitor, onGetStack: () => SimpleStack('$methodName/node.star'));
+        formatState.copyEntity(node.expression, astVisitor, onGetStack: () => SimpleStack('$methodName/node.expression'));
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

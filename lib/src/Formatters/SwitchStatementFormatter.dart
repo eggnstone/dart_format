@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,10 +26,10 @@ class SwitchStatementFormatter extends IFormatter
         if (node is! SwitchStatement)
             throw FormatException('Not a SwitchStatement: ${node.runtimeType}');
 
-        formatState.copyEntity(node.switchKeyword, astVisitor, onGetSource: ()=>'$methodName/node.switchKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetSource: ()=>'$methodName/node.leftParenthesis');
-        formatState.copyEntity(node.expression, astVisitor, onGetSource: ()=>'$methodName/node.expression');
-        formatState.copyEntity(node.rightParenthesis, astVisitor,onGetSource: ()=> '$methodName/node.rightParenthesis');
+        formatState.copyEntity(node.switchKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.switchKeyword'));
+        formatState.copyEntity(node.leftParenthesis, astVisitor, onGetStack: () => SimpleStack('$methodName/node.leftParenthesis'));
+        formatState.copyEntity(node.expression, astVisitor, onGetStack: () => SimpleStack('$methodName/node.expression'));
+        formatState.copyEntity(node.rightParenthesis, astVisitor,onGetStack: () => SimpleStack('$methodName/node.rightParenthesis'));
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
         formatState.acceptList(node.members, astVisitor, '$methodName/node.members');
         formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');

@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -26,10 +27,10 @@ class PartOfDirectiveFormatter extends IFormatter
             throw FormatException('Not a PartOfDirective: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.partKeyword, astVisitor, onGetSource: ()=>'$methodName/node.partKeyword');
-        formatState.copyEntity(node.ofKeyword, astVisitor, onGetSource: ()=>'$methodName/node.ofKeyword');
-        formatState.copyEntity(node.uri, astVisitor, onGetSource: ()=>'$methodName/node.uri');
-        formatState.copyEntity(node.libraryName, astVisitor, onGetSource: ()=>'$methodName/node.libraryName');
+        formatState.copyEntity(node.partKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.partKeyword'));
+        formatState.copyEntity(node.ofKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.ofKeyword'));
+        formatState.copyEntity(node.uri, astVisitor, onGetStack: () => SimpleStack('$methodName/node.uri'));
+        formatState.copyEntity(node.libraryName, astVisitor, onGetStack: () => SimpleStack('$methodName/node.libraryName'));
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

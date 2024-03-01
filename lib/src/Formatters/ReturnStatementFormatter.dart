@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,8 +26,8 @@ class ReturnStatementFormatter extends IFormatter
         if (node is! ReturnStatement)
             throw FormatException('Not a ReturnStatement: ${node.runtimeType}');
 
-        formatState.copyEntity(node.returnKeyword, astVisitor, onGetSource: ()=>'$methodName/node.returnKeyword');
-        formatState.copyEntity(node.expression, astVisitor, onGetSource: ()=>'$methodName/node.expression');
+        formatState.copyEntity(node.returnKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.returnKeyword'));
+        formatState.copyEntity(node.expression, astVisitor, onGetStack: () => SimpleStack('$methodName/node.expression'));
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

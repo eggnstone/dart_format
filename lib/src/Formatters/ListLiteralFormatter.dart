@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,13 +26,13 @@ class ListLiteralFormatter extends IFormatter
         if (node is! ListLiteral)
             throw FormatException('Not a ListLiteral: ${node.runtimeType}');
 
-        formatState.copyEntity(node.constKeyword, astVisitor, onGetSource: ()=>'$methodName/node.constKeyword');
-        formatState.copyEntity(node.typeArguments, astVisitor, onGetSource: ()=>'$methodName/node.typeArguments');
-        formatState.copyEntity(node.leftBracket, astVisitor,onGetSource: ()=> '$methodName/node.leftBracket');
+        formatState.copyEntity(node.constKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.constKeyword'));
+        formatState.copyEntity(node.typeArguments, astVisitor, onGetStack: () => SimpleStack('$methodName/node.typeArguments'));
+        formatState.copyEntity(node.leftBracket, astVisitor,onGetStack: () => SimpleStack('$methodName/node.leftBracket'));
         formatState.pushLevel('$methodName/node.leftBracket');
         formatState.acceptListWithComma(node.elements, node.rightBracket, astVisitor, '$methodName/node.elements');
         formatState.popLevelAndIndent();
-        formatState.copyEntity(node.rightBracket, astVisitor, onGetSource: ()=>'$methodName/node.rightBracket');
+        formatState.copyEntity(node.rightBracket, astVisitor, onGetStack: () => SimpleStack('$methodName/node.rightBracket'));
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
     }

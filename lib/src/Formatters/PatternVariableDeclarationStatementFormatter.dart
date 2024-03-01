@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,7 +26,7 @@ class PatternVariableDeclarationStatementFormatter extends IFormatter
         if (node is! PatternVariableDeclarationStatement)
             throw FormatException('Not a PatternVariableDeclarationStatement: ${node.runtimeType}');
 
-        formatState.copyEntity(node.declaration, astVisitor, onGetSource: ()=>'$methodName/node.declaration');
+        formatState.copyEntity(node.declaration, astVisitor, onGetStack: () => SimpleStack('$methodName/node.declaration'));
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

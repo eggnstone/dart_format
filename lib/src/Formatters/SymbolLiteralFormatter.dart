@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -25,7 +26,7 @@ class SymbolLiteralFormatter extends IFormatter
         if (node is! SymbolLiteral)
             throw FormatException('Not a SymbolLiteral: ${node.runtimeType}');
 
-        formatState.copyEntity(node.poundSign, astVisitor, onGetSource: ()=>'$methodName/node.poundSign');
+        formatState.copyEntity(node.poundSign, astVisitor, onGetStack: () => SimpleStack('$methodName/node.poundSign'));
         formatState.acceptTokenListWithPeriod(node.components, astVisitor, '$methodName/node.components');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);

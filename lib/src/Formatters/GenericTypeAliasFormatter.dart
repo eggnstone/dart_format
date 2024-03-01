@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../FormatState.dart';
+import '../SimpleStack.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -26,11 +27,11 @@ class GenericTypeAliasFormatter extends IFormatter
             throw FormatException('Not a GenericTypeAlias: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.typedefKeyword, astVisitor, onGetSource: ()=>'$methodName/node.typedefKeyword');
-        formatState.copyEntity(node.name, astVisitor, onGetSource: ()=>'$methodName/node.name');
-        formatState.copyEntity(node.typeParameters, astVisitor, onGetSource: ()=>'$methodName/node.typeParameters');
-        formatState.copyEntity(node.equals, astVisitor, onGetSource: ()=>'$methodName/node.equals');
-        formatState.copyEntity(node.type, astVisitor, onGetSource: ()=>'$methodName/node.type');
+        formatState.copyEntity(node.typedefKeyword, astVisitor, onGetStack: () => SimpleStack('$methodName/node.typedefKeyword'));
+        formatState.copyEntity(node.name, astVisitor, onGetStack: () => SimpleStack('$methodName/node.name'));
+        formatState.copyEntity(node.typeParameters, astVisitor, onGetStack: () => SimpleStack('$methodName/node.typeParameters'));
+        formatState.copyEntity(node.equals, astVisitor, onGetStack: () => SimpleStack('$methodName/node.equals'));
+        formatState.copyEntity(node.type, astVisitor, onGetStack: () => SimpleStack('$methodName/node.type'));
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node)})', --formatState.logIndent);
