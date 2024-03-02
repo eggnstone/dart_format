@@ -236,19 +236,19 @@ class WebServiceHandler
             final String? contentType = contentTypeList?.first;
             //logDebug('contentType: $contentType');
             if (contentType == null)
-                throw DartFormatException.error('No content-type header found.');
+                throw DartFormatException.error('No content-type header found.', null);
 
             final String? boundary = ContentTypeTools.getBoundary(contentType);
             //logDebug('boundary: $boundary');
             if (boundary == null)
-                throw DartFormatException.error('No boundary found.');
+                throw DartFormatException.error('No boundary found.', null);
 
             final Stream<MimeMultipart> mimeMultiPartStreams = MimeMultipartTransformer(boundary).bind(request);
 
             final List<MimeMultipart> mimeMultiParts = await mimeMultiPartStreams.toList();
             //logDebug('mimeMultiParts: ${mimeMultiParts.length}');
             if (mimeMultiParts.length != 2)
-                throw DartFormatException.error('Expected 2 parts, got ${mimeMultiParts.length}.');
+                throw DartFormatException.error('Expected 2 parts, got ${mimeMultiParts.length}.', null);
 
             //logDebug('mimeMultiParts[0].headers: ${mimeMultiParts[0].headers}');
             final String? contentType0 = mimeMultiParts[0].headers['content-type'];
@@ -266,10 +266,10 @@ class WebServiceHandler
             final Encoding? encoding1 = Encoding.getByName(charset1);
 
             if (encoding0 == null)
-                throw DartFormatException.error('Cannot find decoder for charset "$charset0".');
+                throw DartFormatException.error('Cannot find decoder for charset "$charset0".', null);
 
             if (encoding1 == null)
-                throw DartFormatException.error('Cannot find decoder for charset "$charset1".');
+                throw DartFormatException.error('Cannot find decoder for charset "$charset1".', null);
 
             final String mimeMultiPart0 = await encoding0.decodeStream(mimeMultiParts[0]);
             final String mimeMultiPart1 = await encoding1.decodeStream(mimeMultiParts[1]);
@@ -283,10 +283,10 @@ class WebServiceHandler
                 configText = mimeMultiPart1;
 
             if (configText == null)
-                throw DartFormatException.error('No part named "Config" found.');
+                throw DartFormatException.error('No part named "Config" found.', null);
 
             if (configText.isEmpty)
-                throw DartFormatException.error('Part named "Config" is empty.');
+                throw DartFormatException.error('Part named "Config" is empty.', null);
 
             if (mimeMultiParts[0].headers['content-disposition'] == 'form-data; name="Text"')
                 text = mimeMultiPart0;
@@ -294,10 +294,10 @@ class WebServiceHandler
                 text = mimeMultiPart1;
 
             if (text == null)
-                throw DartFormatException.error('No part named "Text" found .');
+                throw DartFormatException.error('No part named "Text" found .', null);
 
             if (text.isEmpty)
-                throw DartFormatException.error('Part named "Text" is empty.');
+                throw DartFormatException.error('Part named "Text" is empty.', null);
 
             //logDebug('configText: ${StringTools.toDisplayString(configText)}');
             //logDebug('text: ${StringTools.toDisplayString(text)}');
@@ -306,7 +306,7 @@ class WebServiceHandler
             final Formatter formatter = Formatter(config);
             final String formattedText = formatter.format(text);
             if (formattedText.isEmpty)
-                throw DartFormatException.error('No output generated.');
+                throw DartFormatException.error('No output generated.', null);
 
             //logDebug('Sending formatted text: ${StringTools.toDisplayString(formattedText)}');
 
@@ -326,7 +326,7 @@ class WebServiceHandler
         on Exception catch (e, st)
         {
             logErrorObject(METHOD_NAME, e, st);
-            final DartFormatException dartFormatException = DartFormatException.error(e.toString());
+            final DartFormatException dartFormatException = DartFormatException.error(e.toString(), null);
             request.response.statusCode = HttpStatus.ok;
             request.response.headers.contentType = ContentType.text;
             request.response.headers.add('X-DartFormat-Result', 'Fail');

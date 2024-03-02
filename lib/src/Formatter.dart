@@ -82,6 +82,8 @@ class Formatter
 
         final String message1;
         final String message2;
+        CharacterLocation? location1;
+        CharacterLocation? location2;
         if (positions == createEmptyIntTuple())
         {
             message1 = 'Internal error: Invalid changes detected but no differences to show.';
@@ -91,8 +93,8 @@ class Formatter
         }
         else
         {
-            final CharacterLocation location1 = lineInfo.getLocation(positions.item1);
-            final CharacterLocation location2 = lineInfo.getLocation(positions.item2);
+            location1 = lineInfo.getLocation(positions.item1);
+            location2 = lineInfo.getLocation(positions.item2);
             message1 = 'Internal error: Invalid changes detected at index ${location1.lineNumber},${location1.columnNumber} / ${location2.lineNumber},${location2.columnNumber}';
             message2 =
             'Same:   ${StringTools.toDisplayStringCutEnd(result.substring(0, positions.item2))}\n'
@@ -115,7 +117,7 @@ class Formatter
             }
         }
 
-        throw DartFormatException.error('$message1|$message2');
+        throw DartFormatException.error('$message1|$message2', location1);
     }
 
     void _logAndThrowWarning(String message, CharacterLocation location)

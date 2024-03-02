@@ -47,7 +47,7 @@ class FormalParameterListFormatter extends IFormatter
                 final int end = shouldWriteLeftDelimiter ? node.leftDelimiter!.offset : parameter.offset;
                 final String commaText = formatState.getText(lastNode.end, end);
                 if (!FormatTools.isCommaText(commaText))
-                    throw DartFormatException.error('commaText is not a comma: ${StringTools.toDisplayString(commaText)}');
+                    throw DartFormatException.error('commaText is not a comma: ${StringTools.toDisplayString(commaText)}', formatState.getCharacterLocation(lastNode.end));
 
                 formatState.consumeText(lastNode.end, end, commaText, '$methodName/commaText');
             }
@@ -69,7 +69,7 @@ class FormalParameterListFormatter extends IFormatter
         {
             final AstNode? parentNode = lastNode.parent;
             if (parentNode == null)
-                throw DartFormatException.error('parentNode is null');
+                throw DartFormatException.error('parentNode is null', null);
 
             String commaText = formatState.getText(lastNode.end, endToken.offset);
             if (FormatTools.isCommaText(commaText))

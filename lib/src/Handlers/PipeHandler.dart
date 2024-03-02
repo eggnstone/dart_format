@@ -51,7 +51,7 @@ class PipeHandler
         }
         on Exception catch (e)
         {
-            dartFormatException = DartFormatException.error(e.toString());
+            dartFormatException = DartFormatException.error(e.toString(), null);
         }
 
         if (errorsAsJson)

@@ -33,7 +33,7 @@ class StringBufferEx
             return;
         }
 
-        throw DartFormatException.error('Unsupported type: ${o.runtimeType}');
+        throw DartFormatException.error('Unsupported type: ${o.runtimeType}', null);
     }
 
     @override

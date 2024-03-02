@@ -1,6 +1,6 @@
 class Constants
 {
-    static const bool DEBUG = false;
+    static const bool DEBUG = true;
     static const bool DEBUG_ALL = false;
 
     static const bool DEBUG_ANALYZER = (DEBUG && false) || DEBUG_ALL;
@@ -19,7 +19,7 @@ class Constants
 
     static const int HTTP_TOOLS_WAIT_BETWEEN_FLUSH_AND_CLOSE_IN_MILLISECONDS = 100;
 
-    static const int MAX_DEBUG_LENGTH = 50;
+    static const int MAX_DEBUG_LENGTH = 80;
 
     static const int PREFERRED_PORT = 7777;
 

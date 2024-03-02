@@ -19,8 +19,8 @@ class DartFormatException with _$DartFormatException implements Exception
         @JsonKey(includeIfNull: false, name: 'Column') int? column
     }) = _DartFormatException;
 
-    factory DartFormatException.error(String message)
-    => DartFormatException(message: message, type: FailType.error);
+    factory DartFormatException.error(String message, CharacterLocation? location)
+    => DartFormatException(message: message, type: FailType.error, line: location?.lineNumber, column: location?.columnNumber);
 
     factory DartFormatException.warning(String message, CharacterLocation location)
     => DartFormatException(message: message, type: FailType.warning, line: location.lineNumber, column: location.columnNumber);

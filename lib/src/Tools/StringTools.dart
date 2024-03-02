@@ -1,5 +1,7 @@
 // ignore_for_file: always_put_control_body_on_new_line
 
+import 'package:analyzer/source/line_info.dart';
+
 import '../../dart_format.dart';
 import '../Constants/Constants.dart';
 import '../Data/IntTuple.dart';
@@ -136,7 +138,8 @@ class StringTools
             bool expectComments = false,
             int position = -1,
             String source = 'TEST',
-            String Function(int offset)? onGetPositionInfo
+            String Function(int offset)? onGetPositionInfo,
+            CharacterLocation Function(int offset)? onGetCharacterLocation
         })
     {
         if (Constants.DEBUG_STRING_TOOLS_REMOVE_LEADING_WHITESPACE)
@@ -169,7 +172,8 @@ class StringTools
             onMatch:  _removeLeadingWhitespaceInBlockComment,
             onNonMatch: _removeLeadingWhitespaceInCode,
             position: position,
-            onGetPositionInfo: onGetPositionInfo
+            onGetPositionInfo: onGetPositionInfo,
+            onGetCharacterLocation: onGetCharacterLocation
         );
 
         if (Constants.DEBUG_STRING_TOOLS_REMOVE_LEADING_WHITESPACE) logInternal('OUT: ${StringTools.toDisplayString(fixedS)}');
@@ -246,7 +250,8 @@ class StringTools
             required StringBuffer Function(String s) onMatch, 
             required StringBuffer Function(String s) onNonMatch,
             int position = -1,
-            String Function(int offset)? onGetPositionInfo
+            String Function(int offset)? onGetPositionInfo,
+            CharacterLocation Function(int offset)? onGetCharacterLocation
         })
     {
         if (s.isEmpty)
@@ -292,7 +297,7 @@ class StringTools
                         ' Found end of block comment without start of block comment'
                         ' commentDepth ($commentDepth) <= 0'
                         '$positionInfo'
-                        ' ${toDisplayString(s)}');
+                        ' ${toDisplayString(s)}', onGetCharacterLocation?.call(position));
                 }
 
                 currentBlock.write('*/');
@@ -321,7 +326,7 @@ class StringTools
                 ' Did not find end of block comment for start of block comment'
                 ' commentDepth ($commentDepth) > 0'
                 '$positionInfo'
-                ' ${toDisplayString(s)}');
+                ' ${toDisplayString(s)}', onGetCharacterLocation?.call(position));
         }
 
         if (currentBlock.isNotEmpty)

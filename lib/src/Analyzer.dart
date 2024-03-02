@@ -46,7 +46,7 @@ class Analyzer
             }
             else
             {
-                throw DartFormatException.error('Unhandled type: ${item.runtimeType} ${StringTools.toDisplayString(item)}');
+                throw DartFormatException.error('Unhandled type: ${item.runtimeType} ${StringTools.toDisplayString(item)}', null);
             }
         }
     }

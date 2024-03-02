@@ -71,7 +71,7 @@ class FormatState
             {
                 final String periodText = getText(lastNode.end, node.offset);
                 if (!FormatTools.isPeriodText(periodText))
-                    throw DartFormatException.error('periodText is not a period: ${StringTools.toDisplayString(periodText)}');
+                    throw DartFormatException.error('periodText is not a period: ${StringTools.toDisplayString(periodText)}', getCharacterLocation(lastNode.end));
 
                 consumeText(lastNode.end, node.offset, periodText, '$source/Period');
             }
@@ -90,7 +90,7 @@ class FormatState
             {
                 final String periodText = getText(lastToken.end, token.offset);
                 if (!FormatTools.isPeriodText(periodText))
-                    throw DartFormatException.error('periodText is not a period: ${StringTools.toDisplayString(periodText)}');
+                    throw DartFormatException.error('periodText is not a period: ${StringTools.toDisplayString(periodText)}', getCharacterLocation(lastToken.end));
 
                 consumeText(lastToken.end, token.offset, periodText, '$source/Period');
             }
@@ -134,7 +134,7 @@ class FormatState
                     }
 
                     if (filler.trim().isNotEmpty)
-                        throw DartFormatException.error('filler is not empty: ${StringTools.toDisplayString(filler)}');
+                        throw DartFormatException.error('filler is not empty: ${StringTools.toDisplayString(filler)}', getCharacterLocation(lastNode.end));
                     end = lastConsumedPosition;
                 }
 
@@ -143,7 +143,7 @@ class FormatState
                 if (Constants.DEBUG_FORMAT_STATE) logInternal('  $methodName: commaText: ${StringTools.toDisplayString(commaText)}');
 
                 if (!FormatTools.isCommaText(commaText))
-                    throw DartFormatException.error('commaText is not a comma: ${StringTools.toDisplayString(commaText)}');
+                    throw DartFormatException.error('commaText is not a comma: ${StringTools.toDisplayString(commaText)}', getCharacterLocation(end));
 
                 final String? maxCommaText = FormatTools.getMaxCommaText(commaText);
                 if (Constants.DEBUG_FORMAT_STATE) logInternal('  $methodName: maxCommaText: ${StringTools.toDisplayString(maxCommaText)}');
@@ -175,7 +175,7 @@ class FormatState
 
             final AstNode? parentNode = lastNode.parent;
             if (parentNode == null)
-                throw DartFormatException.error('parentNode is null');
+                throw DartFormatException.error('parentNode is null', getCharacterLocation(lastNode.end));
 
             if (endToken != null)
             {
@@ -282,6 +282,7 @@ class FormatState
         int finalOffset = initialOffset;
         if (initialOffset < lastConsumedPosition)
         {
+                throw DartFormatException.error('STILL USED: initialOffset < lastConsumedPosition', getCharacterLocation(initialOffset));
             final String alreadyConsumedText = getText(initialOffset, lastConsumedPosition);
             if (Constants.DEBUG_FORMAT_STATE || Constants.DEBUG_TODOS)
                 logDebug('  $methodName: initialOffset < lastConsumedPosition:'
@@ -303,7 +304,7 @@ class FormatState
                 if (Constants.DEBUG_FORMAT_STATE || Constants.DEBUG_TODOS) logWarning('  $methodName: Could not correct because alreadyConsumedText is neither empty nor comments: ${StringTools.toDisplayString(alreadyConsumedText)}');
                 _logAndThrowError('Internal error: initialOffset < lastConsumedPosition:'
                     ' (${getPositionInfo(initialOffset)}) < (${getPositionInfo(lastConsumedPosition)})'
-                    ' Source: $source');
+                    ' Source: $source', getCharacterLocation(initialOffset));
             }
         }
 
@@ -324,13 +325,14 @@ class FormatState
                 _logAndThrowError('Internal error: Missed some text:'
                     ' (${getPositionInfo(lastConsumedPosition)}) - (${getPositionInfo(finalOffset)}):'
                     ' ${StringTools.toDisplayString(filler)}'
-                    ' Source: $source');
+                    ' Source: $source', getCharacterLocation(lastConsumedPosition));
 
             final String fixedFiller = _removeLeadingWhitespace(filler,
                 source:source,
                 expectComments: expectComments,
                 position: lastConsumedPosition,
-                onGetPositionInfo: getPositionInfo
+                onGetPositionInfo: getPositionInfo,
+                onGetCharacterLocation: getCharacterLocation
             );
             if (Constants.DEBUG_FORMAT_STATE)
             {
@@ -350,7 +352,8 @@ class FormatState
             source:source,
             expectComments: expectComments,
             position: finalOffset,
-            onGetPositionInfo: getPositionInfo
+            onGetPositionInfo: getPositionInfo,
+            onGetCharacterLocation: getCharacterLocation
         );
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  $methodName:   S w/o leading ws:     ${StringTools.toDisplayString(fixedS)}');
         _write(fixedS);
@@ -386,7 +389,7 @@ class FormatState
             _logAndThrowError('Internal error: Missed some text:'
                 ' (${getPositionInfo(lastConsumedPosition)}) - (${getPositionInfo(end)}):'
                 ' ${StringTools.toDisplayString(filler)}'
-                ' Source: $source');
+                ' Source: $source', getCharacterLocation(lastConsumedPosition));
         }
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(filler)} ($fullSource)');
@@ -434,7 +437,7 @@ class FormatState
         else if (entity is Token)
             _copyToken(entity, getFullSource() , addNewLineBefore: false, addNewLineAfter: false);
         else
-            throw DartFormatException.error('Unhandled type: ${entity.runtimeType} ${StringTools.toDisplayString(entity)}');
+            throw DartFormatException.error('Unhandled type: ${entity.runtimeType} ${StringTools.toDisplayString(entity)}', null);
         //copyText(entity.offset, entity.end, fullSource);
     }
 
@@ -448,11 +451,14 @@ class FormatState
     String getLastText()
     => _textBuffers.last.lastText;
 
+    CharacterLocation getCharacterLocation(int offset)
+    => _parseResult.lineInfo.getLocation(offset);
+
     String getPositionInfo(int offset)
     {
         try
         {
-            final CharacterLocation location = _parseResult.lineInfo.getLocation(offset);
+            final CharacterLocation location = getCharacterLocation(offset);
             final int line = location.lineNumber;
             final int column = location.columnNumber;
             return 'Line $line, column $column';
@@ -573,7 +579,7 @@ class FormatState
         if (lastConsumedPosition > token.offset)
             _logAndThrowError('Internal error: FormatState:_addNewLineBeforeToken: lastConsumedPosition > token.offset:'
             ' (${getPositionInfo(lastConsumedPosition)}) < (${getPositionInfo(token.offset)})'
-            ' Source: $source');
+            ' Source: $source', getCharacterLocation(lastConsumedPosition));
 
         if (getLastText().endsWith('\n'))
         {
@@ -614,7 +620,7 @@ class FormatState
         if (filler.trim().isNotEmpty)
             _logAndThrowError('Internal error: Upcoming trimmed filler is not empty/whitespace-only:'
                 ' (${getPositionInfo(lastConsumedPosition)})'
-                ' ${StringTools.toDisplayString(filler)}');
+                ' ${StringTools.toDisplayString(filler)}', getCharacterLocation(lastConsumedPosition));
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  Replacing empty or whitespace-only filler with line break because upcoming filler does not contain line break.');
         consumeText(lastConsumedPosition, end, '', fullSource);
@@ -724,6 +730,7 @@ class FormatState
 
         if (end < lastConsumedPosition)
         {
+            throw DartFormatException.error('STILL USED: end < lastConsumedPosition', getCharacterLocation(end));
             final String alreadyConsumedText = getText(end, lastConsumedPosition);
             if (Constants.DEBUG_FORMAT_STATE || Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
             if (alreadyConsumedText.trim().isEmpty)
@@ -737,10 +744,10 @@ class FormatState
         _copyText(end, token.end, fullSource);
     }
 
-    void _logAndThrowError(String message)
+    void _logAndThrowError(String message, CharacterLocation? location)
     {
         _logError(message);
-        throw DartFormatException.error(message);
+        throw DartFormatException.error(message, location);
     }
 
     void _logError(String s)
@@ -752,6 +759,7 @@ class FormatState
             required String source,
             required int position,
             required String Function(int offset) onGetPositionInfo,
+            required CharacterLocation Function(int offset) onGetCharacterLocation,
             bool expectComments = false
         })
     {
@@ -762,7 +770,8 @@ class FormatState
             source: source,
             expectComments: expectComments,
             position: position,
-            onGetPositionInfo: onGetPositionInfo
+            onGetPositionInfo: onGetPositionInfo,
+            onGetCharacterLocation: onGetCharacterLocation
         );
     }
 
@@ -779,7 +788,7 @@ class FormatState
 
             _logAndThrowError('Internal error: FormatState:_setLastConsumedPosition: value < lastConsumedPosition:'
                 ' (${getPositionInfo(value)}) < (${getPositionInfo(lastConsumedPosition)})'
-                ' Source: $source');
+                ' Source: $source', getCharacterLocation(value));
         }
 
         _lastConsumedPositionUnsafe = value;

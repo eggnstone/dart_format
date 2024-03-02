@@ -61,7 +61,7 @@ class DefaultFormatter extends IFormatter
                     }
                 }
                 else
-                    throw DartFormatException.error('Unhandled type: ${child.runtimeType} ${StringTools.toDisplayString(child)}');
+                    throw DartFormatException.error('Unhandled type: ${child.runtimeType} ${StringTools.toDisplayString(child)}', null);
             }
         );
 

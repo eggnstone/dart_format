@@ -168,7 +168,7 @@ class FormatTools
             final int start = result.indexOf(Constants.REMOVE_START);
             final int end = result.indexOf(Constants.REMOVE_END, start);
             if (end == -1)
-                throw DartFormatException.error('Internal error: Missing ${Constants.REMOVE_END} in result.');
+                throw DartFormatException.error('Internal error: Missing ${Constants.REMOVE_END} in result.', null);
 
             result = result.substring(0, start) + result.substring(end + Constants.REMOVE_END.length);
         }
@@ -184,7 +184,7 @@ class FormatTools
             final int start = result.indexOf(Constants.REMOVE_START);
             final int end = result.indexOf(Constants.REMOVE_END, start);
             if (end == -1)
-                throw DartFormatException.error('Internal error: Missing ${Constants.REMOVE_END} in result.');
+                throw DartFormatException.error('Internal error: Missing ${Constants.REMOVE_END} in result.', null);
 
             result = result.substring(0, start)
             + result.substring(start + Constants.REMOVE_START.length, end)
