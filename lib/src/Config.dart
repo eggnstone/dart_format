@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'Constants/Constants.dart';
 import 'Tools/JsonTools.dart';
+import 'Tools/LogTools.dart';
 
 // TODO: JSON and freezed
 
@@ -104,7 +106,8 @@ class Config
             return const Config.all();
 
         final dynamic json = jsonDecode(configText);
-        return Config.none(
+
+        final Config config = Config.none(
             addNewLineAfterClosingBrace: JsonTools.get(json, 'AddNewLineAfterClosingBrace', ADD_NEW_LINE_AFTER_CLOSING_BRACE_NONE),
             addNewLineAfterOpeningBrace: JsonTools.get(json, 'AddNewLineAfterOpeningBrace', ADD_NEW_LINE_AFTER_OPENING_BRACE_NONE),
             addNewLineAfterSemicolon: JsonTools.get(json, 'AddNewLineAfterSemicolon', ADD_NEW_LINE_AFTER_SEMICOLON_NONE),
@@ -115,5 +118,18 @@ class Config
             maxEmptyLines: JsonTools.get(json, 'MaxEmptyLines', MAX_EMPTY_LINES_NONE),
             removeTrailingCommas: JsonTools.get(json, 'RemoveTrailingCommas', REMOVE_TRAILING_COMMAS_NONE)
         );
+
+        if (Constants.DEBUG_CONFIG)
+        {
+            logInternal('Config.fromJson()');
+            logInternal('  configText: $configText');
+            logInternal('  json: $json');
+            // TODO: freezed
+            logInternal('  addNewLineAfterClosingBrace: ${config.addNewLineAfterClosingBrace}');
+            logInternal('  addNewLineAfterOpeningBrace: ${config.addNewLineAfterOpeningBrace}');
+            // ...
+        }
+
+        return config;
     }
 }

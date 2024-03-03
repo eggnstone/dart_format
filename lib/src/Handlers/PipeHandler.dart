@@ -8,10 +8,11 @@ import '../Exceptions/DartFormatException.dart';
 import '../Formatter.dart';
 import '../Tools/LogTools.dart';
 import '../Tools/VersionTools.dart';
+import '../Types/FailType.dart';
 
 class PipeHandler
 {
-    static const String CLASS_NAME = 'DefaultHandler';
+    static const String CLASS_NAME = 'PipeHandler';
 
     final String? configText;
     final bool errorsAsJson;
@@ -57,7 +58,7 @@ class PipeHandler
         if (errorsAsJson)
             writelnToStdErr(jsonEncode(dartFormatException));
         else
-            writelnToStdErr('${dartFormatException.type.name}: ${dartFormatException.message}');
+            writelnToStdErr('${dartFormatException.type.name2}: ${dartFormatException.message}');
 
         _logDebug('$METHOD_NAME END with ERROR');
         return ExitCodes.ERROR;

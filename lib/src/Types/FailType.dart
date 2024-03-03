@@ -8,7 +8,7 @@ enum FailType
 
 extension FailTypeExtension on FailType
 {
-    String get name
+    String get name2
     {
         switch (this)
         {

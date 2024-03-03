@@ -39,7 +39,11 @@ class Formatter
 
         final List<AnalysisError> errors = parseResult.errors;
         if (errors.isNotEmpty)
-            _logAndThrowWarning(errors.first.message, parseResult.lineInfo.getLocation(errors.first.offset));
+            _logAndThrowWarning(
+                'Parse error',
+                errors.first.message,
+                parseResult.lineInfo.getLocation(errors.first.offset)
+            );
 
         final FormatState formatState = FormatState(
             parseResult,
@@ -120,9 +124,9 @@ class Formatter
         throw DartFormatException.error('$message1|$message2', location1);
     }
 
-    void _logAndThrowWarning(String message, CharacterLocation location)
+    void _logAndThrowWarning(String type, String message, CharacterLocation location)
     {
-        _logWarning(message);
-        throw DartFormatException.warning(message, location);
+        _logWarning('$type at ${location.lineNumber}:${location.columnNumber}: $message');
+        throw DartFormatException.warning('$type: $message', location);
     }
 }

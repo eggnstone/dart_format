@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dart_format/src/Constants/Constants.dart';
 import 'package:dart_format/src/Constants/ExitCodes.dart';
 import 'package:dart_format/src/Exceptions/DartFormatException.dart';
 import 'package:dart_format/src/Handlers/DefaultHandler.dart';
@@ -14,6 +15,13 @@ Future<void> main(List<String> args)
 async
 {
     LogTools.logToConsole = args.contains('--log-to-console') || args.contains('--log-to-console=true');
+
+    if (Constants.DEBUG_MAIN)
+    {
+        logDebug('args:');
+        for (int i = 0; i < args.length; i++)
+            logDebug('  #$i: ${args[i]}');
+    }
 
     // Mandatory for the beta phase. Optional afterwards.
     LogTools.logToTempFile = true;//args.contains('--log-to-temp-file') || args.contains('--log-to-temp-file=true');
@@ -52,7 +60,7 @@ async
     on DartFormatException catch (e)
     {
         final String optionalLocation = e.line == null && e.column == null ? '' : ' at ${e.line}:${e.column}';
-        writelnToStdErr('${e.type.name}$optionalLocation: ${e.message}');
+        writelnToStdErr('${e.type.name2}$optionalLocation: ${e.message}');
         exitCode = ExitCodes.ERROR;
     }
     catch (e)
@@ -100,7 +108,7 @@ async
 
         if (argLower.startsWith('--config='))
         {
-            configText = argLower.substring('--config='.length);
+            configText = arg.substring('--config='.length);
             continue;
         }
 

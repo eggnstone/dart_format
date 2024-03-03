@@ -1,9 +1,10 @@
 class Constants
 {
-    static const bool DEBUG = true;
+    static const bool DEBUG = false;
     static const bool DEBUG_ALL = false;
 
     static const bool DEBUG_ANALYZER = (DEBUG && false) || DEBUG_ALL;
+    static const bool DEBUG_CONFIG = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_DART_FORMAT_HANDLERS = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_FORMAT_STATE = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_FORMAT_TOOLS_GET_MAX_COMMA_TEXT = (DEBUG && false) || DEBUG_ALL;
@@ -13,6 +14,7 @@ class Constants
     static const bool DEBUG_FORMATTER_DEFAULT = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_I_FORMATTER = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_I_FORMATTER_OFFSETS = (DEBUG && false) || DEBUG_ALL;
+    static const bool DEBUG_MAIN = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_STRING_TOOLS_REMOVE_LEADING_WHITESPACE = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_STRING_TOOLS_SPLIT_BLOCK_COMMENTS_AND_JOIN = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_TODOS = (DEBUG && false) || DEBUG_ALL;
