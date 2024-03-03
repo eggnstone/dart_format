@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.12
+
+- Fixed JSON config via command line not working.
+ 
 ## 1.1.11
 
 - Added default formatter.
