@@ -100,7 +100,7 @@ async
 
         if (argLower.startsWith('--config='))
         {
-            configText = argLower.substring('--config='.length);
+            configText = arg.substring('--config='.length);
             continue;
         }
 
