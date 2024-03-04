@@ -1,8 +1,9 @@
 /all_lint_rules.yaml
 /analysis_options.yaml
 /doc/
+/GenerateDocumentation.ps1
 /KNOWN_ISSUES.txt
 /lib/src/Analyser.dart
-/Publish.ps1
+/PublishPackageToPubDev.ps1
 /test/
 /TODO.txt
