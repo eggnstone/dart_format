@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.13
+
+- Fixed JSON via web service: empty JSON means default JSON.
+- 
 ## 1.1.12
 
 - Fixed JSON config via command line not working.
