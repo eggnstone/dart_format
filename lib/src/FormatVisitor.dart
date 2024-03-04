@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/ast/ast.dart';
 
-import 'Config.dart';
+import 'Data/Config.dart';
 import 'FormatState.dart';
 import 'Formatters/ArgumentListFormatter.dart';
 import 'Formatters/AssertInitializerFormatter.dart';

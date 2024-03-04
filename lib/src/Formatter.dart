@@ -5,8 +5,8 @@ import 'package:analyzer/dart/analysis/utilities.dart' as AnalyzerUtilities; // 
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/source/line_info.dart';
 
-import 'Config.dart';
 import 'Constants/Constants.dart';
+import 'Data/Config.dart';
 import 'Data/IntTuple.dart';
 import 'Exceptions/DartFormatException.dart';
 import 'FormatState.dart';

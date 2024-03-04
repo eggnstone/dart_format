@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../Constants/ExitCodes.dart';
+import '../Data/Config.dart';
 import '../Formatter.dart';
 import '../Tools/InfoTools.dart';
 import '../Tools/LogTools.dart';

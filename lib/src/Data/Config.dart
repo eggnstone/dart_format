@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'Tools/JsonTools.dart';
+import '../Tools/JsonTools.dart';
 
 // TODO: JSON and freezed
 
