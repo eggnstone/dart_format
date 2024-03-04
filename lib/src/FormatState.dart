@@ -6,8 +6,8 @@ import 'package:analyzer/dart/ast/syntactic_entity.dart';
 import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/source/line_info.dart';
 
-import 'Config.dart';
 import 'Constants/Constants.dart';
+import 'Data/Config.dart';
 import 'Data/Indentation.dart';
 import 'Exceptions/DartFormatException.dart';
 import 'StringBufferEx.dart';

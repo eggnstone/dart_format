@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../Constants/ExitCodes.dart';
+import '../Data/Config.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../Formatter.dart';
 import '../Tools/LogTools.dart';
@@ -36,7 +36,7 @@ class PipeHandler
 
         try
         {
-            final Config config = Config.fromJson(configText);
+            final Config config = Config.fromJsonText(configText);
             final Formatter formatter = Formatter(config);
             final String inputText = _readInput();
             final String formattedText = formatter.format(inputText);

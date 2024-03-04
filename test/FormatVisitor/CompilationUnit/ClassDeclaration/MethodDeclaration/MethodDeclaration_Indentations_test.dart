@@ -7,7 +7,7 @@ void main()
 {
     TestTools.init();
 
-    const Config config = Config.none(indentationSpacesPerLevel: 4);
+    final Config config = Config.none(indentationSpacesPerLevel: 4);
     final Formatter formatter = Formatter(config);
 
     group('MethodDeclarations (Indentations)', ()

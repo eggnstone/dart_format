@@ -4,10 +4,10 @@ import 'dart:io';
 
 import 'package:mime/mime.dart';
 
-import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../Constants/ExitCodes.dart';
 import '../Constants/Generated/VersionConstants.dart';
+import '../Data/Config.dart';
 import '../Data/JsonResponse.dart';
 import '../Data/Version.dart';
 import '../Exceptions/DartFormatException.dart';
@@ -305,7 +305,7 @@ class WebServiceHandler
             //logDebug('configText: ${StringTools.toDisplayString(configText)}');
             //logDebug('text: ${StringTools.toDisplayString(text)}');
 
-            final Config config = configText.isEmpty ? const Config.all() : Config.fromJson(configText);
+            final Config config = configText.isEmpty ? Config.all() : Config.fromJsonText(configText);
             final Formatter formatter = Formatter(config);
             final String formattedText = formatter.format(text);
             if (formattedText.isEmpty)

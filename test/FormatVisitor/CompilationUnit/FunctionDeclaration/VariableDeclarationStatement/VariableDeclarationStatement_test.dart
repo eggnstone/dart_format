@@ -8,7 +8,7 @@ void main()
 {
     TestTools.init();
 
-    late Config config = const Config.none();
+    late Config config = Config.none();
     late Formatter formatter = Formatter(config);
     late String afterSemicolonText;
 

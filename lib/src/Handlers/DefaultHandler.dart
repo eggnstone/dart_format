@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../Constants/ExitCodes.dart';
+import '../Data/Config.dart';
 import '../Formatter.dart';
 import '../Tools/InfoTools.dart';
 import '../Tools/LogTools.dart';
@@ -35,7 +35,7 @@ class DefaultHandler
         final bool isNewerVersionAvailable = await VersionTools(writeToStdOut: true).isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
         final int exitCodeForSuccess = isNewerVersionAvailable ? ExitCodes.SUCCESS_AND_NEW_VERSION_AVAILABLE : ExitCodes.SUCCESS;
 
-        final Config config = Config.fromJson(configText);
+        final Config config = Config.fromJsonText(configText);
         final Formatter formatter = Formatter(config);
         for (final String fileName in fileNames)
         {

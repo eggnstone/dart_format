@@ -1,11 +1,12 @@
+/*
 import 'dart:convert';
 
-import 'Tools/JsonTools.dart';
+import '../Tools/JsonTools.dart';
 
 // TODO: JSON and freezed
 
 /// Configuration for the formatter.
-class Config
+class ConfigOld
 {
     /// Default value when all options are turned on: Whether to add a new line after a closing brace.
     static const bool ADD_NEW_LINE_AFTER_CLOSING_BRACE_DEFAULT = true;
@@ -72,7 +73,7 @@ class Config
     final bool removeTrailingCommas;
 
     /// Create a new instance of [Config] with all options turned on.
-    const Config.all({
+    const ConfigOld.all({
         this.addNewLineAfterClosingBrace = ADD_NEW_LINE_AFTER_CLOSING_BRACE_DEFAULT,
         this.addNewLineAfterOpeningBrace = ADD_NEW_LINE_AFTER_OPENING_BRACE_DEFAULT,
         this.addNewLineAfterSemicolon = ADD_NEW_LINE_AFTER_SEMICOLON_DEFAULT,
@@ -85,7 +86,7 @@ class Config
     });
 
     /// Create a new instance of [Config] with all options turned off.
-    const Config.none({
+    const ConfigOld.none({
         this.addNewLineAfterClosingBrace = ADD_NEW_LINE_AFTER_CLOSING_BRACE_NONE,
         this.addNewLineAfterOpeningBrace = ADD_NEW_LINE_AFTER_OPENING_BRACE_NONE,
         this.addNewLineAfterSemicolon = ADD_NEW_LINE_AFTER_SEMICOLON_NONE,
@@ -98,13 +99,13 @@ class Config
     });
 
     /// Create a new instance of [Config] from a JSON string.
-    factory Config.fromJson(String? configText)
+    factory ConfigOld.fromJson(String? configText)
     {
         if (configText == null)
-            return const Config.all();
+            return const ConfigOld.all();
 
         final dynamic json = jsonDecode(configText);
-        return Config.none(
+        return ConfigOld.none(
             addNewLineAfterClosingBrace: JsonTools.get(json, 'AddNewLineAfterClosingBrace', ADD_NEW_LINE_AFTER_CLOSING_BRACE_NONE),
             addNewLineAfterOpeningBrace: JsonTools.get(json, 'AddNewLineAfterOpeningBrace', ADD_NEW_LINE_AFTER_OPENING_BRACE_NONE),
             addNewLineAfterSemicolon: JsonTools.get(json, 'AddNewLineAfterSemicolon', ADD_NEW_LINE_AFTER_SEMICOLON_NONE),
@@ -117,3 +118,4 @@ class Config
         );
     }
 }
+*/
