@@ -286,7 +286,10 @@ class WebServiceHandler
                 throw DartFormatException.error('No part named "Config" found.');
 
             if (configText.isEmpty)
-                throw DartFormatException.error('Part named "Config" is empty.');
+            {
+                //logDebug('Part named "Config" is empty. => Using default config.');
+                //throw DartFormatException.error('Part named "Config" is empty.', null);
+            }
 
             if (mimeMultiParts[0].headers['content-disposition'] == 'form-data; name="Text"')
                 text = mimeMultiPart0;
@@ -302,7 +305,7 @@ class WebServiceHandler
             //logDebug('configText: ${StringTools.toDisplayString(configText)}');
             //logDebug('text: ${StringTools.toDisplayString(text)}');
 
-            final Config config = Config.fromJson(configText);
+            final Config config = configText.isEmpty ? const Config.all() : Config.fromJson(configText);
             final Formatter formatter = Formatter(config);
             final String formattedText = formatter.format(text);
             if (formattedText.isEmpty)
