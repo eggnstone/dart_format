@@ -39,11 +39,14 @@ class Formatter
 
         final List<AnalysisError> errors = parseResult.errors;
         if (errors.isNotEmpty)
+        {
+            if (Constants.DEBUG_FORMATTER) logInternal(StringTools.toDisplayStringCutMiddle(sWithoutCarriageReturns, 100));
             _logAndThrowWarning(
-                'Parse error',
+                'Dart parse error',
                 errors.first.message,
                 parseResult.lineInfo.getLocation(errors.first.offset)
             );
+        }
 
         final FormatState formatState = FormatState(
             parseResult,

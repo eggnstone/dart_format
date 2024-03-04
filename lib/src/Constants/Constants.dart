@@ -18,6 +18,7 @@ class Constants
     static const bool DEBUG_STRING_TOOLS_REMOVE_LEADING_WHITESPACE = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_STRING_TOOLS_SPLIT_BLOCK_COMMENTS_AND_JOIN = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_TODOS = (DEBUG && false) || DEBUG_ALL;
+    static const bool DEBUG_WEB_SERVICE_HANDLER = (DEBUG && true) || DEBUG_ALL;
 
     static const int HTTP_TOOLS_WAIT_BETWEEN_FLUSH_AND_CLOSE_IN_MILLISECONDS = 100;
 

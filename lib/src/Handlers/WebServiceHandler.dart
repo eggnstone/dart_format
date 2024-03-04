@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -225,42 +227,49 @@ class WebServiceHandler
     async
     {
         const String METHOD_NAME = '$CLASS_NAME._handlePostFormat';
-        //logDebug('$METHOD_NAME: Request: ${request.contentLength}');
+        if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('$METHOD_NAME()');
 
         try
         {
-            //logDebug('Request.contentLength: request.contentLength: ${request.contentLength}');
+            if (Constants.DEBUG_WEB_SERVICE_HANDLER)
+            {
+                logDebug('  request.contentLength: ${request.contentLength}');
+                request.headers.forEach((String key, List<String> values)
+                    {
+                        logDebug('  $key: $values');
+                    }
+                );
+            }
 
             final List<String>? contentTypeList = request.headers['content-type'];
-            //logDebug('contentTypeList: $contentTypeList');
+            if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('  contentTypeList: $contentTypeList');
             final String? contentType = contentTypeList?.first;
-            //logDebug('contentType: $contentType');
+            if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('  contentType: $contentType');
             if (contentType == null)
                 throw DartFormatException.error('No content-type header found.', null);
 
             final String? boundary = ContentTypeTools.getBoundary(contentType);
-            //logDebug('boundary: $boundary');
+            if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('boundary: $boundary');
             if (boundary == null)
                 throw DartFormatException.error('No boundary found.', null);
 
             final Stream<MimeMultipart> mimeMultiPartStreams = MimeMultipartTransformer(boundary).bind(request);
-
             final List<MimeMultipart> mimeMultiParts = await mimeMultiPartStreams.toList();
-            //logDebug('mimeMultiParts: ${mimeMultiParts.length}');
+            if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('mimeMultiParts: ${mimeMultiParts.length}');
             if (mimeMultiParts.length != 2)
                 throw DartFormatException.error('Expected 2 parts, got ${mimeMultiParts.length}.', null);
 
-            //logDebug('mimeMultiParts[0].headers: ${mimeMultiParts[0].headers}');
+            if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('mimeMultiParts[0].headers: ${mimeMultiParts[0].headers}');
             final String? contentType0 = mimeMultiParts[0].headers['content-type'];
-            //logDebug('contentType0: $contentType0');
+            if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('contentType0: $contentType0');
             final String? charset0 = ContentTypeTools.getCharset(contentType0);
-            //logDebug('charset0: $charset0');
+            if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('charset0: $charset0');
 
-            //logDebug('mimeMultiParts[1].headers: ${mimeMultiParts[1].headers}');
+            if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('mimeMultiParts[1].headers: ${mimeMultiParts[1].headers}');
             final String? contentType1 = mimeMultiParts[1].headers['content-type'];
-            //logDebug('contentType1: $contentType1');
+            if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('contentType1: $contentType1');
             final String? charset1 = ContentTypeTools.getCharset(contentType1);
-            //logDebug('charset1: $charset1');
+            if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('charset1: $charset1');
 
             final Encoding? encoding0 = Encoding.getByName(charset0);
             final Encoding? encoding1 = Encoding.getByName(charset1);
@@ -286,7 +295,10 @@ class WebServiceHandler
                 throw DartFormatException.error('No part named "Config" found.', null);
 
             if (configText.isEmpty)
-                throw DartFormatException.error('Part named "Config" is empty.', null);
+            {
+                if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('Part named "Config" is empty. => Using default config.');
+                //throw DartFormatException.error('Part named "Config" is empty.', null);
+            }
 
             if (mimeMultiParts[0].headers['content-disposition'] == 'form-data; name="Text"')
                 text = mimeMultiPart0;
@@ -299,16 +311,16 @@ class WebServiceHandler
             if (text.isEmpty)
                 throw DartFormatException.error('Part named "Text" is empty.', null);
 
-            //logDebug('configText: ${StringTools.toDisplayString(configText)}');
-            //logDebug('text: ${StringTools.toDisplayString(text)}');
+            if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('configText: ${StringTools.toDisplayString(configText)}');
+            if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('text:       ${StringTools.toDisplayString(text)}');
 
-            final Config config = Config.fromJson(configText);
+            final Config config = configText.isEmpty ? const Config.all() : Config.fromJson(configText);
             final Formatter formatter = Formatter(config);
             final String formattedText = formatter.format(text);
             if (formattedText.isEmpty)
                 throw DartFormatException.error('No output generated.', null);
 
-            //logDebug('Sending formatted text: ${StringTools.toDisplayString(formattedText)}');
+            if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('Sending formatted text: ${StringTools.toDisplayString(formattedText)}');
 
             request.response.statusCode = HttpStatus.ok;
             request.response.headers.contentType = ContentType.text;
@@ -318,6 +330,7 @@ class WebServiceHandler
         on DartFormatException catch (e, st)
         {
             logErrorObject(METHOD_NAME, e, st);
+            if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('Sending exception: ${e.toJson()}');
             request.response.statusCode = HttpStatus.ok;
             request.response.headers.contentType = ContentType.text;
             request.response.headers.add('X-DartFormat-Result', 'Fail');
@@ -327,6 +340,7 @@ class WebServiceHandler
         {
             logErrorObject(METHOD_NAME, e, st);
             final DartFormatException dartFormatException = DartFormatException.error(e.toString(), null);
+            if (Constants.DEBUG_WEB_SERVICE_HANDLER) logDebug('Sending exception: ${dartFormatException.toJson()}');
             request.response.statusCode = HttpStatus.ok;
             request.response.headers.contentType = ContentType.text;
             request.response.headers.add('X-DartFormat-Result', 'Fail');

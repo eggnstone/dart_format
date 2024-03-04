@@ -16,6 +16,7 @@ TODO
 - ensure DEBUG is off when publishing
 - safety: don't accept result if length is 0 or very short, e.g. when throwing UnimplementedError in StringTools.
 - no empty lines after/before braces/parentheses
+- max empty lines at text start/end / no empty lines at text start/end
 
 DONE
 ====
