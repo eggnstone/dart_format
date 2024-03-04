@@ -12,7 +12,9 @@ But better ;)
 Because it's configurable.
 
 Also available as a plugin for Jetbrains (Android Studio, IntelliJ IDEA, ...)  
-https://plugins.jetbrains.com/plugin/21003-dartformat
+https://plugins.jetbrains.com/plugin/21003-dartformat  
+Also available as an extension for Visual Studio Code  
+https://marketplace.visualstudio.com/items?itemName=eggnstone.DartFormat
 
 ## To run dart_format from the command line:
 - Follow the instructions at https://pub.dev/packages/dart_format/install
