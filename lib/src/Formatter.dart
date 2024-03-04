@@ -19,18 +19,20 @@ import 'Tools/TextTools.dart';
 /// The Formatter class is the main class of the package.
 class Formatter
 {
-    final Config config;
+    final Config _config;
 
-    Formatter(this.config);
+    /// Create a new Formatter with the given configuration.
+    Formatter(Config config) : _config = config;
 
+    /// Format the given string.
     String format(String s)
     {
         if (Constants.DEBUG_FORMATTER)
         {
             logInternal('# Formatter.format()');
             logInternal('  ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
-            logInternal('  indentationSpacesPerLevel: ${config.indentationSpacesPerLevel}');
-            logInternal('  maxEmptyLines: ${config.maxEmptyLines}');
+            logInternal('  indentationSpacesPerLevel: ${_config.indentationSpacesPerLevel}');
+            logInternal('  maxEmptyLines: ${_config.maxEmptyLines}');
         }
 
         final String sWithoutCarriageReturns = s.replaceAll('\r', '');
@@ -43,14 +45,14 @@ class Formatter
 
         final FormatState formatState = FormatState(
             parseResult,
-            indentationSpacesPerLevel: config.indentationSpacesPerLevel,
-            removeTrailingCommas: config.removeTrailingCommas
+            indentationSpacesPerLevel: _config.indentationSpacesPerLevel,
+            removeTrailingCommas: _config.removeTrailingCommas
         );
-        final FormatVisitor visitor = FormatVisitor(config: config, formatState: formatState);
+        final FormatVisitor visitor = FormatVisitor(config: _config, formatState: formatState);
         formatState.compilationUnit.accept(visitor);
         String result = formatState.getResult();
 
-        final TextTools textTools = TextTools(config);
+        final TextTools textTools = TextTools(_config);
         result = textTools.removeEmptyLines(result);
         result = textTools.addNewLineAtEndOfText(result);
 
@@ -61,6 +63,12 @@ class Formatter
     {
         if (Constants.DEBUG_FORMAT_STATE)
             logInternalWarning(s);
+    }
+
+    void _logAndThrowWarning(String message, CharacterLocation location)
+    {
+        _logWarning(message);
+        throw DartFormatException.warning(message, location);
     }
 
     String _verifyResult(String s, String result, LineInfo lineInfo)
@@ -116,11 +124,5 @@ class Formatter
         }
 
         throw DartFormatException.error('$message1|$message2');
-    }
-
-    void _logAndThrowWarning(String message, CharacterLocation location)
-    {
-        _logWarning(message);
-        throw DartFormatException.warning(message, location);
     }
 }

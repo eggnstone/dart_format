@@ -1,8 +1,8 @@
 # Changelog
 
-## 1.1.15
+## 1.1.16
 
-- Improved documentation for Config.
+- Improved documentation.
  
 ## 1.1.14
 

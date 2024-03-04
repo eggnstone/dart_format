@@ -62,28 +62,46 @@ class Config with _$Config
     /// Create a new instance of [Config].
     @JsonSerializable(fieldRename: FieldRename.pascal)
     const factory Config({
+        /// Whether to add a new line after a closing brace.
         required bool addNewLineAfterClosingBrace,
+        /// Whether to add a new line after an opening brace.
         required bool addNewLineAfterOpeningBrace,
+        /// Whether to add a new line after a semicolon.
         required bool addNewLineAfterSemicolon,
+        /// Whether to add a new line at the end of the text.
         required bool addNewLineAtEndOfText,
+        /// Whether to add a new line before a closing brace.
         required bool addNewLineBeforeClosingBrace,
+        /// Whether to add a new line before an opening brace.
         required bool addNewLineBeforeOpeningBrace,
+        /// The number of spaces to use for indentation. -1 = do not change indentation.
         required int indentationSpacesPerLevel,
+        /// The maximum number of empty lines to allow. -1 = do not change empty lines.
         required int maxEmptyLines,
+        /// Whether to remove trailing commas.
         required bool removeTrailingCommas
     }) = _Config;
 
     /// Create a new instance of [Config] with all options turned on.
     // ignore: prefer_constructors_over_static_methods
     static Config all({
+        /// Whether to add a new line after a closing brace.
         bool addNewLineAfterClosingBrace = ADD_NEW_LINE_AFTER_CLOSING_BRACE_DEFAULT,
+        /// Whether to add a new line after an opening brace.
         bool addNewLineAfterOpeningBrace = ADD_NEW_LINE_AFTER_OPENING_BRACE_DEFAULT,
+        /// Whether to add a new line after a semicolon.
         bool addNewLineAfterSemicolon = ADD_NEW_LINE_AFTER_SEMICOLON_DEFAULT,
+        /// Whether to add a new line at the end of the text.
         bool addNewLineAtEndOfText = ADD_NEW_LINE_AT_END_OF_TEXT_DEFAULT,
+        /// Whether to add a new line before a closing brace.
         bool addNewLineBeforeClosingBrace = ADD_NEW_LINE_BEFORE_CLOSING_BRACE_DEFAULT,
+        /// Whether to add a new line before an opening brace.
         bool addNewLineBeforeOpeningBrace = ADD_NEW_LINE_BEFORE_OPENING_BRACE_DEFAULT,
+        /// The number of spaces to use for indentation. -1 = do not change indentation.
         int indentationSpacesPerLevel = INDENTATION_SPACES_PER_LEVEL_DEFAULT,
+        /// The maximum number of empty lines to allow. -1 = do not change empty lines.
         int maxEmptyLines = MAX_EMPTY_LINES_DEFAULT,
+        /// Whether to remove trailing commas.
         bool removeTrailingCommas = REMOVE_TRAILING_COMMAS_DEFAULT
     })
     => Config(
@@ -101,14 +119,23 @@ class Config with _$Config
     /// Create a new instance of [Config] with all options turned off.
     // ignore: prefer_constructors_over_static_methods
     static Config none({
+        /// Whether to add a new line after a closing brace.
         bool addNewLineAfterClosingBrace = ADD_NEW_LINE_AFTER_CLOSING_BRACE_NONE,
+        /// Whether to add a new line after an opening brace.
         bool addNewLineAfterOpeningBrace = ADD_NEW_LINE_AFTER_OPENING_BRACE_NONE,
+        /// Whether to add a new line after a semicolon.
         bool addNewLineAfterSemicolon = ADD_NEW_LINE_AFTER_SEMICOLON_NONE,
+        /// Whether to add a new line at the end of the text.
         bool addNewLineAtEndOfText = ADD_NEW_LINE_AT_END_OF_TEXT_NONE,
+        /// Whether to add a new line before a closing brace.
         bool addNewLineBeforeClosingBrace = ADD_NEW_LINE_BEFORE_CLOSING_BRACE_NONE,
+        /// Whether to add a new line before an opening brace.
         bool addNewLineBeforeOpeningBrace = ADD_NEW_LINE_BEFORE_OPENING_BRACE_NONE,
+        /// The number of spaces to use for indentation. -1 = do not change indentation.
         int indentationSpacesPerLevel = INDENTATION_SPACES_PER_LEVEL_NONE,
+        /// The maximum number of empty lines to allow. -1 = do not change empty lines.
         int maxEmptyLines = MAX_EMPTY_LINES_NONE,
+        /// Whether to remove trailing commas.
         bool removeTrailingCommas = REMOVE_TRAILING_COMMAS_NONE
     })
     => Config(
