@@ -7,7 +7,7 @@ void main()
 {
     TestTools.init();
 
-    const Config config = Config.all();
+    final Config config = Config.all();
     final Formatter formatter = Formatter(config);
 
     group('Formatter.format: indentation', ()

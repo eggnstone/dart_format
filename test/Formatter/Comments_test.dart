@@ -29,7 +29,7 @@ void main()
 
                     Analyzer().analyze(inputText);
 
-                    const Config config = Config.none();
+                    final Config config = Config.none();
                     final Formatter formatter = Formatter(config);
                     final String actualText = formatter.format(inputText);
 
@@ -48,7 +48,7 @@ void main()
 
                     Analyzer().analyze(inputText);
 
-                    const Config config = Config.none();
+                    final Config config = Config.none();
                     final Formatter formatter = Formatter(config);
                     final String actualText = formatter.format(inputText);
 

@@ -8,8 +8,8 @@ class TestConfig
     final String name;
 
     TestConfig([this.expectedText, this.restText])
-        : config = const Config.all(), name = 'Default';
+        : config = Config.all(), name = 'Default';
 
     TestConfig.none([this.expectedText, this.restText])
-        : config = const Config.none(), name = 'None';
+        : config = Config.none(), name = 'None';
 }
