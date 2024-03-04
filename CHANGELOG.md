@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.15
+
+- Improved documentation for Config.
+ 
 ## 1.1.14
 
 - Fixed problem with comments.
