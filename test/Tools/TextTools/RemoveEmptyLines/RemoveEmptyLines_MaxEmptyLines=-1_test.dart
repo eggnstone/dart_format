@@ -9,7 +9,7 @@ void main()
     TestTools.init();
 
     // ignore: avoid_redundant_argument_values
-    const Config config = Config.none(maxEmptyLines: -1);
+    final Config config = Config.none(maxEmptyLines: -1);
     final TextTools textTools = TextTools(config);
 
     group('RemoveEmptyLines MaxEmptyLines=-1', ()

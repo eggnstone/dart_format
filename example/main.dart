@@ -8,7 +8,7 @@ void main(List<String> arguments)
     print('Unformatted text:');
     print('$unformattedText\n');
 
-    const Config config = Config.all();
+    final Config config = Config.all();
     final Formatter formatter = Formatter(config);
     final String formattedText = formatter.format(unformattedText);
     print('Formatted text:');

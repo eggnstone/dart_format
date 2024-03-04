@@ -9,7 +9,7 @@ void main()
 {
     TestTools.init();
 
-    const Config config = Config.none();
+    final Config config = Config.none();
     final Formatter formatter = Formatter(config);
 
     for (final String comment in TestParameters.comments)

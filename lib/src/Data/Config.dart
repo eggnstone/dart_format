@@ -1,11 +1,15 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'dart:convert';
 
-import '../Tools/JsonTools.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-// TODO: JSON and freezed
+part 'Config.freezed.dart';
+part 'Config.g.dart';
 
 /// Configuration for the formatter.
-class Config
+@freezed
+class Config with _$Config
 {
     /// Default value when all options are turned on: Whether to add a new line after a closing brace.
     static const bool ADD_NEW_LINE_AFTER_CLOSING_BRACE_DEFAULT = true;
@@ -52,68 +56,83 @@ class Config
     /// Default value when all options are turned off: Whether to remove trailing commas.
     static const bool REMOVE_TRAILING_COMMAS_NONE = false;
 
-    /// Whether to add a new line after a closing brace.
-    final bool addNewLineAfterClosingBrace;
-    /// Whether to add a new line after an opening brace.
-    final bool addNewLineAfterOpeningBrace;
-    /// Whether to add a new line after a semicolon.
-    final bool addNewLineAfterSemicolon;
-    /// Whether to add a new line at the end of the text.
-    final bool addNewLineAtEndOfText;
-    /// Whether to add a new line before a closing brace.
-    final bool addNewLineBeforeClosingBrace;
-    /// Whether to add a new line before an opening brace.
-    final bool addNewLineBeforeOpeningBrace;
-    /// The number of spaces to use for indentation. -1 = do not change indentation.
-    final int indentationSpacesPerLevel;
-    /// The maximum number of empty lines to allow. -1 = do not change empty lines.
-    final int maxEmptyLines;
-    /// Whether to remove trailing commas.
-    final bool removeTrailingCommas;
+    // necessary when you want to create additional methods
+    const Config._();
+
+    /// Create a new instance of [Config].
+    @JsonSerializable(fieldRename: FieldRename.pascal)
+    const factory Config({
+        required bool addNewLineAfterClosingBrace,
+        required bool addNewLineAfterOpeningBrace,
+        required bool addNewLineAfterSemicolon,
+        required bool addNewLineAtEndOfText,
+        required bool addNewLineBeforeClosingBrace,
+        required bool addNewLineBeforeOpeningBrace,
+        required int indentationSpacesPerLevel,
+        required int maxEmptyLines,
+        required bool removeTrailingCommas
+    }) = _Config;
 
     /// Create a new instance of [Config] with all options turned on.
-    const Config.all({
-        this.addNewLineAfterClosingBrace = ADD_NEW_LINE_AFTER_CLOSING_BRACE_DEFAULT,
-        this.addNewLineAfterOpeningBrace = ADD_NEW_LINE_AFTER_OPENING_BRACE_DEFAULT,
-        this.addNewLineAfterSemicolon = ADD_NEW_LINE_AFTER_SEMICOLON_DEFAULT,
-        this.addNewLineAtEndOfText = ADD_NEW_LINE_AT_END_OF_TEXT_DEFAULT,
-        this.addNewLineBeforeClosingBrace = ADD_NEW_LINE_BEFORE_CLOSING_BRACE_DEFAULT,
-        this.addNewLineBeforeOpeningBrace = ADD_NEW_LINE_BEFORE_OPENING_BRACE_DEFAULT,
-        this.indentationSpacesPerLevel = INDENTATION_SPACES_PER_LEVEL_DEFAULT,
-        this.maxEmptyLines = MAX_EMPTY_LINES_DEFAULT,
-        this.removeTrailingCommas = REMOVE_TRAILING_COMMAS_DEFAULT
-    });
+    // ignore: prefer_constructors_over_static_methods
+    static Config all({
+        bool addNewLineAfterClosingBrace = ADD_NEW_LINE_AFTER_CLOSING_BRACE_DEFAULT,
+        bool addNewLineAfterOpeningBrace = ADD_NEW_LINE_AFTER_OPENING_BRACE_DEFAULT,
+        bool addNewLineAfterSemicolon = ADD_NEW_LINE_AFTER_SEMICOLON_DEFAULT,
+        bool addNewLineAtEndOfText = ADD_NEW_LINE_AT_END_OF_TEXT_DEFAULT,
+        bool addNewLineBeforeClosingBrace = ADD_NEW_LINE_BEFORE_CLOSING_BRACE_DEFAULT,
+        bool addNewLineBeforeOpeningBrace = ADD_NEW_LINE_BEFORE_OPENING_BRACE_DEFAULT,
+        int indentationSpacesPerLevel = INDENTATION_SPACES_PER_LEVEL_DEFAULT,
+        int maxEmptyLines = MAX_EMPTY_LINES_DEFAULT,
+        bool removeTrailingCommas = REMOVE_TRAILING_COMMAS_DEFAULT
+    })
+    => Config(
+        addNewLineAfterClosingBrace: addNewLineAfterClosingBrace,
+        addNewLineAfterOpeningBrace: addNewLineAfterOpeningBrace,
+        addNewLineAfterSemicolon: addNewLineAfterSemicolon,
+        addNewLineAtEndOfText: addNewLineAtEndOfText,
+        addNewLineBeforeClosingBrace: addNewLineBeforeClosingBrace,
+        addNewLineBeforeOpeningBrace: addNewLineBeforeOpeningBrace,
+        indentationSpacesPerLevel: indentationSpacesPerLevel,
+        maxEmptyLines: maxEmptyLines,
+        removeTrailingCommas: removeTrailingCommas
+    );
 
     /// Create a new instance of [Config] with all options turned off.
-    const Config.none({
-        this.addNewLineAfterClosingBrace = ADD_NEW_LINE_AFTER_CLOSING_BRACE_NONE,
-        this.addNewLineAfterOpeningBrace = ADD_NEW_LINE_AFTER_OPENING_BRACE_NONE,
-        this.addNewLineAfterSemicolon = ADD_NEW_LINE_AFTER_SEMICOLON_NONE,
-        this.addNewLineAtEndOfText = ADD_NEW_LINE_AT_END_OF_TEXT_NONE,
-        this.addNewLineBeforeClosingBrace = ADD_NEW_LINE_BEFORE_CLOSING_BRACE_NONE,
-        this.addNewLineBeforeOpeningBrace = ADD_NEW_LINE_BEFORE_OPENING_BRACE_NONE,
-        this.indentationSpacesPerLevel = INDENTATION_SPACES_PER_LEVEL_NONE,
-        this.maxEmptyLines = MAX_EMPTY_LINES_NONE,
-        this.removeTrailingCommas = REMOVE_TRAILING_COMMAS_NONE
-    });
+    // ignore: prefer_constructors_over_static_methods
+    static Config none({
+        bool addNewLineAfterClosingBrace = ADD_NEW_LINE_AFTER_CLOSING_BRACE_NONE,
+        bool addNewLineAfterOpeningBrace = ADD_NEW_LINE_AFTER_OPENING_BRACE_NONE,
+        bool addNewLineAfterSemicolon = ADD_NEW_LINE_AFTER_SEMICOLON_NONE,
+        bool addNewLineAtEndOfText = ADD_NEW_LINE_AT_END_OF_TEXT_NONE,
+        bool addNewLineBeforeClosingBrace = ADD_NEW_LINE_BEFORE_CLOSING_BRACE_NONE,
+        bool addNewLineBeforeOpeningBrace = ADD_NEW_LINE_BEFORE_OPENING_BRACE_NONE,
+        int indentationSpacesPerLevel = INDENTATION_SPACES_PER_LEVEL_NONE,
+        int maxEmptyLines = MAX_EMPTY_LINES_NONE,
+        bool removeTrailingCommas = REMOVE_TRAILING_COMMAS_NONE
+    })
+    => Config(
+        addNewLineAfterClosingBrace: addNewLineAfterClosingBrace,
+        addNewLineAfterOpeningBrace: addNewLineAfterOpeningBrace,
+        addNewLineAfterSemicolon: addNewLineAfterSemicolon,
+        addNewLineAtEndOfText: addNewLineAtEndOfText,
+        addNewLineBeforeClosingBrace: addNewLineBeforeClosingBrace,
+        addNewLineBeforeOpeningBrace: addNewLineBeforeOpeningBrace,
+        indentationSpacesPerLevel: indentationSpacesPerLevel,
+        maxEmptyLines: maxEmptyLines,
+        removeTrailingCommas: removeTrailingCommas
+    );
 
     /// Create a new instance of [Config] from a JSON string.
-    factory Config.fromJson(String? configText)
+    factory Config.fromJsonText(String? s)
     {
-        if (configText == null)
-            return const Config.all();
+        if (s == null)
+            return Config.all();
 
-        final dynamic json = jsonDecode(configText);
-        return Config.none(
-            addNewLineAfterClosingBrace: JsonTools.get(json, 'AddNewLineAfterClosingBrace', ADD_NEW_LINE_AFTER_CLOSING_BRACE_NONE),
-            addNewLineAfterOpeningBrace: JsonTools.get(json, 'AddNewLineAfterOpeningBrace', ADD_NEW_LINE_AFTER_OPENING_BRACE_NONE),
-            addNewLineAfterSemicolon: JsonTools.get(json, 'AddNewLineAfterSemicolon', ADD_NEW_LINE_AFTER_SEMICOLON_NONE),
-            addNewLineAtEndOfText: JsonTools.get(json, 'AddNewLineAtEndOfText', ADD_NEW_LINE_AT_END_OF_TEXT_NONE),
-            addNewLineBeforeClosingBrace: JsonTools.get(json, 'AddNewLineBeforeClosingBrace', ADD_NEW_LINE_BEFORE_CLOSING_BRACE_NONE),
-            addNewLineBeforeOpeningBrace: JsonTools.get(json, 'AddNewLineBeforeOpeningBrace', ADD_NEW_LINE_BEFORE_OPENING_BRACE_NONE),
-            indentationSpacesPerLevel: JsonTools.get(json, 'IndentationSpacesPerLevel', INDENTATION_SPACES_PER_LEVEL_NONE),
-            maxEmptyLines: JsonTools.get(json, 'MaxEmptyLines', MAX_EMPTY_LINES_NONE),
-            removeTrailingCommas: JsonTools.get(json, 'RemoveTrailingCommas', REMOVE_TRAILING_COMMAS_NONE)
-        );
+        return Config.fromJson(Map<String, dynamic>.from(jsonDecode(s)));
     }
+
+    /// Create a new instance of [Config] from a JSON object.
+    factory Config.fromJson(Map<String, dynamic> json)
+    => _$ConfigFromJson(json);
 }

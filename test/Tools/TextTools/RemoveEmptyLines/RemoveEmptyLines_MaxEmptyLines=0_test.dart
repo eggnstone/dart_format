@@ -8,7 +8,7 @@ void main()
 {
     TestTools.init();
 
-    const Config config = Config.none(maxEmptyLines: 0);
+    final Config config = Config.none(maxEmptyLines: 0);
     final TextTools textTools = TextTools(config);
 
     group('RemoveEmptyLines MaxEmptyLines=0', ()

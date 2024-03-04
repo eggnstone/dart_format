@@ -7,7 +7,7 @@ void main()
 {
     TestTools.init();
 
-    const Config config = Config.none(maxEmptyLines: 0);
+    final Config config = Config.none(maxEmptyLines: 0);
     final Formatter formatter = Formatter(config);
 
     group('Formatter.format: expecting exception', ()

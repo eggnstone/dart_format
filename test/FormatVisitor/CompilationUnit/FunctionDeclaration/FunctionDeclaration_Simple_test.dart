@@ -11,7 +11,7 @@ void main()
         {
             test('Empty function with space before opening brace', ()
                 {
-                    const Config config = Config.none(addNewLineBeforeOpeningBrace: true);
+                    final Config config = Config.none(addNewLineBeforeOpeningBrace: true);
                     final Formatter formatter = Formatter(config);
 
                     const String inputText = 'void f() {}';

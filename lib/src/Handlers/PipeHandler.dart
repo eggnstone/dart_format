@@ -36,7 +36,7 @@ class PipeHandler
 
         try
         {
-            final Config config = Config.fromJson(configText);
+            final Config config = Config.fromJsonText(configText);
             final Formatter formatter = Formatter(config);
             final String inputText = _readInput();
             final String formattedText = formatter.format(inputText);

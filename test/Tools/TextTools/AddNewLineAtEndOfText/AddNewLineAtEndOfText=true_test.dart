@@ -8,7 +8,7 @@ void main()
 {
     TestTools.init();
 
-    const Config config = Config.none(addNewLineAtEndOfText: true);
+    final Config config = Config.none(addNewLineAtEndOfText: true);
     final TextTools textTools = TextTools(config);
 
     group('AddNewLineAtEndOfText=true tests', ()
