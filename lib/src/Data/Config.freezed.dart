@@ -20,14 +20,31 @@ Config _$ConfigFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Config {
+  /// Whether to add a new line after a closing brace.
   bool get addNewLineAfterClosingBrace => throw _privateConstructorUsedError;
+
+  /// Whether to add a new line after an opening brace.
   bool get addNewLineAfterOpeningBrace => throw _privateConstructorUsedError;
+
+  /// Whether to add a new line after a semicolon.
   bool get addNewLineAfterSemicolon => throw _privateConstructorUsedError;
+
+  /// Whether to add a new line at the end of the text.
   bool get addNewLineAtEndOfText => throw _privateConstructorUsedError;
+
+  /// Whether to add a new line before a closing brace.
   bool get addNewLineBeforeClosingBrace => throw _privateConstructorUsedError;
+
+  /// Whether to add a new line before an opening brace.
   bool get addNewLineBeforeOpeningBrace => throw _privateConstructorUsedError;
+
+  /// The number of spaces to use for indentation. -1 = do not change indentation.
   int get indentationSpacesPerLevel => throw _privateConstructorUsedError;
+
+  /// The maximum number of empty lines to allow. -1 = do not change empty lines.
   int get maxEmptyLines => throw _privateConstructorUsedError;
+
+  /// Whether to remove trailing commas.
   bool get removeTrailingCommas => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -216,22 +233,39 @@ class _$ConfigImpl extends _Config {
   factory _$ConfigImpl.fromJson(Map<String, dynamic> json) =>
       _$$ConfigImplFromJson(json);
 
+  /// Whether to add a new line after a closing brace.
   @override
   final bool addNewLineAfterClosingBrace;
+
+  /// Whether to add a new line after an opening brace.
   @override
   final bool addNewLineAfterOpeningBrace;
+
+  /// Whether to add a new line after a semicolon.
   @override
   final bool addNewLineAfterSemicolon;
+
+  /// Whether to add a new line at the end of the text.
   @override
   final bool addNewLineAtEndOfText;
+
+  /// Whether to add a new line before a closing brace.
   @override
   final bool addNewLineBeforeClosingBrace;
+
+  /// Whether to add a new line before an opening brace.
   @override
   final bool addNewLineBeforeOpeningBrace;
+
+  /// The number of spaces to use for indentation. -1 = do not change indentation.
   @override
   final int indentationSpacesPerLevel;
+
+  /// The maximum number of empty lines to allow. -1 = do not change empty lines.
   @override
   final int maxEmptyLines;
+
+  /// Whether to remove trailing commas.
   @override
   final bool removeTrailingCommas;
 
@@ -318,22 +352,40 @@ abstract class _Config extends Config {
   factory _Config.fromJson(Map<String, dynamic> json) = _$ConfigImpl.fromJson;
 
   @override
+
+  /// Whether to add a new line after a closing brace.
   bool get addNewLineAfterClosingBrace;
   @override
+
+  /// Whether to add a new line after an opening brace.
   bool get addNewLineAfterOpeningBrace;
   @override
+
+  /// Whether to add a new line after a semicolon.
   bool get addNewLineAfterSemicolon;
   @override
+
+  /// Whether to add a new line at the end of the text.
   bool get addNewLineAtEndOfText;
   @override
+
+  /// Whether to add a new line before a closing brace.
   bool get addNewLineBeforeClosingBrace;
   @override
+
+  /// Whether to add a new line before an opening brace.
   bool get addNewLineBeforeOpeningBrace;
   @override
+
+  /// The number of spaces to use for indentation. -1 = do not change indentation.
   int get indentationSpacesPerLevel;
   @override
+
+  /// The maximum number of empty lines to allow. -1 = do not change empty lines.
   int get maxEmptyLines;
   @override
+
+  /// Whether to remove trailing commas.
   bool get removeTrailingCommas;
   @override
   @JsonKey(ignore: true)

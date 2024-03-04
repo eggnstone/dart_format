@@ -20,12 +20,19 @@ DartFormatException _$DartFormatExceptionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DartFormatException {
+  /// The message of the exception.
   @JsonKey(name: 'Message')
   String get message => throw _privateConstructorUsedError;
+
+  /// The type of the exception.
   @JsonKey(name: 'Type')
   FailType get type => throw _privateConstructorUsedError;
+
+  /// The line number where the exception occurred.
   @JsonKey(includeIfNull: false, name: 'Line')
   int? get line => throw _privateConstructorUsedError;
+
+  /// The column number where the exception occurred.
   @JsonKey(includeIfNull: false, name: 'Column')
   int? get column => throw _privateConstructorUsedError;
 
@@ -151,15 +158,22 @@ class _$DartFormatExceptionImpl implements _DartFormatException {
   factory _$DartFormatExceptionImpl.fromJson(Map<String, dynamic> json) =>
       _$$DartFormatExceptionImplFromJson(json);
 
+  /// The message of the exception.
   @override
   @JsonKey(name: 'Message')
   final String message;
+
+  /// The type of the exception.
   @override
   @JsonKey(name: 'Type')
   final FailType type;
+
+  /// The line number where the exception occurred.
   @override
   @JsonKey(includeIfNull: false, name: 'Line')
   final int? line;
+
+  /// The column number where the exception occurred.
   @override
   @JsonKey(includeIfNull: false, name: 'Column')
   final int? column;
@@ -211,15 +225,23 @@ abstract class _DartFormatException implements DartFormatException {
       _$DartFormatExceptionImpl.fromJson;
 
   @override
+
+  /// The message of the exception.
   @JsonKey(name: 'Message')
   String get message;
   @override
+
+  /// The type of the exception.
   @JsonKey(name: 'Type')
   FailType get type;
   @override
+
+  /// The line number where the exception occurred.
   @JsonKey(includeIfNull: false, name: 'Line')
   int? get line;
   @override
+
+  /// The column number where the exception occurred.
   @JsonKey(includeIfNull: false, name: 'Column')
   int? get column;
   @override
