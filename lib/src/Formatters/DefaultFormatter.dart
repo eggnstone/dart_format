@@ -4,8 +4,8 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/syntactic_entity.dart';
 import 'package:analyzer/dart/ast/token.dart';
 
-import '../Config.dart';
 import '../Constants/Constants.dart';
+import '../Data/Config.dart';
 import '../FormatState.dart';
 import '../Tools/LogTools.dart';
 import '../Tools/StringTools.dart';

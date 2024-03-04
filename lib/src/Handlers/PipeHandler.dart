@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import '../Config.dart';
 import '../Constants/Constants.dart';
 import '../Constants/ExitCodes.dart';
+import '../Data/Config.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../Formatter.dart';
 import '../Tools/LogTools.dart';

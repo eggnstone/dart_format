@@ -3,8 +3,8 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/token.dart';
 
-import '../Config.dart';
 import '../Constants/Constants.dart';
+import '../Data/Config.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../FormatState.dart';
 import '../Tools/FormatTools.dart';

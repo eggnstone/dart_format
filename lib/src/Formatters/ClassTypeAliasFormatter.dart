@@ -2,8 +2,8 @@
 
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Config.dart';
 import '../Constants/Constants.dart';
+import '../Data/Config.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';

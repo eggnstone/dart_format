@@ -1,4 +1,4 @@
-import '../Config.dart';
+import '../Data/Config.dart';
 
 class TextTools
 {
