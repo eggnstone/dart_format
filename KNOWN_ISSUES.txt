@@ -1,1 +1,1 @@
-- pipe mode does not work with special characters like "ä"
+- Pipe mode does not work with special characters like "ä".
