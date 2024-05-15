@@ -823,4 +823,20 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitYieldStatement(YieldStatement node)
     => _yieldStatementFormatter.format(node);
+
+    @override
+    void visitAugmentedExpression(AugmentedExpression node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitAugmentedInvocation(AugmentedInvocation node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitExtensionOnClause(ExtensionOnClause node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitMixinOnClause(MixinOnClause node)
+    => _defaultFormatter.format(node);
 }

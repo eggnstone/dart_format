@@ -689,4 +689,19 @@ abstract class SimpleVisitor extends AstVisitor<void>
     void visitYieldStatement(YieldStatement node)
     => visit(node);
 
+    @override
+    void visitAugmentedExpression(AugmentedExpression node)
+    => visit(node);
+
+    @override
+    void visitAugmentedInvocation(AugmentedInvocation node)
+    => visit(node);
+
+    @override
+    void visitExtensionOnClause(ExtensionOnClause node)
+    => visit(node);
+
+    @override
+    void visitMixinOnClause(MixinOnClause node)
+    => visit(node);
 }

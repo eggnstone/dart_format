@@ -8,7 +8,7 @@ part of 'JsonResponse.dart';
 
 _$JsonResponseImpl _$$JsonResponseImplFromJson(Map<String, dynamic> json) =>
     _$JsonResponseImpl(
-      statusCode: json['StatusCode'] as int,
+      statusCode: (json['StatusCode'] as num).toInt(),
       status: json['Status'] as String,
       currentVersion: json['CurrentVersion'] as String?,
       latestVersion: json['LatestVersion'] as String?,

@@ -11,8 +11,8 @@ _$DartFormatExceptionImpl _$$DartFormatExceptionImplFromJson(
     _$DartFormatExceptionImpl(
       message: json['Message'] as String,
       type: $enumDecode(_$FailTypeEnumMap, json['Type']),
-      line: json['Line'] as int?,
-      column: json['Column'] as int?,
+      line: (json['Line'] as num?)?.toInt(),
+      column: (json['Column'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$DartFormatExceptionImplToJson(

@@ -15,8 +15,9 @@ _$ConfigImpl _$$ConfigImplFromJson(Map<String, dynamic> json) => _$ConfigImpl(
           json['AddNewLineBeforeClosingBrace'] as bool,
       addNewLineBeforeOpeningBrace:
           json['AddNewLineBeforeOpeningBrace'] as bool,
-      indentationSpacesPerLevel: json['IndentationSpacesPerLevel'] as int,
-      maxEmptyLines: json['MaxEmptyLines'] as int,
+      indentationSpacesPerLevel:
+          (json['IndentationSpacesPerLevel'] as num).toInt(),
+      maxEmptyLines: (json['MaxEmptyLines'] as num).toInt(),
       removeTrailingCommas: json['RemoveTrailingCommas'] as bool,
     );
 
