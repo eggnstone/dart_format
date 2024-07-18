@@ -31,11 +31,10 @@ class SwitchExpressionFormatter extends IFormatter
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
         formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
-        formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
-        //formatState.pushLevel('$methodName/node.members');
+
+        formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
         formatState.acceptListWithComma(node.cases, node.rightBracket, astVisitor, '$methodName/node.cases');
-        //formatState.popLevelAndIndent();
-        formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
+        formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

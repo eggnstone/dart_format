@@ -17,6 +17,7 @@ TODO
 - ensure DEBUG is off when publishing
 - safety: don't accept result if length is 0 or very short, e.g. when throwing UnimplementedError in StringTools.
 - No blank lines between {{ and }}
+- No blank line after { and before }
 - Investigate line endings. Keep existing style, but also offer option to convert.
 
 DONE (I think)

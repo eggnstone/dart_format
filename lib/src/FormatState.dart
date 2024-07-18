@@ -203,10 +203,20 @@ class FormatState
             logInternal('  filler/2:                           ${StringTools.toDisplayString(filler)}');
         }
 
-        final int pos = filler.indexOf('\n');
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  pos:       $pos');
-        if (pos >= 0)
+        final int lineBreakPos = filler.indexOf('\n');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  lineBreakPos:                       $lineBreakPos');
+        if (lineBreakPos >= 0)
+        {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  Line break already in filler => not adding line break');
             return;
+        }
+
+        // TODO: test
+        if (nextToken.toString() == ';')
+        {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  nextToken is ";" => not adding line break');
+            return;
+        }
 
         if (nextToken.offset == _parseResult.content.length)
         {

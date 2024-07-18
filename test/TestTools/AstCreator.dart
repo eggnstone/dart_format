@@ -100,6 +100,9 @@ class AstCreator
     static OnClause createOnClauseInMixinDeclaration(String s)
     => createMixinDeclaration(s).onClause!;
 
+    static ReturnStatement createReturnStatementInFunction(String s)
+    => createStatementInFunction(s) as ReturnStatement;
+
     static SimpleFormalParameter createSimpleFormalParameterInFunction(String s)
     => createFormalParameterInFunction(s) as SimpleFormalParameter;
 
@@ -108,6 +111,12 @@ class AstCreator
 
     static Statement createStatementInWhileInFunction(String s)
     => createWhileStatementInFunction(s).body;
+
+    static Expression createReturnStatementExpressionInFunction(String s)
+    => createReturnStatementInFunction(s).expression!;
+
+    static SwitchExpression createSwitchExpressionInReturnStatementExpressionInFunction(String s)
+    => createReturnStatementExpressionInFunction(s) as SwitchExpression;
 
     static SwitchStatement createSwitchStatementInFunction(String s)
     => createStatementInFunction(s) as SwitchStatement;
