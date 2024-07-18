@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Tests in BlockCommentsTests.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" nameIsGenerated="true">
+    <option name="filePath" value="$PROJECT_DIR$/test/Explicit/BlockCommentsTests.dart" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -47,8 +47,12 @@ mixin _$Config {
   /// Whether to remove trailing commas.
   bool get removeTrailingCommas => throw _privateConstructorUsedError;
 
+  /// Serializes this Config to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Config
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ConfigCopyWith<Config> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -79,6 +83,8 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Config
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -160,6 +166,8 @@ class __$$ConfigImplCopyWithImpl<$Res>
       _$ConfigImpl _value, $Res Function(_$ConfigImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Config
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -308,7 +316,7 @@ class _$ConfigImpl extends _Config {
                 other.removeTrailingCommas == removeTrailingCommas));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -322,7 +330,9 @@ class _$ConfigImpl extends _Config {
       maxEmptyLines,
       removeTrailingCommas);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Config
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ConfigImplCopyWith<_$ConfigImpl> get copyWith =>
@@ -351,44 +361,46 @@ abstract class _Config extends Config {
 
   factory _Config.fromJson(Map<String, dynamic> json) = _$ConfigImpl.fromJson;
 
-  @override
-
   /// Whether to add a new line after a closing brace.
-  bool get addNewLineAfterClosingBrace;
   @override
+  bool get addNewLineAfterClosingBrace;
 
   /// Whether to add a new line after an opening brace.
-  bool get addNewLineAfterOpeningBrace;
   @override
+  bool get addNewLineAfterOpeningBrace;
 
   /// Whether to add a new line after a semicolon.
-  bool get addNewLineAfterSemicolon;
   @override
+  bool get addNewLineAfterSemicolon;
 
   /// Whether to add a new line at the end of the text.
-  bool get addNewLineAtEndOfText;
   @override
+  bool get addNewLineAtEndOfText;
 
   /// Whether to add a new line before a closing brace.
-  bool get addNewLineBeforeClosingBrace;
   @override
+  bool get addNewLineBeforeClosingBrace;
 
   /// Whether to add a new line before an opening brace.
-  bool get addNewLineBeforeOpeningBrace;
   @override
+  bool get addNewLineBeforeOpeningBrace;
 
   /// The number of spaces to use for indentation. -1 = do not change indentation.
-  int get indentationSpacesPerLevel;
   @override
+  int get indentationSpacesPerLevel;
 
   /// The maximum number of empty lines to allow. -1 = do not change empty lines.
-  int get maxEmptyLines;
   @override
+  int get maxEmptyLines;
 
   /// Whether to remove trailing commas.
-  bool get removeTrailingCommas;
   @override
-  @JsonKey(ignore: true)
+  bool get removeTrailingCommas;
+
+  /// Create a copy of Config
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ConfigImplCopyWith<_$ConfigImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

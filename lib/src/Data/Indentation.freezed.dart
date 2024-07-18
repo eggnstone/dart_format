@@ -19,7 +19,9 @@ mixin _$Indentation {
   String get name => throw _privateConstructorUsedError;
   IndentationType get type => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Indentation
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $IndentationCopyWith<Indentation> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -43,6 +45,8 @@ class _$IndentationCopyWithImpl<$Res, $Val extends Indentation>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Indentation
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -81,6 +85,8 @@ class __$$IndentationImplCopyWithImpl<$Res>
       _$IndentationImpl _value, $Res Function(_$IndentationImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Indentation
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -127,7 +133,9 @@ class _$IndentationImpl implements _Indentation {
   @override
   int get hashCode => Object.hash(runtimeType, name, type);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Indentation
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$IndentationImplCopyWith<_$IndentationImpl> get copyWith =>
@@ -143,8 +151,11 @@ abstract class _Indentation implements Indentation {
   String get name;
   @override
   IndentationType get type;
+
+  /// Create a copy of Indentation
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$IndentationImplCopyWith<_$IndentationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -36,8 +36,12 @@ mixin _$DartFormatException {
   @JsonKey(includeIfNull: false, name: 'Column')
   int? get column => throw _privateConstructorUsedError;
 
+  /// Serializes this DartFormatException to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DartFormatException
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DartFormatExceptionCopyWith<DartFormatException> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -65,6 +69,8 @@ class _$DartFormatExceptionCopyWithImpl<$Res, $Val extends DartFormatException>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DartFormatException
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -117,6 +123,8 @@ class __$$DartFormatExceptionImplCopyWithImpl<$Res>
       $Res Function(_$DartFormatExceptionImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DartFormatException
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -194,11 +202,13 @@ class _$DartFormatExceptionImpl implements _DartFormatException {
             (identical(other.column, column) || other.column == column));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, message, type, line, column);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DartFormatException
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DartFormatExceptionImplCopyWith<_$DartFormatExceptionImpl> get copyWith =>
@@ -224,28 +234,30 @@ abstract class _DartFormatException implements DartFormatException {
   factory _DartFormatException.fromJson(Map<String, dynamic> json) =
       _$DartFormatExceptionImpl.fromJson;
 
-  @override
-
   /// The message of the exception.
+  @override
   @JsonKey(name: 'Message')
   String get message;
-  @override
 
   /// The type of the exception.
+  @override
   @JsonKey(name: 'Type')
   FailType get type;
-  @override
 
   /// The line number where the exception occurred.
+  @override
   @JsonKey(includeIfNull: false, name: 'Line')
   int? get line;
-  @override
 
   /// The column number where the exception occurred.
+  @override
   @JsonKey(includeIfNull: false, name: 'Column')
   int? get column;
+
+  /// Create a copy of DartFormatException
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DartFormatExceptionImplCopyWith<_$DartFormatExceptionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

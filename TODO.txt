@@ -1,7 +1,7 @@
 TODO
 ====
 - Indent assignments when multiline
-- Error "Missed some text" does not fully carry over to the plugin when the text contains <text>
+- Error "Missed some text" does not fully carry over to the plugin when the text contains "<" or ">"
 -- e.g. <DartFormatException>.
 -- e.g. offset < lastConsumedPosition
 - favicon.ico does not work when called from plugin.

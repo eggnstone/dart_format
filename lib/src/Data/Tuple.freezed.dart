@@ -19,7 +19,9 @@ mixin _$Tuple<T1, T2> {
   T1 get item1 => throw _privateConstructorUsedError;
   T2 get item2 => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Tuple
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TupleCopyWith<T1, T2, Tuple<T1, T2>> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -43,6 +45,8 @@ class _$TupleCopyWithImpl<T1, T2, $Res, $Val extends Tuple<T1, T2>>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Tuple
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -81,6 +85,8 @@ class __$$TupleImplCopyWithImpl<T1, T2, $Res>
       _$TupleImpl<T1, T2> _value, $Res Function(_$TupleImpl<T1, T2>) _then)
       : super(_value, _then);
 
+  /// Create a copy of Tuple
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -130,7 +136,9 @@ class _$TupleImpl<T1, T2> implements _Tuple<T1, T2> {
       const DeepCollectionEquality().hash(item1),
       const DeepCollectionEquality().hash(item2));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Tuple
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TupleImplCopyWith<T1, T2, _$TupleImpl<T1, T2>> get copyWith =>
@@ -144,8 +152,11 @@ abstract class _Tuple<T1, T2> implements Tuple<T1, T2> {
   T1 get item1;
   @override
   T2 get item2;
+
+  /// Create a copy of Tuple
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TupleImplCopyWith<T1, T2, _$TupleImpl<T1, T2>> get copyWith =>
       throw _privateConstructorUsedError;
 }
