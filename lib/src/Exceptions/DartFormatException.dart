@@ -25,8 +25,8 @@ class DartFormatException with _$DartFormatException implements Exception
     }) = _DartFormatException;
 
     /// Create a new error DartFormatException with the given message.
-    factory DartFormatException.error(String message)
-    => DartFormatException(message: message, type: FailType.error);
+    factory DartFormatException.error(String message, [CharacterLocation? location])
+    => DartFormatException(message: message, type: FailType.error, line: location?.lineNumber, column: location?.columnNumber);
 
     /// Create a new warning DartFormatException with the given message.
     factory DartFormatException.warning(String message, CharacterLocation location)
