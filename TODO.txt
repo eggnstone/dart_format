@@ -1,5 +1,6 @@
 TODO
 ====
+- Add tests from other machine (format the complete Flutter checkout)
 - Indent assignments when multiline
 - Error "Missed some text" does not fully carry over to the plugin when the text contains "<" or ">"
 -- e.g. <DartFormatException>.
@@ -15,6 +16,8 @@ TODO
 - Own lint rule: don't return Future<void>s.
 - ensure DEBUG is off when publishing
 - safety: don't accept result if length is 0 or very short, e.g. when throwing UnimplementedError in StringTools.
+- No blank lines between {{ and }}
+- Investigate line endings. Keep existing style, but also offer option to convert.
 
 DONE (I think)
 ==============

@@ -138,8 +138,8 @@ void main()
             );
 
             test('Comment in function - Prevent negative indentation', ()
-            {
-                const String inputText = 'void f()\n'
+                {
+                    const String inputText = 'void f()\n'
                     '{\n'
                     '        /*START\n'
                     '    TEXT\n'
@@ -147,7 +147,7 @@ void main()
                     '    s;\n'
                     '}\n';
 
-                const String expectedText = 'void f()\n'
+                    const String expectedText = 'void f()\n'
                     '{\n'
                     '            /*START\n'
                     '        TEXT\n'
@@ -155,16 +155,16 @@ void main()
                     '    s;\n'
                     '}\n';
 
-                Analyzer().analyze(inputText);
+                    Analyzer().analyze(inputText);
 
-                final Config config = Config.all();
-                final Formatter formatter = Formatter(config);
+                    final Config config = Config.all();
+                    final Formatter formatter = Formatter(config);
 
-                final String actualText = formatter.format(expectedText);
+                    final String actualText = formatter.format(expectedText);
 
-                TestTools.expect(actualText, equals(inputText));
-                logDebug('actualText:\n${StringTools.toDisplayString(actualText)}\n$actualText');
-            }
+                    TestTools.expect(actualText, equals(inputText));
+                    logDebug('actualText:\n${StringTools.toDisplayString(actualText)}\n$actualText');
+                }
             );
 
             test('Comment after semicolon - no changes expected', ()

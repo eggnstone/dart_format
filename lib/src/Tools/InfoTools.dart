@@ -23,5 +23,4 @@ class InfoTools
         writelnToStdOut('    --skip-version-check             Skips version check on start-up', preventLoggingToTempFile: true);
         writelnToStdOut('    --web[service]                   Starts in web service mode', preventLoggingToTempFile: true);
     }
-
 }
