@@ -29,8 +29,14 @@ class ExtensionDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.extensionKeyword, astVisitor, '$methodName/node.extensionKeyword');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
+
+        formatState.copyEntity(node.onClause, astVisitor, '$methodName/node.extendedType');
+        /*
+        onClause replaces onKeyword and extendedType
         formatState.copyEntity(node.onKeyword, astVisitor, '$methodName/node.onKeyword');
         formatState.copyEntity(node.extendedType, astVisitor, '$methodName/node.extendedType');
+        */
+
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
         formatState.acceptList(node.members, astVisitor, '$methodName/node.members');
         formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');

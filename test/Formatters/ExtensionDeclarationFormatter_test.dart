@@ -18,7 +18,8 @@ void main()
             name: 'ExtensionDeclaration',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<TypeParameterList>(11, '<T1,T2>'),
-                TestVisitor<NamedType>(22, 'C<T1,T2>'),
+                //TestVisitor<NamedType>(22, 'C<T1,T2>'), onClause replaces onKeyword and extendedType
+                TestVisitor<ExtensionOnClause>(19, 'on C<T1,T2>'),
                 TestVisitor<MethodDeclaration>(31, 'void m(){}')
             ],
             testConfigs: <TestConfig>[

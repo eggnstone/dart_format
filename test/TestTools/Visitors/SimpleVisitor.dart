@@ -446,6 +446,7 @@ abstract class SimpleVisitor extends AstVisitor<void>
     => visit(node);
 
     @override
+    // ignore: deprecated_member_use
     void visitOnClause(OnClause node)
     => visit(node);
 

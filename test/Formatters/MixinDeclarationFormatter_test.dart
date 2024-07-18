@@ -17,7 +17,8 @@ void main()
             inputMiddle: 'mixin M on A, B{}',
             name: 'MixinDeclaration / mixin M on A, B{}',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<OnClause>(8, 'on A, B')
+                //TestVisitor<OnClause>(8, 'on A, B') OnClause => MixinOnClause
+                TestVisitor<MixinOnClause>(8, 'on A, B')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

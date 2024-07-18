@@ -93,6 +93,7 @@ class AstCreator
     static NamespaceDirective createNamespaceDirective(String s)
     => createDirective(s) as NamespaceDirective;
 
+    // ignore: deprecated_member_use
     static OnClause createOnClauseInMixinDeclaration(String s)
     => createMixinDeclaration(s).onClause!;
 

@@ -581,6 +581,7 @@ class FormatVisitor extends AstVisitor<void>
     => _objectPatternFormatter.format(node);
 
     @override
+    // ignore: deprecated_member_use
     void visitOnClause(OnClause node)
     => _onClauseFormatter.format(node);
 

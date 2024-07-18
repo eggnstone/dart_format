@@ -22,6 +22,7 @@ class OnClauseFormatter extends IFormatter
         const String methodName = 'OnClauseFormatter.format';
         if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
+        // ignore: deprecated_member_use
         if (node is! OnClause)
             throw FormatException('Not an OnClause: ${node.runtimeType}');
 
