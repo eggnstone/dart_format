@@ -29,6 +29,7 @@ class ClassDeclarationFormatter extends IFormatter
         //log('### NOT COPYING node.sortedCommentAndAnnotations', 0);
 
         formatState.copyEntity(node.sealedKeyword, astVisitor, '$methodName/node.abstractKeyword');
+        formatState.copyEntity(node.baseKeyword, astVisitor, '$methodName/node.baseKeyword');
         formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword');
         formatState.copyEntity(node.mixinKeyword, astVisitor, '$methodName/node.mixinKeyword');
         formatState.copyEntity(node.interfaceKeyword, astVisitor, '$methodName/node.interfaceKeyword');

@@ -43,6 +43,15 @@ void main()
         ),
         TestGroupConfig(
             inputNodeCreator: AstCreator.createDeclaration,
+            inputMiddle: 'base class C{}',
+            name: 'ClassDeclaration / base class C{}',
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('base class C\n{\n}\n')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createDeclaration,
             inputMiddle: 'abstract mixin class C{}',
             name: 'ClassDeclaration / abstract mixin class C{}',
             testConfigs: <TestConfig>[

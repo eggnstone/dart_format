@@ -20,7 +20,7 @@ void main()
             name: 'SwitchPatternCase',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<IntegerLiteral>(22, '0'),
-                TestVisitor<SwitchExpressionCase>(25, '0=>0'),
+                TestVisitor<SwitchExpressionCase>(25, '0=>0')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
