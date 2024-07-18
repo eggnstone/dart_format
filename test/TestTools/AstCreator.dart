@@ -30,6 +30,9 @@ class AstCreator
     static AstNode createCommentBeforeClassDeclaration(String s)
     => createClassDeclaration(s).sortedCommentAndAnnotations[0];
 
+    static ConditionalExpression createConditionalExpression(String s)
+    => createVariableDeclarationInitializerInFunction(s) as ConditionalExpression;
+
     static ConstructorDeclaration createConstructorDeclaration(String s)
     => createClassMember(s) as ConstructorDeclaration;
 
@@ -123,6 +126,18 @@ class AstCreator
 
     static TypeAnnotation createTypeAnnotationInFunctionParameter(String s)
     => createSimpleFormalParameterInFunction(s).type!;
+
+    static VariableDeclaration createVariableDeclarationInFunction(String s)
+    => createVariableDeclarationListInFunction(s).variables[0];
+
+    static Expression createVariableDeclarationInitializerInFunction(String s)
+    => createVariableDeclarationInFunction(s).initializer!;
+
+    static VariableDeclarationList createVariableDeclarationListInFunction(String s)
+    => createVariableDeclarationStatementInFunction(s).variables;
+
+    static VariableDeclarationStatement createVariableDeclarationStatementInFunction(String s)
+    => createStatementInFunction(s) as VariableDeclarationStatement;
 
     static VariableDeclaration createVariableDeclarationInClass(String s)
     => createVariableDeclarationListInClass(s).variables[0];

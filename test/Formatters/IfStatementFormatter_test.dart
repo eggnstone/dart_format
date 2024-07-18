@@ -70,10 +70,6 @@ void main()
                 TestVisitor<BooleanLiteral>(13, 'true'),
                 TestVisitor<EmptyStatement>(18, ';'),
                 TestVisitor<EmptyStatement>(23, ';')
-            ],
-            testConfigs: <TestConfig>[
-                TestConfig.none(),
-                TestConfig()
             ]
         ),
         TestGroupConfig(

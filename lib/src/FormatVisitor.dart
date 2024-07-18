@@ -11,6 +11,7 @@ import 'Formatters/BreakStatementFormatter.dart';
 import 'Formatters/ClassDeclarationFormatter.dart';
 import 'Formatters/ClassTypeAliasFormatter.dart';
 import 'Formatters/CompilationUnitFormatter.dart';
+import 'Formatters/ConditionalExpressionFormatter.dart';
 import 'Formatters/ConstructorDeclarationFormatter.dart';
 import 'Formatters/ContinueStatementFormatter.dart';
 import 'Formatters/DefaultFormatter.dart';
@@ -83,6 +84,7 @@ class FormatVisitor extends AstVisitor<void>
     late final ClassDeclarationFormatter _classDeclarationFormatter = ClassDeclarationFormatter(config, this, _formatState);
     late final ClassTypeAliasFormatter _classTypeAliasFormatter = ClassTypeAliasFormatter(config, this, _formatState);
     late final CompilationUnitFormatter _compilationUnitFormatter = CompilationUnitFormatter(config, this, _formatState);
+    late final ConditionalExpressionFormatter _conditionalExpressionFormatter = ConditionalExpressionFormatter(config, this, _formatState);
     late final ConstructorDeclarationFormatter _constructorDeclarationFormatter = ConstructorDeclarationFormatter(config, this, _formatState);
     late final ContinueStatementFormatter _continueStatementFormatter = ContinueStatementFormatter(config, this, _formatState);
     late final DoStatementFormatter _doStatementFormatter = DoStatementFormatter(config, this, _formatState);
@@ -246,7 +248,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitConditionalExpression(ConditionalExpression node)
-    => _defaultFormatter.format(node);
+    => _conditionalExpressionFormatter.format(node);
 
     @override
     void visitConfiguration(Configuration node)
