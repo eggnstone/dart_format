@@ -11,9 +11,6 @@ void main()
 {
     TestTools.init();
 
-    final VariableDeclaration x = AstCreator.createVariableDeclarationInFunction('void f(){bool b = true\n? true\n: false;}');
-    final Expression? y = x.initializer;
-
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
         TestGroupConfig(
             inputNodeCreator: AstCreator.createConditionalExpression,
