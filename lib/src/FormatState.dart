@@ -325,7 +325,9 @@ class FormatState
                 _logAndThrowError('Internal error: Missed some text:'
                     ' (${getPositionInfo(lastConsumedPosition)}) - (${getPositionInfo(offset)}):'
                     ' ${StringTools.toDisplayString(filler, 100)}'
-                    ' Source: $source', _parseResult.lineInfo.getLocation(lastConsumedPosition));
+                    ' Source: $source',
+                    getLocation(lastConsumedPosition)
+                );
 
             final String fixedFiller = _removeLeadingWhitespace(filler);
             if (Constants.DEBUG_FORMAT_STATE)
@@ -370,7 +372,9 @@ class FormatState
             if (Constants.DEBUG_FORMAT_STATE) logInternal('  Current:                   ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
             _logAndThrowError('Internal error: Missed some text:'
                 ' (${getPositionInfo(lastConsumedPosition)}) - (${getPositionInfo(end)}):'
-                ' ${StringTools.toDisplayString(filler, 100)} Source: $source', _parseResult.lineInfo.getLocation(lastConsumedPosition));
+                ' ${StringTools.toDisplayString(filler, 100)} Source: $source',
+                getLocation(lastConsumedPosition)
+            );
         }
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(filler, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
@@ -529,6 +533,21 @@ class FormatState
 
     String getLastText()
     => _textBuffers.last.lastText;
+
+    CharacterLocation? getLocation(int offset)
+    {
+        try
+        {
+            return _parseResult.lineInfo.getLocation(offset);
+        }
+        // ignore: avoid_catching_errors
+        on UnimplementedError catch (_)
+        {
+            // TestParseStringResult will throw an UnimplementedError.
+            //logInfo('Offset $offset');
+            return null;
+        }
+    }
 
     String getPositionInfo(int offset)
     {
