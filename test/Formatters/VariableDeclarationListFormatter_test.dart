@@ -21,6 +21,18 @@ void main()
                 TestVisitor<NamedType>(19, 'int'),
                 TestVisitor<VariableDeclaration>(23, 'i = 0')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createVariableDeclarationListInFunction,
+            inputLeading: 'void f(){',
+            inputMiddle: '@a bool b',
+            inputTrailing: ';}',
+            name: 'VariableDeclarationList @a bool b',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<Annotation>(9, '@a'),
+                TestVisitor<NamedType>(12, 'bool'),
+                TestVisitor<VariableDeclaration>(17, 'b')
+            ]
         )
     ];
 

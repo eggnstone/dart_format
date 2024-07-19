@@ -25,6 +25,7 @@ class VariableDeclarationListFormatter extends IFormatter
         if (node is! VariableDeclarationList)
             throw FormatException('Not a VariableDeclarationList: ${node.runtimeType}');
 
+        formatState.acceptList(node.metadata, astVisitor, '$methodName/node.metadata');
         formatState.copyEntity(node.lateKeyword, astVisitor, '$methodName/node.lateKeyword');
         formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword');
         formatState.copyEntity(node.type, astVisitor, '$methodName/node.type');
