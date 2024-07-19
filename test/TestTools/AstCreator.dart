@@ -3,6 +3,9 @@ import 'package:analyzer/src/dart/ast/ast.dart';
 
 class AstCreator
 {
+    static BinaryExpression createBinaryExpressionInTopLevelVariable(String s)
+    => createInitializerInTopLevelVariable(s) as BinaryExpression;
+
     static BlockFunctionBody createBlockFunctionBody(String s)
     => createFunctionExpression(s).body as BlockFunctionBody;
 
@@ -31,7 +34,7 @@ class AstCreator
     => createClassDeclaration(s).sortedCommentAndAnnotations[0];
 
     static ConditionalExpression createConditionalExpression(String s)
-    => createVariableDeclarationInitializerInFunction(s) as ConditionalExpression;
+    => createInitializerInVariableDeclarationInFunction(s) as ConditionalExpression;
 
     static ConstructorDeclaration createConstructorDeclaration(String s)
     => createClassMember(s) as ConstructorDeclaration;
@@ -63,6 +66,15 @@ class AstCreator
     static FieldDeclaration createFieldDeclarationInClass(String s)
     => createClassMember(s) as FieldDeclaration;
 
+    static Expression createInitializerInVariableDeclarationInClass(String s)
+    => createVariableDeclarationInClass(s).initializer!;
+
+    static Expression createInitializerInVariableDeclarationInFunction(String s)
+    => createVariableDeclarationInFunction(s).initializer!;
+
+    static Expression createInitializerInTopLevelVariable(String s)
+    => createVariableDeclarationInTopLevelVariableDeclaration(s).initializer!;
+
     static ForLoopParts createForLoopPartsInForStatementInFunction(String s)
     => createForStatementInFunction(s).forLoopParts;
 
@@ -83,9 +95,6 @@ class AstCreator
 
     static FunctionExpression createFunctionExpression(String s)
     => createFunctionDeclaration(s).functionExpression;
-
-    static Expression createInitializerInVariableDeclarationInClass(String s)
-    => createVariableDeclarationInClass(s).initializer!;
 
     static MixinDeclaration createMixinDeclaration(String s)
     => createDeclaration(s) as MixinDeclaration;
@@ -139,11 +148,14 @@ class AstCreator
     static VariableDeclaration createVariableDeclarationInFunction(String s)
     => createVariableDeclarationListInFunction(s).variables[0];
 
-    static Expression createVariableDeclarationInitializerInFunction(String s)
-    => createVariableDeclarationInFunction(s).initializer!;
+    static VariableDeclaration createVariableDeclarationInTopLevelVariableDeclaration(String s)
+    => createVariableDeclarationsInTopLevelVariableDeclaration(s)[0];
 
     static VariableDeclarationList createVariableDeclarationListInFunction(String s)
     => createVariableDeclarationStatementInFunction(s).variables;
+
+    static NodeList<VariableDeclaration> createVariableDeclarationsInTopLevelVariableDeclaration(String s)
+    => createTopLevelVariableList(s).variables;
 
     static VariableDeclarationStatement createVariableDeclarationStatementInFunction(String s)
     => createStatementInFunction(s) as VariableDeclarationStatement;

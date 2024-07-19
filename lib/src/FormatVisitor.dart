@@ -6,6 +6,7 @@ import 'Formatters/ArgumentListFormatter.dart';
 import 'Formatters/AssertInitializerFormatter.dart';
 import 'Formatters/AssertStatementFormatter.dart';
 import 'Formatters/AugmentationImportDirectiveFormatter.dart';
+import 'Formatters/BinaryExpressionFormatter.dart';
 import 'Formatters/BlockFormatter.dart';
 import 'Formatters/BreakStatementFormatter.dart';
 import 'Formatters/ClassDeclarationFormatter.dart';
@@ -80,6 +81,7 @@ class FormatVisitor extends AstVisitor<void>
     late final AssertInitializerFormatter _assertInitializerFormatter = AssertInitializerFormatter(config, this, _formatState);
     late final AssertStatementFormatter _assertStatementFormatter = AssertStatementFormatter(config, this, _formatState);
     late final AugmentationImportDirectiveFormatter _augmentationImportDirectiveFormatter = AugmentationImportDirectiveFormatter(config, this, _formatState);
+    late final BinaryExpressionFormatter _binaryExpressionFormatter = BinaryExpressionFormatter(config, this, _formatState);
     late final BlockFormatter _blockFormatter = BlockFormatter(config, this, _formatState);
     late final BreakStatementFormatter _breakStatementFormatter = BreakStatementFormatter(config, this, _formatState);
     late final ClassDeclarationFormatter _classDeclarationFormatter = ClassDeclarationFormatter(config, this, _formatState);
@@ -137,6 +139,7 @@ class FormatVisitor extends AstVisitor<void>
     late final TopLevelVariableDeclarationFormatter _topLevelVariableDeclarationFormatter = TopLevelVariableDeclarationFormatter(config, this, _formatState);
     late final TypeArgumentListFormatter _typeArgumentListFormatter = TypeArgumentListFormatter(config, this, _formatState);
     late final TypeParameterListFormatter _typeParameterListFormatter = TypeParameterListFormatter(config, this, _formatState);
+    //late final VariableDeclarationFormatter _variableDeclarationFormatter = VariableDeclarationFormatter(config, this, _formatState);
     late final VariableDeclarationListFormatter _variableDeclarationListFormatter = VariableDeclarationListFormatter(config, this, _formatState);
     late final VariableDeclarationStatementFormatter _variableDeclarationStatementFormatter = VariableDeclarationStatementFormatter(config, this, _formatState);
     late final WhileStatementFormatter _whileStatementFormatter = WhileStatementFormatter(config, this, _formatState);
@@ -190,7 +193,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitBinaryExpression(BinaryExpression node)
-    => _defaultFormatter.format(node);
+    => _binaryExpressionFormatter.format(node);
 
     @override
     void visitBlock(Block node)
@@ -800,6 +803,7 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitVariableDeclaration(VariableDeclaration node)
     => _defaultFormatter.format(node);
+    //=> _variableDeclarationFormatter.format(node);
 
     @override
     void visitVariableDeclarationList(VariableDeclarationList node)

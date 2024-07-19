@@ -28,6 +28,8 @@ class FunctionTypedFormalParameterFormatter extends IFormatter
         formatState.copyEntity(node.returnType, astVisitor, '$methodName/node.returnType');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters');
+        // This whole formatter should not be necessary, because it doesn't do anything special.
+        // But when FormalParameterListFormatter calls parameter.accept(astVisitor); the question is omitted.
         formatState.copyEntity(node.question, astVisitor, '$methodName/node.question');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
