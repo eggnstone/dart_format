@@ -26,6 +26,7 @@ class BreakStatementFormatter extends IFormatter
             throw FormatException('Not a BreakStatement: ${node.runtimeType}');
 
         formatState.copyEntity(node.breakKeyword,astVisitor, '$methodName/node.breakKeyword');
+        formatState.copyEntity(node.label, astVisitor, '$methodName/node.label');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
