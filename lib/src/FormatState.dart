@@ -166,7 +166,11 @@ class FormatState
                         }
                     }
 
-                    consumeText(adjustedLastNodeEnd, endToken.offset, commaText, '$source/TrailingComma');
+                    // TODO: test
+                    if (adjustedLastNodeEnd < endToken.offset)
+                        consumeText(adjustedLastNodeEnd, endToken.offset, commaText, '$source/TrailingComma');
+                    else
+                        logWarning('Trailing comma text not consumed: adjustedLastNodeEnd < endToken.offset');
                 }
             }
         }
@@ -489,7 +493,11 @@ class FormatState
             }
         }
 
-        copyText(adjustedCommentsOffset, commentsEnd, fullSource);
+        // TODO: test
+        if (adjustedCommentsOffset < commentsEnd)
+            copyText(adjustedCommentsOffset, commentsEnd, fullSource);
+        else
+            logWarning('Comments not consumed: adjustedCommentsOffset < commentsEnd');
     }
 
     void _copyTokenWithoutComments(Token? token, String source)
@@ -531,7 +539,11 @@ class FormatState
             }
         }
 
-        copyText(adjustedCommentTokenEnd, token.end, fullSource);
+        // TODO: test
+        if (adjustedCommentTokenEnd < token.end)
+            copyText(adjustedCommentTokenEnd, token.end, fullSource);
+        else
+            logWarning('Comments not consumed: adjustedCommentTokenEnd < token.end');
     }
 
     String getLastText()
