@@ -38,8 +38,8 @@ class FormalParameterListFormatter extends IFormatter
         {
             final bool shouldWriteLeftDelimiter =
             node.leftDelimiter != null
-            && (parameter.isNamed || parameter.isOptional)
-            && !wroteLeftDelimiter;
+                && (parameter.isNamed || parameter.isOptional)
+                && !wroteLeftDelimiter;
 
             if (lastNode != null)
             {

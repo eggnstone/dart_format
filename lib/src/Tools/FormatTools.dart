@@ -149,8 +149,8 @@ class FormatTools
                 throw DartFormatException.error('Internal error: Missing ${Constants.REMOVE_END} in result.');
 
             result = result.substring(0, start)
-            + result.substring(start + Constants.REMOVE_START.length, end)
-            + result.substring(end + Constants.REMOVE_END.length);
+                + result.substring(start + Constants.REMOVE_START.length, end)
+                + result.substring(end + Constants.REMOVE_END.length);
         }
 
         return result;
