@@ -26,11 +26,11 @@ class ClassTypeAliasFormatter extends IFormatter
             throw FormatException('Not a ClassTypeAlias: ${node.runtimeType}');
 
         formatState.acceptList(node.metadata, astVisitor, '$methodName/node.metadata');
+        formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword');
         formatState.copyEntity(node.typedefKeyword, astVisitor, '$methodName/node.typedefKeyword');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
         formatState.copyEntity(node.equals, astVisitor, '$methodName/node.equals');
-        formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword');
         //formatState.copyEntity(node.macroKeyword, astVisitor, '$methodName/node.macroKeyword');
         formatState.copyEntity(node.sealedKeyword, astVisitor, '$methodName/node.sealedKeyword');
         formatState.copyEntity(node.baseKeyword, astVisitor, '$methodName/node.baseKeyword');
