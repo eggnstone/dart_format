@@ -26,7 +26,21 @@ void main()
                 TestConfig.none(),
                 TestConfig('@a int i;\n')
             ]
-        ) 
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFieldDeclarationInClass,
+            inputLeading: 'abstract class C{',
+            inputMiddle: 'abstract bool b;',
+            inputTrailing: '}',
+            name: 'FieldDeclaration abstract field in abstract class',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<VariableDeclarationList>(26, 'bool b')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('abstract bool b;\n')
+            ]
+        )
     ];
 
     TestTools.runTestGroupsForFormatter(testGroupConfigs, 'FieldDeclarationFormatter', FieldDeclarationFormatter.new, StackTrace.current);
