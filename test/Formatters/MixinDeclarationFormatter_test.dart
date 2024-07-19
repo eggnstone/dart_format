@@ -14,15 +14,14 @@ void main()
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
         TestGroupConfig(
             inputNodeCreator: AstCreator.createDeclaration,
-            inputMiddle: 'mixin M on A, B{}',
-            name: 'MixinDeclaration / mixin M on A, B{}',
+            inputMiddle: 'base mixin M on A, B{}',
+            name: 'MixinDeclaration / base mixin M on A, B{}',
             astVisitors: <TestVisitor<void>>[
-                //TestVisitor<OnClause>(8, 'on A, B') OnClause => MixinOnClause
-                TestVisitor<MixinOnClause>(8, 'on A, B')
+                TestVisitor<MixinOnClause>(13, 'on A, B')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('mixin M on A, B\n{\n}\n')
+                TestConfig('base mixin M on A, B\n{\n}\n')
             ]
         )
     ];

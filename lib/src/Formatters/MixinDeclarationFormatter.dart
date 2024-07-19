@@ -26,6 +26,7 @@ class MixinDeclarationFormatter extends IFormatter
             throw FormatException('Not a MixinDeclaration: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
+        formatState.copyEntity(node.baseKeyword, astVisitor, '$methodName/node.baseKeyword');
         formatState.copyEntity(node.mixinKeyword, astVisitor, '$methodName/node.mixinKeyword');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
