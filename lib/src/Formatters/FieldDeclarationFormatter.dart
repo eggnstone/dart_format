@@ -25,9 +25,7 @@ class FieldDeclarationFormatter extends IFormatter
         if (node is! FieldDeclaration)
             throw FormatException('Not a FieldDeclaration: ${node.runtimeType}');
 
-        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        //log('### NOT COPYING node.sortedCommentAndAnnotations', 0);
-
+        formatState.acceptList(node.metadata, astVisitor, '$methodName/node.metadata');
         formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword');
         formatState.copyEntity(node.externalKeyword, astVisitor, '$methodName/node.externalKeyword');
         formatState.copyEntity(node.staticKeyword, astVisitor, '$methodName/node.staticKeyword');

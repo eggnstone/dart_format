@@ -15,16 +15,16 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createFieldDeclarationInClass,
             inputLeading: 'class C{',
-            inputMiddle: '@a int i;',
+            inputMiddle: '@a late final int i;',
             inputTrailing: '}',
-            name: 'FieldDeclaration @a int i;',
+            name: 'FieldDeclaration @a late final int i;',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<Annotation>(8, '@a'),
-                TestVisitor<VariableDeclarationList>(11, 'int i')
+                TestVisitor<VariableDeclarationList>(11, 'late final int i')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('@a int i;\n')
+                TestConfig('@a late final int i;\n')
             ]
         ),
         TestGroupConfig(
