@@ -117,13 +117,13 @@ class FormatState
             {
                 // This part is necessary for situations like "} ,\nXYZ"
                 int end = lastNode.end;
-                if (_lastConsumedPosition > end)
+                if (lastConsumedPosition > end)
                 {
-                    final String filler = getText(lastNode.end, _lastConsumedPosition);
+                    final String filler = getText(lastNode.end, lastConsumedPosition);
                     //logInternal('filler/1: ${StringTools.toDisplayString(filler)}');
                     if (filler.trim().isNotEmpty)
                         throw DartFormatException.error('filler is not empty: ${StringTools.toDisplayString(filler)}');
-                    end = _lastConsumedPosition;
+                    end = lastConsumedPosition;
                 }
 
                 final String commaText = getText(end, node.offset);
@@ -154,14 +154,14 @@ class FormatState
                         commaText = commaText.replaceFirst(',', '${Constants.REMOVE_START},${Constants.REMOVE_END}');
 
                     int? end = lastNode.end;
-                    if (end < _lastConsumedPosition)
+                    if (end < lastConsumedPosition)
                     {
-                        final String alreadyConsumedText = getText(end, _lastConsumedPosition);
+                        final String alreadyConsumedText = getText(end, lastConsumedPosition);
                         if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
                         if (alreadyConsumedText.trim().isEmpty)
                         {
                             // TODO: Find a better way!
-                            end = _lastConsumedPosition;
+                            end = lastConsumedPosition;
                         }
                     }
 
@@ -245,7 +245,7 @@ class FormatState
         end = token.precedingComments!.offset;*/
 
         if (lastConsumedPosition > token.offset)
-            _logAndThrowError('lastConsumedPosition > token.offset');
+            _logAndThrowErrorWithOffsets('Internal error: lastConsumedPosition > token.offset', '>', null, lastConsumedPosition, token.offset, source);
 
         if (getLastText().endsWith('\n'))
         {
@@ -280,9 +280,7 @@ class FormatState
         }
 
         if (filler.trim().isNotEmpty)
-            _logAndThrowError('Internal error: Upcoming trimmed filler is not empty/whitespace-only:'
-                ' (${getPositionInfo(lastConsumedPosition)})'
-                ' ${StringTools.toDisplayString(filler)}');
+            _logAndThrowErrorWithOffset('Internal error: Upcoming trimmed filler is not empty/whitespace-only:', StringTools.toDisplayString(filler), lastConsumedPosition);
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  Replacing empty or whitespace-only filler with line break because upcoming filler does not contain line break.');
         consumeText(lastConsumedPosition, end, '', fullSource);
@@ -305,9 +303,7 @@ class FormatState
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
         if (offset < lastConsumedPosition)
-            _logAndThrowError('Internal error: offset < lastConsumedPosition:'
-                ' (${getPositionInfo(offset)}) < (${getPositionInfo(lastConsumedPosition)})'
-                ' ($source)');
+            _logAndThrowErrorWithOffsets('Internal error: offset < lastConsumedPosition:', '<', null, offset, lastConsumedPosition, source);
 
         if (lastConsumedPosition < offset)
         {
@@ -322,12 +318,7 @@ class FormatState
             }
 
             if (!FormatTools.isEmptyOrComments(filler))
-                _logAndThrowError('Internal error: Missed some text:'
-                    ' (${getPositionInfo(lastConsumedPosition)}) - (${getPositionInfo(offset)}):'
-                    ' ${StringTools.toDisplayString(filler, 100)}'
-                    ' Source: $source',
-                    getLocation(lastConsumedPosition)
-                );
+                _logAndThrowErrorWithOffsets('Internal error: Missed some text:', '-', StringTools.toDisplayString(filler, 100), lastConsumedPosition, offset, source);
 
             final String fixedFiller = _removeLeadingWhitespace(filler);
             if (Constants.DEBUG_FORMAT_STATE)
@@ -370,11 +361,7 @@ class FormatState
         if (!FormatTools.isEmptyOrComments(filler))
         {
             if (Constants.DEBUG_FORMAT_STATE) logInternal('  Current:                   ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
-            _logAndThrowError('Internal error: Missed some text:'
-                ' (${getPositionInfo(lastConsumedPosition)}) - (${getPositionInfo(end)}):'
-                ' ${StringTools.toDisplayString(filler, 100)} Source: $source',
-                getLocation(lastConsumedPosition)
-            );
+            _logAndThrowErrorWithOffsets('Internal error: Missed some text:', '-', StringTools.toDisplayString(filler, 100), lastConsumedPosition, end, source);
         }
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(filler, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
@@ -517,14 +504,14 @@ class FormatState
             return;
         }
 
-        if (end < _lastConsumedPosition)
+        if (end < lastConsumedPosition)
         {
-            final String alreadyConsumedText = getText(end, _lastConsumedPosition);
+            final String alreadyConsumedText = getText(end, lastConsumedPosition);
             if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
             if (alreadyConsumedText.trim().isEmpty)
             {
                 // TODO: Find a better way!
-                end = _lastConsumedPosition;
+                end = lastConsumedPosition;
             }
         }
 
@@ -671,18 +658,34 @@ class FormatState
         logInternalError(s);
     }
 
-    void _setLastConsumedPosition(int value, String source)
-    {
-        if (value < _lastConsumedPosition)
-            _logAndThrowError('FormatState:_setLastConsumedPosition: value < _lastConsumedPosition: $value < $_lastConsumedPosition ($source)');
-
-        _lastConsumedPosition = value;
-    }
-
     void _logAndThrowError(String message, [CharacterLocation? location])
     {
         _logError(message);
         throw DartFormatException.error(message, location);
+    }
+
+    void _logAndThrowErrorWithOffset(String message, String? additionalText, int offset)
+    {
+        final String positionInfo = Constants.DEBUG_FORMAT_STATE ? '$offset, ${getPositionInfo(offset)}' : getPositionInfo(offset);
+
+        String finalMessage = '$message ($positionInfo)';
+        if (additionalText != null)
+            finalMessage += ' $additionalText';
+
+        _logAndThrowError(finalMessage, getLocation(offset));
+    }
+
+    void _logAndThrowErrorWithOffsets(String message, String delimiter, String? additionalText, int offset1, int offset2, String source)
+    {
+        final String positionInfo1 = Constants.DEBUG_FORMAT_STATE ? '$offset1, ${getPositionInfo(offset1)}' : getPositionInfo(offset1);
+        final String positionInfo2 = Constants.DEBUG_FORMAT_STATE ? '$offset2, ${getPositionInfo(offset2)}' : getPositionInfo(offset2);
+
+        String finalMessage = '$message ($positionInfo1) $delimiter ($positionInfo2)';
+        if (additionalText != null)
+            finalMessage += ' $additionalText';
+
+        finalMessage += ' ($source)';
+        _logAndThrowError(finalMessage, getLocation(offset1));
     }
 
     String _removeLeadingWhitespace(String s)
@@ -691,5 +694,13 @@ class FormatState
             return s;
 
         return StringTools.removeLeadingWhitespace(s);
+    }
+
+    void _setLastConsumedPosition(int value, String source)
+    {
+        if (value < lastConsumedPosition)
+            _logAndThrowErrorWithOffsets('Internal error: setLastConsumedPosition: value < lastConsumedPosition:', '<', null, value, lastConsumedPosition, source);
+
+        _lastConsumedPosition = value;
     }
 }
