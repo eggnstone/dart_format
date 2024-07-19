@@ -66,6 +66,9 @@ class AstCreator
     static FieldDeclaration createFieldDeclarationInClass(String s)
     => createClassMember(s) as FieldDeclaration;
 
+    static FunctionTypeAlias createFunctionTypeAlias(String s)
+    => createDeclaration(s) as FunctionTypeAlias;
+
     static Expression createInitializerInVariableDeclarationInClass(String s)
     => createVariableDeclarationInClass(s).initializer!;
 

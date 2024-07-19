@@ -19,12 +19,13 @@ class FunctionTypeAliasFormatter extends IFormatter
     @override
     void format(AstNode node)
     {
-        const String methodName = 'ForPartsWithExpressionFormatter.format';
+        const String methodName = 'FunctionTypeAliasFormatter.format';
         if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! FunctionTypeAlias)
             throw FormatException('Not a FunctionTypeAlias: ${node.runtimeType}');
 
+        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.typedefKeyword, astVisitor, '$methodName/node.typedefKeyword');
         formatState.copyEntity(node.returnType, astVisitor, '$methodName/node.returnType');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
