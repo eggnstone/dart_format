@@ -153,19 +153,20 @@ class FormatState
                     if (_removeTrailingCommas)
                         commaText = commaText.replaceFirst(',', '${Constants.REMOVE_START},${Constants.REMOVE_END}');
 
-                    int? end = lastNode.end;
-                    if (end < lastConsumedPosition)
+                    int adjustedLastNodeEnd = lastNode.end;
+                    if (lastNode.end < lastConsumedPosition)
                     {
-                        final String alreadyConsumedText = getText(end, lastConsumedPosition);
+                        final String alreadyConsumedText = getText(lastNode.end, lastConsumedPosition);
                         if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
-                        if (alreadyConsumedText.trim().isEmpty)
+                        if (FormatTools.isEmptyOrComments(alreadyConsumedText))
                         {
+                            // TODO: test
                             // TODO: Find a better way!
-                            end = lastConsumedPosition;
+                            adjustedLastNodeEnd = lastConsumedPosition;
                         }
                     }
 
-                    consumeText(end, endToken.offset, commaText, '$source/TrailingComma');
+                    consumeText(adjustedLastNodeEnd, endToken.offset, commaText, '$source/TrailingComma');
                 }
             }
         }
@@ -475,7 +476,20 @@ class FormatState
             return;
         }
 
-        copyText(commentsOffset, commentsEnd, fullSource);
+        int adjustedCommentsOffset = commentsOffset;
+        if (commentsOffset < lastConsumedPosition)
+        {
+            final String alreadyConsumedText = getText(commentsOffset, lastConsumedPosition);
+            if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
+            if (FormatTools.isEmptyOrComments(alreadyConsumedText))
+            {
+                // TODO: test
+                // TODO: Find a better way!
+                adjustedCommentsOffset = lastConsumedPosition;
+            }
+        }
+
+        copyText(adjustedCommentsOffset, commentsEnd, fullSource);
     }
 
     void _copyTokenWithoutComments(Token? token, String source)
@@ -491,31 +505,33 @@ class FormatState
         }
 
         Token? commentToken = token.precedingComments;
-        int? end = commentToken?.end;
+        int? commentTokenEnd = commentToken?.end;
         while (commentToken != null)
         {
-            end = commentToken.end;
+            commentTokenEnd = commentToken.end;
             commentToken = commentToken.next;
         }
 
-        if (end == null)
+        if (commentTokenEnd == null)
         {
             copyText(token.offset, token.end, fullSource);
             return;
         }
 
-        if (end < lastConsumedPosition)
+        int adjustedCommentTokenEnd = commentTokenEnd;
+        if (commentTokenEnd < lastConsumedPosition)
         {
-            final String alreadyConsumedText = getText(end, lastConsumedPosition);
+            final String alreadyConsumedText = getText(commentTokenEnd, lastConsumedPosition);
             if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
-            if (alreadyConsumedText.trim().isEmpty)
+            if (FormatTools.isEmptyOrComments(alreadyConsumedText))
             {
+                // TODO: test
                 // TODO: Find a better way!
-                end = lastConsumedPosition;
+                adjustedCommentTokenEnd = lastConsumedPosition;
             }
         }
 
-        copyText(end, token.end, fullSource);
+        copyText(adjustedCommentTokenEnd, token.end, fullSource);
     }
 
     String getLastText()
