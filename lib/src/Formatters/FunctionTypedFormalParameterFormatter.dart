@@ -25,6 +25,7 @@ class FunctionTypedFormalParameterFormatter extends IFormatter
         if (node is! FunctionTypedFormalParameter)
             throw FormatException('Not a FunctionTypedFormalParameter: ${node.runtimeType}');
 
+        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.returnType, astVisitor, '$methodName/node.returnType');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters');

@@ -14,12 +14,13 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createFormalParameterInFunction,
             inputLeading: 'void f(',
-            inputMiddle: 'void g()?',
+            inputMiddle: '@a void g()?',
             inputTrailing: '){}',
-            name: 'Nullable function param',
+            name: 'FunctionTypedFormalParameter @a void g()?',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<NamedType>(7, 'void'),
-                TestVisitor<FormalParameterList>(13, '()')
+                TestVisitor<Annotation>(7, '@a'),
+                TestVisitor<NamedType>(10, 'void'),
+                TestVisitor<FormalParameterList>(16, '()')
             ]
         )
     ];
