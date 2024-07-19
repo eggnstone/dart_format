@@ -45,9 +45,9 @@ import 'Formatters/ListLiteralFormatter.dart';
 import 'Formatters/ListPatternFormatter.dart';
 import 'Formatters/MapPatternFormatter.dart';
 import 'Formatters/MixinDeclarationFormatter.dart';
+import 'Formatters/MixinOnClauseFormatter.dart';
 import 'Formatters/NativeFunctionBodyFormatter.dart';
 import 'Formatters/ObjectPatternFormatter.dart';
-import 'Formatters/OnClauseFormatter.dart';
 import 'Formatters/PartDirectiveFormatter.dart';
 import 'Formatters/PartOfDirectiveFormatter.dart';
 import 'Formatters/PatternVariableDeclarationStatementFormatter.dart';
@@ -119,9 +119,9 @@ class FormatVisitor extends AstVisitor<void>
     late final ListPatternFormatter _listPatternFormatter = ListPatternFormatter(config, this, _formatState);
     late final MapPatternFormatter _mapPatternFormatter = MapPatternFormatter(config, this, _formatState);
     late final MixinDeclarationFormatter _mixinDeclarationFormatter = MixinDeclarationFormatter(config, this, _formatState);
+    late final MixinOnClauseFormatter _mixinOnClauseFormatter = MixinOnClauseFormatter(config, this, _formatState);
     late final NativeFunctionBodyFormatter _nativeFunctionBodyFormatter = NativeFunctionBodyFormatter(config, this, _formatState);
     late final ObjectPatternFormatter _objectPatternFormatter = ObjectPatternFormatter(config, this, _formatState);
-    late final OnClauseFormatter _onClauseFormatter = OnClauseFormatter(config, this, _formatState);
     late final PartDirectiveFormatter _partDirectiveFormatter = PartDirectiveFormatter(config, this, _formatState);
     late final PartOfDirectiveFormatter _partOfDirectiveFormatter = PartOfDirectiveFormatter(config, this, _formatState);
     late final PatternVariableDeclarationStatementFormatter _patternVariableDeclarationStatementFormatter = PatternVariableDeclarationStatementFormatter(config, this, _formatState);
@@ -590,7 +590,7 @@ class FormatVisitor extends AstVisitor<void>
     @override
     // ignore: deprecated_member_use
     void visitOnClause(OnClause node)
-    => _onClauseFormatter.format(node);
+    => _mixinOnClauseFormatter.format(node);
 
     @override
     void visitParenthesizedExpression(ParenthesizedExpression node)
@@ -847,5 +847,5 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitMixinOnClause(MixinOnClause node)
-    => _defaultFormatter.format(node);
+    => _mixinOnClauseFormatter.format(node);
 }

@@ -1,5 +1,5 @@
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:dart_format/src/Formatters/OnClauseFormatter.dart';
+import 'package:dart_format/src/Formatters/MixinOnClauseFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestGroupConfig.dart';
@@ -16,7 +16,7 @@ void main()
             inputLeading: 'mixin M ',
             inputMiddle: 'on A, B',
             inputTrailing: '{}',
-            name: 'OnClause',
+            name: 'MixinOnClause / on A, B',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<NamedType>(11, 'A'),
                 TestVisitor<NamedType>(14, 'B')
@@ -24,5 +24,5 @@ void main()
         )
     ];
 
-    TestTools.runTestGroupsForFormatter(testGroupConfigs, 'OnClauseFormatter', OnClauseFormatter.new, StackTrace.current);
+    TestTools.runTestGroupsForFormatter(testGroupConfigs, 'MixinOnClauseFormatter', MixinOnClauseFormatter.new, StackTrace.current);
 }

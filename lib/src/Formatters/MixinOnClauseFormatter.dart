@@ -8,26 +8,25 @@ import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
-class OnClauseFormatter extends IFormatter
+class MixinOnClauseFormatter extends IFormatter
 {
     final AstVisitor<void> astVisitor;
     final Config config;
     final FormatState formatState;
 
-    OnClauseFormatter(this.config, this.astVisitor, this.formatState);
+    MixinOnClauseFormatter(this.config, this.astVisitor, this.formatState);
 
     @override
     void format(AstNode node)
     {
-        const String methodName = 'OnClauseFormatter.format';
+        const String methodName = 'MixinOnClauseFormatter.format';
         if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
-        // ignore: deprecated_member_use
-        if (node is! OnClause)
-            throw FormatException('Not an OnClause: ${node.runtimeType}');
+        if (node is! MixinOnClause)
+            throw FormatException('Not a MixinOnClause: ${node.runtimeType}');
 
-        formatState.copyEntity(node.onKeyword, astVisitor, '$methodName/onClause');
-        formatState.acceptListWithComma(node.superclassConstraints, null, astVisitor, '$methodName/superclassConstraints');
+        formatState.copyEntity(node.onKeyword, astVisitor, '$methodName/node.onKeyword');
+        formatState.acceptListWithComma(node.superclassConstraints, null, astVisitor, '$methodName/node.superclassConstraints');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
