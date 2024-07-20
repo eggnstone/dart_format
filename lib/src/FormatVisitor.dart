@@ -44,6 +44,7 @@ import 'Formatters/LibraryIdentifierFormatter.dart';
 import 'Formatters/ListLiteralFormatter.dart';
 import 'Formatters/ListPatternFormatter.dart';
 import 'Formatters/MapPatternFormatter.dart';
+import 'Formatters/MethodInvocationFormatter.dart';
 import 'Formatters/MixinDeclarationFormatter.dart';
 import 'Formatters/MixinOnClauseFormatter.dart';
 import 'Formatters/NativeFunctionBodyFormatter.dart';
@@ -118,6 +119,7 @@ class FormatVisitor extends AstVisitor<void>
     late final ListLiteralFormatter _listLiteralFormatter = ListLiteralFormatter(config, this, _formatState);
     late final ListPatternFormatter _listPatternFormatter = ListPatternFormatter(config, this, _formatState);
     late final MapPatternFormatter _mapPatternFormatter = MapPatternFormatter(config, this, _formatState);
+    late final MethodInvocationFormatter _methodInvocationFormatter = MethodInvocationFormatter(config, this, _formatState);
     late final MixinDeclarationFormatter _mixinDeclarationFormatter = MixinDeclarationFormatter(config, this, _formatState);
     late final MixinOnClauseFormatter _mixinOnClauseFormatter = MixinOnClauseFormatter(config, this, _formatState);
     late final NativeFunctionBodyFormatter _nativeFunctionBodyFormatter = NativeFunctionBodyFormatter(config, this, _formatState);
@@ -549,7 +551,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitMethodInvocation(MethodInvocation node)
-    => _defaultFormatter.format(node);
+    => _methodInvocationFormatter.format(node);
 
     @override
     void visitMixinDeclaration(MixinDeclaration node)

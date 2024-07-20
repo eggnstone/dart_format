@@ -99,6 +99,9 @@ class AstCreator
     static FunctionExpression createFunctionExpression(String s)
     => createFunctionDeclaration(s).functionExpression;
 
+    static MethodInvocation createMethodInvocationInExpressionStatementInFunction(String s)
+    => createExpressionStatementInFunction(s).childEntities.first as MethodInvocation;
+
     static MixinDeclaration createMixinDeclaration(String s)
     => createDeclaration(s) as MixinDeclaration;
 
