@@ -9,6 +9,7 @@ import 'Formatters/AugmentationImportDirectiveFormatter.dart';
 import 'Formatters/BinaryExpressionFormatter.dart';
 import 'Formatters/BlockFormatter.dart';
 import 'Formatters/BreakStatementFormatter.dart';
+import 'Formatters/CascadeExpressionFormatter.dart';
 import 'Formatters/ClassDeclarationFormatter.dart';
 import 'Formatters/ClassTypeAliasFormatter.dart';
 import 'Formatters/CompilationUnitFormatter.dart';
@@ -52,6 +53,7 @@ import 'Formatters/ObjectPatternFormatter.dart';
 import 'Formatters/PartDirectiveFormatter.dart';
 import 'Formatters/PartOfDirectiveFormatter.dart';
 import 'Formatters/PatternVariableDeclarationStatementFormatter.dart';
+import 'Formatters/PrefixedIdentifierFormatter.dart';
 import 'Formatters/RecordLiteralFormatter.dart';
 import 'Formatters/RecordPatternFormatter.dart';
 import 'Formatters/RecordTypeAnnotationFormatter.dart';
@@ -85,6 +87,7 @@ class FormatVisitor extends AstVisitor<void>
     late final BinaryExpressionFormatter _binaryExpressionFormatter = BinaryExpressionFormatter(config, this, _formatState);
     late final BlockFormatter _blockFormatter = BlockFormatter(config, this, _formatState);
     late final BreakStatementFormatter _breakStatementFormatter = BreakStatementFormatter(config, this, _formatState);
+    late final CascadeExpressionFormatter _cascadeExpressionFormatter = CascadeExpressionFormatter(config, this, _formatState);
     late final ClassDeclarationFormatter _classDeclarationFormatter = ClassDeclarationFormatter(config, this, _formatState);
     late final ClassTypeAliasFormatter _classTypeAliasFormatter = ClassTypeAliasFormatter(config, this, _formatState);
     late final CompilationUnitFormatter _compilationUnitFormatter = CompilationUnitFormatter(config, this, _formatState);
@@ -127,6 +130,7 @@ class FormatVisitor extends AstVisitor<void>
     late final PartDirectiveFormatter _partDirectiveFormatter = PartDirectiveFormatter(config, this, _formatState);
     late final PartOfDirectiveFormatter _partOfDirectiveFormatter = PartOfDirectiveFormatter(config, this, _formatState);
     late final PatternVariableDeclarationStatementFormatter _patternVariableDeclarationStatementFormatter = PatternVariableDeclarationStatementFormatter(config, this, _formatState);
+    late final PrefixedIdentifierFormatter _prefixedIdentifierFormatter = PrefixedIdentifierFormatter(config, this, _formatState);
     late final RecordLiteralFormatter _recordLiteralFormatter = RecordLiteralFormatter(config, this, _formatState);
     late final RecordPatternFormatter _recordPatternFormatter = RecordPatternFormatter(config, this, _formatState);
     late final RecordTypeAnnotationFormatter _recordTypeAnnotationFormatter = RecordTypeAnnotationFormatter(config, this, _formatState);
@@ -215,7 +219,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitCascadeExpression(CascadeExpression node)
-    => _defaultFormatter.format(node);
+    => _cascadeExpressionFormatter.format(node);
 
     @override
     void visitCaseClause(CaseClause node)
@@ -640,7 +644,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitPrefixedIdentifier(PrefixedIdentifier node)
-    => _defaultFormatter.format(node);
+    => _prefixedIdentifierFormatter.format(node);
 
     @override
     void visitPropertyAccess(PropertyAccess node)

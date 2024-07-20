@@ -58,8 +58,8 @@ class FormatState
         indentationSpacesPerLevel: indentationSpacesPerLevel,
         removeTrailingCommas : removeTrailingCommas
     )
-    .._lastConsumedPosition = leading?.length ?? 0
-    .._trailingForTests = trailing;
+        .._lastConsumedPosition = leading?.length ?? 0
+        .._trailingForTests = trailing;
 
     void acceptListWithPeriod(List<AstNode> nodes, AstVisitor<void> astVisitor, String source)
     {
@@ -128,7 +128,7 @@ class FormatState
 
                 final String commaText = getText(end, node.offset);
                 if (!FormatTools.isCommaText(commaText))
-                    throw DartFormatException.error('commaText is not a comma: ${StringTools.toDisplayString(commaText)}');
+                    logAndThrowErrorWithOffsets('commaText is not a comma', '-', StringTools.toDisplayString(commaText), end, node.offset, source);
 
                 consumeText(end, node.offset, commaText, '$source/Comma');
             }
@@ -257,7 +257,7 @@ class FormatState
         end = token.precedingComments!.offset;*/
 
         if (lastConsumedPosition > token.offset)
-            _logAndThrowErrorWithOffsets('Internal error: lastConsumedPosition > token.offset', '>', null, lastConsumedPosition, token.offset, source);
+            logAndThrowErrorWithOffsets('Internal error: lastConsumedPosition > token.offset', '>', null, lastConsumedPosition, token.offset, source);
 
         if (getLastText().endsWith('\n'))
         {
@@ -292,7 +292,7 @@ class FormatState
         }
 
         if (filler.trim().isNotEmpty)
-            _logAndThrowErrorWithOffset('Internal error: Upcoming trimmed filler is not empty/whitespace-only:', StringTools.toDisplayString(filler), lastConsumedPosition);
+            logAndThrowErrorWithOffset('Internal error: Upcoming trimmed filler is not empty/whitespace-only:', StringTools.toDisplayString(filler), lastConsumedPosition);
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  Replacing empty or whitespace-only filler with line break because upcoming filler does not contain line break.');
         consumeText(lastConsumedPosition, end, '', fullSource);
@@ -315,7 +315,7 @@ class FormatState
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
         if (offset < lastConsumedPosition)
-            _logAndThrowErrorWithOffsets('Internal error: offset < lastConsumedPosition:', '<', null, offset, lastConsumedPosition, source);
+            logAndThrowErrorWithOffsets('Internal error: offset < lastConsumedPosition:', '<', null, offset, lastConsumedPosition, source);
 
         if (lastConsumedPosition < offset)
         {
@@ -330,7 +330,7 @@ class FormatState
             }
 
             if (!FormatTools.isEmptyOrComments(filler))
-                _logAndThrowErrorWithOffsets('Internal error: Missed some text:', '-', StringTools.toDisplayString(filler, 100), lastConsumedPosition, offset, source);
+                logAndThrowErrorWithOffsets('Internal error: Missed some text:', '-', StringTools.toDisplayString(filler, 100), lastConsumedPosition, offset, source);
 
             final String fixedFiller = _removeLeadingWhitespace(filler);
             if (Constants.DEBUG_FORMAT_STATE)
@@ -373,7 +373,7 @@ class FormatState
         if (!FormatTools.isEmptyOrComments(filler))
         {
             if (Constants.DEBUG_FORMAT_STATE) logInternal('  Current:                   ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
-            _logAndThrowErrorWithOffsets('Internal error: Missed some text:', '-', StringTools.toDisplayString(filler, 100), lastConsumedPosition, end, source);
+            logAndThrowErrorWithOffsets('Internal error: Missed some text:', '-', StringTools.toDisplayString(filler, 100), lastConsumedPosition, end, source);
         }
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(filler, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
@@ -678,6 +678,7 @@ class FormatState
             //logInternal('  lastText: ${StringTools.toDisplayString(_textBuffers.last.lastText)}');
             //logInternal('  allText:  ${StringTools.toDisplayString(_textBuffers.last)}');
         }
+
         _indentations.add(Indentation(name: name, type: type));
         _textBuffers.add(StringBufferEx(lastText: _textBuffers.last.lastText));
     }
@@ -693,13 +694,13 @@ class FormatState
         logInternalError(s);
     }
 
-    void _logAndThrowError(String message, [CharacterLocation? location])
+    void logAndThrowError(String message, [CharacterLocation? location])
     {
         _logError(message);
         throw DartFormatException.error(message, location);
     }
 
-    void _logAndThrowErrorWithOffset(String message, String? additionalText, int offset)
+    void logAndThrowErrorWithOffset(String message, String? additionalText, int offset)
     {
         final String positionInfo = Constants.DEBUG_FORMAT_STATE ? '$offset, ${getPositionInfo(offset)}' : getPositionInfo(offset);
 
@@ -707,10 +708,10 @@ class FormatState
         if (additionalText != null)
             finalMessage += ' $additionalText';
 
-        _logAndThrowError(finalMessage, getLocation(offset));
+        logAndThrowError(finalMessage, getLocation(offset));
     }
 
-    void _logAndThrowErrorWithOffsets(String message, String delimiter, String? additionalText, int offset1, int offset2, String source)
+    void logAndThrowErrorWithOffsets(String message, String delimiter, String? additionalText, int offset1, int offset2, String source)
     {
         final String positionInfo1 = Constants.DEBUG_FORMAT_STATE ? '$offset1, ${getPositionInfo(offset1)}' : getPositionInfo(offset1);
         final String positionInfo2 = Constants.DEBUG_FORMAT_STATE ? '$offset2, ${getPositionInfo(offset2)}' : getPositionInfo(offset2);
@@ -720,7 +721,7 @@ class FormatState
             finalMessage += ' $additionalText';
 
         finalMessage += ' ($source)';
-        _logAndThrowError(finalMessage, getLocation(offset1));
+        logAndThrowError(finalMessage, getLocation(offset1));
     }
 
     String _removeLeadingWhitespace(String s)
@@ -734,7 +735,7 @@ class FormatState
     void _setLastConsumedPosition(int value, String source)
     {
         if (value < lastConsumedPosition)
-            _logAndThrowErrorWithOffsets('Internal error: setLastConsumedPosition: value < lastConsumedPosition:', '<', null, value, lastConsumedPosition, source);
+            logAndThrowErrorWithOffsets('Internal error: setLastConsumedPosition: value < lastConsumedPosition:', '<', null, value, lastConsumedPosition, source);
 
         _lastConsumedPosition = value;
     }

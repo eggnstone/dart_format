@@ -2,7 +2,6 @@
 
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/token.dart';
-import 'package:eggnstone_dart/eggnstone_dart.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
@@ -27,31 +26,12 @@ class MethodInvocationFormatter extends IFormatter
         if (node is! MethodInvocation)
             throw FormatException('Not a MethodInvocation: ${node.runtimeType}');
 
-        /*logDebug('node.operator:                ${node.operator}');
-        logDebug('node.operator:                ${node.operator?.type}');
-        logDebug('node.operator:                ${node.operator?.keyword}');*/
-
-        final bool pushLevel = node.operator?.type == TokenType.PERIOD && formatState.getText(node.offset, node.end).contains('\n');
-
-        /*logDebug('all:                          ${StringTools.toDisplayString(formatState.getText(node.offset, node.end))}');
-
-        if (node.operator != null)
-            logDebug('operator - end:               ${StringTools.toDisplayString(formatState.getText(node.operator!.offset, node.end))}');
-
-        logDebug('node.target:                  ${node.target}');
-        if (node.target != null)
-            logDebug('target - end:                 ${StringTools.toDisplayString(formatState.getText(node.target!.offset, node.target!.end))}');
-
-        //logDebug('node.target.beginToken:       ${node.target?.beginToken}');
-        //logDebug('node.target.beginToken.next:  ${node.target?.beginToken.next}');
-
-        if (node.operator != null)
-            logDebug('operator:                     ${StringTools.toDisplayString(formatState.getText(node.operator!.offset, node.operator!.end))}');
-
-        logDebug('node.methodName:              ${node.methodName}');
-        logDebug('methodName:                   ${StringTools.toDisplayString(formatState.getText(node.methodName.offset, node.methodName.end))}');
-
-        logDebug('node.methodName.beginToken:   ${node.methodName.beginToken}');*/
+        bool pushLevel = false;
+        if (node.target != null && node.operator != null && node.operator!.type == TokenType.PERIOD)
+        {
+            final String textBetweenTargetAndOperator = formatState.getText(node.target!.end, node.operator!.offset);
+            pushLevel = textBetweenTargetAndOperator.contains('\n');
+        }
 
         formatState.copyEntity(node.target, astVisitor, '$methodName/node.target');
 

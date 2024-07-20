@@ -12,6 +12,9 @@ class AstCreator
     static Block createBlockInFunction(String s)
     => createBlockFunctionBody(s).block;
 
+    static CascadeExpression createCascadeExpressionInFunction(String s)
+    => createExpressionInFunction(s) as CascadeExpression;
+
     static CascadeExpression createCascadeExpressionInVariableDeclarationInClass(String s)
     => createInitializerInVariableDeclarationInClass(s) as CascadeExpression;
 

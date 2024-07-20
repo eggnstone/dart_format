@@ -17,7 +17,7 @@ void main()
             inputLeading: 'void f(){',
             inputMiddle: 'C\n.a()',
             inputTrailing: ';}',
-            name: 'MethodInvocation / C.a()',
+            name: r'MethodInvocation / C\n.a()',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<SimpleIdentifier>(9, 'C'),
                 TestVisitor<SimpleIdentifier>(12, 'a'),
@@ -33,15 +33,27 @@ void main()
             inputLeading: 'void f(){',
             inputMiddle: 'C\n.a()\n.b()',
             inputTrailing: ';}',
-            name: 'MethodInvocation / C.a().b()',
+            name: r'MethodInvocation / C\n.a()\n.b()',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<MethodInvocation>(9, 'C\n.a()'),
                 TestVisitor<SimpleIdentifier>(17, 'b'),
-                TestVisitor<ArgumentList>(18, '()'),
+                TestVisitor<ArgumentList>(18, '()')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
                 TestConfig('C\n.a()\n    .b()')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createMethodInvocationInExpressionStatementInFunction,
+            inputLeading: 'void f(){',
+            inputMiddle: 'C.c((){})',
+            inputTrailing: ';}',
+            name: 'MethodInvocation / C.c((){})',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleIdentifier>(9, 'C'),
+                TestVisitor<SimpleIdentifier>(11, 'c'),
+                TestVisitor<ArgumentList>(12, '((){})')
             ]
         )
     ];
