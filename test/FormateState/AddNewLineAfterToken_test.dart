@@ -33,15 +33,52 @@ void main()
 
                     formatState.addText('int i=0', 'SOURCE');
                     TestTools.expect(formatState.getResult(), equals('int i=0'));
+
                     formatState.addText(';', 'SOURCE');
+                    TestTools.expect(formatState.getResult(), equals('int i=0;'));
+
                     formatState.addNewLineAfterToken(inputToken1, 'SOURCE', add: true);
                     TestTools.expect(formatState.getResult(), equals('int i=0;'));
 
                     formatState.addText('int j=0', 'SOURCE');
                     TestTools.expect(formatState.getResult(), equals('int i=0;int j=0'));
+
                     formatState.addText(';', 'SOURCE');
+                    TestTools.expect(formatState.getResult(), equals('int i=0;int j=0;'));
+
                     formatState.addNewLineAfterToken(inputToken3, 'SOURCE', add: true);
                     TestTools.expect(formatState.getResult(), equals('int i=0;int j=0;'));
+                }
+            );
+
+            // TODO: better tests, tests with non-,
+            test('addNewLineAfterToken with ,', ()
+                {
+                    const String inputText = 'void f(void Function()g,int i){}void h(){f((){},0);}';
+                    final Token inputToken1 = Token(TokenType.STRING, 0);
+                    final Token inputToken2 = Token(TokenType.COMMA, 47);
+                    final Token inputToken3 = Token(TokenType.STRING, 48);
+                    inputToken1.next = inputToken2;
+                    inputToken2.next = inputToken3;
+
+                    final ParseStringResult parseResult = AnalyzerUtilities.parseString(content: inputText);
+                    final FormatState formatState = FormatState(
+                        parseResult,
+                        indentationSpacesPerLevel: 4,
+                        removeTrailingCommas: false
+                    );
+
+                    formatState.addText('void f(void Function()g,int i){}void h(){f((){}', 'SOURCE');
+                    TestTools.expect(formatState.getResult(), equals('void f(void Function()g,int i){}void h(){f((){}'));
+
+                    formatState.addText(',', 'SOURCE');
+                    TestTools.expect(formatState.getResult(), equals('void f(void Function()g,int i){}void h(){f((){},'));
+
+                    formatState.addNewLineAfterToken(inputToken1, 'SOURCE', add: true);
+                    TestTools.expect(formatState.getResult(), equals('void f(void Function()g,int i){}void h(){f((){},'));
+
+                    formatState.addText('0);}', 'SOURCE');
+                    TestTools.expect(formatState.getResult(), equals('void f(void Function()g,int i){}void h(){f((){},0);}'));
                 }
             );
         }

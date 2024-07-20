@@ -223,6 +223,13 @@ class FormatState
             return;
         }
 
+        // TODO: test
+        if (nextToken.toString() == ',')
+        {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  nextToken is "," => not adding line break');
+            return;
+        }
+
         if (nextToken.offset == _parseResult.content.length)
         {
             // EOF

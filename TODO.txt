@@ -26,3 +26,5 @@ DONE (I think)
 - WebService: Shut down if calling process dies.
 - quit doesn't work anymore
 - simplify TestAstVisitor
+- Don't add line break between "}" and ";"
+- Don't add line break between "}" and ","
