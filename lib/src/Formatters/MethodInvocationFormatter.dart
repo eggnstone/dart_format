@@ -1,7 +1,6 @@
 // ignore_for_file: always_put_control_body_on_new_line
 
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:analyzer/dart/ast/token.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
@@ -11,6 +10,8 @@ import 'IFormatter.dart';
 
 class MethodInvocationFormatter extends IFormatter
 {
+    static const String CLASS_NAME = 'MethodInvocationFormatter';
+
     final AstVisitor<void> astVisitor;
     final Config config;
     final FormatState formatState;
@@ -20,13 +21,15 @@ class MethodInvocationFormatter extends IFormatter
     @override
     void format(AstNode node)
     {
-        const String methodName = 'MethodInvocationFormatter.format';
+        const String methodName = '$CLASS_NAME.format';
         if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! MethodInvocation)
             throw FormatException('Not a MethodInvocation: ${node.runtimeType}');
 
-        final bool pushLevel = node.target != null && node.operator != null && node.operator!.type == TokenType.PERIOD;
+        final String textWithPossibleLineBreak = formatState.getText(node.offset, node.argumentList.offset);
+        //log('$CLASS_NAME: textWithPossibleLineBreak: ${StringTools.toDisplayString(textWithPossibleLineBreak)}', 0);
+        final bool pushLevel = textWithPossibleLineBreak.contains('\n');
 
         formatState.copyEntity(node.target, astVisitor, '$methodName/node.target');
 
@@ -36,11 +39,10 @@ class MethodInvocationFormatter extends IFormatter
         formatState.copyEntity(node.operator, astVisitor, '$methodName/node.operator');
         formatState.copyEntity(node.methodName, astVisitor, '$methodName/node.methodName');
         formatState.copyEntity(node.typeArguments, astVisitor, '$methodName/node.typeArguments');
+        formatState.copyEntity(node.argumentList, astVisitor, '$methodName/node.argumentList');
 
         if (pushLevel)
             formatState.popLevelAndIndent();
-
-        formatState.copyEntity(node.argumentList, astVisitor, '$methodName/node.argumentList');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
