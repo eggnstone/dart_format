@@ -1,3 +1,4 @@
+/*
 // ignore_for_file: always_put_control_body_on_new_line
 
 import 'package:analyzer/dart/ast/ast.dart';
@@ -26,10 +27,11 @@ class CascadeExpressionFormatter extends IFormatter
             throw FormatException('Not a CascadeExpression: ${node.runtimeType}');
 
         formatState.copyEntity(node.target, astVisitor, '$methodName/node.target');
-        formatState.pushLevel('$methodName/node.cascadeSections');
+        //formatState.pushLevel('$methodName/node.cascadeSections');
         formatState.acceptList(node.cascadeSections, astVisitor, '$methodName/node.cascadeSections');
-        formatState.popLevelAndIndent();
+        //formatState.popLevelAndIndent();
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }
+*/

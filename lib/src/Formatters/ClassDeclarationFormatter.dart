@@ -38,7 +38,7 @@ class ClassDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.classKeyword, astVisitor, '$methodName/node.classKeyword');
 
         //if (pushLevel)
-            formatState.pushLevel('$methodName/node.classKeyword/after');
+        formatState.pushLevel('$methodName/node.classKeyword/after');
 
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
@@ -47,7 +47,7 @@ class ClassDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause');
 
         //if (pushLevel)
-            formatState.popLevelAndIndent();
+        formatState.popLevelAndIndent();
 
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
         formatState.acceptList(node.members, astVisitor, '$methodName/node.members');

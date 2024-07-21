@@ -32,7 +32,7 @@ class ImportDirectiveFormatter extends IFormatter
         formatState.copyEntity(node.importKeyword, astVisitor, '$methodName/node.importKeyword');
 
         //if (pushLevel)
-            formatState.pushLevel('$methodName/node.classKeyword/after');
+        formatState.pushLevel('$methodName/node.classKeyword/after');
 
         formatState.copyEntity(node.uri, astVisitor, '$methodName/node.uri');
         formatState.acceptList(node.configurations, astVisitor, '$methodName/node.configurations');
@@ -43,7 +43,7 @@ class ImportDirectiveFormatter extends IFormatter
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
 
         //if (pushLevel)
-            formatState.popLevelAndIndent();
+        formatState.popLevelAndIndent();
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

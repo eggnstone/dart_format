@@ -1,3 +1,4 @@
+/*
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:dart_format/src/Formatters/CascadeExpressionFormatter.dart';
 
@@ -47,3 +48,4 @@ void main()
 
     TestTools.runTestGroupsForFormatter(testGroupConfigs, 'CascadeExpressionFormatter', CascadeExpressionFormatter.new, StackTrace.current);
 }
+*/
