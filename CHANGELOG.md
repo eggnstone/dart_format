@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.19
+
+- Many improvements and bug fixes.
+ 
 ## 1.1.18
 
 - Adjusted to extended AstVisitor.
