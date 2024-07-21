@@ -26,9 +26,7 @@ class ClassDeclarationFormatter extends IFormatter
             throw FormatException('Not a ClassDeclaration: ${node.runtimeType}');
 
         final String textWithPossibleLineBreak = formatState.getText(node.classKeyword.offset, node.leftBracket.offset);
-        //log('textWithPossibleLineBreak: ${StringTools.toDisplayString(textWithPossibleLineBreak)}', 0);
         final bool pushLevel = textWithPossibleLineBreak.contains('\n');
-        //log('pushLevel: $pushLevel', 0);
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.sealedKeyword, astVisitor, '$methodName/node.abstractKeyword');

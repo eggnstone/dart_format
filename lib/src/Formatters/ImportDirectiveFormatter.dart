@@ -25,8 +25,15 @@ class ImportDirectiveFormatter extends IFormatter
         if (node is! ImportDirective)
             throw FormatException('Not an ImportDirective: ${node.runtimeType}');
 
+        final String textWithPossibleLineBreak = formatState.getText(node.importKeyword.offset, node.semicolon.offset);
+        final bool pushLevel = textWithPossibleLineBreak.contains('\n');
+
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.importKeyword, astVisitor, '$methodName/node.importKeyword');
+
+        if (pushLevel)
+            formatState.pushLevel('$methodName/node.classKeyword/after');
+
         formatState.copyEntity(node.uri, astVisitor, '$methodName/node.uri');
         formatState.acceptList(node.configurations, astVisitor, '$methodName/node.configurations');
         formatState.copyEntity(node.deferredKeyword, astVisitor, '$methodName/node.deferredKeyword');
@@ -34,6 +41,9 @@ class ImportDirectiveFormatter extends IFormatter
         formatState.copyEntity(node.prefix, astVisitor, '$methodName/node.prefix');
         formatState.acceptList(node.combinators, astVisitor, '$methodName/node.combinators');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+
+        if (pushLevel)
+            formatState.popLevelAndIndent();
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

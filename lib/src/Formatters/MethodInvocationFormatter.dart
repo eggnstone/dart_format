@@ -30,9 +30,7 @@ class MethodInvocationFormatter extends IFormatter
         if (node.target != null && node.operator != null && node.operator!.type == TokenType.PERIOD)
         {
             final String textWithPossibleLineBreak = formatState.getText(node.target!.end, node.operator!.offset);
-            //logDebug('textWithPossibleLineBreak: ${StringTools.toDisplayString(textWithPossibleLineBreak)}');
             pushLevel = textWithPossibleLineBreak.contains('\n');
-            //logDebug('pushLevel: $pushLevel');
         }
 
         formatState.copyEntity(node.target, astVisitor, '$methodName/node.target');
