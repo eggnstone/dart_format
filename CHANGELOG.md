@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.19
+## 1.1.20
 
 - Many improvements and bug fixes.
  

@@ -1,9 +1,10 @@
+import '../Constants/Generated/VersionConstants.dart';
 import 'LogTools.dart';
 
 class InfoTools
 {
     static void writeCopyrightToStdOut()
-    => writelnToStdOut('dart_format (c) 2022-2024 Mark Eggenstein', preventLoggingToTempFile: true);
+    => writelnToStdOut('dart_format v${VersionConstants.VERSION} (c) 2022-2024 Mark Eggenstein', preventLoggingToTempFile: true);
 
     static void writeUsageToStdOut()
     {
