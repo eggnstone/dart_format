@@ -12,7 +12,7 @@ void main()
 
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
         TestGroupConfig(
-            inputNodeCreator: AstCreator.createForLoopPartsInForStatementInFunction,
+            inputNodeCreator: AstCreator.createForLoopPartsInFunction,
             inputLeading: 'void f(){for(',
             inputMiddle: ';;i++,j--',
             inputTrailing: ');}',

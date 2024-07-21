@@ -26,6 +26,7 @@ import 'Formatters/ExpressionFunctionBodyFormatter.dart';
 import 'Formatters/ExpressionStatementFormatter.dart';
 import 'Formatters/ExtensionDeclarationFormatter.dart';
 import 'Formatters/FieldDeclarationFormatter.dart';
+import 'Formatters/ForElementFormatter.dart';
 import 'Formatters/ForPartsWithDeclarationsFormatter.dart';
 import 'Formatters/ForPartsWithExpressionFormatter.dart';
 import 'Formatters/ForStatementFormatter.dart';
@@ -104,6 +105,8 @@ class FormatVisitor extends AstVisitor<void>
     late final ExpressionFunctionBodyFormatter _expressionFunctionBodyFormatter = ExpressionFunctionBodyFormatter(config, this, _formatState);
     late final ExpressionStatementFormatter _expressionStatementFormatter = ExpressionStatementFormatter(config, this, _formatState);
     late final FieldDeclarationFormatter _fieldDeclarationFormatter = FieldDeclarationFormatter(config, this, _formatState);
+    //late final ForEachPartsWithDeclarationFormatter _forEachPartsWithDeclarationFormatter = ForEachPartsWithDeclarationFormatter(config, this, _formatState);
+    late final ForElementFormatter _forElementFormatter = ForElementFormatter(config, this, _formatState);
     late final FormalParameterListFormatter _formalParameterListFormatter = FormalParameterListFormatter(config, this, _formatState);
     late final ForPartsWithDeclarationsFormatter _forPartsWithDeclarationsFormatter = ForPartsWithDeclarationsFormatter(config, this, _formatState);
     late final ForPartsWithExpressionFormatter _forPartsWithExpressionFormatter = ForPartsWithExpressionFormatter(config, this, _formatState);
@@ -379,6 +382,7 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitForEachPartsWithDeclaration(ForEachPartsWithDeclaration node)
     => _defaultFormatter.format(node);
+    //=> _forEachPartsWithDeclarationFormatter.format(node);
 
     @override
     void visitForEachPartsWithIdentifier(ForEachPartsWithIdentifier node)
@@ -390,7 +394,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitForElement(ForElement node)
-    => _defaultFormatter.format(node);
+    => _forElementFormatter.format(node);
 
     @override
     void visitFormalParameterList(FormalParameterList node)

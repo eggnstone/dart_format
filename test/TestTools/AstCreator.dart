@@ -72,6 +72,9 @@ class AstCreator
     static FieldDeclaration createFieldDeclarationInClass(String s)
     => createClassMember(s) as FieldDeclaration;
 
+    static ForElement createForElement(String s)
+    => createSetOrMapLiteral(s).elements.first as ForElement;
+
     static FunctionTypeAlias createFunctionTypeAlias(String s)
     => createDeclaration(s) as FunctionTypeAlias;
 
@@ -84,7 +87,7 @@ class AstCreator
     static Expression createInitializerInTopLevelVariable(String s)
     => createVariableDeclarationInTopLevelVariableDeclaration(s).initializer!;
 
-    static ForLoopParts createForLoopPartsInForStatementInFunction(String s)
+    static ForLoopParts createForLoopPartsInFunction(String s)
     => createForStatementInFunction(s).forLoopParts;
 
     static FormalParameter createFormalParameterInFunction(String s)
@@ -126,6 +129,9 @@ class AstCreator
 
     static Expression createRightHandSideInAssignmentExpressionInFunction(String s)
     => createAssignmentExpressionInFunction(s).rightHandSide;
+
+    static SetOrMapLiteral createSetOrMapLiteral(String s)
+    => createRightHandSideInAssignmentExpressionInFunction(s) as SetOrMapLiteral;
 
     static SimpleFormalParameter createSimpleFormalParameterInFunction(String s)
     => createFormalParameterInFunction(s) as SimpleFormalParameter;
