@@ -6,25 +6,26 @@ TODO
 -- e.g. <DartFormatException>.
 -- e.g. offset < lastConsumedPosition
 - favicon.ico does not work when called from plugin.
-- integration tests for indentation=-1
-- integration tests for maxEmptyLines
+- Integration tests for indentation=-1
+- Integration tests for maxEmptyLines
 - maxEmptyLines can only work when removeLeadingWhitespace does not already remove all empty lines.
-- tests for FormalParameterListFormatter, ... (test preservation/removal of trailing comma)
+- Tests for FormalParameterListFormatter, ... (test preservation/removal of trailing comma)
 - Block comments: keep indentation
 - Own lint rule: don't return Futures in a try-catch block.
 - Own lint rule: don't call unawaited stuff in a try-catch block.
 - Own lint rule: don't return Future<void>s.
-- ensure DEBUG is off when publishing
-- safety: don't accept result if length is 0 or very short, e.g. when throwing UnimplementedError in StringTools.
+- Ensure DEBUG is off when publishing
+- Safety: don't accept result if length is 0 or very short, e.g. when throwing UnimplementedError in StringTools.
 - No blank lines between {{ and }}
 - No blank line after { and before }
 - Investigate line endings. Keep existing style, but also offer option to convert.
+- No more than maxEmptyLines blank lines at file end.
 
 DONE (I think)
 ==============
 - Method params: indent when multiline with "(" and "({"
 - WebService: Shut down if calling process dies.
-- quit doesn't work anymore
-- simplify TestAstVisitor
+- Quit doesn't work anymore
+- Simplify TestAstVisitor
 - Don't add line break between "}" and ";"
 - Don't add line break between "}" and ","

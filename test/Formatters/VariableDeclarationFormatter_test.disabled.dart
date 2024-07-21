@@ -1,7 +1,6 @@
 /*
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:dart_format/src/Formatters/VariableDeclarationFormatter.dart';
-import 'package:dart_format/src/Formatters/VariableDeclarationListFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestGroupConfig.dart';
@@ -15,12 +14,12 @@ void main()
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
         TestGroupConfig(
             inputNodeCreator: AstCreator.createVariableDeclarationInTopLevelVariableDeclaration,
-            inputLeading: 'bool ',
-            inputMiddle: 'b = true\n&& false',
+            inputLeading: 'int ',
+            inputMiddle: 'i=f\n.a\n.b',
             inputTrailing: ';',
             name: 'Multiline VariableDeclaration',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<BinaryExpression>(9, 'true\n&& false')
+                TestVisitor<PropertyAccess>(6, 'f\n.a\n.b')
             ]
         )
     ];

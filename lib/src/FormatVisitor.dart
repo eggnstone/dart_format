@@ -54,6 +54,7 @@ import 'Formatters/PartDirectiveFormatter.dart';
 import 'Formatters/PartOfDirectiveFormatter.dart';
 import 'Formatters/PatternVariableDeclarationStatementFormatter.dart';
 import 'Formatters/PrefixedIdentifierFormatter.dart';
+import 'Formatters/PropertyAccessFormatter.dart';
 import 'Formatters/RecordLiteralFormatter.dart';
 import 'Formatters/RecordPatternFormatter.dart';
 import 'Formatters/RecordTypeAnnotationFormatter.dart';
@@ -130,6 +131,7 @@ class FormatVisitor extends AstVisitor<void>
     late final PartOfDirectiveFormatter _partOfDirectiveFormatter = PartOfDirectiveFormatter(config, this, _formatState);
     late final PatternVariableDeclarationStatementFormatter _patternVariableDeclarationStatementFormatter = PatternVariableDeclarationStatementFormatter(config, this, _formatState);
     late final PrefixedIdentifierFormatter _prefixedIdentifierFormatter = PrefixedIdentifierFormatter(config, this, _formatState);
+    late final PropertyAccessFormatter _propertyAccessFormatter = PropertyAccessFormatter(config, this, _formatState);
     late final RecordLiteralFormatter _recordLiteralFormatter = RecordLiteralFormatter(config, this, _formatState);
     late final RecordPatternFormatter _recordPatternFormatter = RecordPatternFormatter(config, this, _formatState);
     late final RecordTypeAnnotationFormatter _recordTypeAnnotationFormatter = RecordTypeAnnotationFormatter(config, this, _formatState);
@@ -647,7 +649,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitPropertyAccess(PropertyAccess node)
-    => _defaultFormatter.format(node);
+    => _propertyAccessFormatter.format(node);
 
     @override
     void visitRecordLiteral(RecordLiteral node)

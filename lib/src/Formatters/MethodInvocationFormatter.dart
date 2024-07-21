@@ -26,25 +26,27 @@ class MethodInvocationFormatter extends IFormatter
         if (node is! MethodInvocation)
             throw FormatException('Not a MethodInvocation: ${node.runtimeType}');
 
-        bool pushLevel = false;
+        /*bool pushLevel = false;
         if (node.target != null && node.operator != null && node.operator!.type == TokenType.PERIOD)
         {
             final String textWithPossibleLineBreak = formatState.getText(node.target!.end, node.operator!.offset);
-            pushLevel = textWithPossibleLineBreak.contains('\n');
+             pushLevel = true;//pushLevel = textWithPossibleLineBreak.contains('\n');
         }
+        pushLevel = true;*/
 
         formatState.copyEntity(node.target, astVisitor, '$methodName/node.target');
 
-        if (pushLevel)
+        //if (pushLevel)
             formatState.pushLevel('$methodName/node.target/after');
 
         formatState.copyEntity(node.operator, astVisitor, '$methodName/node.operator');
         formatState.copyEntity(node.methodName, astVisitor, '$methodName/node.methodName');
         formatState.copyEntity(node.typeArguments, astVisitor, '$methodName/node.typeArguments');
-        formatState.copyEntity(node.argumentList, astVisitor, '$methodName/node.argumentList');
 
-        if (pushLevel)
+        //if (pushLevel)
             formatState.popLevelAndIndent();
+
+        formatState.copyEntity(node.argumentList, astVisitor, '$methodName/node.argumentList');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
