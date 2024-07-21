@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/analysis/utilities.dart' as AnalyzerUtilities; // ignore: library_prefixes
 import 'package:analyzer/dart/ast/token.dart';
+import 'package:dart_format/src/Constants/Constants.dart';
 import 'package:dart_format/src/FormatState.dart';
 import 'package:test/test.dart';
 
@@ -25,10 +26,14 @@ void main()
                     inputToken3.next = inputToken4;
 
                     final ParseStringResult parseResult = AnalyzerUtilities.parseString(content: inputText);
+                    final DateTime startDateTime = DateTime.now();
+                    final DateTime maxDateTime = startDateTime.add(const Duration(seconds: Constants.MAX_FORMAT_TIME_IN_SECONDS_FOR_TESTS));
                     final FormatState formatState = FormatState(
                         parseResult,
                         indentationSpacesPerLevel: 4,
-                        removeTrailingCommas: true
+                        maxDateTime: maxDateTime,
+                        removeTrailingCommas: true,
+                        startDateTime: startDateTime
                     );
 
                     formatState.addText('int i=0', 'SOURCE');
@@ -62,10 +67,14 @@ void main()
                     inputToken2.next = inputToken3;
 
                     final ParseStringResult parseResult = AnalyzerUtilities.parseString(content: inputText);
+                    final DateTime startDateTime = DateTime.now();
+                    final DateTime maxDateTime = startDateTime.add(const Duration(seconds: Constants.MAX_FORMAT_TIME_IN_SECONDS_FOR_TESTS));
                     final FormatState formatState = FormatState(
                         parseResult,
                         indentationSpacesPerLevel: 4,
-                        removeTrailingCommas: false
+                        maxDateTime: maxDateTime,
+                        removeTrailingCommas: false,
+                        startDateTime: startDateTime
                     );
 
                     formatState.addText('void f(void Function()g,int i){}void h(){f((){}', 'SOURCE');

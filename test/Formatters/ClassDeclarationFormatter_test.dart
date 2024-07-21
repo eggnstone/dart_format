@@ -67,6 +67,18 @@ void main()
                 TestConfig.none(),
                 TestConfig('abstract mixin class C\n{\n}\n')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createDeclaration,
+            inputMiddle: 'class C\nwith M{}',
+            name: r'ClassDeclaration / class C\nwith M{}',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<WithClause>(8, 'with M')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('class C\n    with M\n{\n}\n')
+            ]
         )
     ];
 

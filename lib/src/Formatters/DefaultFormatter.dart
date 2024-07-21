@@ -23,7 +23,15 @@ class DefaultFormatter extends IFormatter
     void format(AstNode node)
     {
         const String methodName = 'DefaultFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++, node.offset);
+
+        if (DateTime.now().isAfter(formatState.maxDateTime))
+            throw DartFormatException.error('Timeout');
+
+        if (Constants.DEBUG_I_FORMATTER)
+        {
+            final String message = 'START $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})';
+            log(message, formatState.logIndent++, offset: node.offset, startDateTime: formatState.startDateTime);
+        }
 
         node.childEntities.forEach((SyntacticEntity child)
             {
@@ -58,6 +66,6 @@ class DefaultFormatter extends IFormatter
             }
         );
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent, node.end);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent, offset: node.end);
     }
 }

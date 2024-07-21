@@ -19,8 +19,10 @@ import 'Types/IndentationType.dart';
 class FormatState
 {
     final int _indentationSpacesPerLevel;
+    final DateTime _maxDateTime;
     final ParseStringResult _parseResult;
     final bool _removeTrailingCommas;
+    final DateTime _startDateTime;
 
     final List<StringBufferEx> _textBuffers = <StringBufferEx>[StringBufferEx()];
     final List<Indentation> _indentations = <Indentation>[];
@@ -30,21 +32,27 @@ class FormatState
 
     int logIndent = 0;
 
-    CompilationUnit get compilationUnit
-    => _parseResult.unit;
+    CompilationUnit get compilationUnit => _parseResult.unit;
 
-    int get lastConsumedPosition
-    => _lastConsumedPosition;
+    int get lastConsumedPosition => _lastConsumedPosition;
+
+    DateTime get maxDateTime => _maxDateTime;
+
+    DateTime get startDateTime => _startDateTime;
 
     FormatState(
         ParseStringResult parseResult, {
             required int indentationSpacesPerLevel,
-            required bool removeTrailingCommas
+            required DateTime maxDateTime,
+            required bool removeTrailingCommas,
+            required DateTime startDateTime
         }
     )
         : _indentationSpacesPerLevel = indentationSpacesPerLevel,
+        _maxDateTime = maxDateTime,
         _removeTrailingCommas = removeTrailingCommas,
-        _parseResult = parseResult;
+        _parseResult = parseResult,
+        _startDateTime = startDateTime;
 
     factory FormatState.test(ParseStringResult parseResult, {
             required int indentationSpacesPerLevel, 
@@ -53,13 +61,19 @@ class FormatState
             String? trailing
         }
     )
-    => FormatState(
-        parseResult,
-        indentationSpacesPerLevel: indentationSpacesPerLevel,
-        removeTrailingCommas : removeTrailingCommas
-    )
-        .._lastConsumedPosition = leading?.length ?? 0
-        .._trailingForTests = trailing;
+    {
+        final DateTime startDateTime = DateTime.now();
+        final DateTime maxDateTime = startDateTime.add(const Duration(seconds: Constants.MAX_FORMAT_TIME_IN_SECONDS_FOR_TESTS));
+        return FormatState(
+            parseResult,
+            indentationSpacesPerLevel: indentationSpacesPerLevel,
+            maxDateTime: maxDateTime,
+            removeTrailingCommas : removeTrailingCommas,
+            startDateTime: startDateTime
+        )
+            .._lastConsumedPosition = leading?.length ?? 0
+            .._trailingForTests = trailing;
+    }
 
     void acceptListWithPeriod(List<AstNode> nodes, AstVisitor<void> astVisitor, String source)
     {

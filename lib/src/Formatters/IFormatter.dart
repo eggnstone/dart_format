@@ -7,12 +7,19 @@ abstract class IFormatter
 {
     void format(AstNode node);
 
-    void log(String s, int indent, [int? offset])
+    void log(String s, int indent, {int? offset, DateTime? startDateTime})
     {
-        if (Constants.DEBUG_I_FORMATTER_OFFSETS && offset == null)
-            logInternal('${offset} ${'  ' * indent}$s');
-        else
-            logInternal('  ' * indent + s);
+        final String indentation = '  ' * indent;
+        String prefix = '';
+
+        if (Constants.DEBUG_I_FORMATTER_OFFSETS && offset != null)
+            prefix += '${offset} ';
+
+        if (Constants.DEBUG_I_FORMATTER_TIME && startDateTime != null)
+            prefix += '${DateTime.now().difference(startDateTime).inMilliseconds}ms ';
+
+        final String finalS = indentation + prefix + s;
+        logInternal(finalS);
     }
 
     void logInfo(String s)

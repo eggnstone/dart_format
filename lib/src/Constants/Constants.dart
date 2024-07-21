@@ -11,12 +11,15 @@ class Constants
     static const bool DEBUG_FORMATTER_DEFAULT = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_I_FORMATTER = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_I_FORMATTER_OFFSETS = (DEBUG && false) || DEBUG_ALL;
+    static const bool DEBUG_I_FORMATTER_TIME = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_STRING_TOOLS = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_TODOS = (DEBUG && false) || DEBUG_ALL;
 
     static const int HTTP_TOOLS_WAIT_BETWEEN_FLUSH_AND_CLOSE_IN_MILLISECONDS = 100;
 
     static const int MAX_DEBUG_LENGTH = 50;
+    static const int MAX_FORMAT_TIME_IN_SECONDS = DEBUG ? 10 : 50;
+    static const int MAX_FORMAT_TIME_IN_SECONDS_FOR_TESTS = 1;
 
     static const int PREFERRED_PORT = 7777;
 

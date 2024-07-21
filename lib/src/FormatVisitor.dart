@@ -77,8 +77,7 @@ import 'Formatters/YieldStatementFormatter.dart';
 class FormatVisitor extends AstVisitor<void>
 {
     final Config config;
-
-    late final FormatState _formatState;
+    final FormatState _formatState;
 
     late final ArgumentListFormatter _argumentListFormatter = ArgumentListFormatter(config, this, _formatState);
     late final AssertInitializerFormatter _assertInitializerFormatter = AssertInitializerFormatter(config, this, _formatState);

@@ -25,6 +25,11 @@ class ClassDeclarationFormatter extends IFormatter
         if (node is! ClassDeclaration)
             throw FormatException('Not a ClassDeclaration: ${node.runtimeType}');
 
+        final String textWithPossibleLineBreak = formatState.getText(node.classKeyword.offset, node.leftBracket.offset);
+        //log('textWithPossibleLineBreak: ${StringTools.toDisplayString(textWithPossibleLineBreak)}', 0);
+        final bool pushLevel = textWithPossibleLineBreak.contains('\n');
+        //log('pushLevel: $pushLevel', 0);
+
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.sealedKeyword, astVisitor, '$methodName/node.abstractKeyword');
         formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword');
@@ -33,11 +38,19 @@ class ClassDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.interfaceKeyword, astVisitor, '$methodName/node.interfaceKeyword');
         formatState.copyEntity(node.finalKeyword, astVisitor, '$methodName/node.finalKeyword');
         formatState.copyEntity(node.classKeyword, astVisitor, '$methodName/node.classKeyword');
+
+        if (pushLevel)
+            formatState.pushLevel('$methodName/node.classKeyword/after');
+
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
         formatState.copyEntity(node.extendsClause, astVisitor, '$methodName/node.extendsClause');
         formatState.copyEntity(node.withClause, astVisitor, '$methodName/node.withClause');
         formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause');
+
+        if (pushLevel)
+            formatState.popLevelAndIndent();
+
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
         formatState.acceptList(node.members, astVisitor, '$methodName/node.members');
         formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');

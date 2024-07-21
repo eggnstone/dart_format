@@ -43,11 +43,16 @@ class Formatter
         if (errors.isNotEmpty)
             _logAndThrowWarning(errors.first.message, parseResult.lineInfo.getLocation(errors.first.offset));
 
+        final DateTime startDateTime = DateTime.now();
+        final DateTime maxDateTime = startDateTime.add(const Duration(seconds: Constants.MAX_FORMAT_TIME_IN_SECONDS));
         final FormatState formatState = FormatState(
             parseResult,
             indentationSpacesPerLevel: _config.indentationSpacesPerLevel,
-            removeTrailingCommas: _config.removeTrailingCommas
+            maxDateTime: maxDateTime,
+            removeTrailingCommas: _config.removeTrailingCommas,
+            startDateTime: startDateTime
         );
+
         final FormatVisitor visitor = FormatVisitor(config: _config, formatState: formatState);
         formatState.compilationUnit.accept(visitor);
         String result = formatState.getResult();
