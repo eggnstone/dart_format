@@ -27,9 +27,28 @@ class SetOrMapLiteralFormatter extends IFormatter
 
         formatState.copyEntity(node.constKeyword, astVisitor, '$methodName/node.constKeyword');
         formatState.copyEntity(node.typeArguments, astVisitor, '$methodName/node.typeArguments');
-        formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
+
+        if (config.breakSetOrMapLiterals)
+        {
+            formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
+        }
+        else
+        {
+            formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
+            formatState.pushLevel('$methodName/node.leftBracket/after');
+        }
+
         formatState.acceptListWithComma(node.elements, node.rightBracket, astVisitor, '$methodName/node.elements');
-        formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
+
+        if (config.breakSetOrMapLiterals)
+        {
+            formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');
+        }
+        else
+        {
+            formatState.popLevelAndIndent();
+            formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
+        }
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

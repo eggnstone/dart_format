@@ -3,6 +3,9 @@ import 'package:analyzer/src/dart/ast/ast.dart';
 
 class AstCreator
 {
+    static AssignmentExpression createAssignmentExpressionInFunction(String s)
+    => createExpressionInFunction(s) as AssignmentExpression;
+
     static BinaryExpression createBinaryExpressionInTopLevelVariable(String s)
     => createInitializerInTopLevelVariable(s) as BinaryExpression;
 
@@ -120,6 +123,9 @@ class AstCreator
 
     static ReturnStatement createReturnStatementInFunction(String s)
     => createStatementInFunction(s) as ReturnStatement;
+
+    static Expression createRightHandSideInAssignmentExpressionInFunction(String s)
+    => createAssignmentExpressionInFunction(s).rightHandSide;
 
     static SimpleFormalParameter createSimpleFormalParameterInFunction(String s)
     => createFormalParameterInFunction(s) as SimpleFormalParameter;

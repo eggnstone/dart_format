@@ -82,6 +82,7 @@ class FormatVisitor extends AstVisitor<void>
     late final ArgumentListFormatter _argumentListFormatter = ArgumentListFormatter(config, this, _formatState);
     late final AssertInitializerFormatter _assertInitializerFormatter = AssertInitializerFormatter(config, this, _formatState);
     late final AssertStatementFormatter _assertStatementFormatter = AssertStatementFormatter(config, this, _formatState);
+    //late final AssignmentExpressionFormatter _assignmentExpressionFormatter = AssignmentExpressionFormatter(config, this, _formatState);
     late final AugmentationImportDirectiveFormatter _augmentationImportDirectiveFormatter = AugmentationImportDirectiveFormatter(config, this, _formatState);
     late final BinaryExpressionFormatter _binaryExpressionFormatter = BinaryExpressionFormatter(config, this, _formatState);
     late final BlockFormatter _blockFormatter = BlockFormatter(config, this, _formatState);
@@ -172,6 +173,7 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitAssignmentExpression(AssignmentExpression node)
     => _defaultFormatter.format(node);
+    //=> _assignmentExpressionFormatter.format(node);
 
     @override
     void visitAsExpression(AsExpression node)
