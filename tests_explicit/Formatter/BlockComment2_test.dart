@@ -4,7 +4,7 @@ import 'package:dart_format/src/Tools/StringTools.dart';
 import 'package:eggnstone_dart/eggnstone_dart.dart';
 import 'package:test/test.dart';
 
-import '../TestTools/TestTools.dart';
+import '../../test/TestTools/TestTools.dart';
 
 void main()
 {

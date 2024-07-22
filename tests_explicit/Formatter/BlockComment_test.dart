@@ -4,21 +4,21 @@ import 'package:dart_format/src/Tools/StringTools.dart';
 import 'package:eggnstone_dart/eggnstone_dart.dart';
 import 'package:test/test.dart';
 
-import '../TestTools/TestTools.dart';
+import '../../test/TestTools/TestTools.dart';
 
 void main()
 {
     TestTools.init();
 
-    group('EndOfLine comments in function and map blocks', ()
+    group('Block comments in function and map blocks', ()
         {
-            test('EndOfLine comment in a function block', ()
+            test('Block comment in a function block', ()
                 {
                     const String inputText = 
                         'void f()\n'
                         '{\n'
                         '    a;\n'
-                        '    // EOL\n'
+                        '    /*Comment*/\n'
                         '}\n';
 
                     Analyzer().analyze(inputText);
@@ -33,13 +33,13 @@ void main()
                 }
             );
 
-            test('EndOfLine comment without trailing comma', ()
+            test('Block comment without trailing comma', ()
                 {
                     const String inputText =
                         'var m =\n'
                         '{\n'
                         '    a\n'
-                        '    // EOL\n'
+                        '    /*Comment*/\n'
                         '};\n';
 
                     Analyzer().analyze(inputText);
@@ -54,13 +54,13 @@ void main()
                 }
             );
 
-            test('EndOfLine comment with trailing comma, without removal', ()
+            test('Block comment with trailing comma, without removal', ()
                 {
                     const String inputText =
                         'var m =\n'
                         '{\n'
                         '    a,\n'
-                        '    // EOL\n'
+                        '    /*Comment*/\n'
                         '};\n';
 
                     Analyzer().analyze(inputText);
@@ -75,20 +75,20 @@ void main()
                 }
             );
 
-            test('EndOfLine comment with trailing comma, with removal', ()
+            test('Block comment with trailing comma, with removal', ()
                 {
                     const String inputText =
                         'var m =\n'
                         '{\n'
                         '    a,\n'
-                        '    // EOL\n'
+                        '    /*Comment*/\n'
                         '};\n';
 
                     const String expectedText =
                         'var m =\n'
                         '{\n'
                         '    a\n'
-                        '    // EOL\n'
+                        '    /*Comment*/\n'
                         '};\n';
 
                     Analyzer().analyze(inputText);
