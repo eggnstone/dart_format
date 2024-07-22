@@ -10,9 +10,9 @@ void main()
 {
     TestTools.init();
 
-    group('EndOfLine comments', ()
+    group('EndOfLine comments in function and map blocks', ()
         {
-            test('EndOfLine comment in a normal function block', ()
+            test('EndOfLine comment in a function block', ()
                 {
                     const String inputText = 
                     'void f()\n'
