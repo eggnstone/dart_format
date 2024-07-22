@@ -15,11 +15,11 @@ void main()
             test('Block comment in a function block', ()
                 {
                     const String inputText = 
-                    'void f()\n'
-                    '{\n'
-                    '    a;\n'
-                    '    /*Comment*/\n'
-                    '}\n';
+                        'void f()\n'
+                        '{\n'
+                        '    a;\n'
+                        '    /*Comment*/\n'
+                        '}\n';
 
                     Analyzer().analyze(inputText);
 
@@ -36,11 +36,11 @@ void main()
             test('Block comment without trailing comma', ()
                 {
                     const String inputText =
-                    'var m =\n'
-                    '{\n'
-                    '    a\n'
-                    '    /*Comment*/\n'
-                    '};\n';
+                        'var m =\n'
+                        '{\n'
+                        '    a\n'
+                        '    /*Comment*/\n'
+                        '};\n';
 
                     Analyzer().analyze(inputText);
 
@@ -57,11 +57,11 @@ void main()
             test('Block comment with trailing comma, without removal', ()
                 {
                     const String inputText =
-                    'var m =\n'
-                    '{\n'
-                    '    a,\n'
-                    '    /*Comment*/\n'
-                    '};\n';
+                        'var m =\n'
+                        '{\n'
+                        '    a,\n'
+                        '    /*Comment*/\n'
+                        '};\n';
 
                     Analyzer().analyze(inputText);
 
@@ -78,18 +78,18 @@ void main()
             test('Block comment with trailing comma, with removal', ()
                 {
                     const String inputText =
-                    'var m =\n'
-                    '{\n'
-                    '    a,\n'
-                    '    /*Comment*/\n'
-                    '};\n';
+                        'var m =\n'
+                        '{\n'
+                        '    a,\n'
+                        '    /*Comment*/\n'
+                        '};\n';
 
                     const String expectedText =
-                    'var m =\n'
-                    '{\n'
-                    '    a\n'
-                    '    /*Comment*/\n'
-                    '};\n';
+                        'var m =\n'
+                        '{\n'
+                        '    a\n'
+                        '    /*Comment*/\n'
+                        '};\n';
 
                     Analyzer().analyze(inputText);
 

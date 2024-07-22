@@ -11,20 +11,20 @@ void main()
     test('Filler before "," already consumed', ()
         {
             const String inputText = 
-            'void f(void Function(int a) a, void Function(int b) b)\n'
-            '{\n'
-            'f((_) {} , (__) {});\n'
-            '}';
+                'void f(void Function(int a) a, void Function(int b) b)\n'
+                '{\n'
+                'f((_) {} , (__) {});\n'
+                '}';
             const String expectedText =
-            'void f(void Function(int a) a, void Function(int b) b)\n'
-            '{\n'
-            '    f((_)\n'
-            '        {\n'
-            '        } , (__)\n'
-            '        {\n'
-            '        }\n'
-            '    );\n'
-            '}\n';
+                'void f(void Function(int a) a, void Function(int b) b)\n'
+                '{\n'
+                '    f((_)\n'
+                '        {\n'
+                '        } , (__)\n'
+                '        {\n'
+                '        }\n'
+                '    );\n'
+                '}\n';
 
             Analyzer().analyze(inputText);
 

@@ -15,9 +15,9 @@ void main()
             test('Comment only - no changes expected', ()
                 {
                     const String inputText = 
-                    '/*START\n'
-                    '    TEXT\n'
-                    'END*/\n';
+                        '/*START\n'
+                        '    TEXT\n'
+                        'END*/\n';
 
                     Analyzer().analyze(inputText);
 
@@ -34,14 +34,14 @@ void main()
             test('Comment only - indented 1 level too far - removal of 1 level expected', ()
                 {
                     const String inputText =
-                    '    /*START\n'
-                    '        TEXT\n'
-                    '    END*/\n';
+                        '    /*START\n'
+                        '        TEXT\n'
+                        '    END*/\n';
 
                     const String expectedText =
-                    '/*START\n'
-                    '    TEXT\n'
-                    'END*/\n';
+                        '/*START\n'
+                        '    TEXT\n'
+                        'END*/\n';
 
                     Analyzer().analyze(inputText);
 

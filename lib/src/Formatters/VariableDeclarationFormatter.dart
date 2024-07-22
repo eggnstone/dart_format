@@ -31,10 +31,10 @@ class VariableDeclarationFormatter extends IFormatter
         if (node.initializer != null)
         {
             final String textWithPossibleLineBreak = formatState.getText(node.offset, node.initializer!.offset);
-            log('textWithPossibleLineBreak: ${StringTools.toDisplayString(textWithPossibleLineBreak)}', 0);
             pushLevel = textWithPossibleLineBreak.contains('\n');
+            //log('textWithPossibleLineBreak: ${StringTools.toDisplayString(textWithPossibleLineBreak)}', 0);
+            //log('pushLevel: $pushLevel', 0);
         }
-            log('pushLevel: $pushLevel', 0);
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
@@ -47,7 +47,6 @@ class VariableDeclarationFormatter extends IFormatter
 
         if (pushLevel)
             formatState.popLevelAndIndent();
-
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
