@@ -8,9 +8,9 @@ void main()
 {
     TestTools.init();
 
-    test('CascadeExpressionFormatter and PropertyAccessFormatter', ()
+    test('VariableDeclarationList and MethodInvocation', ()
         {
-            const String inputText = 'void f()\n{\n    a\n        ..b;\n}\n';
+            const String inputText = 'int i=a(()\n    {\n    }\n);\n';
             const String expectedText = inputText;
 
             Analyzer().analyze(inputText);

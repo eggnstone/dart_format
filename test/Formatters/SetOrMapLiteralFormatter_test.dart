@@ -104,7 +104,7 @@ void main()
                 TestConfig.none(),
                 TestConfig('{b}')
             ]
-        ),
+        )
     ];
 
     TestTools.runTestGroupsForFormatter(testGroupConfigs, 'SetOrMapLiteralFormatter', SetOrMapLiteralFormatter.new, StackTrace.current);

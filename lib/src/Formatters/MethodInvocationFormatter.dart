@@ -28,7 +28,6 @@ class MethodInvocationFormatter extends IFormatter
             throw FormatException('Not a MethodInvocation: ${node.runtimeType}');
 
         final String textWithPossibleLineBreak = formatState.getText(node.offset, node.argumentList.offset);
-        //log('$CLASS_NAME: textWithPossibleLineBreak: ${StringTools.toDisplayString(textWithPossibleLineBreak)}', 0);
         final bool pushLevel = textWithPossibleLineBreak.contains('\n');
 
         formatState.copyEntity(node.target, astVisitor, '$methodName/node.target');

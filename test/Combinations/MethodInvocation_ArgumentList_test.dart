@@ -8,7 +8,7 @@ void main()
 {
     TestTools.init();
 
-    group('MethodInvocationFormatter and ArgumentListFormatter', ()
+    group('MethodInvocation and ArgumentList', ()
         {
             test(r'1 a(()\n{\n}\n)', ()
                 {

@@ -41,6 +41,7 @@ class IfStatementFormatter extends IFormatter
         final bool indentElse = node.elseStatement is! IfStatement;
 
         formatState.copyEntity(node.elseKeyword, astVisitor, '$methodName/node.elseKeyword');
+
         if (indentElse)
             formatState.pushLevel('$methodName/node.elseKeyword');
 

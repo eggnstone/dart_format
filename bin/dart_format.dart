@@ -28,8 +28,8 @@ async
             final int exitCode = await mainNoThrow(args);
             logDebug('main/runZonedGuarded END', preventLoggingToConsole: true);
             return exitCode;
-        }
-        , (Object error, StackTrace stackTrace)
+        },
+        (Object error, StackTrace stackTrace)
         {
             logErrorObject('main/runZonedGuarded', error, stackTrace);
             encounteredErrorInRunZonedGuarded = true;

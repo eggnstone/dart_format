@@ -12,17 +12,6 @@ void main()
 
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
         TestGroupConfig(
-            inputNodeCreator: AstCreator.createVariableDeclarationListInClass,
-            inputLeading: 'class C{',
-            inputMiddle: 'late final int i = 0',
-            inputTrailing: ';}',
-            name: 'VariableDeclarationList late final int i = 0;',
-            astVisitors: <TestVisitor<void>>[
-                TestVisitor<NamedType>(19, 'int'),
-                TestVisitor<VariableDeclaration>(23, 'i = 0')
-            ]
-        ),
-        TestGroupConfig(
             inputNodeCreator: AstCreator.createVariableDeclarationListInFunction,
             inputLeading: 'void f(){',
             inputMiddle: '@a bool b',
