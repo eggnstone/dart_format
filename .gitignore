@@ -9,5 +9,5 @@ pubspec.lock
 # Manually added
 /.idea/libraries/Dart_Packages.xml
 /doc/
-/test/FormatterExplicit/Playground*.dart
-/test/Sandbox*.dart
+/tests/Sandbox*.dart
+/tests_explicit/Formatter/Playground*.dart

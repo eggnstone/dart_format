@@ -1,6 +1,6 @@
 class Constants
 {
-    static const bool DEBUG = true;
+    static const bool DEBUG = false;
     static const bool DEBUG_ALL = false;
 
     static const bool DEBUG_ANALYZER = (DEBUG && false) || DEBUG_ALL;
