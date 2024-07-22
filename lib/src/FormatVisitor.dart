@@ -69,6 +69,7 @@ import 'Formatters/SymbolLiteralFormatter.dart';
 import 'Formatters/TopLevelVariableDeclarationFormatter.dart';
 import 'Formatters/TypeArgumentListFormatter.dart';
 import 'Formatters/TypeParameterListFormatter.dart';
+import 'Formatters/VariableDeclarationFormatter.dart';
 import 'Formatters/VariableDeclarationListFormatter.dart';
 import 'Formatters/VariableDeclarationStatementFormatter.dart';
 import 'Formatters/WhileStatementFormatter.dart';
@@ -149,7 +150,7 @@ class FormatVisitor extends AstVisitor<void>
     late final TopLevelVariableDeclarationFormatter _topLevelVariableDeclarationFormatter = TopLevelVariableDeclarationFormatter(config, this, _formatState);
     late final TypeArgumentListFormatter _typeArgumentListFormatter = TypeArgumentListFormatter(config, this, _formatState);
     late final TypeParameterListFormatter _typeParameterListFormatter = TypeParameterListFormatter(config, this, _formatState);
-    //late final VariableDeclarationFormatter _variableDeclarationFormatter = VariableDeclarationFormatter(config, this, _formatState);
+    late final VariableDeclarationFormatter _variableDeclarationFormatter = VariableDeclarationFormatter(config, this, _formatState);
     late final VariableDeclarationListFormatter _variableDeclarationListFormatter = VariableDeclarationListFormatter(config, this, _formatState);
     late final VariableDeclarationStatementFormatter _variableDeclarationStatementFormatter = VariableDeclarationStatementFormatter(config, this, _formatState);
     late final WhileStatementFormatter _whileStatementFormatter = WhileStatementFormatter(config, this, _formatState);
@@ -815,8 +816,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitVariableDeclaration(VariableDeclaration node)
-    => _defaultFormatter.format(node);
-    //=> _variableDeclarationFormatter.format(node);
+    => _variableDeclarationFormatter.format(node);
 
     @override
     void visitVariableDeclarationList(VariableDeclarationList node)
