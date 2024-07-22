@@ -12,7 +12,4 @@ class TestConfig
 
     TestConfig.none([this.expectedText, this.restText])
         : config = Config.none(), name = 'None';
-
-    TestConfig.breakSetOrMapLiterals([this.expectedText, this.restText])
-        : config = Config.all(breakSetOrMapLiterals: true), name = 'BreakSetOrMapLiterals';
 }

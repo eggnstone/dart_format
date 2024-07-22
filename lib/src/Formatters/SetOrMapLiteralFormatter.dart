@@ -25,30 +25,18 @@ class SetOrMapLiteralFormatter extends IFormatter
         if (node is! SetOrMapLiteral)
             throw FormatException('Not a SetOrMapLiteral: ${node.runtimeType}');
 
+        final String textInside = formatState.getText(node.leftBracket.end, node.rightBracket.offset);
+
+        // If the block does not contain any line breaks, then leave it as is.
+        final Config adjustedConfig = textInside.contains('\n')
+            ? config
+            : config.copyWith(addNewLineBeforeOpeningBrace: false, addNewLineAfterOpeningBrace: false, addNewLineBeforeClosingBrace: false, addNewLineAfterClosingBrace: false);
+
         formatState.copyEntity(node.constKeyword, astVisitor, '$methodName/node.constKeyword');
         formatState.copyEntity(node.typeArguments, astVisitor, '$methodName/node.typeArguments');
-
-        if (config.breakSetOrMapLiterals)
-        {
-            formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
-        }
-        else
-        {
-            formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
-            formatState.pushLevel('$methodName/node.leftBracket/after');
-        }
-
+        formatState.copyOpeningBraceAndPushLevel(node.leftBracket, adjustedConfig, '$methodName/node.leftBracket');
         formatState.acceptListWithComma(node.elements, node.rightBracket, astVisitor, '$methodName/node.elements');
-
-        if (config.breakSetOrMapLiterals)
-        {
-            formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');
-        }
-        else
-        {
-            formatState.popLevelAndIndent();
-            formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
-        }
+        formatState.copyClosingBraceAndPopLevel(node.rightBracket, adjustedConfig, '$methodName/node.rightBracket');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

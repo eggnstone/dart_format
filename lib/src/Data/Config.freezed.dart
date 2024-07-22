@@ -47,9 +47,6 @@ mixin _$Config {
   /// Whether to remove trailing commas.
   bool get removeTrailingCommas => throw _privateConstructorUsedError;
 
-  /// Whether to break set or map literals.
-  bool get breakSetOrMapLiterals => throw _privateConstructorUsedError;
-
   /// Serializes this Config to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
@@ -73,8 +70,7 @@ abstract class $ConfigCopyWith<$Res> {
       bool addNewLineBeforeOpeningBrace,
       int indentationSpacesPerLevel,
       int maxEmptyLines,
-      bool removeTrailingCommas,
-      bool breakSetOrMapLiterals});
+      bool removeTrailingCommas});
 }
 
 /// @nodoc
@@ -101,7 +97,6 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config>
     Object? indentationSpacesPerLevel = null,
     Object? maxEmptyLines = null,
     Object? removeTrailingCommas = null,
-    Object? breakSetOrMapLiterals = null,
   }) {
     return _then(_value.copyWith(
       addNewLineAfterClosingBrace: null == addNewLineAfterClosingBrace
@@ -140,10 +135,6 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config>
           ? _value.removeTrailingCommas
           : removeTrailingCommas // ignore: cast_nullable_to_non_nullable
               as bool,
-      breakSetOrMapLiterals: null == breakSetOrMapLiterals
-          ? _value.breakSetOrMapLiterals
-          : breakSetOrMapLiterals // ignore: cast_nullable_to_non_nullable
-              as bool,
     ) as $Val);
   }
 }
@@ -164,8 +155,7 @@ abstract class _$$ConfigImplCopyWith<$Res> implements $ConfigCopyWith<$Res> {
       bool addNewLineBeforeOpeningBrace,
       int indentationSpacesPerLevel,
       int maxEmptyLines,
-      bool removeTrailingCommas,
-      bool breakSetOrMapLiterals});
+      bool removeTrailingCommas});
 }
 
 /// @nodoc
@@ -190,7 +180,6 @@ class __$$ConfigImplCopyWithImpl<$Res>
     Object? indentationSpacesPerLevel = null,
     Object? maxEmptyLines = null,
     Object? removeTrailingCommas = null,
-    Object? breakSetOrMapLiterals = null,
   }) {
     return _then(_$ConfigImpl(
       addNewLineAfterClosingBrace: null == addNewLineAfterClosingBrace
@@ -229,10 +218,6 @@ class __$$ConfigImplCopyWithImpl<$Res>
           ? _value.removeTrailingCommas
           : removeTrailingCommas // ignore: cast_nullable_to_non_nullable
               as bool,
-      breakSetOrMapLiterals: null == breakSetOrMapLiterals
-          ? _value.breakSetOrMapLiterals
-          : breakSetOrMapLiterals // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -250,8 +235,7 @@ class _$ConfigImpl extends _Config {
       required this.addNewLineBeforeOpeningBrace,
       required this.indentationSpacesPerLevel,
       required this.maxEmptyLines,
-      required this.removeTrailingCommas,
-      this.breakSetOrMapLiterals = false})
+      required this.removeTrailingCommas})
       : super._();
 
   factory _$ConfigImpl.fromJson(Map<String, dynamic> json) =>
@@ -293,14 +277,9 @@ class _$ConfigImpl extends _Config {
   @override
   final bool removeTrailingCommas;
 
-  /// Whether to break set or map literals.
-  @override
-  @JsonKey()
-  final bool breakSetOrMapLiterals;
-
   @override
   String toString() {
-    return 'Config(addNewLineAfterClosingBrace: $addNewLineAfterClosingBrace, addNewLineAfterOpeningBrace: $addNewLineAfterOpeningBrace, addNewLineAfterSemicolon: $addNewLineAfterSemicolon, addNewLineAtEndOfText: $addNewLineAtEndOfText, addNewLineBeforeClosingBrace: $addNewLineBeforeClosingBrace, addNewLineBeforeOpeningBrace: $addNewLineBeforeOpeningBrace, indentationSpacesPerLevel: $indentationSpacesPerLevel, maxEmptyLines: $maxEmptyLines, removeTrailingCommas: $removeTrailingCommas, breakSetOrMapLiterals: $breakSetOrMapLiterals)';
+    return 'Config(addNewLineAfterClosingBrace: $addNewLineAfterClosingBrace, addNewLineAfterOpeningBrace: $addNewLineAfterOpeningBrace, addNewLineAfterSemicolon: $addNewLineAfterSemicolon, addNewLineAtEndOfText: $addNewLineAtEndOfText, addNewLineBeforeClosingBrace: $addNewLineBeforeClosingBrace, addNewLineBeforeOpeningBrace: $addNewLineBeforeOpeningBrace, indentationSpacesPerLevel: $indentationSpacesPerLevel, maxEmptyLines: $maxEmptyLines, removeTrailingCommas: $removeTrailingCommas)';
   }
 
   @override
@@ -316,7 +295,8 @@ class _$ConfigImpl extends _Config {
                     addNewLineAfterOpeningBrace) ||
                 other.addNewLineAfterOpeningBrace ==
                     addNewLineAfterOpeningBrace) &&
-            (identical(other.addNewLineAfterSemicolon, addNewLineAfterSemicolon) ||
+            (identical(
+                    other.addNewLineAfterSemicolon, addNewLineAfterSemicolon) ||
                 other.addNewLineAfterSemicolon == addNewLineAfterSemicolon) &&
             (identical(other.addNewLineAtEndOfText, addNewLineAtEndOfText) ||
                 other.addNewLineAtEndOfText == addNewLineAtEndOfText) &&
@@ -333,9 +313,7 @@ class _$ConfigImpl extends _Config {
             (identical(other.maxEmptyLines, maxEmptyLines) ||
                 other.maxEmptyLines == maxEmptyLines) &&
             (identical(other.removeTrailingCommas, removeTrailingCommas) ||
-                other.removeTrailingCommas == removeTrailingCommas) &&
-            (identical(other.breakSetOrMapLiterals, breakSetOrMapLiterals) ||
-                other.breakSetOrMapLiterals == breakSetOrMapLiterals));
+                other.removeTrailingCommas == removeTrailingCommas));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -350,8 +328,7 @@ class _$ConfigImpl extends _Config {
       addNewLineBeforeOpeningBrace,
       indentationSpacesPerLevel,
       maxEmptyLines,
-      removeTrailingCommas,
-      breakSetOrMapLiterals);
+      removeTrailingCommas);
 
   /// Create a copy of Config
   /// with the given fields replaced by the non-null parameter values.
@@ -379,8 +356,7 @@ abstract class _Config extends Config {
       required final bool addNewLineBeforeOpeningBrace,
       required final int indentationSpacesPerLevel,
       required final int maxEmptyLines,
-      required final bool removeTrailingCommas,
-      final bool breakSetOrMapLiterals}) = _$ConfigImpl;
+      required final bool removeTrailingCommas}) = _$ConfigImpl;
   const _Config._() : super._();
 
   factory _Config.fromJson(Map<String, dynamic> json) = _$ConfigImpl.fromJson;
@@ -420,10 +396,6 @@ abstract class _Config extends Config {
   /// Whether to remove trailing commas.
   @override
   bool get removeTrailingCommas;
-
-  /// Whether to break set or map literals.
-  @override
-  bool get breakSetOrMapLiterals;
 
   /// Create a copy of Config
   /// with the given fields replaced by the non-null parameter values.
