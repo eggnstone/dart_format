@@ -10,7 +10,7 @@ void main()
 {
     TestTools.init();
 
-    group('BlockCommentsTests', ()
+    group('Block comments', ()
         {
             test('Comment only - no changes expected', ()
                 {
@@ -27,7 +27,7 @@ void main()
                     final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(inputText));
-                    logDebug('actualText:\n${StringTools.toDisplayString(actualText)}\n$actualText');
+                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
@@ -51,7 +51,7 @@ void main()
                     final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
-                    logDebug('actualText:\n${StringTools.toDisplayString(actualText)}\n$actualText');
+                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
@@ -81,7 +81,7 @@ void main()
                     final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
-                    logDebug('actualText:\n${StringTools.toDisplayString(actualText)}\n$actualText');
+                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
@@ -103,7 +103,7 @@ void main()
                     final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(inputText));
-                    logDebug('actualText:\n${StringTools.toDisplayString(actualText)}\n$actualText');
+                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
@@ -133,7 +133,7 @@ void main()
                     final String actualText = formatter.format(expectedText);
 
                     TestTools.expect(actualText, equals(inputText));
-                    logDebug('actualText:\n${StringTools.toDisplayString(actualText)}\n$actualText');
+                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
@@ -163,7 +163,7 @@ void main()
                     final String actualText = formatter.format(expectedText);
 
                     TestTools.expect(actualText, equals(inputText));
-                    logDebug('actualText:\n${StringTools.toDisplayString(actualText)}\n$actualText');
+                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
@@ -181,7 +181,7 @@ void main()
                     final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(inputText));
-                    logDebug('actualText:\n${StringTools.toDisplayString(actualText)}\n$actualText');
+                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
@@ -203,7 +203,7 @@ void main()
                     final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
-                    logDebug('actualText:\n${StringTools.toDisplayString(actualText)}\n$actualText');
+                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
         }
