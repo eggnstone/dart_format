@@ -3,3 +3,4 @@ targets:
     sources:
       - "lib/**"
       - "tests/**"
+      - "tests_explicit/**"
