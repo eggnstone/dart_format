@@ -1,7 +1,6 @@
 TODO
 ====
 - Add tests from other machine (format the complete Flutter checkout)
-- Indent assignments when multiline
 - Error "Missed some text" does not fully carry over to the plugin when the text contains "<" or ">"
 -- e.g. <DartFormatException>.
 -- e.g. offset < lastConsumedPosition
@@ -20,6 +19,8 @@ TODO
 - No blank line after { and before }
 - Investigate line endings. Keep existing style, but also offer option to convert.
 - No more than maxEmptyLines blank lines at file end.
+- Keep "{}" if it doesn't contain line breaks.
+- Indent "((){});" if contains line breaks.
 
 DONE (I think)
 ==============
@@ -29,3 +30,4 @@ DONE (I think)
 - Simplify TestAstVisitor
 - Don't add line break between "}" and ";"
 - Don't add line break between "}" and ","
+- Indent assignments when multiline

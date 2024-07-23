@@ -1,4 +1,4 @@
-import 'package:dart_format/src/Tools/FormatTools.dart';
+import 'package:dart_format/src/Tools/CommentTools.dart';
 import 'package:test/test.dart';
 
 import '../../../TestTools/TestTools.dart';
@@ -7,7 +7,7 @@ void main()
 {
     TestTools.init();
 
-    group('FormatTools', ()
+    group('CommentTools', ()
         {
             group('isEmptyOrComments', ()
                 {
@@ -16,7 +16,7 @@ void main()
                             const String inputText = '';
                             const bool expectedResult = true;
 
-                            final bool actualResult = FormatTools.isEmptyOrComments(inputText);
+                            final bool actualResult = CommentTools.isEmptyOrComments(inputText);
 
                             expect(actualResult, equals(expectedResult));
                         }
@@ -27,7 +27,7 @@ void main()
                             const String inputText = ' ';
                             const bool expectedResult = true;
 
-                            final bool actualResult = FormatTools.isEmptyOrComments(inputText);
+                            final bool actualResult = CommentTools.isEmptyOrComments(inputText);
 
                             expect(actualResult, equals(expectedResult));
                         }
@@ -38,7 +38,7 @@ void main()
                             const String inputText = 'a';
                             const bool expectedResult = false;
 
-                            final bool actualResult = FormatTools.isEmptyOrComments(inputText);
+                            final bool actualResult = CommentTools.isEmptyOrComments(inputText);
 
                             expect(actualResult, equals(expectedResult));
                         }
@@ -49,7 +49,7 @@ void main()
                             const String inputText = '\n';
                             const bool expectedResult = true;
 
-                            final bool actualResult = FormatTools.isEmptyOrComments(inputText);
+                            final bool actualResult = CommentTools.isEmptyOrComments(inputText);
 
                             expect(actualResult, equals(expectedResult));
                         }
@@ -60,7 +60,7 @@ void main()
                             const String inputText = '//Comment';
                             const bool expectedResult = true;
 
-                            final bool actualResult = FormatTools.isEmptyOrComments(inputText);
+                            final bool actualResult = CommentTools.isEmptyOrComments(inputText);
 
                             expect(actualResult, equals(expectedResult));
                         }
@@ -71,7 +71,7 @@ void main()
                             const String inputText = '/*Comment*/';
                             const bool expectedResult = true;
 
-                            final bool actualResult = FormatTools.isEmptyOrComments(inputText);
+                            final bool actualResult = CommentTools.isEmptyOrComments(inputText);
 
                             expect(actualResult, equals(expectedResult));
                         }
@@ -82,7 +82,7 @@ void main()
                             const String inputText = '/*Comment\n1*//*Comment\n2*/';
                             const bool expectedResult = true;
 
-                            final bool actualResult = FormatTools.isEmptyOrComments(inputText);
+                            final bool actualResult = CommentTools.isEmptyOrComments(inputText);
 
                             expect(actualResult, equals(expectedResult));
                         }
@@ -93,7 +93,7 @@ void main()
                             const String inputText = '/*a/*b*/c*/';
                             const bool expectedResult = true;
 
-                            final bool actualResult = FormatTools.isEmptyOrComments(inputText);
+                            final bool actualResult = CommentTools.isEmptyOrComments(inputText);
 
                             expect(actualResult, equals(expectedResult));
                         }
@@ -104,7 +104,7 @@ void main()
                             const String inputText = '/*';
                             const bool expectedResult = false;
 
-                            final bool actualResult = FormatTools.isEmptyOrComments(inputText);
+                            final bool actualResult = CommentTools.isEmptyOrComments(inputText);
 
                             expect(actualResult, equals(expectedResult));
                         }
@@ -115,7 +115,7 @@ void main()
                             const String inputText = '/**';
                             const bool expectedResult = false;
 
-                            final bool actualResult = FormatTools.isEmptyOrComments(inputText);
+                            final bool actualResult = CommentTools.isEmptyOrComments(inputText);
 
                             expect(actualResult, equals(expectedResult));
                         }
@@ -126,7 +126,7 @@ void main()
                             const String inputText = '/*a';
                             const bool expectedResult = false;
 
-                            final bool actualResult = FormatTools.isEmptyOrComments(inputText);
+                            final bool actualResult = CommentTools.isEmptyOrComments(inputText);
 
                             expect(actualResult, equals(expectedResult));
                         }
@@ -137,7 +137,7 @@ void main()
                             const String inputText = '/*a*';
                             const bool expectedResult = false;
 
-                            final bool actualResult = FormatTools.isEmptyOrComments(inputText);
+                            final bool actualResult = CommentTools.isEmptyOrComments(inputText);
 
                             expect(actualResult, equals(expectedResult));
                         }
@@ -148,7 +148,7 @@ void main()
                             const String inputText = '/*Comment*/*/';
                             const bool expectedResult = false;
 
-                            final bool actualResult = FormatTools.isEmptyOrComments(inputText);
+                            final bool actualResult = CommentTools.isEmptyOrComments(inputText);
 
                             expect(actualResult, equals(expectedResult));
                         }

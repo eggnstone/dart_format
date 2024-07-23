@@ -11,6 +11,7 @@ import 'Data/Config.dart';
 import 'Data/Indentation.dart';
 import 'Exceptions/DartFormatException.dart';
 import 'StringBufferEx.dart';
+import 'Tools/CommentTools.dart';
 import 'Tools/FormatTools.dart';
 import 'Tools/LogTools.dart';
 import 'Tools/StringTools.dart';
@@ -172,7 +173,7 @@ class FormatState
                     {
                         final String alreadyConsumedText = getText(lastNode.end, lastConsumedPosition);
                         if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
-                        if (FormatTools.isEmptyOrComments(alreadyConsumedText))
+                        if (CommentTools.isEmptyOrComments(alreadyConsumedText))
                         {
                             // TODO: test
                             // TODO: Find a better way!
@@ -343,7 +344,7 @@ class FormatState
                 logInternal('  Current:              ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
             }
 
-            if (!FormatTools.isEmptyOrComments(filler))
+            if (!CommentTools.isEmptyOrComments(filler))
                 logAndThrowErrorWithOffsets('Internal error: Missed some text:', '-', StringTools.toDisplayString(filler, 100), lastConsumedPosition, offset, source);
 
             final String fixedFiller = _removeLeadingWhitespace(filler);
@@ -384,7 +385,7 @@ class FormatState
             if (Constants.DEBUG_FORMAT_STATE) logInternal('  Filler (without trailing): ${StringTools.toDisplayString(filler)}');
         }
 
-        if (!FormatTools.isEmptyOrComments(filler))
+        if (!CommentTools.isEmptyOrComments(filler))
         {
             if (Constants.DEBUG_FORMAT_STATE) logInternal('  Current:                   ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
             logAndThrowErrorWithOffsets('Internal error: Missed some text:', '-', StringTools.toDisplayString(filler, 100), lastConsumedPosition, end, source);
@@ -506,7 +507,7 @@ class FormatState
         {
             final String alreadyConsumedText = getText(commentsOffset, lastConsumedPosition);
             if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
-            if (FormatTools.isEmptyOrComments(alreadyConsumedText))
+            if (CommentTools.isEmptyOrComments(alreadyConsumedText))
             {
                 // TODO: test
                 // TODO: Find a better way!
@@ -552,7 +553,7 @@ class FormatState
         {
             final String alreadyConsumedText = getText(commentTokenEnd, lastConsumedPosition);
             if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
-            if (FormatTools.isEmptyOrComments(alreadyConsumedText))
+            if (CommentTools.isEmptyOrComments(alreadyConsumedText))
             {
                 // TODO: test
                 // TODO: Find a better way!
@@ -740,7 +741,7 @@ class FormatState
 
     String _removeLeadingWhitespace(String s)
     {
-        if (_indentationSpacesPerLevel< 0)
+        if (_indentationSpacesPerLevel < 0)
             return s;
 
         return StringTools.removeLeadingWhitespace(s);

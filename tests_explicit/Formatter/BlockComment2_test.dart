@@ -31,6 +31,26 @@ void main()
                 }
             );
 
+            test('Comment and one variable - no changes expected', ()
+                {
+                    const String inputText =
+                        '/*START\n'
+                        '    TEXT\n'
+                        'END*/\n'
+                        'var a;';
+
+                    Analyzer().analyze(inputText);
+
+                    final Config config = Config.all();
+                    final Formatter formatter = Formatter(config);
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(inputText));
+                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
+                }
+            );
+
             test('Comment only - indented 1 level too far - removal of 1 level expected', ()
                 {
                     const String inputText =

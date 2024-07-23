@@ -2,6 +2,7 @@
 
 import '../Constants/Constants.dart';
 import '../Exceptions/DartFormatException.dart';
+import 'CommentTools.dart';
 import 'LogTools.dart';
 import 'StringTools.dart';
 
@@ -29,96 +30,20 @@ class FormatTools
         }
 
         final String beforeComma = s.substring(0, commaPos);
-        if (!isEmptyOrComments(beforeComma))
+        if (!CommentTools.isEmptyOrComments(beforeComma))
         {
             if (Constants.DEBUG_FORMAT_TOOLS) logInternal('  beforeComma is not empty or comments: ${StringTools.toDisplayString(beforeComma, Constants.MAX_DEBUG_LENGTH)}');
             return false;
         }
 
         final String afterComma = s.substring(commaPos + 1);
-        if (!isEmptyOrComments(afterComma))
+        if (!CommentTools.isEmptyOrComments(afterComma))
         {
             if (Constants.DEBUG_FORMAT_TOOLS) logInternal('  afterComma is not empty or comments: ${StringTools.toDisplayString(afterComma, Constants.MAX_DEBUG_LENGTH)}');
             return false;
         }
 
         if (Constants.DEBUG_FORMAT_TOOLS) logInternal('  Comma surrounded by comments found: ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
-        return true;
-    }
-
-    static bool isEmptyOrComments(String s)
-    {
-        const String methodName = 'FormatTools.isEmptyOrComments';
-        if (Constants.DEBUG_FORMAT_TOOLS) logInternal('# $methodName(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)})');
-
-        bool isInEndOfLineComment = false;
-        int blockCommentDepth = 0;
-
-        for (int i = 0; i < s.length; i++)
-        {
-            final String char = s[i];
-            final String? nextChar = i < s.length - 1 ? s[i + 1] : null;
-            if (Constants.DEBUG_FORMAT_TOOLS) logInternal('  char: ${StringTools.toDisplayString(char)} nextChar: ${StringTools.toDisplayString(nextChar)}');
-
-            if (isInEndOfLineComment)
-            {
-                if (char == '\n')
-                {
-                    isInEndOfLineComment = false;
-                    if (Constants.DEBUG_FORMAT_TOOLS) logInternal('  Now isInEndOfLineComment=false');
-                    continue;
-                }
-
-                continue;
-            }
-
-            if (char == '/' && nextChar == '*')
-            {
-                blockCommentDepth++;
-                if (Constants.DEBUG_FORMAT_TOOLS) logInternal('  Now blockCommentDepth++: $blockCommentDepth');
-                i++;
-                continue;
-            }
-
-            if (char == '*' && nextChar == '/')
-            {
-                blockCommentDepth--;
-                if (Constants.DEBUG_FORMAT_TOOLS) logInternal('  Now blockCommentDepth--: $blockCommentDepth');
-                if (blockCommentDepth < 0)
-                {
-                    _logError('Block comment ended but blockCommentDepth < 0');
-                    return false;
-                }
-
-                i++;
-                continue;
-            }
-
-            if (blockCommentDepth > 0)
-                continue;
-
-            if (char == '/' && nextChar == '/')
-            {
-                isInEndOfLineComment = true;
-                if (Constants.DEBUG_FORMAT_TOOLS) logInternal('  Now isInEndOfLineComment=true');
-                i++;
-                continue;
-            }
-
-            if (char == ' ' || char == '\t' || char == '\n')
-                continue;
-
-            if (Constants.DEBUG_FORMAT_TOOLS) logInternal('  Result: false');
-            return false;
-        }
-
-        if (blockCommentDepth > 0)
-        {
-            _logError('Text ended but blockCommentDepth > 0');
-            return false;
-        }
-
-        if (Constants.DEBUG_FORMAT_TOOLS) logInternal('  Result: true');
         return true;
     }
 
@@ -154,10 +79,5 @@ class FormatTools
         }
 
         return result;
-    }
-
-    static void _logError(String s)
-    {
-        logInternalError(s);
     }
 }
