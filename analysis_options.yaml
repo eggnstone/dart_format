@@ -11,18 +11,20 @@ analyzer:
     missing_required_param: error
     missing_return: error
     must_be_immutable: error
-  exclude:
-    - 'lib/App.widgetbook.dart'
-    - 'lib/constants/generated/*.dart'
-    - 'lib/generated/*.dart'
-    - '**/*.freezed.dart'
-    - '**/*.g.dart'
-    - '**/*.gr.dart'
-    - '**/*Injection.config.dart'
-    - '**/*.pb.dart'
-    - '**/*.pbenum.dart'
-    - '**/*.pbjson.dart'
-    - '**/*.pbserver.dart'
+  exclude: [
+    'lib/App.widgetbook.dart',
+    'lib/constants/generated/*.dart',
+    'lib/generated/*.dart',
+    'tests_explicit/Sandbox*.dart',
+    '**/*.freezed.dart',
+    '**/*.g.dart',
+    '**/*.gr.dart',
+    '**/*.pb.dart',
+    '**/*.pbenum.dart',
+    '**/*.pbjson.dart',
+    '**/*.pbserver.dart',
+    '**/*Injection.config.dart'
+  ]
 
 # Explicitly disable only the rules we do not want.
 linter:

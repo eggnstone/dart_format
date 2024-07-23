@@ -26,7 +26,7 @@ class DefaultFormatter extends IFormatter
         const String methodName = 'DefaultFormatter.format';
 
         if (DateTime.now().isAfter(formatState.maxDateTime))
-            throw DartFormatException.error('Timeout');
+            throw DartFormatException.error('Maximum time for formatting reached.');
 
         if (Constants.DEBUG_I_FORMATTER)
         {

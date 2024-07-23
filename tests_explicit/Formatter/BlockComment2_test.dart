@@ -37,7 +37,7 @@ void main()
                         '/*START\n'
                         '    TEXT\n'
                         'END*/\n'
-                        'var a;';
+                        'var a;\n';
 
                     Analyzer().analyze(inputText);
 
