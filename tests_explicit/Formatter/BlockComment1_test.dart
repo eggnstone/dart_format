@@ -20,6 +20,7 @@ void main()
                         '    a;\n'
                         '    /*Comment*/\n'
                         '}\n';
+                    const String expectedText = inputText;
 
                     Analyzer().analyze(inputText);
 
@@ -28,7 +29,7 @@ void main()
 
                     final String actualText = formatter.format(inputText);
 
-                    TestTools.expect(actualText, equals(inputText));
+                    TestTools.expect(actualText, equals(expectedText));
                     logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
@@ -37,10 +38,11 @@ void main()
                 {
                     const String inputText =
                         'var m =\n'
-                        '{\n'
-                        '    a\n'
-                        '    /*Comment*/\n'
-                        '};\n';
+                        '    {\n'
+                        '        a\n'
+                        '        /*Comment*/\n'
+                        '    };\n';
+                    const String expectedText = inputText;
 
                     Analyzer().analyze(inputText);
 
@@ -49,7 +51,7 @@ void main()
 
                     final String actualText = formatter.format(inputText);
 
-                    TestTools.expect(actualText, equals(inputText));
+                    TestTools.expect(actualText, equals(expectedText));
                     logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
@@ -58,10 +60,11 @@ void main()
                 {
                     const String inputText =
                         'var m =\n'
-                        '{\n'
-                        '    a,\n'
-                        '    /*Comment*/\n'
-                        '};\n';
+                        '    {\n'
+                        '        a,\n'
+                        '        /*Comment*/\n'
+                        '    };\n';
+                    const String expectedText = inputText;
 
                     Analyzer().analyze(inputText);
 
@@ -70,7 +73,7 @@ void main()
 
                     final String actualText = formatter.format(inputText);
 
-                    TestTools.expect(actualText, equals(inputText));
+                    TestTools.expect(actualText, equals(expectedText));
                     logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
@@ -79,17 +82,17 @@ void main()
                 {
                     const String inputText =
                         'var m =\n'
-                        '{\n'
-                        '    a,\n'
-                        '    /*Comment*/\n'
-                        '};\n';
+                        '    {\n'
+                        '        a,\n'
+                        '        /*Comment*/\n'
+                        '    };\n';
 
                     const String expectedText =
                         'var m =\n'
-                        '{\n'
-                        '    a\n'
-                        '    /*Comment*/\n'
-                        '};\n';
+                        '    {\n'
+                        '        a\n'
+                        '        /*Comment*/\n'
+                        '    };\n';
 
                     Analyzer().analyze(inputText);
 

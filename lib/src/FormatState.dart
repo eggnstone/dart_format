@@ -329,10 +329,15 @@ class FormatState
         final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
-        if (offset < lastConsumedPosition)
+        if (lastConsumedPosition > offset)
+        {
             logAndThrowErrorWithOffsets('Internal error: offset < lastConsumedPosition:', '<', null, offset, lastConsumedPosition, source);
-
-        if (lastConsumedPosition < offset)
+        }
+        else if (lastConsumedPosition == offset)
+        {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  No filler');
+        }
+        else
         {
             final String filler = getText(lastConsumedPosition, offset);
 
@@ -347,7 +352,7 @@ class FormatState
             if (!CommentTools.isEmptyOrComments(filler))
                 logAndThrowErrorWithOffsets('Internal error: Missed some text:', '-', StringTools.toDisplayString(filler, 100), lastConsumedPosition, offset, source);
 
-            final String fixedFiller = _removeLeadingWhitespace(filler);
+            final String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
             if (Constants.DEBUG_FORMAT_STATE)
             {
                 logInternal('  Filler w/o leadingWS: ${StringTools.toDisplayString(fixedFiller)}');
@@ -356,11 +361,9 @@ class FormatState
 
             write(fixedFiller);
         }
-        else
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  No filler');
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
-        final String fixedS = _removeLeadingWhitespace(s);
+        final String fixedS = _removeLeadingWhitespace(s, offset);
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  S w/o leading ws:     ${StringTools.toDisplayString(fixedS)}');
         write(fixedS);
 
@@ -393,6 +396,22 @@ class FormatState
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(filler, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
         write(filler);
+
+        /*
+        TODO: 'int i=0;/ *START\n'
+        final String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
+        if (Constants.DEBUG_FORMAT_STATE)
+        {
+            logInternal('  Filler w/o leadingWS: ${StringTools.toDisplayString(fixedFiller)}');
+            logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
+        }
+        else
+        {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(filler, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
+        }
+
+        write(fixedFiller);
+        */
 
         _setLastConsumedPosition(end, fullSource);
     }
@@ -739,12 +758,20 @@ class FormatState
         logAndThrowError(finalMessage, getLocation(offset1));
     }
 
-    String _removeLeadingWhitespace(String s)
+    String _removeLeadingWhitespace(String s, int offset)
     {
         if (_indentationSpacesPerLevel < 0)
             return s;
 
-        return StringTools.removeLeadingWhitespace(s);
+        try
+        {
+            return StringTools.removeLeadingWhitespace(s);
+        }
+        on DartFormatException catch(e)
+        {
+            final CharacterLocation? location = getLocation(offset);
+            throw e.copyWith(line: location?.lineNumber, column: location?.columnNumber);
+        }
     }
 
     void _setLastConsumedPosition(int value, String source)

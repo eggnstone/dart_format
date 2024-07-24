@@ -8,8 +8,102 @@ void main()
 {
     TestTools.init();
 
+    final Config configNone = Config.none();
+    final Formatter formatterNone = Formatter(configNone);
+
     group('Comments', ()
         {
+            /* Unterminated multi-line comment.
+            test('Block comment with block comment start inside', ()
+            {
+                // ignore: prefer_interpolation_to_compose_strings, prefer_adjacent_string_concatenation
+                const String inputText = '/' + '* Comment /' + '* *' + '/';
+                const String expectedText = inputText;
+
+                final String actualText = formatterNone.format(inputText);
+
+                TestTools.expect(actualText, equals(expectedText));
+            }
+            );*/
+
+            test('Block comment start in single-quote string', ()
+            {
+                const String inputText = "String s = '/*';";
+                const String expectedText = inputText;
+
+                final String actualText = formatterNone.format(inputText);
+
+                TestTools.expect(actualText, equals(expectedText));
+            }
+            );
+
+            test('Block comment start in double-quote string', ()
+            {
+                const String inputText = 'String s = "/*";';
+                const String expectedText = inputText;
+
+                final String actualText = formatterNone.format(inputText);
+
+                TestTools.expect(actualText, equals(expectedText));
+            }
+            );
+
+
+            test('EndOfLine comment in single-quote string', ()
+            {
+                const String inputText = "String s = '//';";
+                const String expectedText = inputText;
+
+                final String actualText = formatterNone.format(inputText);
+
+                TestTools.expect(actualText, equals(expectedText));
+            }
+            );
+
+            test('EndOfLine comment in double-quote string', ()
+            {
+                const String inputText = 'String s = "//";';
+                const String expectedText = inputText;
+
+                final String actualText = formatterNone.format(inputText);
+
+                TestTools.expect(actualText, equals(expectedText));
+            }
+            );
+
+            test('Block comment with block comment inside', ()
+            {
+                const String inputText = '/* Comment /* */ */';
+                const String expectedText = inputText;
+
+                final String actualText = formatterNone.format(inputText);
+
+                TestTools.expect(actualText, equals(expectedText));
+            }
+            );
+
+            test('Block comment with EndOfLine comment inside', ()
+            {
+                const String inputText = '/* Comment // */';
+                const String expectedText = inputText;
+
+                final String actualText = formatterNone.format(inputText);
+
+                TestTools.expect(actualText, equals(expectedText));
+            }
+            );
+
+            test('EndOfLine comment with Block comment start inside', ()
+            {
+                const String inputText = '// /* Comment';
+                const String expectedText = inputText;
+
+                final String actualText = formatterNone.format(inputText);
+
+                TestTools.expect(actualText, equals(expectedText));
+            }
+            );
+
             test('Normal comments and DocComments mixed', ()
                 {
                     const String inputText =
@@ -26,14 +120,12 @@ void main()
                         '/// DocComment2\n'
                         'bool normalFirstThenDoc = true;\n'
                         '}';
+                    const String expectedText = inputText;
 
                     Analyzer().analyze(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
-                    final Config config = Config.none();
-                    final Formatter formatter = Formatter(config);
-                    final String actualText = formatter.format(inputText);
-
-                    TestTools.expect(actualText, equals(inputText));
+                    TestTools.expect(actualText, equals(expectedText));
                 }
             );
 
@@ -45,14 +137,12 @@ void main()
                         '/// Start [SomeReference] End\n'
                         'bool b = true;\n'
                         '}';
+                    const String expectedText = inputText;
 
                     Analyzer().analyze(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
-                    final Config config = Config.none();
-                    final Formatter formatter = Formatter(config);
-                    final String actualText = formatter.format(inputText);
-
-                    TestTools.expect(actualText, equals(inputText));
+                    TestTools.expect(actualText, equals(expectedText));
                 }
             );
         }

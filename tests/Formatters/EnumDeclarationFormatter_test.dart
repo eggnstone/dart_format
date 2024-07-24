@@ -102,7 +102,7 @@ void main()
                 TestVisitor<EnumConstantDeclaration>(11, 'y')
             ],
             testConfigs: <TestConfig>[
-                TestConfig.none('enum E{\nx,\ny}'),
+                TestConfig.none(),
                 TestConfig('enum E\n{\n    x,\n    y\n}\n')
             ]
         ),
@@ -116,7 +116,7 @@ void main()
                 TestVisitor<EnumConstantDeclaration>(14, 'z')
             ],
             testConfigs: <TestConfig>[
-                TestConfig.none('enum E{\nx,\ny,\nz}'),
+                TestConfig.none(),
                 TestConfig('enum E\n{\n    x,\n    y,\n    z\n}\n')
             ]
         )

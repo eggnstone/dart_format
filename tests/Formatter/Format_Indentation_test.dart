@@ -12,6 +12,39 @@ void main()
 
     group('Formatter.format: indentation', ()
         {
+            test('Statement with leading whitespace', ()
+                {
+                    const String inputText = '    int a;';
+                    const String expectedText = 'int a;\n';
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
+
+            test('Block comment with leading whitespace', ()
+                {
+                    const String inputText = '    /* Comment */';
+                    const String expectedText = '/* Comment */\n';
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
+
+            test('EndOfLine comment with leading whitespace', ()
+                {
+                    const String inputText = '    // Comment';
+                    const String expectedText = '// Comment\n';
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
+
             test('Function / ExpressionStatement', ()
                 {
                     const String inputText = 'void f(){a;}';
