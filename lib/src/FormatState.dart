@@ -352,14 +352,27 @@ class FormatState
             if (!CommentTools.isEmptyOrComments(filler))
                 logAndThrowErrorWithOffsets('Internal error: Missed some text:', '-', StringTools.toDisplayString(filler, 100), lastConsumedPosition, offset, source);
 
-            final String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
             if (Constants.DEBUG_FORMAT_STATE)
             {
-                logInternal('  Filler w/o leadingWS: ${StringTools.toDisplayString(fixedFiller)}');
-                logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
+                logInternal('  filler:            ${StringTools.toDisplayString(filler)}');
+                logInternal('  _textBuffers.last: ${StringTools.toDisplayString(_textBuffers.last)}');
             }
 
-            write(fixedFiller);
+            if (filler.replaceAll(' ', '').isEmpty && _textBuffers.length == 1 && _textBuffers.last.toString().isEmpty)
+            {
+                if (Constants.DEBUG_FORMAT_STATE) logInternal('  Skipping space-only filler');
+            }
+            else
+            {
+                final String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
+                if (Constants.DEBUG_FORMAT_STATE)
+                {
+                    logInternal('  Filler w/o leadingWS: ${StringTools.toDisplayString(fixedFiller)}');
+                    logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
+                }
+
+                write(fixedFiller);
+            }
         }
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
@@ -394,24 +407,38 @@ class FormatState
             logAndThrowErrorWithOffsets('Internal error: Missed some text:', '-', StringTools.toDisplayString(filler, 100), lastConsumedPosition, end, source);
         }
 
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(filler, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
-        write(filler);
+        String lastText = _textBuffers.last.toString();
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  lastText1: ${StringTools.toDisplayString(lastText)}');
 
-        /*
-        TODO: 'int i=0;/ *START\n'
-        final String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
-        if (Constants.DEBUG_FORMAT_STATE)
+        final int lastLineBreakPos = lastText.lastIndexOf('\n');
+        if (lastLineBreakPos >= 0)
         {
-            logInternal('  Filler w/o leadingWS: ${StringTools.toDisplayString(fixedFiller)}');
-            logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
+            lastText = lastText.substring(lastLineBreakPos + 1);
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  lastText2: ${StringTools.toDisplayString(lastText)}');
+        }
+
+        bool removeLeadingWhitespace = lastText.trim().isEmpty;
+        if (!removeLeadingWhitespace)
+        {
+            final String firstLine = filler.split('\n').first;
+            removeLeadingWhitespace = firstLine.trim().isEmpty;
+        }
+
+        if (removeLeadingWhitespace)
+        {
+            final String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
+            if (Constants.DEBUG_FORMAT_STATE)
+            {
+                logInternal('  Filler w/o leadingWS: ${StringTools.toDisplayString(fixedFiller)}');
+                logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
+            }
+
+            write(fixedFiller);
         }
         else
         {
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(filler, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
+            write(filler);
         }
-
-        write(fixedFiller);
-        */
 
         _setLastConsumedPosition(end, fullSource);
     }

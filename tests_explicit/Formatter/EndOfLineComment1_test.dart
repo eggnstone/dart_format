@@ -38,16 +38,11 @@ void main()
                 {
                     const String inputText =
                         'var m =\n'
-                        '{\n'
-                        '    a\n'
-                        '    // EOL\n'
-                        '};\n';
-                    const String expectedText =
-                        'var m =\n'
                         '    {\n'
                         '        a\n'
                         '        // EOL\n'
                         '    };\n';
+                    const String expectedText = inputText;
 
                     Analyzer().analyze(inputText);
 
@@ -87,10 +82,10 @@ void main()
                 {
                     const String inputText =
                         'var m =\n'
-                        '{\n'
-                        '    a,\n'
-                        '    // EOL\n'
-                        '};\n';
+                        '    {\n'
+                        '        a,\n'
+                        '        // EOL\n'
+                        '    };\n';
 
                     const String expectedText =
                         'var m =\n'

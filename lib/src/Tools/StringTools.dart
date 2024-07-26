@@ -51,46 +51,86 @@ class StringTools
 
         String leading = '';
         int currentPos = 0;
-        int blockCommentStartPos;
-        while ((blockCommentStartPos = s.indexOf('/*', currentPos)) >= 0)
+        while (true)
         {
-            final int blockCommentEndPos = s.indexOf('*/', blockCommentStartPos + 2);
-            if (blockCommentEndPos < 0)
-                throw DartFormatException.error('Block comment not closed.');
+            final int blockCommentStartPos2 = s.indexOf('/*', currentPos);
+            final int endOfLineCommentStartPos = s.indexOf('//', currentPos);
+            if (blockCommentStartPos2 < 0 && endOfLineCommentStartPos < 0)
+                break;
 
-            final String beforeComment = s.substring(currentPos, blockCommentStartPos);
+            int commentStartPos;
+            int commentEndPos;
+            if (blockCommentStartPos2 < 0 || (blockCommentStartPos2 >= 0 && endOfLineCommentStartPos >= 0 && endOfLineCommentStartPos < blockCommentStartPos2))
+            {
+                // EndOfLine comment comes first
+                commentStartPos = endOfLineCommentStartPos;
+
+                final int endOfLineCommentEndPos = s.indexOf('\n', endOfLineCommentStartPos + 2);
+                if (endOfLineCommentEndPos < 0)
+                {
+                    commentEndPos = s.length - 1;
+                    //throw DartFormatException.error('TODO: EndOfLine comment 1');
+                }
+                else
+                {
+                    commentEndPos = endOfLineCommentEndPos;
+                    //throw DartFormatException.error('TODO: EndOfLine comment 2');
+                }
+
+                //continue;
+            }
+            else
+            {
+                // Block comment comes first
+                commentStartPos = blockCommentStartPos2;
+
+                final int blockCommentEndPos = s.indexOf('*/', blockCommentStartPos2 + 2);
+                if (blockCommentEndPos < 0)
+                    throw DartFormatException.error('Block comment not closed.');
+
+                commentEndPos = blockCommentEndPos + 2;
+            }
+
+            final String beforeComment = s.substring(currentPos, commentStartPos);
             if (beforeComment.isNotEmpty)
             {
                 final String adjustedNonComment = _removeLeadingWhitespaceFromNonComment(beforeComment, spacer);
-                if (Constants.DEBUG_STRING_TOOLS) logInternal('ADDING NC: ${toDisplayString(adjustedNonComment)}');
-                leading = _determineLeading(leading, beforeComment, spacer);
+                if (Constants.DEBUG_STRING_TOOLS) logInternal('ADDING aNC: ${toDisplayString(adjustedNonComment)}');
+                leading = determineLeading(leading, beforeComment, spacer);
                 if (leading.isNotEmpty && leading.trim().isEmpty)
                 {
                     if (adjustedNonComment.endsWith(leading))
                         sb.write(adjustedNonComment.substring(0, adjustedNonComment.length - leading.length));
                     else
                         sb.write(adjustedNonComment);
-                    //leading = '';
                 }
                 else
                     sb.write(adjustedNonComment);
             }
 
-            final String comment = s.substring(blockCommentStartPos, blockCommentEndPos + 2);
+            final String comment = s.substring(commentStartPos, commentEndPos);
             final String adjustedComment = _removeLeadingWhitespaceFromComment(leading, comment, spacer);
-            if (Constants.DEBUG_STRING_TOOLS) logInternal('ADDING C: ${toDisplayString(adjustedComment)}');
+            if (Constants.DEBUG_STRING_TOOLS) logInternal('ADDING aC: ${toDisplayString(adjustedComment)}');
             sb.write(adjustedComment);
-            leading = _determineLeading(leading, comment, spacer);
+            leading = determineLeading(leading, comment, spacer);
 
-            currentPos = blockCommentEndPos + 2;
+            currentPos = commentEndPos;
         }
 
         final String rest = s.substring(currentPos);
         if (rest.isNotEmpty)
         {
             final String adjustedNonCommentRest = _removeLeadingWhitespaceFromNonComment(rest, spacer);
-            if (Constants.DEBUG_STRING_TOOLS) logInternal('ADDING RNC: ${toDisplayString(adjustedNonCommentRest)}');
-            sb.write(adjustedNonCommentRest);
+            if (Constants.DEBUG_STRING_TOOLS) logInternal('adjustedNonCommentRest: ${toDisplayString(adjustedNonCommentRest)}');
+            /*if (adjustedNonCommentRest.trim().isEmpty)
+            {
+                if (Constants.DEBUG_STRING_TOOLS) logInternal('NOT ADDING raNC: ${toDisplayString(adjustedNonCommentRest)}');
+            }
+            else
+            {*/
+                if (Constants.DEBUG_STRING_TOOLS) logInternal('ADDING raNC: ${toDisplayString(adjustedNonCommentRest)}');
+                sb.write(adjustedNonCommentRest);
+            //}
         }
 
     final String result = sb.toString();
@@ -258,18 +298,18 @@ class StringTools
         return result;
     }*/
 
-  static String _determineLeading(String leading, String s, String spacer)
+  static String determineLeading(String leading, String s, String spacer)
   {
       final int lastLineBreakPos = s.lastIndexOf('\n');
       if (lastLineBreakPos >= 0)
       {
           final String newLeading = s.substring(lastLineBreakPos + 1);
-          if (Constants.DEBUG_STRING_TOOLS) logInternal('${spacer}New leading 1: ${toDisplayString(newLeading)}');
+          if (Constants.DEBUG_STRING_TOOLS) logInternal('${spacer}New leading LB:    ${toDisplayString(newLeading)}');
             return newLeading;
       }
 
       final String newLeading = leading + s;
-      if (Constants.DEBUG_STRING_TOOLS) logInternal('${spacer}New leading 2: ${toDisplayString(newLeading)}');
+      if (Constants.DEBUG_STRING_TOOLS) logInternal('${spacer}New leading No-LB: ${toDisplayString(newLeading)}');
         return newLeading;
   }
 

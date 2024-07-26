@@ -233,7 +233,7 @@ void main()
 
     group('After statement', ()
     {
-            test('No changes expected', ()
+            test('!!! No changes expected', ()
                 {
                     const String inputText = 'int i=0; /*START\n'
                     '        TEXT\n'

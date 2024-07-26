@@ -12,7 +12,7 @@ class Constants
     static const bool DEBUG_I_FORMATTER = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_I_FORMATTER_OFFSETS = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_I_FORMATTER_TIME = (DEBUG && false) || DEBUG_ALL;
-    static const bool DEBUG_STRING_TOOLS = (DEBUG && true) || DEBUG_ALL;
+    static const bool DEBUG_STRING_TOOLS = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_TODOS = (DEBUG && false) || DEBUG_ALL;
 
     static const int HTTP_TOOLS_WAIT_BETWEEN_FLUSH_AND_CLOSE_IN_MILLISECONDS = 100;
