@@ -10,7 +10,7 @@ void main()
 {
     TestTools.init();
 
-    group('EndOfLine comments in function and map blocks', ()
+    group('EndOfLine comments in function and maps', ()
         {
             test('EndOfLine comment in a function block', ()
                 {

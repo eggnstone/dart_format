@@ -35,9 +35,12 @@ class Formatter
             logInternal('  maxEmptyLines: ${_config.maxEmptyLines}');
         }
 
-        final String sWithoutCarriageReturns = s.replaceAll('\r', '');
+        final String cleanedS = s.replaceAll('\r', '');
+        /*final int firstNoSpacePos = cleanedS.indexOf(RegExp(r'\S'));
+        if (firstNoSpacePos > 0)
+            cleanedS = cleanedS.substring(firstNoSpacePos);*/
 
-        final ParseStringResult parseResult = AnalyzerUtilities.parseString(content: sWithoutCarriageReturns, throwIfDiagnostics: false);
+        final ParseStringResult parseResult = AnalyzerUtilities.parseString(content: cleanedS, throwIfDiagnostics: false);
 
         final List<AnalysisError> errors = parseResult.errors;
         if (errors.isNotEmpty)
@@ -61,7 +64,7 @@ class Formatter
         result = textTools.removeEmptyLines(result);
         result = textTools.addNewLineAtEndOfText(result);
 
-        return _verifyResult(sWithoutCarriageReturns, result, parseResult.lineInfo);
+        return _verifyResult(cleanedS, result, parseResult.lineInfo);
     }
 
     void _logWarning(String s)

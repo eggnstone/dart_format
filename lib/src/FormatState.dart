@@ -10,6 +10,7 @@ import 'Constants/Constants.dart';
 import 'Data/Config.dart';
 import 'Data/Indentation.dart';
 import 'Exceptions/DartFormatException.dart';
+import 'LeadingWhitespaceRemover.dart';
 import 'StringBufferEx.dart';
 import 'Tools/CommentTools.dart';
 import 'Tools/FormatTools.dart';
@@ -792,7 +793,8 @@ class FormatState
 
         try
         {
-            return StringTools.removeLeadingWhitespace(s);
+            final bool removeLeadingSpaces = offset == 0;
+            return LeadingWhitespaceRemover.remove(s, removeLeadingSpaces: removeLeadingSpaces);
         }
         on DartFormatException catch(e)
         {

@@ -1,23 +1,24 @@
-import 'package:dart_format/src/Tools/StringTools.dart';
+import 'package:dart_format/src/LeadingWhitespaceRemover.dart';
 import 'package:test/test.dart';
 
-import '../../../TestTools/TestTools.dart';
+import '../TestTools/TestTools.dart';
 
 void main()
 {
     TestTools.init();
 
-    group('RemoveLeadingWhitespace, 3 lines, space at the start', ()
+    group('Remove, 3 lines', ()
         {
-            const String baseInput = ' Line 1\n Line 2\n Line 3';
-            const String baseExpected = 'Line 1\nLine 2\nLine 3';
+            const String baseText = 'Line 1\nLine 2\nLine 3';
+            const String baseInput = baseText;
+            const String baseExpected = baseInput;
 
             test('No newlines', ()
                 {
                     const String inputText = baseInput;
-                    const String expectedText = ' $baseExpected';
+                    const String expectedText = baseExpected;
 
-                    final String actualText = StringTools.removeLeadingWhitespace(inputText);
+                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -26,9 +27,9 @@ void main()
             test('Newline at the end', ()
                 {
                     const String inputText = '$baseInput\n';
-                    const String expectedText = ' $baseExpected\n';
+                    const String expectedText = '$baseExpected\n';
 
-                    final String actualText = StringTools.removeLeadingWhitespace(inputText);
+                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -39,7 +40,7 @@ void main()
                     const String inputText = '\n$baseInput';
                     const String expectedText = '\n$baseExpected';
 
-                    final String actualText = StringTools.removeLeadingWhitespace(inputText);
+                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -50,7 +51,7 @@ void main()
                     const String inputText = '\n$baseInput\n';
                     const String expectedText = '\n$baseExpected\n';
 
-                    final String actualText = StringTools.removeLeadingWhitespace(inputText);
+                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }

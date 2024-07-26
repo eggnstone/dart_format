@@ -10,7 +10,7 @@ void main()
 {
     TestTools.init();
 
-    group('Block comments in function and map blocks', ()
+    group('Block comments in function and maps', ()
         {
             test('Block comment in a function block', ()
                 {
