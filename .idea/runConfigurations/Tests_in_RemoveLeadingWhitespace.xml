@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Tests in RemoveLeadingWhitespace" type="DartTestRunConfigurationType" factoryName="Dart Test">
-    <option name="filePath" value="$PROJECT_DIR$/tests/Tools/StringTools/RemoveLeadingWhitespace" />
+  <configuration default="false" name="Tests in RemoveLeadingWhitespace" type="DartTestRunConfigurationType" factoryName="Dart Test" nameIsGenerated="true">
+    <option name="filePath" value="$PROJECT_DIR$/test/Tools/StringTools/RemoveLeadingWhitespace" />
     <option name="scope" value="FOLDER" />
     <method v="2" />
   </configuration>

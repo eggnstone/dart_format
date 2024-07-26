@@ -1,6 +1,0 @@
-targets:
-  $default:
-    sources:
-      - "lib/**"
-      - "tests/**"
-      - "tests_explicit/**"

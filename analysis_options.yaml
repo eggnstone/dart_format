@@ -15,7 +15,7 @@ analyzer:
     'lib/App.widgetbook.dart',
     'lib/constants/generated/*.dart',
     'lib/generated/*.dart',
-    'tests_explicit/Sandbox*.dart',
+    'test/ExplicitTests/Sandbox*.dart',
     '**/*.freezed.dart',
     '**/*.g.dart',
     '**/*.gr.dart',
