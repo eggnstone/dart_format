@@ -796,8 +796,9 @@ class FormatState
             final bool removeLeadingSpaces = offset == 0;
             return LeadingWhitespaceRemover.remove(s, removeLeadingSpaces: removeLeadingSpaces);
         }
-        on DartFormatException catch(e)
+        on DartFormatException catch(e, stackTrace)
         {
+            logError('$e\n$stackTrace');
             final CharacterLocation? location = getLocation(offset);
             throw e.copyWith(line: location?.lineNumber, column: location?.columnNumber);
         }

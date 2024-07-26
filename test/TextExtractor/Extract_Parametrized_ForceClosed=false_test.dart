@@ -10,7 +10,7 @@ void main()
 {
     TestTools.init();
 
-    group('TextExtractor.extract without force-close', ()
+    group('TextExtractor.extract forceClose=false', ()
     {
         final Map<String, Tuple<String, String>> params = <String, Tuple<String, String>>
         {

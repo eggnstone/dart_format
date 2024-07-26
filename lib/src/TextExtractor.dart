@@ -1,4 +1,5 @@
 import 'Data/TextInfo.dart';
+import 'Exceptions/DartFormatException.dart';
 import 'Tools/StringTools.dart';
 import 'Types/TextType.dart';
 
@@ -15,7 +16,7 @@ class TextExtractor
             if (escapePos == -1 && endMarkerPos == -1)
             {
                 if (forceClosed)
-                    throw Exception('Unclosed: ${StringTools.toDisplayString(s)}');
+                    throw DartFormatException.error('Unclosed: ${StringTools.toDisplayString(s)}');
 
                 return TextInfo(type: type, text: s);
             }
@@ -32,6 +33,9 @@ class TextExtractor
             return TextInfo(type: type, text: s.substring(0, endMarkerPos));
         }
 
-        throw Exception('Unknown error: ${StringTools.toDisplayString(s)}');
+        if (forceClosed)
+            throw DartFormatException.error('Unclosed: ${StringTools.toDisplayString(s)}');
+
+        return TextInfo(type: type, text: s);
     }
 }

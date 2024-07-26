@@ -75,7 +75,6 @@ class Analyzer
 
     void _log(String s)
     {
-        if (Constants.DEBUG_ANALYZER)
-            logDebug(s);
+        logDebug(s);
     }
 }

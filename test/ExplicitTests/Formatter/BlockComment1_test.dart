@@ -1,5 +1,4 @@
 import 'package:dart_format/dart_format.dart';
-import 'package:dart_format/src/Analyzer.dart';
 import 'package:dart_format/src/Tools/StringTools.dart';
 import 'package:eggnstone_dart/eggnstone_dart.dart';
 import 'package:test/test.dart';
@@ -22,8 +21,6 @@ void main()
                         '}\n';
                     const String expectedText = inputText;
 
-                    Analyzer().analyze(inputText);
-
                     final Config config = Config.all();
                     final Formatter formatter = Formatter(config);
 
@@ -44,8 +41,6 @@ void main()
                         '    };\n';
                     const String expectedText = inputText;
 
-                    Analyzer().analyze(inputText);
-
                     final Config config = Config.all();
                     final Formatter formatter = Formatter(config);
 
@@ -65,8 +60,6 @@ void main()
                         '        /*Comment*/\n'
                         '    };\n';
                     const String expectedText = inputText;
-
-                    Analyzer().analyze(inputText);
 
                     final Config config = Config.all(removeTrailingCommas: false);
                     final Formatter formatter = Formatter(config);
@@ -93,8 +86,6 @@ void main()
                         '        a\n'
                         '        /*Comment*/\n'
                         '    };\n';
-
-                    Analyzer().analyze(inputText);
 
                     final Config config = Config.all();
                     final Formatter formatter = Formatter(config);

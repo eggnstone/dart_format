@@ -1,5 +1,4 @@
 import 'package:dart_format/dart_format.dart';
-import 'package:dart_format/src/Analyzer.dart';
 import 'package:test/test.dart';
 
 import '../TestTools/TestTools.dart';
@@ -122,7 +121,6 @@ void main()
                         '}';
                     const String expectedText = inputText;
 
-                    Analyzer().analyze(inputText);
                     final String actualText = formatterNone.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
@@ -139,7 +137,6 @@ void main()
                         '}';
                     const String expectedText = inputText;
 
-                    Analyzer().analyze(inputText);
                     final String actualText = formatterNone.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));

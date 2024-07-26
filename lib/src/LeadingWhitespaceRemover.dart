@@ -27,16 +27,10 @@ class LeadingWhitespaceRemover
 
             if (part.type == TextType.Comment)
             {
-                String partText = part.text;
-                logWarning('partText: ${StringTools.toDisplayString(partText)}');
-
-                /*if (partText.endsWith('\n'))
-                    partText = partText.substring(0, partText.length - 1);*/
-
-                final String adjustedComment = _removeFromComment(leading, partText, '$spacer      ');
+                final String adjustedComment = _removeFromComment(leading, part.text, '$spacer      ');
                 if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer    Adding comment:  ${StringTools.toDisplayString(adjustedComment)}');
                 sb.write(adjustedComment);
-                leading = _determineLeading(leading, partText, '$spacer    ');
+                leading = _determineLeading(leading, part.text, '$spacer    ');
             }
             else
             {
