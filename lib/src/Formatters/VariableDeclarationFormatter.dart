@@ -32,8 +32,8 @@ class VariableDeclarationFormatter extends IFormatter
         {
             final String textWithPossibleLineBreak = formatState.getText(node.offset, node.initializer!.offset);
             pushLevel = textWithPossibleLineBreak.contains('\n');
-            //log('textWithPossibleLineBreak: ${StringTools.toDisplayString(textWithPossibleLineBreak)}', 0);
-            //log('pushLevel: $pushLevel', 0);
+            log('textWithPossibleLineBreak:            ${StringTools.toDisplayString(textWithPossibleLineBreak)}', 0);
+            log('pushLevel:                            $pushLevel', 0);
         }
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
@@ -43,7 +43,31 @@ class VariableDeclarationFormatter extends IFormatter
             formatState.pushLevel('$methodName/node.name/after');
 
         formatState.copyEntity(node.equals, astVisitor, '$methodName/node.equals');
-        formatState.copyEntity(node.initializer, astVisitor, '$methodName/node.initializer');
+
+        if (node.initializer is AdjacentStrings)
+        {
+            final String textWithPossibleLineBreakEquals = formatState.getText(node.equals!.offset, node.initializer!.offset);
+            final bool pushLevelEquals = textWithPossibleLineBreakEquals.contains('\n');
+            log('textWithPossibleLineBreakEquals:      ${StringTools.toDisplayString(textWithPossibleLineBreakEquals)}', 0);
+            log('pushLevelEquals:                      $pushLevelEquals', 0);
+            final String textWithPossibleLineBreakInitializer = formatState.getText(node.initializer!.offset, node.initializer!.end);
+            final bool pushLevelInitializer = textWithPossibleLineBreakInitializer.contains('\n');
+            log('textWithPossibleLineBreakInitializer: ${StringTools.toDisplayString(textWithPossibleLineBreakInitializer)}', 0);
+            log('pushLevelInitializer:                 $pushLevelInitializer', 0);
+
+            final bool combinedPushLevel = !pushLevelEquals && pushLevelInitializer;
+            log('combinedPushLevel:                    $combinedPushLevel', 0);
+
+            if (combinedPushLevel)
+                formatState.pushLevel('$methodName/node.initializer/before');
+
+            formatState.copyEntity(node.initializer, astVisitor, '$methodName/node.initializer');
+
+            if (combinedPushLevel)
+                formatState.popLevelAndIndent();
+        }
+        else
+            formatState.copyEntity(node.initializer, astVisitor, '$methodName/node.initializer');
 
         if (pushLevel)
             formatState.popLevelAndIndent();

@@ -7,6 +7,9 @@ class TextExtractor
 {
     static TextInfo extract(String s, TextType type, String startMarker, String endMarker, {bool forceClosed = true})
     {
+        if (!s.startsWith(startMarker))
+            throw DartFormatException.error('Does not start with expected start marker: ${StringTools.toDisplayString(s)}');
+
         int currentPos = startMarker.length;
         while (currentPos < s.length)
         {

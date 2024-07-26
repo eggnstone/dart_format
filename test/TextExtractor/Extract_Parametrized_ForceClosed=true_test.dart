@@ -39,8 +39,15 @@ void main()
         }
                 );
 
-                test('Unclosed with escaped end', () {
+                test('Unclosed with escaped end 1', () {
                     final String inputText = '${markers.item1}abc\\${markers.item2}';
+
+                    expect(() => TextExtractor.extract(inputText, TextType.Normal, markers.item1, markers.item2), throwsA(isA<Exception>()));
+                }
+                );
+
+                test('Unclosed with escaped end 2', () {
+                    final String inputText = '${markers.item1}abc\\${markers.item2}def';
 
                     expect(() => TextExtractor.extract(inputText, TextType.Normal, markers.item1, markers.item2), throwsA(isA<Exception>()));
                 }

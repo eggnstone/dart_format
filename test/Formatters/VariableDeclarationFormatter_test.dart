@@ -63,6 +63,20 @@ void main()
                 TestConfig.none(),
                 TestConfig('i\n    =\n    f.a.b')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createVariableDeclarationInTopLevelVariableDeclaration,
+            inputLeading: 'String ',
+            inputMiddle: "s =\n'a'\n'b'",
+            inputTrailing: ';',
+            name: 'VariableDeclaration with adjacent strings',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<AdjacentStrings>(11, "'a'\n'b'")
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig("s =\n    'a'\n    'b'")
+            ]
         )
     ];
 
