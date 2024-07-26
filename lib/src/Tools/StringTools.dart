@@ -3,6 +3,9 @@
 import '../../dart_format.dart';
 import '../Constants/Constants.dart';
 import '../Data/IntTuple.dart';
+import '../Data/TextInfo.dart';
+import '../TextSeparator.dart';
+import '../Types/TextType.dart';
 import 'LogTools.dart';
 
 class StringTools
@@ -40,7 +43,6 @@ class StringTools
         return IntTuple(indexInput, indexResult);
     }
 
-
     static String removeLeadingWhitespace(String s)
     {
         const String methodName = 'removeLeadingWhitespace';
@@ -49,42 +51,50 @@ class StringTools
 
         if (Constants.DEBUG_STRING_TOOLS) logInternal('$methodName()\nIN:\n-----\n${toDisplayString(s)}\n-----\n$s\n-----');
 
+        final List<TextInfo> parts = TextSeparator.separate(s);
+        for (final TextInfo part in parts)
+        {
+             if (part.type == TextType.Comment)
+                {
+
+                }
+            else if (part.type == TextType.String)
+                {
+
+                }
+            else
+                {
+
+                }
+            }
+
         String leading = '';
         int currentPos = 0;
         while (true)
         {
-            final int blockCommentStartPos2 = s.indexOf('/*', currentPos);
+            final int singleQuotePos = s.indexOf("'", currentPos);
+            final int doubleQuotePos = s.indexOf('"', currentPos);
+            final int blockCommentStartPos = s.indexOf('/*', currentPos);
             final int endOfLineCommentStartPos = s.indexOf('//', currentPos);
-            if (blockCommentStartPos2 < 0 && endOfLineCommentStartPos < 0)
+            if (blockCommentStartPos < 0 && endOfLineCommentStartPos < 0)
                 break;
 
             int commentStartPos;
             int commentEndPos;
-            if (blockCommentStartPos2 < 0 || (blockCommentStartPos2 >= 0 && endOfLineCommentStartPos >= 0 && endOfLineCommentStartPos < blockCommentStartPos2))
+            if (blockCommentStartPos < 0 || (blockCommentStartPos >= 0 && endOfLineCommentStartPos >= 0 && endOfLineCommentStartPos < blockCommentStartPos))
             {
                 // EndOfLine comment comes first
                 commentStartPos = endOfLineCommentStartPos;
 
                 final int endOfLineCommentEndPos = s.indexOf('\n', endOfLineCommentStartPos + 2);
-                if (endOfLineCommentEndPos < 0)
-                {
-                    commentEndPos = s.length - 1;
-                    //throw DartFormatException.error('TODO: EndOfLine comment 1');
-                }
-                else
-                {
-                    commentEndPos = endOfLineCommentEndPos;
-                    //throw DartFormatException.error('TODO: EndOfLine comment 2');
-                }
-
-                //continue;
+                commentEndPos = endOfLineCommentEndPos < 0 ? s.length - 1 : endOfLineCommentEndPos;
             }
             else
             {
                 // Block comment comes first
-                commentStartPos = blockCommentStartPos2;
+                commentStartPos = blockCommentStartPos;
 
-                final int blockCommentEndPos = s.indexOf('*/', blockCommentStartPos2 + 2);
+                final int blockCommentEndPos = s.indexOf('*/', blockCommentStartPos + 2);
                 if (blockCommentEndPos < 0)
                     throw DartFormatException.error('Block comment not closed.');
 
@@ -445,4 +455,10 @@ class StringTools
 
         return '<COMMENT-with-leading-text>$s</COMMENT-with-leading-text>';
     }
+
+  static int? indexOfOrNull(String s, String pattern, int start)
+  {
+        final int index = s.indexOf(pattern, start);
+        return index < 0 ? null : index;
+  }
 }

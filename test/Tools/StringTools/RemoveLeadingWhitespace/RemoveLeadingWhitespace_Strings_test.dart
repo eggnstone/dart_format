@@ -7,23 +7,11 @@ void main()
 {
     TestTools.init();
 
-    group('RemoveLeadingWhitespace, comments', ()
+    group('RemoveLeadingWhitespace, strings', ()
         {
-            test('"/*"', ()
-                {
-                    const String inputText = 'String s="/*";';
-                    const String expectedText = inputText;
-
-                    final String actualText = StringTools.removeLeadingWhitespace(inputText);
-
-                    TestTools.expect(actualText, equals(expectedText));
-                }
-            );
-
             test(r"'\''", ()
                 {
-                    // ignore: avoid_escaping_inner_quotes
-                    const String inputText = '\'';
+                    const String inputText = r"String s='\'';";
                     const String expectedText = inputText;
 
                     final String actualText = StringTools.removeLeadingWhitespace(inputText);
@@ -32,9 +20,9 @@ void main()
                 }
             );
 
-            test("'/*'", ()
+            test(r'"\""', ()
                 {
-                    const String inputText = "String s='/*';";
+                    const String inputText = r'String s="\"";';
                     const String expectedText = inputText;
 
                     final String actualText = StringTools.removeLeadingWhitespace(inputText);

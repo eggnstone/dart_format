@@ -7,11 +7,11 @@ void main()
 {
     TestTools.init();
 
-    group('RemoveLeadingWhitespace, comments', ()
+    group('RemoveLeadingWhitespace, comments in strings', ()
         {
-            test('Empty', ()
+            test('"/*"', ()
                 {
-                    const String inputText = '';
+                    const String inputText = 'String s="/*";';
                     const String expectedText = inputText;
 
                     final String actualText = StringTools.removeLeadingWhitespace(inputText);
@@ -20,9 +20,9 @@ void main()
                 }
             );
 
-            test('No leading whitespace', ()
+            test("'/*'", ()
                 {
-                    const String inputText = '/* Comment */';
+                    const String inputText = "String s='/*';";
                     const String expectedText = inputText;
 
                     final String actualText = StringTools.removeLeadingWhitespace(inputText);
@@ -31,25 +31,10 @@ void main()
                 }
             );
 
-            test('One leading whitespace', ()
+            test("'//'", ()
                 {
-                    const String inputText = ' /* Comment */';
-                    const String expectedText = '/* Comment */';
-
-                    final String actualText = StringTools.removeLeadingWhitespace(inputText);
-
-                    TestTools.expect(actualText, equals(expectedText));
-                }
-            );
-
-            test('One leading whitespace', ()
-                {
-                    const String inputText =
-                        ' /* Comment1\n'
-                        ' Comment2 */';
-                    const String expectedText =
-                        '/* Comment1\n'
-                        'Comment2 */';
+                    const String inputText = "String s='//';";
+                    const String expectedText = inputText;
 
                     final String actualText = StringTools.removeLeadingWhitespace(inputText);
 
