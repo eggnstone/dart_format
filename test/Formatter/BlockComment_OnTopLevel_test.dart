@@ -280,7 +280,7 @@ void main()
 
             group('Back-to-back', ()
                 {
-                    test('3 lines, not indented', ()
+                    test('Not indented', ()
                         {
                             const String inputText = '/*\n'
                                 '*//*\n'
@@ -293,17 +293,84 @@ void main()
                         }
                     );
 
-                    test('3 lines, not indented', ()
-                    {
-                        const String inputText = '/*\n'
-                            '    *//*\n'
-                            '*/\n';
-                        const String expectedText = inputText;
+                    test('Start indented', ()
+                        {
+                            const String inputText = '    /*\n'
+                                '*//*\n'
+                                '*/\n';
+                            const String expectedText = inputText;
 
-                        final String actualText = formatterAll.format(inputText);
+                            final String actualText = formatterAll.format(inputText);
 
-                        TestTools.expect(actualText, equals(expectedText));
-                    }
+                            TestTools.expect(actualText, equals(expectedText));
+                        }
+                    );
+
+                    test('Middle indented', ()
+                        {
+                            const String inputText = '/*\n'
+                                '    *//*\n'
+                                '*/\n';
+                            const String expectedText = inputText;
+
+                            final String actualText = formatterAll.format(inputText);
+
+                            TestTools.expect(actualText, equals(expectedText));
+                        }
+                    );
+
+                    test('End indented', ()
+                        {
+                            const String inputText = '/*\n'
+                                '*//*\n'
+                                '    */\n';
+                            const String expectedText = inputText;
+
+                            final String actualText = formatterAll.format(inputText);
+
+                            TestTools.expect(actualText, equals(expectedText));
+                        }
+                    );
+
+                    test('Start and middle indented', ()
+                        {
+                            const String inputText = '    /*\n'
+                                '    *//*\n'
+                                '*/\n';
+                            const String expectedText = '/*\n'
+                                '*/    /*\n'
+                                '*/\n';
+
+                            final String actualText = formatterAll.format(inputText);
+
+                            TestTools.expect(actualText, equals(expectedText));
+                        }
+                    );
+
+                    test('Start and end indented', ()
+                        {
+                            const String inputText = '    /*\n'
+                                '*//*\n'
+                                '    */\n';
+                            const String expectedText = inputText;
+
+                            final String actualText = formatterAll.format(inputText);
+
+                            TestTools.expect(actualText, equals(expectedText));
+                        }
+                    );
+
+                    test('Middle and end indented', ()
+                        {
+                            const String inputText = '/*\n'
+                                '    *//*\n'
+                                '    */\n';
+                            const String expectedText = inputText;
+
+                            final String actualText = formatterAll.format(inputText);
+
+                            TestTools.expect(actualText, equals(expectedText));
+                        }
                     );
                 }
             );
