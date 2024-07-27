@@ -419,14 +419,18 @@ class FormatState
             if (Constants.DEBUG_FORMAT_STATE) logInternal('  lastText2:                 ${StringTools.toDisplayString(lastText)}');
         }
 
-        bool removeLeadingWhitespace = lastText.trim().isEmpty;
+        /*bool removeLeadingWhitespace = lastText.trim().isEmpty;
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  removeLeadingWhitespace:   $removeLeadingWhitespace');
         if (!removeLeadingWhitespace)
         {
             final String firstLine = filler.split('\n').first;
             removeLeadingWhitespace = firstLine.trim().isEmpty;
         }
 
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  removeLeadingWhitespace:   $removeLeadingWhitespace');
         if (removeLeadingWhitespace)
+        */
+        if (true)
         {
             final String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
             if (Constants.DEBUG_FORMAT_STATE)
