@@ -30,8 +30,6 @@ void main()
                         '    s;\n'
                         '}\n';
 
-
-
                     final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
@@ -49,8 +47,6 @@ void main()
                         '    s;\n'
                         '}\n';
                     const String expectedText = inputText;
-
-
 
                     final String actualText = formatterAll.format(inputText);
 
@@ -76,8 +72,6 @@ void main()
                         '    s;\n'
                         '}\n';
 
-
-
                     final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
@@ -101,8 +95,6 @@ void main()
                         '    END*/\n'
                         '    s;\n'
                         '}\n';
-
-
 
                     final String actualText = formatterAll.format(inputText);
 

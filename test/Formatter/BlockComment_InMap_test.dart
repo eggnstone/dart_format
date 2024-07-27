@@ -23,8 +23,6 @@ void main()
                         '    };\n';
                     const String expectedText = inputText;
 
-                    
-
                     final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
@@ -66,8 +64,6 @@ void main()
                         '        a\n'
                         '        /* Comment */\n'
                         '    };\n';
-
-                    
 
                     final String actualText = formatterAll.format(inputText);
 

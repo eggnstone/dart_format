@@ -120,6 +120,9 @@ class LeadingWhitespaceRemover
         for (int i = 1; i < lines.length; i++)
         {
             final String line = lines[i];
+            if (line.trim().isEmpty)
+                continue;
+
             final int indentation = line.length - line.trimLeft().length;
             if (indentation < minIndentation)
                 minIndentation = indentation;
