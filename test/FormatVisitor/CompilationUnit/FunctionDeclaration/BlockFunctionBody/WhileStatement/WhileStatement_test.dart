@@ -8,8 +8,8 @@ void main()
 {
     TestTools.init();
 
-    final Config config = Config.none();
-    final Formatter formatter = Formatter(config);
+    final Config configNone = Config.none();
+    final Formatter formatterNone = Formatter(configNone);
 
     group('WhileStatements', ()
         {
@@ -18,7 +18,7 @@ void main()
                     const String inputText = 'void f(){while(true);}';
                     const String expectedText = 'void f(){while(true);}';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }

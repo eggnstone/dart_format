@@ -8,9 +8,12 @@ void main()
 {
     TestTools.init();
 
-    group('Block comments in function', ()
+    final Config configAll = Config.all();
+    final Formatter formatterAll = Formatter(configAll);
+
+    group('Block comments in function, after statement', ()
         {
-            test('Single line on separate line', ()
+            test('Single line, on separate line', ()
                 {
                     const String inputText = 
                         'void f()\n'
@@ -20,17 +23,14 @@ void main()
                         '}\n';
                     const String expectedText = inputText;
 
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
-
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
-            test('Single line after statement', ()
+            test('Single line, on same line', ()
                 {
                     const String inputText =
                         'void f()\n'
@@ -39,17 +39,14 @@ void main()
                         '}\n';
                     const String expectedText = inputText;
 
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
-
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
-            test('Multiline on separate line', ()
+            test('Multiline, on separate line', ()
                 {
                     const String inputText =
                         'void f()\n'
@@ -60,17 +57,14 @@ void main()
                         '}\n';
                     const String expectedText = inputText;
 
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
-
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
-            test('Multiline after statement', ()
+            test('Multiline, on same line', ()
                 {
                     const String inputText =
                         'void f()\n'
@@ -80,17 +74,14 @@ void main()
                         '}\n';
                     const String expectedText = inputText;
 
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
-
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
-            test('Multiline on separate line before statement', ()
+            test('Multiline, on separate line, before statement', ()
                 {
                     const String inputText =
                         'void f()\n'
@@ -102,17 +93,14 @@ void main()
                         '}\n';
                     const String expectedText = inputText;
 
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
-
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
-            test('Multiline after statement before statement', ()
+            test('Multiline, on same line, before statement', ()
                 {
                     const String inputText =
                         'void f()\n'
@@ -123,10 +111,7 @@ void main()
                         '}\n';
                     const String expectedText = inputText;
 
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
-
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');

@@ -8,15 +8,16 @@ void main()
 {
     TestTools.init();
 
+    final Config configAll = Config.all();
+    final Formatter formatterAll = Formatter(configAll);
+
     // TODO: Convert to formatter test
     test('Trailing comma after assertion message', ()
         {
             const String inputText = "void f(){assert(true == true,'message',);}";
             const String expectedText = "void f()\n{\n    assert(true == true,'message');\n}\n";
 
-            final Config config = Config.all();
-            final Formatter formatter = Formatter(config);
-            final String actualText = formatter.format(inputText);
+            final String actualText = formatterAll.format(inputText);
 
             TestTools.expect(actualText, equals(expectedText));
         }

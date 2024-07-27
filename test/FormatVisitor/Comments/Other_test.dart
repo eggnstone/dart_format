@@ -10,8 +10,8 @@ void main()
 {
     TestTools.init();
 
-    final Config config = Config.none();
-    final Formatter formatter = Formatter(config);
+    final Config configNone = Config.none();
+    final Formatter formatterNone = Formatter(configNone);
 
     for (final String comment in TestParameters.comments)
         group('Comments (${StringTools.toDisplayString(comment)})', ()
@@ -21,7 +21,7 @@ void main()
                         final String inputText = comment;
                         final String expectedText = comment;
 
-                        final String actualText = formatter.format(inputText);
+                        final String actualText = formatterNone.format(inputText);
 
                         TestTools.expect(actualText, equals(expectedText));
                     }
@@ -32,7 +32,7 @@ void main()
                         final String inputText = 'void f(){{${comment}a;}}';
                         final String expectedText = 'void f(){{${comment}a;}}';
 
-                        final String actualText = formatter.format(inputText);
+                        final String actualText = formatterNone.format(inputText);
 
                         TestTools.expect(actualText, equals(expectedText));
                     }
@@ -43,7 +43,7 @@ void main()
                         final String inputText = 'void f(){{a;$comment}}';
                         final String expectedText = 'void f(){{a;$comment}}';
 
-                        final String actualText = formatter.format(inputText);
+                        final String actualText = formatterNone.format(inputText);
 
                         TestTools.expect(actualText, equals(expectedText));
                     }
@@ -54,7 +54,7 @@ void main()
                         final String inputText = 'void f(){${comment}a;}';
                         final String expectedText = 'void f(){${comment}a;}';
 
-                        final String actualText = formatter.format(inputText);
+                        final String actualText = formatterNone.format(inputText);
 
                         TestTools.expect(actualText, equals(expectedText));
                     }
@@ -65,7 +65,7 @@ void main()
                         final String inputText = 'void f(){a;$comment}';
                         final String expectedText = 'void f(){a;$comment}';
 
-                        final String actualText = formatter.format(inputText);
+                        final String actualText = formatterNone.format(inputText);
 
                         TestTools.expect(actualText, equals(expectedText));
                     }
@@ -76,7 +76,7 @@ void main()
                         final String inputText = 'void f(){${comment}a;}';
                         final String expectedText = 'void f(){${comment}a;}';
 
-                        final String actualText = formatter.format(inputText);
+                        final String actualText = formatterNone.format(inputText);
 
                         TestTools.expect(actualText, equals(expectedText));
                     }
@@ -87,8 +87,7 @@ void main()
                         final String inputText = 'void f(){{{${comment}a();}}}';
                         final String expectedText = 'void f(){{{${comment}a();}}}';
 
-                        final Formatter formatter = Formatter(config);
-                        final String actualText = formatter.format(inputText);
+                        final String actualText = formatterNone.format(inputText);
 
                         TestTools.expect(actualText, equals(expectedText));
                     }

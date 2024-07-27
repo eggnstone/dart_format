@@ -8,8 +8,8 @@ void main()
 {
     TestTools.init();
 
-    final Config config = Config.none(indentationSpacesPerLevel: 4);
-    final Formatter formatter = Formatter(config);
+    final Config configNone = Config.none(indentationSpacesPerLevel: 4);
+    final Formatter formatterNone = Formatter(configNone);
 
     group('ConstructorDeclarations (Indentations)', ()
         {
@@ -18,7 +18,7 @@ void main()
                     const String inputText =  'class C\n{\nconst C();\n}';
                     const String expectedText =   'class C\n{\n    const C();\n}';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }

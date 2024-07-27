@@ -12,13 +12,13 @@ void main()
         {
             test('Empty function with space before opening brace', ()
                 {
-                    final Config config = Config.none(addNewLineBeforeOpeningBrace: true);
-                    final Formatter formatter = Formatter(config);
+                    final Config configNone = Config.none(addNewLineBeforeOpeningBrace: true);
+                    final Formatter formatterNone = Formatter(configNone);
 
                     const String inputText = 'void f() {}';
                     const String expectedText = 'void f()\n{}';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }

@@ -9,8 +9,8 @@ void main()
 {
     TestTools.init();
 
-    final Config config = Config.none(maxEmptyLines: 0);
-    final Formatter formatter = Formatter(config);
+    final Config configNone = Config.none(maxEmptyLines: 0);
+    final Formatter formatterNone = Formatter(configNone);
 
     group('Formatter.format: expecting exception', ()
         {
@@ -18,7 +18,7 @@ void main()
                 {
                     const String inputText = '<html>';
 
-                    expect(() => formatter.format(inputText), throwsA(isA<DartFormatException>()));
+                    expect(() => formatterNone.format(inputText), throwsA(isA<DartFormatException>()));
                 }
             );
 
@@ -26,7 +26,7 @@ void main()
                 {
                     const String inputText = 'x;';
 
-                    expect(() => formatter.format(inputText), throwsA(isA<DartFormatException>()));
+                    expect(() => formatterNone.format(inputText), throwsA(isA<DartFormatException>()));
                 }
             );
         }

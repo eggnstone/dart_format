@@ -8,8 +8,8 @@ void main()
 {
     TestTools.init();
 
-    final Config config = Config.all();
-    final Formatter formatter = Formatter(config);
+    final Config configAll = Config.all();
+    final Formatter formatterAll = Formatter(configAll);
 
     group('Formatter.format: indentation', ()
         {
@@ -18,7 +18,7 @@ void main()
                     const String inputText = '    int a;';
                     const String expectedText = 'int a;\n';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -29,7 +29,7 @@ void main()
                     const String inputText = '    /* Comment */';
                     const String expectedText = '/* Comment */\n';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -40,7 +40,7 @@ void main()
                     const String inputText = '    // Comment';
                     const String expectedText = '// Comment\n';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -51,7 +51,7 @@ void main()
                     const String inputText = 'void f(){a;}';
                     const String expectedText = 'void f()\n{\n    a;\n}\n';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -62,7 +62,7 @@ void main()
                     const String inputText = 'void f(){if(true)\n;}';
                     const String expectedText = 'void f()\n{\n    if(true)\n        ;\n}\n';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -73,7 +73,7 @@ void main()
                     const String inputText = 'void f(){if(true)\na;}';
                     const String expectedText = 'void f()\n{\n    if(true)\n        a;\n}\n';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -84,7 +84,7 @@ void main()
                     const String inputText = 'void f(){if(true)\n{}}';
                     const String expectedText = 'void f()\n{\n    if(true)\n    {\n    }\n}\n';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -95,7 +95,7 @@ void main()
                     const String inputText = 'void f(){if(true)\n{a;}}';
                     const String expectedText = 'void f()\n{\n    if(true)\n    {\n        a;\n    }\n}\n';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -107,7 +107,7 @@ void main()
                     //const String expectedText = 'void f()\n{\n    a((){});\n}\n';
                     const String expectedText = 'void f()\n{\n    a(()\n        {\n        }\n    );\n}\n';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -119,7 +119,7 @@ void main()
                     //const String expectedText = 'void f()\n{\n    a((){b;});\n}\n';
                     const String expectedText = 'void f()\n{\n    a(()\n        {\n            b;\n        }\n    );\n}\n';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -131,7 +131,7 @@ void main()
                     //const String expectedText = 'void f()\n{\n    a((){\n        b;\n    });\n}\n';
                     const String expectedText = 'void f()\n{\n    a(()\n        {\n            b;\n        }\n    );\n}\n';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }

@@ -8,8 +8,8 @@ void main()
 {
     TestTools.init();
 
-    final Config config = Config.none();
-    final Formatter formatter = Formatter(config);
+    final Config configNone = Config.none();
+    final Formatter formatterNone = Formatter(configNone);
 
     group('ReturnStatements', ()
         {
@@ -18,7 +18,7 @@ void main()
                     const String inputText = 'void f(){return;}';
                     const String expectedText = 'void f(){return;}';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }

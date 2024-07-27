@@ -8,8 +8,8 @@ void main()
 {
     TestTools.init();
 
-    final Config config = Config.none();
-    final Formatter formatter = Formatter(config);
+    final Config configNone = Config.none();
+    final Formatter formatterNone = Formatter(configNone);
 
     group('IfStatements', ()
         {
@@ -18,7 +18,7 @@ void main()
                     const String inputText = 'void f(){if(true);}';
                     const String expectedText = 'void f(){if(true);}';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -29,7 +29,7 @@ void main()
                     const String inputText = 'void f(){if(true);else;}';
                     const String expectedText = 'void f(){if(true);else;}';
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }

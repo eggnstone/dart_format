@@ -8,14 +8,15 @@ void main()
 {
     TestTools.init();
 
+    final Config configAll = Config.all();
+    final Formatter formatterAll = Formatter(configAll);
+
     test('ExpressionStatement and PropertyAccess', ()
         {
             const String inputText = 'void f()\n{\n    a\n        ..b;\n}\n';
             const String expectedText = inputText;
 
-            final Config config = Config.all();
-            final Formatter formatter = Formatter(config);
-            final String actualText = formatter.format(inputText);
+            final String actualText = formatterAll.format(inputText);
 
             TestTools.expect(actualText, equals(expectedText));
         }

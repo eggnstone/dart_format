@@ -8,8 +8,8 @@ void main()
 {
     TestTools.init();
 
-    final Config config = Config.none();
-    final Formatter formatter = Formatter(config);
+    final Config configNone = Config.none();
+    final Formatter formatterNone = Formatter(configNone);
 
     group('ConstructorDeclarations (Initializers)', ()
         {
@@ -18,7 +18,7 @@ void main()
                     const String inputText = 'class C{const C():super();}';
                     const String expectedText = inputText;
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -29,7 +29,7 @@ void main()
                     const String inputText = 'class C{const C():a=0,b=0;}';
                     const String expectedText = inputText;
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -40,7 +40,7 @@ void main()
                     const String inputText = 'class C{const C():a=0, b=0;}';
                     const String expectedText = inputText;
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -51,7 +51,7 @@ void main()
                     const String inputText = 'class C{C():this.a=0;}';
                     const String expectedText = inputText;
 
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }

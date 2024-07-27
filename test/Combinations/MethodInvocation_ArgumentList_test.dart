@@ -8,6 +8,9 @@ void main()
 {
     TestTools.init();
 
+    final Config configAll = Config.all();
+    final Formatter formatterAll = Formatter(configAll);
+
     group('MethodInvocation and ArgumentList', ()
         {
             test(r'1 a(()\n{\n}\n)', ()
@@ -15,9 +18,7 @@ void main()
                     const String inputText = 'void f()\n{\n    a(()\n        {\n        }\n    );\n}\n';
                     const String expectedText = inputText;
 
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -28,9 +29,7 @@ void main()
                     const String inputText = 'void f()\n{\n    a(\n        ()\n        {\n        }\n    );\n}\n';
                     const String expectedText = inputText;
 
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -41,9 +40,7 @@ void main()
                     const String inputText = 'void f()\n{\n    a.b(()\n        {\n        }\n    );\n}\n';
                     const String expectedText = inputText;
 
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -54,9 +51,7 @@ void main()
                     const String inputText = 'void f()\n{\n    a\n        .b(()\n            {\n            }\n        );\n}\n';
                     const String expectedText = inputText;
 
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -67,9 +62,7 @@ void main()
                     const String inputText = 'void f()\n{\n    a\n        .b(\n            ()\n            {\n            }\n        );\n}\n';
                     const String expectedText = inputText;
 
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }

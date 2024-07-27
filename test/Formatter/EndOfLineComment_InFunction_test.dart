@@ -8,6 +8,9 @@ void main()
 {
     TestTools.init();
 
+    final Config configAll = Config.all();
+    final Formatter formatterAll = Formatter(configAll);
+
     group('EndOfLine comments in function', ()
         {
             test('Normal', ()
@@ -20,10 +23,9 @@ void main()
                         '}\n';
                     const String expectedText = inputText;
 
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
 
-                    final String actualText = formatter.format(inputText);
+
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');

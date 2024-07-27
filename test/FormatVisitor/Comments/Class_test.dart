@@ -10,8 +10,8 @@ void main()
 {
     TestTools.init();
 
-    final Config config = Config.none();
-    final Formatter formatter = Formatter(config);
+    final Config configNone = Config.none();
+    final Formatter formatterNone = Formatter(configNone);
 
     for (final String comment in TestParameters.comments)
         group('Comments (class, ${StringTools.toDisplayString(comment)})', ()
@@ -21,7 +21,7 @@ void main()
                         final String inputText = '${comment}class C{}';
                         final String expectedText = '${comment}class C{}';
 
-                        final String actualText = formatter.format(inputText);
+                        final String actualText = formatterNone.format(inputText);
 
                         TestTools.expect(actualText, equals(expectedText));
                     }
@@ -43,7 +43,7 @@ void main()
                         final String inputText = '$comment@a class C{}';
                         final String expectedText = '$comment@a class C{}';
 
-                        final String actualText = formatter.format(inputText);
+                        final String actualText = formatterNone.format(inputText);
 
                         TestTools.expect(actualText, equals(expectedText));
                     }
@@ -54,7 +54,7 @@ void main()
                         final String inputText = '$comment@a @b class C{}';
                         final String expectedText = '$comment@a @b class C{}';
 
-                        final String actualText = formatter.format(inputText);
+                        final String actualText = formatterNone.format(inputText);
 
                         TestTools.expect(actualText, equals(expectedText));
                     }
@@ -65,7 +65,7 @@ void main()
                         final String inputText = '$comment@a@b class C{}';
                         final String expectedText = '$comment@a@b class C{}';
 
-                        final String actualText = formatter.format(inputText);
+                        final String actualText = formatterNone.format(inputText);
 
                         TestTools.expect(actualText, equals(expectedText));
                     }
@@ -76,7 +76,7 @@ void main()
                         final String inputText = '@a${comment}class C{}';
                         final String expectedText = '@a${comment}class C{}';
 
-                        final String actualText = formatter.format(inputText);
+                        final String actualText = formatterNone.format(inputText);
 
                         TestTools.expect(actualText, equals(expectedText));
                     }
@@ -87,7 +87,7 @@ void main()
                         final String inputText = '$comment\nclass C{}';
                         final String expectedText = '$comment\nclass C{}';
 
-                        final String actualText = formatter.format(inputText);
+                        final String actualText = formatterNone.format(inputText);
 
                         TestTools.expect(actualText, equals(expectedText));
                     }
@@ -98,7 +98,7 @@ void main()
                         final String inputText = 'class C{$comment}';
                         final String expectedText = 'class C{$comment}';
 
-                        final String actualText = formatter.format(inputText);
+                        final String actualText = formatterNone.format(inputText);
 
                         TestTools.expect(actualText, equals(expectedText));
                     }

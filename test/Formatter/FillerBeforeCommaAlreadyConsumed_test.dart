@@ -8,6 +8,9 @@ void main()
 {
     TestTools.init();
 
+    final Config configAll = Config.all();
+    final Formatter formatterAll = Formatter(configAll);
+
     test('Filler before "," already consumed', ()
         {
             const String inputText = 
@@ -26,9 +29,7 @@ void main()
                 '    );\n'
                 '}\n';
 
-            final Config config = Config.all();
-            final Formatter formatter = Formatter(config);
-            final String actualText = formatter.format(inputText);
+            final String actualText = formatterAll.format(inputText);
 
             TestTools.expect(actualText, equals(expectedText));
         }

@@ -8,7 +8,10 @@ void main()
 {
     TestTools.init();
 
-    group('Block comments in function', ()
+    final Config configAll = Config.all();
+    final Formatter formatterAll = Formatter(configAll);
+
+    group('Block comments in function, before statement', ()
         {
             test('Addition of 1 level expected', ()
                 {
@@ -27,10 +30,9 @@ void main()
                         '    s;\n'
                         '}\n';
 
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
 
-                    final String actualText = formatter.format(inputText);
+
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
@@ -48,10 +50,9 @@ void main()
                         '}\n';
                     const String expectedText = inputText;
 
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
 
-                    final String actualText = formatter.format(inputText);
+
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
@@ -75,10 +76,9 @@ void main()
                         '    s;\n'
                         '}\n';
 
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
 
-                    final String actualText = formatter.format(inputText);
+
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
@@ -102,10 +102,9 @@ void main()
                         '    s;\n'
                         '}\n';
 
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
 
-                    final String actualText = formatter.format(inputText);
+
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');

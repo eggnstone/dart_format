@@ -15,11 +15,26 @@ void main()
         {
             group('Comment only', ()
                 {
-                    test('No changes expected', ()
+                    test('No changes expected, 3 lines', ()
                         {
                             const String inputText =
                                 '/*START\n'
                                 '    TEXT\n'
+                                'END*/\n';
+                            const String expectedText = inputText;
+
+                            final String actualText = formatterAll.format(inputText);
+
+                            TestTools.expect(actualText, equals(expectedText));
+                            //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
+                        }
+                    );
+
+                    test('No changes expected, 3 lines with 1 empty line', ()
+                        {
+                            const String inputText =
+                                '/*START\n'
+                                '\n'
                                 'END*/\n';
                             const String expectedText = inputText;
 

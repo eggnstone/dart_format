@@ -11,19 +11,16 @@ void main()
     final Config configAll = Config.all();
     final Formatter formatterAll = Formatter(configAll);
 
-    group('EndOfLine comments in map', ()
+    group('Block comments in function, alone', ()
         {
-            test('EndOfLine comment without trailing comma', ()
+            test('1 line', ()
                 {
-                    const String inputText =
-                        'var m =\n'
-                        '    {\n'
-                        '        a\n'
-                        '        // EOL\n'
-                        '    };\n';
+                    const String inputText = 
+                        'void f()\n'
+                        '{\n'
+                        '    /* Comment */\n'
+                        '}\n';
                     const String expectedText = inputText;
-
-                    
 
                     final String actualText = formatterAll.format(inputText);
 
@@ -32,42 +29,33 @@ void main()
                 }
             );
 
-            test('EndOfLine comment with trailing comma, without removal', ()
+            test('2 lines', ()
                 {
                     const String inputText =
-                        'var m =\n'
-                        '    {\n'
-                        '        a,\n'
-                        '        // EOL\n'
-                        '    };\n';
+                        'void f()\n'
+                        '{\n'
+                        '    /* Comment\n'
+                        '    Comment */\n'
+                        '}\n';
                     const String expectedText = inputText;
 
-                    final Config config = Config.all(removeTrailingCommas: false);
-                    final Formatter formatter = Formatter(config);
-
-                    final String actualText = formatter.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
-            test('EndOfLine comment with trailing comma, with removal', ()
+            test('3 lines, with empty line', ()
                 {
                     const String inputText =
-                        'var m =\n'
-                        '    {\n'
-                        '        a,\n'
-                        '        // EOL\n'
-                        '    };\n';
-                    const String expectedText =
-                        'var m =\n'
-                        '    {\n'
-                        '        a\n'
-                        '        // EOL\n'
-                        '    };\n';
-
-                    
+                        'void f()\n'
+                        '{\n'
+                        '    /* Comment\n'
+                        '\n'
+                        '    Comment */\n'
+                        '}\n';
+                    const String expectedText = inputText;
 
                     final String actualText = formatterAll.format(inputText);
 
