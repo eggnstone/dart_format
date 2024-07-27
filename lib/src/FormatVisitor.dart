@@ -62,6 +62,7 @@ import 'Formatters/RecordTypeAnnotationNamedFieldsFormatter.dart';
 import 'Formatters/ReturnStatementFormatter.dart';
 import 'Formatters/SetOrMapLiteralFormatter.dart';
 import 'Formatters/ShowCombinatorFormatter.dart';
+import 'Formatters/SimpleStringLiteralFormatter.dart';
 import 'Formatters/StringInterpolationFormatter.dart';
 import 'Formatters/SwitchExpressionFormatter.dart';
 import 'Formatters/SwitchPatternCaseFormatter.dart';
@@ -145,6 +146,7 @@ class FormatVisitor extends AstVisitor<void>
     late final ReturnStatementFormatter _returnStatementFormatter = ReturnStatementFormatter(config, this, _formatState);
     late final SetOrMapLiteralFormatter _setOrMapLiteralFormatter = SetOrMapLiteralFormatter(config, this, _formatState);
     late final ShowCombinatorFormatter _showCombinatorFormatter = ShowCombinatorFormatter(config, this, _formatState);
+    late final SimpleStringLiteralFormatter _simpleStringLiteralFormatter = SimpleStringLiteralFormatter(config, this, _formatState);
     late final StringInterpolationFormatter _stringInterpolationFormatter = StringInterpolationFormatter(config, this, _formatState);
     late final SwitchExpressionFormatter _switchExpressionFormatter = SwitchExpressionFormatter(config, this, _formatState);
     late final SwitchStatementFormatter _switchStatementFormatter = SwitchStatementFormatter(config, this, _formatState);
@@ -736,7 +738,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitSimpleStringLiteral(SimpleStringLiteral node)
-    => _defaultFormatter.format(node);
+    => _simpleStringLiteralFormatter.format(node);
 
     @override
     void visitSpreadElement(SpreadElement node)

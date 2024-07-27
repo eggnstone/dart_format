@@ -21,17 +21,29 @@ class TextSeparator
         int currentPos = 0;
         while (currentPos < s.length)
         {
-            if (Constants.DEBUG_TEXT_SEPARATOR) {
-        logInternal('$spacer  CurrentPos: $currentPos');
-        logInternal('$spacer  Rest:       ${StringTools.toDisplayString(s.substring(currentPos))}');
-      }
+            if (Constants.DEBUG_TEXT_SEPARATOR)
+            {
+                logInternal('$spacer  CurrentPos: $currentPos');
+                logInternal('$spacer  Rest:       ${StringTools.toDisplayString(s.substring(currentPos))}');
+            }
 
-      final int? singleQuotePos = StringTools.indexOfOrNull(s, "'", currentPos);
+            final int? singleQuotePos = StringTools.indexOfOrNull(s, "'", currentPos);
+            final int? rawSingleQuotePos = StringTools.indexOfOrNull(s, "r'", currentPos);
             final int? doubleQuotePos = StringTools.indexOfOrNull(s, '"', currentPos);
+            final int? rawDoubleQuotePos = StringTools.indexOfOrNull(s, 'r"', currentPos);
             final int? endOfLineCommentStartPos = StringTools.indexOfOrNull(s, '//', currentPos);
             final int? blockCommentStartPos = StringTools.indexOfOrNull(s, '/*', currentPos);
+            if (Constants.DEBUG_TEXT_EXTRACTOR)
+            {
+                logInternal('${spacer}    singleQuotePos:           $singleQuotePos');
+                logInternal('${spacer}    rawSingleQuotePos:        $rawSingleQuotePos');
+                logInternal('${spacer}    doubleQuotePos:           $doubleQuotePos');
+                logInternal('${spacer}    rawDoubleQuotePos:        $rawDoubleQuotePos');
+                logInternal('${spacer}    endOfLineCommentStartPos: $endOfLineCommentStartPos');
+                logInternal('${spacer}    blockCommentStartPos:     $blockCommentStartPos');
+            }
 
-            final int? first = _getFirst(singleQuotePos, doubleQuotePos, endOfLineCommentStartPos, blockCommentStartPos);
+            final int? first = _getFirst(singleQuotePos, rawSingleQuotePos, doubleQuotePos, rawDoubleQuotePos, endOfLineCommentStartPos, blockCommentStartPos);
             if (first != null && first > currentPos)
             {
                 final TextInfo info = TextInfo(type: TextType.Normal, text: s.substring(currentPos, first));
@@ -42,7 +54,10 @@ class TextSeparator
 
             if (_isFirst(singleQuotePos, doubleQuotePos, blockCommentStartPos, endOfLineCommentStartPos))
             {
-                final TextInfo info = TextExtractor.extract(s.substring(singleQuotePos!), TextType.String, "'", "'", spacer: '$spacer  ');
+                final bool isRaw = rawSingleQuotePos != null && rawSingleQuotePos + 1 == singleQuotePos;
+                final int startPos = isRaw ? rawSingleQuotePos : singleQuotePos!;
+                final String startMarker = isRaw ? "r'" : "'";
+                final TextInfo info = TextExtractor.extract(s.substring(startPos), TextType.String, startMarker, "'", spacer: '$spacer  ', isRaw: isRaw);
                 if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
                 result.add(info);
                 currentPos += info.text.length;
@@ -51,7 +66,10 @@ class TextSeparator
 
             if (_isFirst(doubleQuotePos, singleQuotePos, blockCommentStartPos, endOfLineCommentStartPos))
             {
-                final TextInfo info = TextExtractor.extract(s.substring(doubleQuotePos!), TextType.String, '"', '"', spacer: '$spacer  ');
+                final bool isRaw = rawDoubleQuotePos != null && rawDoubleQuotePos + 1 == doubleQuotePos;
+                final int startPos = isRaw ? rawDoubleQuotePos : doubleQuotePos!;
+                final String startMarker = isRaw ? 'r"' : '"';
+                final TextInfo info = TextExtractor.extract(s.substring(startPos), TextType.String, startMarker, '"', spacer: '$spacer  ', isRaw: isRaw);
                 if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
                 result.add(info);
                 currentPos += info.text.length;
@@ -85,8 +103,8 @@ class TextSeparator
         return result;
     }
 
-  static bool _isFirst(int? main, int? other1, int? other2, int? other3)
-  {
+    static bool _isFirst(int? main, int? other1, int? other2, int? other3)
+    {
         if (main == null)
             return false;
 
@@ -100,11 +118,11 @@ class TextSeparator
             return false;
 
         return true;
-  }
+    }
 
-  static int? _getFirst(int? i1,     int? i2,     int? i3,     int? i4)
-  {
-      int? result;
+    static int? _getFirst(int? i1,     int? i2,     int? i3,     int? i4,     int? i5,     int? i6)
+    {
+        int? result;
 
         if (i1 != null)
             result = i1;
@@ -118,6 +136,12 @@ class TextSeparator
         if (i4 != null && (result == null || i4 < result))
             result = i4;
 
-      return result;
+        if (i5 != null && (result == null || i5 < result))
+            result = i5;
+
+        if (i6 != null && (result == null || i6 < result))
+            result = i6;
+
+        return result;
     }
 }

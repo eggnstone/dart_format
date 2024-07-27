@@ -10,12 +10,18 @@ import 'Types/TextType.dart';
 class TextExtractor
 {
     // TODO: rename forceClosed to allowUnclosed?
-    static TextInfo extract(String s, TextType type, String startMarker, String endMarker, {bool forceClosed = true, bool allowNested = false, String spacer = ''})
+    static TextInfo extract(String s, TextType type, String startMarker, String endMarker, {bool forceClosed = true, bool allowNested = false, bool isRaw = false, String spacer = ''})
     {
         if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('${spacer}TextExtractor.extract: ${StringTools.toDisplayString(s)}');
 
         if (!s.startsWith(startMarker))
             throw DartFormatException.error('Does not start with expected start marker: ${StringTools.toDisplayString(s)}');
+
+        /*if (!isRaw && !s.startsWith(startMarker))
+            throw DartFormatException.error('Does not start with expected start marker: ${StringTools.toDisplayString(s)}');
+
+        if (isRaw && !s.startsWith('r$startMarker'))
+            throw DartFormatException.error('Does not start with expected start marker: r${StringTools.toDisplayString(s)}');*/
 
         int depth = 1;
         int currentPos = startMarker.length;
@@ -32,7 +38,7 @@ class TextExtractor
             }
 
             final int start2MarkerPos = allowNested ? s.indexOf(startMarker, currentPos) : -1;
-            final int escapePos = s.indexOf(r'\', currentPos);
+            final int escapePos = isRaw ? -1 : s.indexOf(r'\', currentPos);
             if (Constants.DEBUG_TEXT_EXTRACTOR)
             {
                 logInternal('${spacer}  escapePos:       $escapePos');

@@ -9,7 +9,7 @@ void main()
 {
     TestTools.init();
 
-    group(r'TextExtractor.extract default with $', ()
+    group(r'TextExtractor.extract with $', ()
         {
             test(r"Normal with ' and $", ()
                 {

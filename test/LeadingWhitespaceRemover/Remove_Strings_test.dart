@@ -9,7 +9,7 @@ void main()
 
     group('Remove, strings', ()
         {
-            test(r"'\''", ()
+            test(r"String s='\'';", ()
                 {
                     const String inputText = r"String s='\'';";
                     const String expectedText = inputText;
@@ -20,9 +20,20 @@ void main()
                 }
             );
 
-            test(r'"\""', ()
+            test(r'String s="\"";', ()
                 {
                     const String inputText = r'String s="\"";';
+                    const String expectedText = inputText;
+
+                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
+
+            test(r"r'\', raw mode", ()
+                {
+                    const String inputText = r"r'\';";
                     const String expectedText = inputText;
 
                     final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
