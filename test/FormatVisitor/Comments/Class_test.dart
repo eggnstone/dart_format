@@ -30,12 +30,12 @@ void main()
                 // TODO
                 /*test('Comment after newline before class declaration', ()
                 {
-                final String inputText = '\n${comment}class C{}';
-                final String expectedText = '\n${comment}class C{}';
+                    final String inputText = '\n${comment}class C{}';
+                    final String expectedText = '\n${comment}class C{}';
 
-                final String actualText = formatter.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
-                TestTools.expectX(actualText, equals(expectedText));
+                    TestTools.expectX(actualText, equals(expectedText));
                 });*/
 
                 test('Comment before annotation before class declaration', ()
@@ -107,22 +107,22 @@ void main()
                 // TODO
                 /*test('Comment after class declaration', ()
                 {
-                final String inputText = 'class C{}$comment';
-                final String expectedText = 'class C{}$comment';
+                    final String inputText = 'class C{}$comment';
+                    final String expectedText = 'class C{}$comment';
 
-                final String actualText = formatter.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
-                TestTools.expectX(actualText, equals(expectedText));
+                    TestTools.expectX(actualText, equals(expectedText));
                 });
 
                 test('Comment before newline after class declaration', ()
                 {
-                final String inputText = 'class C{}$comment\n';
-                final String expectedText = 'class C{}$comment\n';
+                    final String inputText = 'class C{}$comment\n';
+                    final String expectedText = 'class C{}$comment\n';
 
-                final String actualText = formatter.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
-                TestTools.expectX(actualText, equals(expectedText));
+                    TestTools.expectX(actualText, equals(expectedText));
                 });*/
             }
         );

@@ -433,14 +433,14 @@ class FormatState
 
         /*if (true)
         {*/
-            final String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
-            if (Constants.DEBUG_FORMAT_STATE)
-            {
-                logInternal('  fixedFiller:               ${StringTools.toDisplayString(fixedFiller)}');
-                logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
-            }
+        final String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
+        if (Constants.DEBUG_FORMAT_STATE)
+        {
+            logInternal('  fixedFiller:               ${StringTools.toDisplayString(fixedFiller)}');
+            logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
+        }
 
-            write(fixedFiller);
+        write(fixedFiller);
         /*}
         else
         {
@@ -688,15 +688,16 @@ class FormatState
     /*String? getResultAfterLast(String searchText)
     {
         for (int i = _textBuffers.length - 1; i >= 0; i--)
-            {
-                final String text = _textBuffers[i].toString();
-                final int lastPos = text.lastIndexOf(searchText);
-                if (lastPos == -1)
-                      continue;
+        {
+            final String text = _textBuffers[i].toString();
+            final int lastPos = text.lastIndexOf(searchText);
+            if (lastPos == -1)
+                  continue;
 
-                final StringBuffer sb = StringBuffer();
-                sb.write(text.substring(lastPos + searchText.length));
-                for (int j = i + 1; j < _textBuffers.length; j++) {
+            final StringBuffer sb = StringBuffer();
+            sb.write(text.substring(lastPos + searchText.length));
+            for (int j = i + 1; j < _textBuffers.length; j++)
+            {
                 sb.write('LEVEL');
                 sb.write(_textBuffers[j].toString());
             }

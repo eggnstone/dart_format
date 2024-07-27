@@ -12,15 +12,15 @@ void main()
 
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
         /*TestGroupConfig(
-        inputNodeCreator: AstCreator.createInitializerInVariableDeclarationInClass,
-        inputLeading: 'class C{int i=',
-        inputMiddle: 'a[0]',
-        inputTrailing: ';}',
-        name: 'IndexExpression a[0]',
-        astVisitors: <TestVisitor<void>>[
-        TestVisitor<SimpleIdentifier>(14, 'a'),
-        TestVisitor<IntegerLiteral>(16, '0')
-        ]
+            inputNodeCreator: AstCreator.createInitializerInVariableDeclarationInClass,
+            inputLeading: 'class C{int i=',
+            inputMiddle: 'a[0]',
+            inputTrailing: ';}',
+            name: 'IndexExpression a[0]',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleIdentifier>(14, 'a'),
+                TestVisitor<IntegerLiteral>(16, '0')
+            ]
         ),*/
         TestGroupConfig(
             inputNodeCreator: AstCreator.createCascadeSectionInVariableDeclarationInClass,

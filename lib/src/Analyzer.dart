@@ -38,20 +38,20 @@ class Analyzer
                 _log('${_getSpacer(logIndent)}Token:   ${item.runtimeType} ${StringTools.toDisplayString(item, Constants.MAX_DEBUG_LENGTH)}');
                 /*if (item is Comment)
                 {
-                _log('!!${_getSpacer(logIndent - 1)}  Ignoring Comment in favour of precedingComments');
+                    _log('!!${_getSpacer(logIndent - 1)}  Ignoring Comment in favour of precedingComments');
                 }
                 else*/ /*if (item is CommentImpl)
                 {
-                _log('!!${_getSpacer(logIndent - 1)}  Ignoring CommentImpl in favour of precedingComments');
+                    _log('!!${_getSpacer(logIndent - 1)}  Ignoring CommentImpl in favour of precedingComments');
                 }
                 else*/ /*if (item is CommentTokenImpl)
                 {
-                _log('!!${_getSpacer(logIndent - 1)}  Ignoring CommentTokenImpl in favour of precedingComments');
+                    _log('!!${_getSpacer(logIndent - 1)}  Ignoring CommentTokenImpl in favour of precedingComments');
                 }
                 else*/ /*if (item is DartDocToken)
                 //else if (item.runtimeType.toString() == 'DartDocToken')
                 {
-                _log('!!${_getSpacer(logIndent - 1)}  Ignoring DartDocToken in favour of precedingComments');
+                    _log('!!${_getSpacer(logIndent - 1)}  Ignoring DartDocToken in favour of precedingComments');
                 }
                 else*/
                 {

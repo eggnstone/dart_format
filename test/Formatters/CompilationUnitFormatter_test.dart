@@ -22,9 +22,9 @@ void main()
             ]
         ),
         /*TestGroupConfig(
-        inputNodeCreator: AstCreator.createCompilationUnit,
-        inputMiddle: '/*Comment\n A*/',
-        name: 'Lonely block comment / formatted'
+            inputNodeCreator: AstCreator.createCompilationUnit,
+            inputMiddle: '/*Comment\n A*/',
+            name: 'Lonely block comment / formatted'
         ),*/
 
         TestGroupConfig(
@@ -39,10 +39,10 @@ void main()
             ]
         ),
         /*TestGroupConfig(
-        inputNodeCreator: AstCreator.createCompilationUnit,
-        inputMiddle: '/*Comment\n A*/class C{}',
-        name: 'Block comment before class declaration / formatted',
-        astVisitors: <TestVisitor<void>>[TestVisitor<ClassDeclaration>(14, 'class C{}')]
+            inputNodeCreator: AstCreator.createCompilationUnit,
+            inputMiddle: '/*Comment\n A*/class C{}',
+            name: 'Block comment before class declaration / formatted',
+            astVisitors: <TestVisitor<void>>[TestVisitor<ClassDeclaration>(14, 'class C{}')]
         ),*/
 
         TestGroupConfig(
@@ -56,25 +56,24 @@ void main()
             ]
         ),
         /*TestGroupConfig(
-        inputNodeCreator: AstCreator.createCompilationUnit,
-        inputMiddle: 'class C{}/*Comment\n A*/',
-        name: 'Block comment after class declaration / formatted',
-        astVisitors: <TestVisitor<void>>[TestVisitor<ClassDeclaration>(0, 'class C{}')]
+            inputNodeCreator: AstCreator.createCompilationUnit,
+            inputMiddle: 'class C{}/*Comment\n A*/',
+            name: 'Block comment after class declaration / formatted',
+            astVisitors: <TestVisitor<void>>[TestVisitor<ClassDeclaration>(0, 'class C{}')]
         ),*/
-
         /*TestGroupConfig(
-        inputNodeCreator: AstCreator.createCompilationUnit,
-        inputMiddle: 'class C{void m(){}/*Comment\nA*/}class D{}',
-        name: 'Block comment after class declaration',
-        astVisitors: <TestVisitor<void>>[
-        TestVisitor<ClassDeclaration>(0, 'class C{}'),
-        TestVisitor<MethodDeclaration>(8, 'void m(){}'),
-        TestVisitor<ClassDeclaration>(32, 'class D{}')
-        ],
-        testConfigs: <TestConfig>[
-        TestConfig.none(),
-        TestConfig('class C{}/*Comment\nA*/\n')
-        ]
+            inputNodeCreator: AstCreator.createCompilationUnit,
+            inputMiddle: 'class C{void m(){}/*Comment\nA*/}class D{}',
+            name: 'Block comment after class declaration',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<ClassDeclaration>(0, 'class C{}'),
+                TestVisitor<MethodDeclaration>(8, 'void m(){}'),
+                TestVisitor<ClassDeclaration>(32, 'class D{}')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('class C{}/*Comment\nA*/\n')
+            ]
         ),*/
 
         TestGroupConfig(
@@ -87,9 +86,9 @@ void main()
             ]
         ),
         /*TestGroupConfig(
-        inputNodeCreator: AstCreator.createCompilationUnit,
-        inputMiddle: '/**DocComment\n A*/',
-        name: 'Lonely doc block comment / formatted'
+            inputNodeCreator: AstCreator.createCompilationUnit,
+            inputMiddle: '/**DocComment\n A*/',
+            name: 'Lonely doc block comment / formatted'
         ),*/
 
         TestGroupConfig(
@@ -104,10 +103,10 @@ void main()
             ]
         ),
         /*TestGroupConfig(
-        inputNodeCreator: AstCreator.createCompilationUnit,
-        inputMiddle: '/**DocComment\n A*/class C{}',
-        name: 'Doc block comment before class declaration / formatted'',
-        astVisitors: <TestVisitor<void>>[TestVisitor<ClassDeclaration>(18, 'class C{}')]
+            inputNodeCreator: AstCreator.createCompilationUnit,
+            inputMiddle: '/**DocComment\n A*/class C{}',
+            name: 'Doc block comment before class declaration / formatted'',
+            astVisitors: <TestVisitor<void>>[TestVisitor<ClassDeclaration>(18, 'class C{}')]
         ),*/
 
         TestGroupConfig(
@@ -121,10 +120,10 @@ void main()
             ]
         ),
         /*TestGroupConfig(
-        inputNodeCreator: AstCreator.createCompilationUnit,
-        inputMiddle: 'class C{}/**DocComment\n A*/',
-        name: 'Doc block comment after class declaration / formatted',
-        astVisitors: <TestVisitor<void>>[TestVisitor<ClassDeclaration>(0, 'class C{}')]
+            inputNodeCreator: AstCreator.createCompilationUnit,
+            inputMiddle: 'class C{}/**DocComment\n A*/',
+            name: 'Doc block comment after class declaration / formatted',
+            astVisitors: <TestVisitor<void>>[TestVisitor<ClassDeclaration>(0, 'class C{}')]
         ),*/
 
         TestGroupConfig(

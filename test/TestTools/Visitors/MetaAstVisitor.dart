@@ -29,7 +29,7 @@ class MetaAstVisitor<T extends AstNode> extends SimpleVisitor
             final AstVisitor<void> visitor = astVisitors![_currentVisitorIndex];
             /*
             if (visitor is! T)
-            throw Exception('Visitor #${_currentVisitorIndex + 1} expected to be of type $T expected but is ${visitor.runtimeType}.');
+                throw Exception('Visitor #${_currentVisitorIndex + 1} expected to be of type $T expected but is ${visitor.runtimeType}.');
             */
 
             //logInfo('# ${visitor.runtimeType}(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
