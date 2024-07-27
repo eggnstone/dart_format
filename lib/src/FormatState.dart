@@ -369,7 +369,7 @@ class FormatState
                 final String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
                 if (Constants.DEBUG_FORMAT_STATE)
                 {
-                    logInternal('  fixedFiller:      ${StringTools.toDisplayString(fixedFiller)}');
+                    logInternal('  fixedFiller/4:    ${StringTools.toDisplayString(fixedFiller)}');
                     logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
                 }
 
@@ -680,6 +680,27 @@ class FormatState
         return sb.toString();
     }
 
+    /*String? getResultAfterLast(String searchText)
+    {
+        for (int i = _textBuffers.length - 1; i >= 0; i--)
+            {
+                final String text = _textBuffers[i].toString();
+                final int lastPos = text.lastIndexOf(searchText);
+                if (lastPos == -1)
+                      continue;
+
+        final StringBuffer sb = StringBuffer();
+        sb.write(text.substring(lastPos + searchText.length));
+        for (int j = i + 1; j < _textBuffers.length; j++) {
+        sb.write('LEVEL');
+        sb.write(_textBuffers[j].toString());
+      }
+      return sb.toString();
+      }
+
+        return null;
+    }*/
+
     String getText(int offset, int end)
     {
         try
@@ -811,8 +832,9 @@ class FormatState
 
         try
         {
-            final bool removeLeadingSpaces = offset == 0;
-            return LeadingWhitespaceRemover.remove(s, removeLeadingSpaces: removeLeadingSpaces);
+            return offset == 0
+                ? LeadingWhitespaceRemover.remove(s, removeLeadingSpaces: true)
+                : LeadingWhitespaceRemover.remove(s, removeLeadingSpaces: false, initialCurrentLineSoFar: _getCurrentLineSoFar(offset));
         }
         on DartFormatException catch(e, stackTrace)
         {
@@ -829,4 +851,46 @@ class FormatState
 
         _lastConsumedPosition = value;
     }
+
+  String _getCurrentLineSoFar(int offset)
+  {
+      logInternal('getCurrentLineSoFar($offset)');
+
+      if (offset == 0)
+          {
+              logInternal("  Offset==0 => returning ''");
+              return '';
+          }
+
+      /*String c = _parseResult.content[offset];
+          logInternal('  c: ${StringTools.toDisplayString(c)}');
+
+      if (c == '\n') {
+          logInternal('  Current line start with a line break => returning null');
+      return null;
+    }*/
+
+    int currentOffset = offset - 1;
+      while (currentOffset >= 0)
+      {
+          final String c = _parseResult.content[currentOffset];
+            if (c == '\n')
+            {
+                final String result = _parseResult.content.substring(currentOffset + 1, offset);
+                if (result.isEmpty) {
+          logInternal("  Line break found and current line is empty => Returning ''");
+          return '';
+        }
+
+          logInternal('  Line break found => Returning: ${StringTools.toDisplayString(result)}');
+          return result;
+      }
+
+          currentOffset--;
+      }
+
+      final String result = _parseResult.content.substring(0, offset);
+      logInternal('  No line break found => Returning all: ${StringTools.toDisplayString(result)}');
+      return result;
+  }
 }

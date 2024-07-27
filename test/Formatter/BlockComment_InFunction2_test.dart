@@ -57,7 +57,7 @@ void main()
                         '{\n'
                         '    a;\n'
                         '    /* Comment\n'
-                        '       Comment */\n'
+                        '        Comment */\n'
                         '}\n';
                     const String expectedText = inputText;
 
@@ -77,7 +77,7 @@ void main()
                         'void f()\n'
                         '{\n'
                         '    a; /* Comment\n'
-                        '      Comment */\n'
+                        '        Comment */\n'
                         '}\n';
                     const String expectedText = inputText;
 
@@ -98,7 +98,7 @@ void main()
                         '{\n'
                         '    a;\n'
                         '    /* Comment\n'
-                        '       Comment */\n'
+                        '    Comment */\n'
                         '    b;\n'
                         '}\n';
                     const String expectedText = inputText;
@@ -119,7 +119,7 @@ void main()
                         'void f()\n'
                         '{\n'
                         '    a; /* Comment\n'
-                        '         Comment */\n'
+                        '        Comment */\n'
                         '    b;\n'
                         '}\n';
                     const String expectedText = inputText;

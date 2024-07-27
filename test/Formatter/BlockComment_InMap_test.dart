@@ -59,7 +59,6 @@ void main()
                         '        a,\n'
                         '        /* Comment */\n'
                         '    };\n';
-
                     const String expectedText =
                         'var m =\n'
                         '    {\n'

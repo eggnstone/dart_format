@@ -20,7 +20,6 @@ void main()
                         'END*/\n'
                         '    s;\n'
                         '}\n';
-
                     const String expectedText = 'void f()\n'
                         '{\n'
                         '    /*START\n'
@@ -69,7 +68,6 @@ void main()
                         '        END*/\n'
                         '    s;\n'
                         '}\n';
-
                     const String expectedText = 'void f()\n'
                         '{\n'
                         '    /*START\n'
@@ -97,7 +95,6 @@ void main()
                         'END*/\n'
                         '    s;\n'
                         '}\n';
-
                     const String expectedText = 'void f()\n'
                         '{\n'
                         '            /*START\n'

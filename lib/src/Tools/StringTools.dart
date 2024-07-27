@@ -85,4 +85,8 @@ class StringTools
         final int index = s.indexOf(pattern, start);
         return index < 0 ? null : index;
     }
+
+    static String padIntLeft(int i, int length) => i.toString().padLeft(length);
+
+    static String padIntLeft0(int i, int length) => i.toString().padLeft(length, '0');
 }

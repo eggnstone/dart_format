@@ -37,7 +37,6 @@ void main()
                                 '    /*START\n'
                                 '        TEXT\n'
                                 '    END*/\n';
-
                             const String expectedText =
                                 '/*START\n'
                                 '    TEXT\n'
@@ -128,7 +127,6 @@ void main()
                                         '    /*START\n'
                                         '        TEXT\n'
                                         '    END*/\n';
-
                                     const String expectedText = 'int i=0;\n'
                                         '/*START\n'
                                         '    TEXT\n'
@@ -151,7 +149,6 @@ void main()
                                         '        TEXT\n'
                                         '    END*/\n'
                                         '    var a;\n';
-
                                     const String expectedText = 'int i=0;\n'
                                         '/*START\n'
                                         '    TEXT\n'
@@ -173,7 +170,6 @@ void main()
                                     const String inputText = '    int i=0; /*START\n'
                                         '        TEXT\n'
                                         '    END*/\n';
-
                                     const String expectedText = 'int i=0; /*START\n'
                                         '        TEXT\n'
                                         '    END*/\n';
@@ -195,10 +191,9 @@ void main()
                             const String inputText = '    int i=0; /*START\n'
                                 '    TEXT\n'
                                 'END*/\n';
-
-                            const String expectedText = 'int i=0; /*START\n'
-                                '        TEXT\n'
-                                '    END*/\n';
+                            const String expectedText = 'int i=0;    /*START\n'
+                                '    TEXT\n'
+                                'END*/\n';
 
                             final Config config = Config.all();
                             final Formatter formatter = Formatter(config);
