@@ -33,10 +33,10 @@ class VariableDeclarationFormatter extends IFormatter
             final String textWithPossibleLineBreak = formatState.getText(node.offset, node.initializer!.offset);
             pushLevel = textWithPossibleLineBreak.contains('\n');
             if (Constants.DEBUG_I_FORMATTER)
-                {
+            {
                 log('textWithPossibleLineBreak:            ${StringTools.toDisplayString(textWithPossibleLineBreak)}', 0);
-            log('pushLevel:                            $pushLevel', 0);
-        }
+                log('pushLevel:                            $pushLevel', 0);
+            }
         }
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
@@ -55,7 +55,8 @@ class VariableDeclarationFormatter extends IFormatter
             final bool pushLevelInitializer = textWithPossibleLineBreakInitializer.contains('\n');
             final bool combinedPushLevel = !pushLevelEquals && pushLevelInitializer;
 
-            if (Constants.DEBUG_I_FORMATTER) {
+            if (Constants.DEBUG_I_FORMATTER)
+            {
                 log('textWithPossibleLineBreakEquals:      ${StringTools.toDisplayString(textWithPossibleLineBreakEquals)}', 0);
                 log('pushLevelEquals:                      $pushLevelEquals', 0);
                 log('textWithPossibleLineBreakInitializer: ${StringTools.toDisplayString(textWithPossibleLineBreakInitializer)}', 0);
