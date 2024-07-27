@@ -1,4 +1,6 @@
-import 'package:dart_format/dart_format.dart';
+import 'package:dart_format/src/Data/Config.dart';
+import 'package:dart_format/src/Exceptions/DartFormatException.dart';
+import 'package:dart_format/src/Formatter.dart';
 import 'package:test/test.dart';
 
 import '../TestTools/TestTools.dart';

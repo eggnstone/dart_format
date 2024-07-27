@@ -32,15 +32,13 @@ class AdjacentStringsFormatter extends IFormatter
         //final bool pushLevel = false;
         //log('pushLevel: $pushLevel', 0);
 
-        */
-/*if (pushLevel)
+        *//*if (pushLevel)
             formatState.pushLevel('$methodName/node.target/after');*//*
 
         formatState.acceptList(node.strings, astVisitor, '$methodName/node.strings');
         //formatState.acceptListWithComma(node.strings, null, astVisitor, '$methodName/node.strings');
 
-        */
-/*if (pushLevel)
+        *//*if (pushLevel)
             formatState.popLevelAndIndent();*//*
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

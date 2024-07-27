@@ -1,13 +1,11 @@
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:dart_format/src/Constants/Constants.dart';
 import 'package:dart_format/src/Data/Config.dart';
 import 'package:dart_format/src/FormatState.dart';
 import 'package:dart_format/src/FormatVisitor.dart';
 import 'package:dart_format/src/Formatters/IFormatter.dart';
 import 'package:dart_format/src/Tools/FormatTools.dart';
 import 'package:dart_format/src/Tools/LogTools.dart';
-import 'package:dart_format/src/Tools/StringTools.dart';
 import 'package:test/test.dart' as Test; // ignore: library_prefixes
 
 import 'TestConfig.dart';
@@ -35,7 +33,7 @@ class TestTools
         {
             Test.expect(actual, matcher, reason: reason);
             // TODO: why use logInternalInfo instead of logInfo?
-            logInternalInfo('OK: ${StringTools.toDisplayString(actual, Constants.MAX_DEBUG_LENGTH)}');
+            //logInternalInfo('OK: ${StringTools.toDisplayString(actual, Constants.MAX_DEBUG_LENGTH)}');
         }
         on Test.TestFailure catch (e)
         {

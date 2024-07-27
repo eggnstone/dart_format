@@ -10,14 +10,14 @@ import 'Tools/StringTools.dart';
 
 class Analyzer
 {
-    void analyze(String s)
+    static void analyze(String s)
     {
         final ParseStringResult parseResult = AnalyzerUtilities.parseString(content: s, throwIfDiagnostics: false);
 
         _analyzeSyntacticEntities(parseResult.unit.childEntities, 0);
     }
 
-    void _analyzeSyntacticEntities(Iterable<SyntacticEntity> items, int logIndent)
+    static void _analyzeSyntacticEntities(Iterable<SyntacticEntity> items, int logIndent)
     {
         for (final SyntacticEntity item in items)
         {
@@ -70,10 +70,10 @@ class Analyzer
         }
     }
 
-    String _getSpacer(int logIndent)
+    static String _getSpacer(int logIndent)
     => '  ' * logIndent;
 
-    void _log(String s)
+    static void _log(String s)
     {
         logDebug(s);
     }

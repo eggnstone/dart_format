@@ -1,6 +1,5 @@
-import 'package:dart_format/dart_format.dart';
-import 'package:dart_format/src/Tools/StringTools.dart';
-import 'package:eggnstone_dart/eggnstone_dart.dart';
+import 'package:dart_format/src/Data/Config.dart';
+import 'package:dart_format/src/Formatter.dart';
 import 'package:test/test.dart';
 
 import '../TestTools/TestTools.dart';
@@ -27,7 +26,7 @@ void main()
                     final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
-                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
+                    //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
@@ -46,7 +45,7 @@ void main()
                     final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
-                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
+                    //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
@@ -67,7 +66,7 @@ void main()
                     final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
-                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
+                    //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
@@ -87,7 +86,7 @@ void main()
                     final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
-                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
+                    //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
@@ -109,7 +108,7 @@ void main()
                     final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
-                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
+                    //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
 
@@ -130,7 +129,7 @@ void main()
                     final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
-                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
+                    //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
         }

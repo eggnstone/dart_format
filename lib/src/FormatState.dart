@@ -420,18 +420,19 @@ class FormatState
         }
 
         /*bool removeLeadingWhitespace = lastText.trim().isEmpty;
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('  removeLeadingWhitespace:   $removeLeadingWhitespace');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  removeLeadingWhitespace:   $removeLeadingWhitespace');
         if (!removeLeadingWhitespace)
         {
             final String firstLine = filler.split('\n').first;
             removeLeadingWhitespace = firstLine.trim().isEmpty;
         }
 
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('  removeLeadingWhitespace:   $removeLeadingWhitespace');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  removeLeadingWhitespace:   $removeLeadingWhitespace');
         if (removeLeadingWhitespace)
         */
-        if (true)
-        {
+
+        /*if (true)
+        {*/
             final String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
             if (Constants.DEBUG_FORMAT_STATE)
             {
@@ -440,11 +441,11 @@ class FormatState
             }
 
             write(fixedFiller);
-        }
+        /*}
         else
         {
             write(filler);
-        }
+        }*/
 
         _setLastConsumedPosition(end, fullSource);
     }
@@ -470,20 +471,20 @@ class FormatState
         );
     }
 
-            /*void copyRawStringEntity(SyntacticEntity? entity, AstVisitor<void> astVisitor, String source)
-            {
-                const String methodName = 'copyRawStringEntity';
+    /*void copyRawStringEntity(SyntacticEntity? entity, AstVisitor<void> astVisitor, String source)
+    {
+        const String methodName = 'copyRawStringEntity';
 
-                if (entity is! Token)
-                    throw ArgumentError('Not a Token: ${entity.runtimeType}');
+        if (entity is! Token)
+            throw ArgumentError('Not a Token: ${entity.runtimeType}');
 
-                if (entity.type != TokenType.STRING)
-                    throw ArgumentError('Not a string: ${entity.type}');
+        if (entity.type != TokenType.STRING)
+            throw ArgumentError('Not a string: ${entity.type}');
 
-                if (Constants.DEBUG_FORMAT_STATE) logInternal('${entity.type}');
-                if (Constants.DEBUG_FORMAT_STATE) logInternal('${entity.value()}');
-                copyEntity(entity, astVisitor, source, isRaw: true);
-            }*/
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('${entity.type}');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('${entity.value()}');
+        copyEntity(entity, astVisitor, source, isRaw: true);
+    }*/
 
     void copyEntity(SyntacticEntity? entity, AstVisitor<void> astVisitor, String source)
     {
@@ -693,14 +694,15 @@ class FormatState
                 if (lastPos == -1)
                       continue;
 
-        final StringBuffer sb = StringBuffer();
-        sb.write(text.substring(lastPos + searchText.length));
-        for (int j = i + 1; j < _textBuffers.length; j++) {
-        sb.write('LEVEL');
-        sb.write(_textBuffers[j].toString());
-      }
-      return sb.toString();
-      }
+                final StringBuffer sb = StringBuffer();
+                sb.write(text.substring(lastPos + searchText.length));
+                for (int j = i + 1; j < _textBuffers.length; j++) {
+                sb.write('LEVEL');
+                sb.write(_textBuffers[j].toString());
+            }
+
+            return sb.toString();
+        }
 
         return null;
     }*/
@@ -713,8 +715,11 @@ class FormatState
         }
         catch (e)
         {
-            logInternal('FormatState.getText($offset, $end) $e');
-            logInternal('  ${StringTools.toDisplayString(_parseResult.content)}');
+            if (Constants.DEBUG_FORMAT_STATE)
+            {
+                logInternal('FormatState.getText($offset, $end) $e');
+                logInternal('  ${StringTools.toDisplayString(_parseResult.content)}');
+            }
             rethrow;
         }
     }
@@ -856,45 +861,49 @@ class FormatState
         _lastConsumedPosition = value;
     }
 
-  String _getCurrentLineSoFar(int offset)
-  {
-      logInternal('getCurrentLineSoFar($offset)');
+    String _getCurrentLineSoFar(int offset)
+    {
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('getCurrentLineSoFar($offset)');
 
-      if (offset == 0)
-          {
-              logInternal("  Offset==0 => returning ''");
-              return '';
-          }
+        if (offset == 0)
+        {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal("  Offset==0 => returning ''");
+            return '';
+        }
 
-      /*String c = _parseResult.content[offset];
-          logInternal('  c: ${StringTools.toDisplayString(c)}');
+        /*
+        String c = _parseResult.content[offset];
+        logInternal('  c: ${StringTools.toDisplayString(c)}');
 
-      if (c == '\n') {
-          logInternal('  Current line start with a line break => returning null');
-      return null;
-    }*/
+        if (c == '\n')
+        {
+            logInternal('  Current line start with a line break => returning null');
+            return null;
+        }
+        */
 
-    int currentOffset = offset - 1;
-      while (currentOffset >= 0)
-      {
-          final String c = _parseResult.content[currentOffset];
+        int currentOffset = offset - 1;
+        while (currentOffset >= 0)
+        {
+            final String c = _parseResult.content[currentOffset];
             if (c == '\n')
             {
                 final String result = _parseResult.content.substring(currentOffset + 1, offset);
-                if (result.isEmpty) {
-          logInternal("  Line break found and current line is empty => Returning ''");
-          return '';
+                if (result.isEmpty)
+                {
+                    if (Constants.DEBUG_FORMAT_STATE) logInternal("  Line break found and current line is empty => Returning ''");
+                    return '';
+                }
+
+                if (Constants.DEBUG_FORMAT_STATE) logInternal('  Line break found => Returning: ${StringTools.toDisplayString(result)}');
+                return result;
+            }
+
+            currentOffset--;
         }
 
-          logInternal('  Line break found => Returning: ${StringTools.toDisplayString(result)}');
-          return result;
-      }
-
-          currentOffset--;
-      }
-
-      final String result = _parseResult.content.substring(0, offset);
-      logInternal('  No line break found => Returning all: ${StringTools.toDisplayString(result)}');
-      return result;
-  }
+        final String result = _parseResult.content.substring(0, offset);
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  No line break found => Returning all: ${StringTools.toDisplayString(result)}');
+        return result;
+    }
 }

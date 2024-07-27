@@ -1,8 +1,5 @@
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:dart_format/src/Constants/Constants.dart';
 import 'package:dart_format/src/FormatState.dart';
-import 'package:dart_format/src/Tools/LogTools.dart';
-import 'package:dart_format/src/Tools/StringTools.dart';
 
 import 'SimpleVisitor.dart';
 import 'TestVisitor.dart';
@@ -35,7 +32,7 @@ class MetaAstVisitor<T extends AstNode> extends SimpleVisitor
             throw Exception('Visitor #${_currentVisitorIndex + 1} expected to be of type $T expected but is ${visitor.runtimeType}.');
             */
 
-            logInfo('# ${visitor.runtimeType}(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
+            //logInfo('# ${visitor.runtimeType}(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})');
 
             if (visitor is TestVisitor)
                 visitor.formatState = formatState;
