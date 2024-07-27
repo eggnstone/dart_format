@@ -10,28 +10,26 @@ void main()
     group('Remove, comments, leading comments', ()
         {
             test('EndOfLine comment', ()
-            {
-                const String inputText = ' // Comment';
-                const String expectedText = ' // Comment';
+                {
+                    const String inputText = ' // Comment';
+                    const String expectedText = ' // Comment';
 
-                final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
+                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
 
-                TestTools.expect(actualText, equals(expectedText));
-            }
+                    TestTools.expect(actualText, equals(expectedText));
+                }
             );
 
             test('EndOfLine comment, remove leading spaces', ()
-            {
-                const String inputText = ' // Comment';
-                const String expectedText = '// Comment';
+                {
+                    const String inputText = ' // Comment';
+                    const String expectedText = '// Comment';
 
-                final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: true);
+                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: true);
 
-                TestTools.expect(actualText, equals(expectedText));
-            }
+                    TestTools.expect(actualText, equals(expectedText));
+                }
             );
-
-
 
             test('Block comment', ()
                 {

@@ -43,27 +43,27 @@ void main()
             );
 
             test('Multiline block comment', ()
-            {
-                const String inputText =
-                    '/* Comment1\n'
-                    'Comment2 */';
-                const String expectedText = inputText;
+                {
+                    const String inputText =
+                        '/* Comment1\n'
+                        'Comment2 */';
+                    const String expectedText = inputText;
 
-                final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
+                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
 
-                TestTools.expect(actualText, equals(expectedText));
-            }
+                    TestTools.expect(actualText, equals(expectedText));
+                }
             );
 
             test('Double block comment', ()
-            {
-                const String inputText = '/* Comment1 *//* Comment2 */';
-                const String expectedText = inputText;
+                {
+                    const String inputText = '/* Comment1 *//* Comment2 */';
+                    const String expectedText = inputText;
 
-                final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
+                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
 
-                TestTools.expect(actualText, equals(expectedText));
-            }
+                    TestTools.expect(actualText, equals(expectedText));
+                }
             );
         }
     );

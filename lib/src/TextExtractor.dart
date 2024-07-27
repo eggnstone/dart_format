@@ -92,17 +92,17 @@ class TextExtractor
         return TextInfo(type: type, text: s);
     }
 
-  static bool _isFirst(int main, int other1, int other2)
-  {
-    if (main == -1)
-      return false;
+    static bool _isFirst(int main, int other1, int other2)
+    {
+        if (main == -1)
+            return false;
 
-    if (other1 != -1 && other1 < main)
-      return false;
+        if (other1 != -1 && other1 < main)
+            return false;
 
-    if (other2 != -1 && other2 < main)
-        return false;
+        if (other2 != -1 && other2 < main)
+            return false;
 
-    return true;
-  }
+        return true;
+    }
 }

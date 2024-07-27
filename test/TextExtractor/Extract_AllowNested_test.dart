@@ -55,16 +55,15 @@ void main()
                 }
             );
 
-
             test('Nested with escaped first finisher', ()
-            {
-                const String inputText = '${startMarker}a${startMarker}b\\${endMarker}c${endMarker}d${endMarker}';
-                const TextInfo expectedResult = TextInfo(type: TextType.Normal, text: inputText);
+                {
+                    const String inputText = '${startMarker}a${startMarker}b\\${endMarker}c${endMarker}d${endMarker}';
+                    const TextInfo expectedResult = TextInfo(type: TextType.Normal, text: inputText);
 
-                final TextInfo actualResult = TextExtractor.extract(inputText, TextType.Normal, startMarker, endMarker, allowNested: true);
+                    final TextInfo actualResult = TextExtractor.extract(inputText, TextType.Normal, startMarker, endMarker, allowNested: true);
 
-                expect(actualResult, equals(expectedResult));
-            }
+                    expect(actualResult, equals(expectedResult));
+                }
             );
 
             test('Nested with escaped first finisher, unclosed', ()
@@ -76,17 +75,15 @@ void main()
             );
 
             test('Nested with escaped second finisher', ()
-            {
-                const String inputText = '${startMarker}a${startMarker}b${endMarker}c\\${endMarker}d${endMarker}';
-                const TextInfo expectedResult = TextInfo(type: TextType.Normal, text: inputText);
+                {
+                    const String inputText = '${startMarker}a${startMarker}b${endMarker}c\\${endMarker}d${endMarker}';
+                    const TextInfo expectedResult = TextInfo(type: TextType.Normal, text: inputText);
 
-                final TextInfo actualResult = TextExtractor.extract(inputText, TextType.Normal, startMarker, endMarker, allowNested: true);
+                    final TextInfo actualResult = TextExtractor.extract(inputText, TextType.Normal, startMarker, endMarker, allowNested: true);
 
-                expect(actualResult, equals(expectedResult));
-            }
+                    expect(actualResult, equals(expectedResult));
+                }
             );
-
-
 
             test('Nested with escaped second finisher, unclosed', ()
                 {

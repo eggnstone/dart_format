@@ -66,7 +66,6 @@ void main()
                 }
             );
 
-
             test('Block comment', ()
                 {
                     const String inputText = '/*Comment*/';

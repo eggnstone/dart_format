@@ -18,43 +18,43 @@ void main()
                     'abc"def"': <TextInfo>
                     [
                         const TextInfo(type: TextType.Normal, text: 'abc'),
-                        const TextInfo(type: TextType.String, text: '"def"'),
+                        const TextInfo(type: TextType.String, text: '"def"')
                     ],
                     '"def"abc': <TextInfo>
                     [
                         const TextInfo(type: TextType.String, text: '"def"'),
-                        const TextInfo(type: TextType.Normal, text: 'abc'),
+                        const TextInfo(type: TextType.Normal, text: 'abc')
                     ],
                     "abc'def'": <TextInfo>
                     [
                         const TextInfo(type: TextType.Normal, text: 'abc'),
-                        const TextInfo(type: TextType.String, text: "'def'"),
+                        const TextInfo(type: TextType.String, text: "'def'")
                     ],
                     "'def'abc": <TextInfo>
                     [
                         const TextInfo(type: TextType.String, text: "'def'"),
-                        const TextInfo(type: TextType.Normal, text: 'abc'),
+                        const TextInfo(type: TextType.Normal, text: 'abc')
                     ],
                     'abc/*Comment*/': <TextInfo>
                     [
                         const TextInfo(type: TextType.Normal, text: 'abc'),
-                        const TextInfo(type: TextType.Comment, text: '/*Comment*/'),
+                        const TextInfo(type: TextType.Comment, text: '/*Comment*/')
                     ],
                     '/*Comment*/abc': <TextInfo>
                     [
                         const TextInfo(type: TextType.Comment, text: '/*Comment*/'),
-                        const TextInfo(type: TextType.Normal, text: 'abc'),
+                        const TextInfo(type: TextType.Normal, text: 'abc')
                     ],
                     'abc//Comment': <TextInfo>
                     [
                         const TextInfo(type: TextType.Normal, text: 'abc'),
-                        const TextInfo(type: TextType.Comment, text: '//Comment'),
+                        const TextInfo(type: TextType.Comment, text: '//Comment')
                     ],
                     '//Comment\nabc': <TextInfo>
                     [
                         const TextInfo(type: TextType.Comment, text: '//Comment'),
-                        const TextInfo(type: TextType.Normal, text: '\nabc'),
-                    ],
+                        const TextInfo(type: TextType.Normal, text: '\nabc')
+                    ]
                 };
 
             inputs.forEach((String input, List<TextInfo> expected)
