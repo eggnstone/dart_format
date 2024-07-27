@@ -277,6 +277,36 @@ void main()
 
                 }
             );
+
+            group('Back-to-back', ()
+                {
+                    test('3 lines, not indented', ()
+                        {
+                            const String inputText = '/*\n'
+                                '*//*\n'
+                                '*/\n';
+                            const String expectedText = inputText;
+
+                            final String actualText = formatterAll.format(inputText);
+
+                            TestTools.expect(actualText, equals(expectedText));
+                        }
+                    );
+
+                    test('3 lines, not indented', ()
+                    {
+                        const String inputText = '/*\n'
+                            '    *//*\n'
+                            '*/\n';
+                        const String expectedText = inputText;
+
+                        final String actualText = formatterAll.format(inputText);
+
+                        TestTools.expect(actualText, equals(expectedText));
+                    }
+                    );
+                }
+            );
         }
     );
 }
