@@ -9,28 +9,8 @@ void main()
 {
     TestTools.init();
 
-    group('EndOfLine comments in function and maps', ()
+    group('EndOfLine comments in map', ()
         {
-            test('EndOfLine comment in a function block', ()
-                {
-                    const String inputText = 
-                        'void f()\n'
-                        '{\n'
-                        '    a;\n'
-                        '    // EOL\n'
-                        '}\n';
-                    const String expectedText = inputText;
-
-                    final Config config = Config.all();
-                    final Formatter formatter = Formatter(config);
-
-                    final String actualText = formatter.format(inputText);
-
-                    TestTools.expect(actualText, equals(expectedText));
-                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
-                }
-            );
-
             test('EndOfLine comment without trailing comma', ()
                 {
                     const String inputText =

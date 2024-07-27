@@ -17,12 +17,6 @@ class TextExtractor
         if (!s.startsWith(startMarker))
             throw DartFormatException.error('Does not start with expected start marker: ${StringTools.toDisplayString(s)}');
 
-        /*if (!isRaw && !s.startsWith(startMarker))
-            throw DartFormatException.error('Does not start with expected start marker: ${StringTools.toDisplayString(s)}');
-
-        if (isRaw && !s.startsWith('r$startMarker'))
-            throw DartFormatException.error('Does not start with expected start marker: r${StringTools.toDisplayString(s)}');*/
-
         int depth = 1;
         int currentPos = startMarker.length;
         while (currentPos < s.length)

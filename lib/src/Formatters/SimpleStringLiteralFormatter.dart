@@ -1,3 +1,4 @@
+/*
 // ignore_for_file: always_put_control_body_on_new_line
 
 import 'package:analyzer/dart/ast/ast.dart';
@@ -25,11 +26,9 @@ class SimpleStringLiteralFormatter extends IFormatter
         if (node is! SimpleStringLiteral)
             throw FormatException('Not a SimpleStringLiteral: ${node.runtimeType}');
 
-        if (node.isRaw)
-            formatState.copyEntity(node.literal, astVisitor, '$methodName/node.literal', isRaw: true);
-        else
-            formatState.copyEntity(node.literal, astVisitor, '$methodName/node.literal'); 
+        formatState.copyEntity(node.literal, astVisitor, '$methodName/node.literal');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }
+*/

@@ -219,7 +219,7 @@ class FormatState
             logInternal('  token:                              ${StringTools.toDisplayString(token)}');
             logInternal('  nextToken:                          ${StringTools.toDisplayString(nextToken)}');
             logInternal('  nextToken.offset:                   ${nextToken.offset}');
-            logInternal('  nextToken.precedingComments:        ${nextToken.precedingComments}');
+            logInternal('  nextToken.precedingComments:        ${StringTools.toDisplayString(nextToken.precedingComments)}');
             logInternal('  nextToken.precedingComments.offset: ${nextToken.precedingComments?.offset}');
             logInternal('  filler/2:                           ${StringTools.toDisplayString(filler)}');
         }
@@ -249,11 +249,13 @@ class FormatState
         if (nextToken.offset == _parseResult.content.length)
         {
             // EOF
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  EOF');
             consumeText(token.end, nextToken.offset, filler, fullSource);
             _addNewLineBeforeToken(nextToken, add: add, beforeComments: false, fullSource);
             return;
         }
 
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  Not EOF');
         _addNewLineBeforeToken(nextToken, add: add, beforeComments: true, fullSource);
     }
 
@@ -324,11 +326,11 @@ class FormatState
         consumeText(lastConsumedPosition, lastConsumedPosition, s, fullSource);
     }
 
-    void consumeText(int offset, int end, String s, String source, {bool isRaw = false})
+    void consumeText(int offset, int end, String s, String source)
     {
         const String methodName = 'consumeText';
         final String fullSource = '$source/$methodName';
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, isRaw: $isRaw, ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
         if (lastConsumedPosition > offset)
             logAndThrowErrorWithOffsets('Internal error: offset < lastConsumedPosition:', '<', null, offset, lastConsumedPosition, source);
@@ -343,9 +345,9 @@ class FormatState
 
             if (Constants.DEBUG_FORMAT_STATE)
             {
-                logInternal('  Filler/4:             ${StringTools.toDisplayString(filler)}');
-                logInternal('  LastConsumedPosition: $lastConsumedPosition');
-                logInternal('  Offset:               $offset');
+                logInternal('  filler/4a:            ${StringTools.toDisplayString(filler)}');
+                logInternal('  lastConsumedPosition: $lastConsumedPosition');
+                logInternal('  offset:               $offset');
                 logInternal('  Result so far:        ${StringTools.toDisplayStringCutAtFront(getResult(), Constants.MAX_DEBUG_LENGTH)}');
             }
 
@@ -354,8 +356,8 @@ class FormatState
 
             if (Constants.DEBUG_FORMAT_STATE)
             {
-                logInternal('  Filler:            ${StringTools.toDisplayString(filler)}');
-                logInternal('  TextBuffers.last:  ${StringTools.toDisplayString(_textBuffers.last)}');
+                logInternal('  filler/4b:            ${StringTools.toDisplayString(filler)}');
+                logInternal('  _textBuffers.last:    ${StringTools.toDisplayString(_textBuffers.last)}');
             }
 
             if (filler.replaceAll(' ', '').isEmpty && _textBuffers.length == 1 && _textBuffers.last.toString().isEmpty)
@@ -367,7 +369,7 @@ class FormatState
                 final String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
                 if (Constants.DEBUG_FORMAT_STATE)
                 {
-                    logInternal('  Filler w/o leadingWS: ${StringTools.toDisplayString(fixedFiller)}');
+                    logInternal('  fixedFiller:      ${StringTools.toDisplayString(fixedFiller)}');
                     logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
                 }
 
@@ -376,8 +378,8 @@ class FormatState
         }
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
-        final String fixedS = _removeLeadingWhitespace(s, offset, isRaw: isRaw);
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  S w/o leading ws:     ${StringTools.toDisplayString(fixedS)}');
+        final String fixedS = _removeLeadingWhitespace(s, offset);
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  S w/o leading ws:          ${StringTools.toDisplayString(fixedS)}');
         write(fixedS);
 
         _setLastConsumedPosition(end, fullSource);
@@ -393,12 +395,12 @@ class FormatState
             return;
 
         String filler = getText(lastConsumedPosition, end);
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  Filler/5:                  ${StringTools.toDisplayString(filler)}');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  filler/5:                  ${StringTools.toDisplayString(filler)}');
 
         if (_trailingForTests != null && filler.endsWith(_trailingForTests!))
         {
             filler = filler.substring(0, filler.length - _trailingForTests!.length);
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('  Filler (without trailing): ${StringTools.toDisplayString(filler)}');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  filler (without trailing): ${StringTools.toDisplayString(filler)}');
         }
 
         if (!CommentTools.isEmptyOrComments(filler))
@@ -408,13 +410,13 @@ class FormatState
         }
 
         String lastText = _textBuffers.last.toString();
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  LastText1: ${StringTools.toDisplayString(lastText)}');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  lastText1:                 ${StringTools.toDisplayString(lastText)}');
 
         final int lastLineBreakPos = lastText.lastIndexOf('\n');
         if (lastLineBreakPos >= 0)
         {
             lastText = lastText.substring(lastLineBreakPos + 1);
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('  LastText2: ${StringTools.toDisplayString(lastText)}');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  lastText2:                 ${StringTools.toDisplayString(lastText)}');
         }
 
         bool removeLeadingWhitespace = lastText.trim().isEmpty;
@@ -429,7 +431,7 @@ class FormatState
             final String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
             if (Constants.DEBUG_FORMAT_STATE)
             {
-                logInternal('  Filler w/o leadingWS: ${StringTools.toDisplayString(fixedFiller)}');
+                logInternal('  fixedFiller:               ${StringTools.toDisplayString(fixedFiller)}');
                 logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
             }
 
@@ -464,22 +466,22 @@ class FormatState
         );
     }
 
-    /*void copyRawStringEntity(SyntacticEntity? entity, AstVisitor<void> astVisitor, String source)
-    {
-        const String methodName = 'copyRawStringEntity';
+            /*void copyRawStringEntity(SyntacticEntity? entity, AstVisitor<void> astVisitor, String source)
+            {
+                const String methodName = 'copyRawStringEntity';
 
-        if (entity is! Token)
-            throw ArgumentError('Not a Token: ${entity.runtimeType}');
+                if (entity is! Token)
+                    throw ArgumentError('Not a Token: ${entity.runtimeType}');
 
-        if (entity.type != TokenType.STRING)
-            throw ArgumentError('Not a string: ${entity.type}');
+                if (entity.type != TokenType.STRING)
+                    throw ArgumentError('Not a string: ${entity.type}');
 
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('${entity.type}');
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('${entity.value()}');
-        copyEntity(entity, astVisitor, source, isRaw: true);
-    }*/
+                if (Constants.DEBUG_FORMAT_STATE) logInternal('${entity.type}');
+                if (Constants.DEBUG_FORMAT_STATE) logInternal('${entity.value()}');
+                copyEntity(entity, astVisitor, source, isRaw: true);
+            }*/
 
-    void copyEntity(SyntacticEntity? entity, AstVisitor<void> astVisitor, String source, {bool isRaw = false})
+    void copyEntity(SyntacticEntity? entity, AstVisitor<void> astVisitor, String source)
     {
         const String methodName = 'copyEntity';
         final String fullSource = '$source/$methodName';
@@ -494,7 +496,7 @@ class FormatState
         if (entity is AstNode)
             entity.accept(astVisitor);
         else
-            copyText(entity.offset, entity.end, fullSource, isRaw: isRaw);
+            copyText(entity.offset, entity.end, fullSource);
     }
 
     void copyOpeningBraceAndPushLevel(Token token, Config config, String source)
@@ -504,14 +506,14 @@ class FormatState
         pushLevel: true
     );
 
-    void copyText(int offset, int end, String source, {bool isRaw = false})
+    void copyText(int offset, int end, String source)
     {
         const String methodName = 'copyText';
         final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, $source)');
 
         final String s = getText(offset, end);
-        consumeText(offset, end, s, fullSource, isRaw: isRaw);
+        consumeText(offset, end, s, fullSource);
     }
 
     void copyToken(Token token, String source, {
@@ -697,7 +699,7 @@ class FormatState
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# FormatState.popLevelAndIndent()');
 
         final Indentation lastLevel = _indentations.removeLast();
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  Popped Level: name: "${lastLevel.name}" type: "${lastLevel.type}"');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  Popped level: name: "${lastLevel.name}" type: "${lastLevel.type}"');
 
         final StringBufferEx poppedStringBuffer = _textBuffers.removeLast();
         if (Constants.DEBUG_FORMAT_STATE)
@@ -802,7 +804,7 @@ class FormatState
         logAndThrowError(finalMessage, getLocation(offset1));
     }
 
-    String _removeLeadingWhitespace(String s, int offset, {bool isRaw = false})
+    String _removeLeadingWhitespace(String s, int offset)
     {
         if (_indentationSpacesPerLevel < 0)
             return s;

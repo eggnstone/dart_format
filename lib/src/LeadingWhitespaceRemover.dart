@@ -27,6 +27,7 @@ class LeadingWhitespaceRemover
 
             if (part.type == TextType.Comment)
             {
+                //final String adjustedComment = _removeFromComment(leading, part.text, '$spacer      ');
                 final String adjustedComment = _removeFromComment(leading, part.text, '$spacer      ');
                 if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer    Adding comment:  ${StringTools.toDisplayString(adjustedComment)}');
                 sb.write(adjustedComment);
@@ -198,7 +199,7 @@ class LeadingWhitespaceRemover
         return result;
     }
 
-    static String _removeFromComment(String leading, String s, String spacer)
+    /*static String _removeFromComment(String leading, String s, String spacer)
     {
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
         {
@@ -208,7 +209,7 @@ class LeadingWhitespaceRemover
         }
 
         return leading.isEmpty ? s : _removeFromCommentWithLeading(leading, s, '$spacer  ');
-    }
+    }*/
 
     /*static String _removeFromCommentWithoutLeading(String s)
     {
@@ -232,11 +233,11 @@ class LeadingWhitespaceRemover
         //return '<COMMENT-without-leading-but-with-line-break>$s</COMMENT-without-leading-but-with-line-break>';
     }*/
 
-    static String _removeFromCommentWithLeading(String leading, String s, String spacer)
+    static String _removeFromComment(String leading, String s, String spacer)
     {
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
         {
-            logInternal('${spacer}removeFromCommentWithLeading()');
+            logInternal('${spacer}removeFromComment()');
             logInternal('$spacer  leading: ${StringTools.toDisplayString(leading)}');
             logInternal('$spacer  s:       ${StringTools.toDisplayString(s)}');
         }

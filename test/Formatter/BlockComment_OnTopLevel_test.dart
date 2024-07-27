@@ -3,123 +3,14 @@ import 'package:dart_format/src/Tools/StringTools.dart';
 import 'package:eggnstone_dart/eggnstone_dart.dart';
 import 'package:test/test.dart';
 
-import '../../TestTools/TestTools.dart';
+import '../TestTools/TestTools.dart';
 
 void main()
 {
     TestTools.init();
 
-    group('Block comments', ()
+    group('Block comments on top level', ()
         {
-            group('In function', ()
-                {
-                    test('Addition of 1 level expected', ()
-                        {
-                            const String inputText = 'void f()\n'
-                                '{\n'
-                                '/*START\n'
-                                '    TEXT\n'
-                                'END*/\n'
-                                '    s;\n'
-                                '}\n';
-
-                            const String expectedText = 'void f()\n'
-                                '{\n'
-                                '    /*START\n'
-                                '        TEXT\n'
-                                '    END*/\n'
-                                '    s;\n'
-                                '}\n';
-
-                            final Config config = Config.all();
-                            final Formatter formatter = Formatter(config);
-
-                            final String actualText = formatter.format(inputText);
-
-                            TestTools.expect(actualText, equals(expectedText));
-                            logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
-                        }
-                    );
-
-                    test('No changes expected', ()
-                        {
-                            const String inputText = 'void f()\n'
-                                '{\n'
-                                '    /*START\n'
-                                '        TEXT\n'
-                                '    END*/\n'
-                                '    s;\n'
-                                '}\n';
-                            const String expectedText = inputText;
-
-                            final Config config = Config.all();
-                            final Formatter formatter = Formatter(config);
-
-                            final String actualText = formatter.format(inputText);
-
-                            TestTools.expect(actualText, equals(expectedText));
-                            logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
-                        }
-                    );
-
-                    test('Removal of 1 level expected', ()
-                        {
-                            const String inputText = 'void f()\n'
-                                '{\n'
-                                '        /*START\n'
-                                '            TEXT\n'
-                                '        END*/\n'
-                                '    s;\n'
-                                '}\n';
-
-                            const String expectedText = 'void f()\n'
-                                '{\n'
-                                '    /*START\n'
-                                '        TEXT\n'
-                                '    END*/\n'
-                                '    s;\n'
-                                '}\n';
-
-                            final Config config = Config.all();
-                            final Formatter formatter = Formatter(config);
-
-                            final String actualText = formatter.format(inputText);
-
-                            TestTools.expect(actualText, equals(expectedText));
-                            logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
-                        }
-                    );
-
-                    test('Prevent negative indentation', ()
-                        {
-                            const String inputText = 'void f()\n'
-                                '{\n'
-                                '        /*START\n'
-                                '    TEXT\n'
-                                'END*/\n'
-                                '    s;\n'
-                                '}\n';
-
-                            const String expectedText = 'void f()\n'
-                                '{\n'
-                                '            /*START\n'
-                                '        TEXT\n'
-                                '    END*/\n'
-                                '    s;\n'
-                                '}\n';
-
-                            final Config config = Config.all();
-                            final Formatter formatter = Formatter(config);
-
-                            final String actualText = formatter.format(inputText);
-
-                            TestTools.expect(actualText, equals(expectedText));
-                            logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
-                        }
-                    );
-                }
-            );
-
             group('Comment only', ()
                 {
                     test('No changes expected', ()
@@ -166,49 +57,45 @@ void main()
 
             group('Before statement', ()
                 {
-                    group('Multiline block comment', ()
+                    test('No changes expected', ()
                         {
-                            test('No changes expected', ()
-                                {
-                                    const String inputText =
-                                        '/*START\n'
-                                        '    TEXT\n'
-                                        'END*/\n'
-                                        'var a;\n';
-                                    const String expectedText = inputText;
+                            const String inputText =
+                                '/*START\n'
+                                '    TEXT\n'
+                                'END*/\n'
+                                'var a;\n';
+                            const String expectedText = inputText;
 
-                                    final Config config = Config.all();
-                                    final Formatter formatter = Formatter(config);
+                            final Config config = Config.all();
+                            final Formatter formatter = Formatter(config);
 
-                                    final String actualText = formatter.format(inputText);
+                            final String actualText = formatter.format(inputText);
 
-                                    TestTools.expect(actualText, equals(expectedText));
-                                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
-                                }
-                            );
+                            TestTools.expect(actualText, equals(expectedText));
+                            logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
+                        }
+                    );
 
-                            test('Removal of 1 level expected', ()
-                                {
-                                    const String inputText =
-                                        '    /*START\n'
-                                        '        TEXT\n'
-                                        '    END*/\n'
-                                        '    var a;\n';
-                                    const String expectedText =
-                                        '/*START\n'
-                                        '    TEXT\n'
-                                        'END*/\n'
-                                        'var a;\n';
+                    test('Removal of 1 level expected', ()
+                        {
+                            const String inputText =
+                                '    /*START\n'
+                                '        TEXT\n'
+                                '    END*/\n'
+                                '    var a;\n';
+                            const String expectedText =
+                                '/*START\n'
+                                '    TEXT\n'
+                                'END*/\n'
+                                'var a;\n';
 
-                                    final Config config = Config.all();
-                                    final Formatter formatter = Formatter(config);
+                            final Config config = Config.all();
+                            final Formatter formatter = Formatter(config);
 
-                                    final String actualText = formatter.format(inputText);
+                            final String actualText = formatter.format(inputText);
 
-                                    TestTools.expect(actualText, equals(expectedText));
-                                    logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
-                                }
-                            );
+                            TestTools.expect(actualText, equals(expectedText));
+                            logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                         }
                     );
                 }
@@ -288,8 +175,8 @@ void main()
                                         '    END*/\n';
 
                                     const String expectedText = 'int i=0; /*START\n'
-                                        '    TEXT\n'
-                                        'END*/\n';
+                                        '        TEXT\n'
+                                        '    END*/\n';
 
                                     final Config config = Config.all();
                                     final Formatter formatter = Formatter(config);
@@ -309,9 +196,9 @@ void main()
                                 '    TEXT\n'
                                 'END*/\n';
 
-                            const String expectedText = 'int i=0;     /*START\n'
-                                '    TEXT\n'
-                                'END*/\n';
+                            const String expectedText = 'int i=0; /*START\n'
+                                '        TEXT\n'
+                                '    END*/\n';
 
                             final Config config = Config.all();
                             final Formatter formatter = Formatter(config);

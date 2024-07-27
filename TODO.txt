@@ -21,6 +21,7 @@ TODO
 - No more than maxEmptyLines blank lines at file end.
 - Keep "{}" if it doesn't contain line breaks.
 - Indent "((){});" if contains line breaks.
+- else\nif
 
 DONE (I think)
 ==============
