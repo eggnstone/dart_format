@@ -296,6 +296,7 @@ class LeadingWhitespaceRemover
     {
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('${spacer}removeFromCommentWithLeadingText: ${StringTools.toDisplayString(s)}');
 
-        return '<COMMENT-with-leading-text>$s</COMMENT-with-leading-text>';
+        return s;
+        //return '<COMMENT-with-leading-text>$s</COMMENT-with-leading-text>';
     }
 }

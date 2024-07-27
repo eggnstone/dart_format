@@ -335,18 +335,18 @@ class WebServiceHandler
             request.response.headers.add('X-DartFormat-Result', 'Fail');
             request.response.headers.add('X-DartFormat-Exception', jsonEncode(dartFormatException.toJson()));
         }
-        /*// ignore: avoid_catching_errors
-        on Error catch (e, st)
-        {
-        // necessary?
-        logErrorObject(METHOD_NAME, e, st);
+                /*// ignore: avoid_catching_errors
+                on Error catch (e, st)
+                {
+                // necessary?
+                logErrorObject(METHOD_NAME, e, st);
 
-        final DartFormatException dartFormatException = DartFormatException.error(e.toString());
-        request.response.statusCode = HttpStatus.ok;
-        request.response.headers.contentType = ContentType.text;
-        request.response.headers.add('X-DartFormat-Result', 'Fail');
-        request.response.headers.add('X-DartFormat-Exception', jsonEncode(dartFormatException.toJson()));
-        }*/
+                final DartFormatException dartFormatException = DartFormatException.error(e.toString());
+                request.response.statusCode = HttpStatus.ok;
+                request.response.headers.contentType = ContentType.text;
+                request.response.headers.add('X-DartFormat-Result', 'Fail');
+                request.response.headers.add('X-DartFormat-Exception', jsonEncode(dartFormatException.toJson()));
+                }*/
         finally
         {
             //logDebug('$METHOD_NAME: Calling flushAndClose');

@@ -37,21 +37,21 @@ class StringTools
         return IntTuple(indexInput, indexResult);
     }
 
-    /*static String _removeLeadingWhitespaceFromNonComment(String s)
-    {
-        if (Constants.DEBUG_STRING_TOOLS) logInternal('removeLeadingWhitespaceFromNonComment: ${toDisplayString(s)}');
+        /*static String _removeLeadingWhitespaceFromNonComment(String s)
+        {
+            if (Constants.DEBUG_STRING_TOOLS) logInternal('removeLeadingWhitespaceFromNonComment: ${toDisplayString(s)}');
 
-        return '<NON-COMMENT>$s</NON-COMMENT>';
-    }*/
+            return '<NON-COMMENT>$s</NON-COMMENT>';
+        }*/
 
-    /*static String removeLeadingWhitespaceOld(String s)
-    {
-        if (Constants.DEBUG_STRING_TOOLS) logInternal('removeLeadingWhitespaceOld: ${toDisplayString(s)}');
+        /*static String removeLeadingWhitespaceOld(String s)
+        {
+            if (Constants.DEBUG_STRING_TOOLS) logInternal('removeLeadingWhitespaceOld: ${toDisplayString(s)}');
 
-      return s.contains('//') || s.contains('/ *')
-        ? _removeLeadingWhitespaceWithComments(s)
-        : _removeLeadingWhitespaceWithoutComments(s);
-    }*/
+          return s.contains('//') || s.contains('/ *')
+            ? _removeLeadingWhitespaceWithComments(s)
+            : _removeLeadingWhitespaceWithoutComments(s);
+        }*/
 
     static String shorten50(String s)
     => shorten(s, 50);
@@ -62,7 +62,7 @@ class StringTools
     static String toDisplayString(Object? o, [int maxLength = -1])
     => '"${toSafeString(o, maxLength)}"';
 
-    static String toDisplayStringCutAtEnd(Object? o, [int maxLength = -1])
+    static String toDisplayStringCutAtFront(Object? o, [int maxLength = -1])
     {
         if (o == null)
             return '<null>';
@@ -100,96 +100,95 @@ class StringTools
         return r;
     }
 
-    /*static String _removeLeadingWhitespaceWithComments(String s)
-    {
-        final StringBuffer sb = StringBuffer();
-
-        if (Constants.DEBUG_STRING_TOOLS)
+        /*static String _removeLeadingWhitespaceWithComments(String s)
         {
-            logInternal('removeLeadingWhitespaceWithComments');
-            logInternal('IN:  ${StringTools.toDisplayString(s)}');
-            logInternal('\n-----\n${toDisplayString(s)}\n-----\n$s\n-----');
-        }
+            final StringBuffer sb = StringBuffer();
 
-        String? lastLine;
-        int blockCommentStart;
-        int curPos = 0;
-        while ((blockCommentStart = s.indexOf('/*', curPos)) >= 0)
-        {
-            final String beforeComment = s.substring(curPos, blockCommentStart);
-            if (Constants.DEBUG_STRING_TOOLS) logInfo('beforeComment:   ${toDisplayString(beforeComment)}');
-
-            if (beforeComment.isNotEmpty)
+            if (Constants.DEBUG_STRING_TOOLS)
             {
-                final int lastLineBreakPos = beforeComment.lastIndexOf('\n');
-                if (lastLineBreakPos >= 0)
+                logInternal('removeLeadingWhitespaceWithComments');
+                logInternal('IN:  ${StringTools.toDisplayString(s)}');
+                logInternal('\n-----\n${toDisplayString(s)}\n-----\n$s\n-----');
+            }
+
+            String? lastLine;
+            int blockCommentStart;
+            int curPos = 0;
+            while ((blockCommentStart = s.indexOf('/*', curPos)) >= 0)
+            {
+                final String beforeComment = s.substring(curPos, blockCommentStart);
+                if (Constants.DEBUG_STRING_TOOLS) logInfo('beforeComment:   ${toDisplayString(beforeComment)}');
+
+                if (beforeComment.isNotEmpty)
                 {
-                    final String lastLineA = beforeComment.substring(0, lastLineBreakPos + 1);
-                    if (Constants.DEBUG_STRING_TOOLS) logInfo('lastLine a:      ${toDisplayString(lastLineA)}');
+                    final int lastLineBreakPos = beforeComment.lastIndexOf('\n');
+                    if (lastLineBreakPos >= 0)
+                    {
+                        final String lastLineA = beforeComment.substring(0, lastLineBreakPos + 1);
+                        if (Constants.DEBUG_STRING_TOOLS) logInfo('lastLine a:      ${toDisplayString(lastLineA)}');
 
-                    final String x = _removeLeadingWhitespaceWithoutComments(lastLineA);
-                    if (Constants.DEBUG_STRING_TOOLS) logInfo('x:               ${toDisplayString(x)}');
-                    sb.write(x);
+                        final String x = _removeLeadingWhitespaceWithoutComments(lastLineA);
+                        if (Constants.DEBUG_STRING_TOOLS) logInfo('x:               ${toDisplayString(x)}');
+                        sb.write(x);
 
-                    final String lastLineB = beforeComment.substring(lastLineBreakPos + 1);
-                    if (Constants.DEBUG_STRING_TOOLS) logInfo('lastLine b:      ${toDisplayString(lastLineB)}');
-                    sb.write(lastLineB);
+                        final String lastLineB = beforeComment.substring(lastLineBreakPos + 1);
+                        if (Constants.DEBUG_STRING_TOOLS) logInfo('lastLine b:      ${toDisplayString(lastLineB)}');
+                        sb.write(lastLineB);
 
-                    lastLine = lastLineB;
+                        lastLine = lastLineB;
+                    }
+                    else
+                    {
+                        final String y = _removeLeadingWhitespaceWithoutComments(beforeComment);
+                        if (Constants.DEBUG_STRING_TOOLS) logInfo('y:               ${toDisplayString(y)}');
+                        sb.write(y);
+                    }
                 }
                 else
                 {
-                    final String y = _removeLeadingWhitespaceWithoutComments(beforeComment);
-                    if (Constants.DEBUG_STRING_TOOLS) logInfo('y:               ${toDisplayString(y)}');
-                    sb.write(y);
+                    if (Constants.DEBUG_STRING_TOOLS) logInfo('beforeComment.isEmpty');
                 }
+
+                final int blockCommentEnd = s.indexOf('*/', blockCommentStart);
+                if (blockCommentEnd < 0)
+                    throw Exception('Block comment not closed.');
+
+                final String comment = s.substring(blockCommentStart, blockCommentEnd + 2);
+                if (Constants.DEBUG_STRING_TOOLS) logInfo('comment:         ${toDisplayString(comment)}');
+                final String adjustedComment = _removeLeadingWhitespaceFromComment(comment);
+                if (Constants.DEBUG_STRING_TOOLS) logInfo('adjustedComment: ${toDisplayString(adjustedComment)}');
+                sb.write(adjustedComment);
+
+                curPos = blockCommentEnd + 2;
             }
-            else
-            {
-                if (Constants.DEBUG_STRING_TOOLS) logInfo('beforeComment.isEmpty');
-            }
 
-            final int blockCommentEnd = s.indexOf('*/', blockCommentStart);
-            if (blockCommentEnd < 0)
-                throw Exception('Block comment not closed.');
+            final String rest = s.substring(curPos);
+            if (Constants.DEBUG_STRING_TOOLS) logInfo('rest:            ${toDisplayString(rest)}');
+            if (rest.isNotEmpty)
+                sb.write(rest);
 
-            final String comment = s.substring(blockCommentStart, blockCommentEnd + 2);
-            if (Constants.DEBUG_STRING_TOOLS) logInfo('comment:         ${toDisplayString(comment)}');
-            final String adjustedComment = _removeLeadingWhitespaceFromComment(comment);
-            if (Constants.DEBUG_STRING_TOOLS) logInfo('adjustedComment: ${toDisplayString(adjustedComment)}');
-            sb.write(adjustedComment);
+            final String result = sb.toString();
+            if (Constants.DEBUG_STRING_TOOLS) logInternal('OUT: ${StringTools.toDisplayString(result)}');
+            return result;
+        }*/
 
-            curPos = blockCommentEnd + 2;
-        }
-
-        final String rest = s.substring(curPos);
-        if (Constants.DEBUG_STRING_TOOLS) logInfo('rest:            ${toDisplayString(rest)}');
-        if (rest.isNotEmpty)
-            sb.write(rest);
-
-        final String result = sb.toString();
-        if (Constants.DEBUG_STRING_TOOLS) logInternal('OUT: ${StringTools.toDisplayString(result)}');
-        return result;
-    }*/
-
-    /*static String _removeLeadingWhitespaceFromComment(String s)
-    {
-        if (Constants.DEBUG_STRING_TOOLS)
+        /*static String _removeLeadingWhitespaceFromComment(String s)
         {
-            logInternal('removeLeadingWhitespaceFromComment');
-            logInternal('IN:  ${StringTools.toDisplayString(s)}');
-        }
+            if (Constants.DEBUG_STRING_TOOLS)
+            {
+                logInternal('removeLeadingWhitespaceFromComment');
+                logInternal('IN:  ${StringTools.toDisplayString(s)}');
+            }
 
-        final String result = s.splitMapJoin('\n', onMatch: (Match m) => '${m[0]}                                  ');
+            final String result = s.splitMapJoin('\n', onMatch: (Match m) => '${m[0]}                                  ');
 
-        if (Constants.DEBUG_STRING_TOOLS) logInternal('OUT: ${StringTools.toDisplayString(result)}');
-        return result;
-    }*/
+            if (Constants.DEBUG_STRING_TOOLS) logInternal('OUT: ${StringTools.toDisplayString(result)}');
+            return result;
+        }*/
 
-
-  static int? indexOfOrNull(String s, String pattern, int start)
-  {
+    static int? indexOfOrNull(String s, String pattern, int start)
+    {
         final int index = s.indexOf(pattern, start);
         return index < 0 ? null : index;
-  }
+    }
 }

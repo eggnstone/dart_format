@@ -98,6 +98,8 @@ class Formatter
 
         final String message1;
         final String message2;
+        CharacterLocation? reportLocation;
+
         if (positions == createEmptyIntTuple())
         {
             message1 = 'Internal error: Invalid changes detected but no differences to show.';
@@ -107,11 +109,12 @@ class Formatter
         }
         else
         {
+            reportLocation = lineInfo.getLocation(positions.item1);
             final CharacterLocation location1 = lineInfo.getLocation(positions.item1);
             final CharacterLocation location2 = lineInfo.getLocation(positions.item2);
             message1 = 'Internal error: Invalid changes detected at index ${location1.lineNumber},${location1.columnNumber} / ${location2.lineNumber},${location2.columnNumber}';
             message2 =
-                'Same:   ${StringTools.toDisplayStringCutAtEnd(result.substring(0, positions.item2), Constants.MAX_DEBUG_LENGTH)}\n'
+                'Same:   ${StringTools.toDisplayStringCutAtFront(result.substring(0, positions.item2), Constants.MAX_DEBUG_LENGTH)}\n'
                 'Input:  ${StringTools.toDisplayString(s.substring(positions.item1), Constants.MAX_DEBUG_LENGTH)}\n'
                 'Result: ${StringTools.toDisplayString(result.substring(positions.item2), Constants.MAX_DEBUG_LENGTH)}';
 
@@ -127,13 +130,13 @@ class Formatter
             if (positions2 != createEmptyIntTuple())
             {
                 final String message2a =
-                    'Same:                       ${StringTools.toDisplayStringCutAtEnd(condensedResultWithIgnores.substring(0, positions2.item2), Constants.MAX_DEBUG_LENGTH)}\n'
-                    'condensedInput:             ${StringTools.toDisplayString(condensedInput.substring(positions2.item1), Constants.MAX_DEBUG_LENGTH)}\n'
-                    'condensedResultWithIgnores: ${StringTools.toDisplayString(condensedResultWithIgnores.substring(positions2.item2), Constants.MAX_DEBUG_LENGTH)}';
+                    'Same:                       ${StringTools.toDisplayStringCutAtFront(condensedResultWithIgnores.substring(0, positions2.item2), Constants.MAX_DEBUG_LENGTH)}\n'
+                    'CondensedInput:             ${StringTools.toDisplayString(condensedInput.substring(positions2.item1), Constants.MAX_DEBUG_LENGTH)}\n'
+                    'CondensedResultWithIgnores: ${StringTools.toDisplayString(condensedResultWithIgnores.substring(positions2.item2), Constants.MAX_DEBUG_LENGTH)}';
                 if (Constants.DEBUG_FORMATTER) logInternal('\n$message2a');
             }
         }
 
-        throw DartFormatException.error('$message1|$message2');
+        throw DartFormatException.error('$message1|$message2', reportLocation);
     }
 }

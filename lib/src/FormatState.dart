@@ -347,7 +347,7 @@ class FormatState
                 logInternal('  filler/4:             ${StringTools.toDisplayString(filler)}');
                 logInternal('  lastConsumedPosition: $lastConsumedPosition');
                 logInternal('  offset:               $offset');
-                logInternal('  Current:              ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
+                logInternal('  Current:              ${StringTools.toDisplayStringCutAtFront(getResult(), Constants.MAX_DEBUG_LENGTH)}');
             }
 
             if (!CommentTools.isEmptyOrComments(filler))
@@ -404,7 +404,7 @@ class FormatState
 
         if (!CommentTools.isEmptyOrComments(filler))
         {
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('  Current:                   ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  Current:                   ${StringTools.toDisplayStringCutAtFront(getResult(), Constants.MAX_DEBUG_LENGTH)}');
             logAndThrowErrorWithOffsets('Internal error: Missed some text:', '-', StringTools.toDisplayString(filler, 100), lastConsumedPosition, end, source);
         }
 
