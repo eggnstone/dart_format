@@ -42,7 +42,7 @@ class TextSeparator
 
             if (_isFirst(singleQuotePos, doubleQuotePos, blockCommentStartPos, endOfLineCommentStartPos))
             {
-                final TextInfo info = TextExtractor.extract(s.substring(singleQuotePos!), TextType.String, "'", "'");
+                final TextInfo info = TextExtractor.extract(s.substring(singleQuotePos!), TextType.String, "'", "'", spacer: '$spacer  ');
                 if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
                 result.add(info);
                 currentPos += info.text.length;
@@ -51,7 +51,7 @@ class TextSeparator
 
             if (_isFirst(doubleQuotePos, singleQuotePos, blockCommentStartPos, endOfLineCommentStartPos))
             {
-                final TextInfo info = TextExtractor.extract(s.substring(doubleQuotePos!), TextType.String, '"', '"');
+                final TextInfo info = TextExtractor.extract(s.substring(doubleQuotePos!), TextType.String, '"', '"', spacer: '$spacer  ');
                 if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
                 result.add(info);
                 currentPos += info.text.length;
@@ -60,7 +60,7 @@ class TextSeparator
 
             if (_isFirst(endOfLineCommentStartPos, singleQuotePos, doubleQuotePos, blockCommentStartPos))
             {
-                final TextInfo info = TextExtractor.extract(s.substring(endOfLineCommentStartPos!), TextType.Comment, '//', '\n', forceClosed: false);
+                final TextInfo info = TextExtractor.extract(s.substring(endOfLineCommentStartPos!), TextType.Comment, '//', '\n', forceClosed: false, spacer: '$spacer  ');
                 if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
                 result.add(info);
                 currentPos += info.text.length;
@@ -69,7 +69,7 @@ class TextSeparator
 
             if (_isFirst(blockCommentStartPos, singleQuotePos, doubleQuotePos, endOfLineCommentStartPos))
             {
-                final TextInfo info = TextExtractor.extract(s.substring(blockCommentStartPos!), TextType.Comment, '/*', '*/');
+                final TextInfo info = TextExtractor.extract(s.substring(blockCommentStartPos!), TextType.Comment, '/*', '*/', allowNested: true, spacer: '$spacer  ');
                 if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
                 result.add(info);
                 currentPos += info.text.length;

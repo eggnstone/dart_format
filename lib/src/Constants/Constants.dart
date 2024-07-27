@@ -13,6 +13,7 @@ class Constants
     static const bool DEBUG_I_FORMATTER_TIME = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_LEADING_WHITESPACE_REMOVER = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_STRING_TOOLS = (DEBUG && false) || DEBUG_ALL;
+    static const bool DEBUG_TEXT_EXTRACTOR = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_TEXT_SEPARATOR = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_TODOS = (DEBUG && false) || DEBUG_ALL;
 

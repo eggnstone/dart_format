@@ -12,95 +12,94 @@ void main()
 
     group('Comments', ()
         {
-            /* Unterminated multi-line comment.
-            test('Block comment with block comment start inside', ()
-            {
-                // ignore: prefer_interpolation_to_compose_strings, prefer_adjacent_string_concatenation
-                const String inputText = '/' + '* Comment /' + '* *' + '/';
-                const String expectedText = inputText;
+                        /* Unterminated multi-line comment.
+                        test('Block comment with block comment start inside', ()
+                        {
+                            // ignore: prefer_interpolation_to_compose_strings, prefer_adjacent_string_concatenation
+                            const String inputText = '/' + '* Comment /' + '* *' + '/';
+                            const String expectedText = inputText;
 
-                final String actualText = formatterNone.format(inputText);
+                            final String actualText = formatterNone.format(inputText);
 
-                TestTools.expect(actualText, equals(expectedText));
-            }
-            );*/
+                            TestTools.expect(actualText, equals(expectedText));
+                        }
+                        );*/
 
             test('Block comment start in single-quote string', ()
-            {
-                const String inputText = "String s = '/*';";
-                const String expectedText = inputText;
+                {
+                    const String inputText = "String s = '/*';";
+                    const String expectedText = inputText;
 
-                final String actualText = formatterNone.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
-                TestTools.expect(actualText, equals(expectedText));
-            }
+                    TestTools.expect(actualText, equals(expectedText));
+                }
             );
 
             test('Block comment start in double-quote string', ()
-            {
-                const String inputText = 'String s = "/*";';
-                const String expectedText = inputText;
+                {
+                    const String inputText = 'String s = "/*";';
+                    const String expectedText = inputText;
 
-                final String actualText = formatterNone.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
-                TestTools.expect(actualText, equals(expectedText));
-            }
+                    TestTools.expect(actualText, equals(expectedText));
+                }
             );
 
-
             test('EndOfLine comment in single-quote string', ()
-            {
-                const String inputText = "String s = '//';";
-                const String expectedText = inputText;
+                {
+                    const String inputText = "String s = '//';";
+                    const String expectedText = inputText;
 
-                final String actualText = formatterNone.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
-                TestTools.expect(actualText, equals(expectedText));
-            }
+                    TestTools.expect(actualText, equals(expectedText));
+                }
             );
 
             test('EndOfLine comment in double-quote string', ()
-            {
-                const String inputText = 'String s = "//";';
-                const String expectedText = inputText;
+                {
+                    const String inputText = 'String s = "//";';
+                    const String expectedText = inputText;
 
-                final String actualText = formatterNone.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
-                TestTools.expect(actualText, equals(expectedText));
-            }
+                    TestTools.expect(actualText, equals(expectedText));
+                }
             );
 
             test('Block comment with block comment inside', ()
-            {
-                const String inputText = '/* Comment /* */ */';
-                const String expectedText = inputText;
+                {
+                    const String inputText = '/* Comment /* */ */';
+                    const String expectedText = inputText;
 
-                final String actualText = formatterNone.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
-                TestTools.expect(actualText, equals(expectedText));
-            }
+                    TestTools.expect(actualText, equals(expectedText));
+                }
             );
 
             test('Block comment with EndOfLine comment inside', ()
-            {
-                const String inputText = '/* Comment // */';
-                const String expectedText = inputText;
+                {
+                    const String inputText = '/* Comment // */';
+                    const String expectedText = inputText;
 
-                final String actualText = formatterNone.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
-                TestTools.expect(actualText, equals(expectedText));
-            }
+                    TestTools.expect(actualText, equals(expectedText));
+                }
             );
 
             test('EndOfLine comment with Block comment start inside', ()
-            {
-                const String inputText = '// /* Comment';
-                const String expectedText = inputText;
+                {
+                    const String inputText = '// /* Comment';
+                    const String expectedText = inputText;
 
-                final String actualText = formatterNone.format(inputText);
+                    final String actualText = formatterNone.format(inputText);
 
-                TestTools.expect(actualText, equals(expectedText));
-            }
+                    TestTools.expect(actualText, equals(expectedText));
+                }
             );
 
             test('Normal comments and DocComments mixed', ()

@@ -566,7 +566,7 @@ class FormatState
         if (adjustedCommentsOffset < commentsEnd)
             copyText(adjustedCommentsOffset, commentsEnd, fullSource);
         else
-            logWarning('Comments not consumed: adjustedCommentsOffset < commentsEnd');
+            logWarning('Comments not consumed: adjustedCommentsOffset ($adjustedCommentsOffset) < commentsEnd ($commentsEnd): ${StringTools.toDisplayString(token)}');
     }
 
     void _copyTokenWithoutComments(Token? token, String source)
@@ -612,7 +612,7 @@ class FormatState
         if (adjustedCommentTokenEnd < token.end)
             copyText(adjustedCommentTokenEnd, token.end, fullSource);
         else
-            logWarning('Comments not consumed: adjustedCommentTokenEnd < token.end');
+            logWarning('Comments not consumed: adjustedCommentTokenEnd ($adjustedCommentTokenEnd) < token.end (${token.end}): ${StringTools.toDisplayString(token)}');
     }
 
     String getLastText()

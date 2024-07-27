@@ -11,7 +11,7 @@ class CommentInfo with _$CommentInfo
         String? errorMessage,
         @Default(false) bool hasError,
         @Default(false) bool isComment,
-        @Default(false) bool isEmpty,
+        @Default(false) bool isEmpty
         //@Default(false) bool isEndOfLineComment,
     }) = _CommentInfo;
 

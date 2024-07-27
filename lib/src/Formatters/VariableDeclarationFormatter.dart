@@ -32,8 +32,11 @@ class VariableDeclarationFormatter extends IFormatter
         {
             final String textWithPossibleLineBreak = formatState.getText(node.offset, node.initializer!.offset);
             pushLevel = textWithPossibleLineBreak.contains('\n');
-            log('textWithPossibleLineBreak:            ${StringTools.toDisplayString(textWithPossibleLineBreak)}', 0);
+            if (Constants.DEBUG_I_FORMATTER)
+                {
+                log('textWithPossibleLineBreak:            ${StringTools.toDisplayString(textWithPossibleLineBreak)}', 0);
             log('pushLevel:                            $pushLevel', 0);
+        }
         }
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
@@ -48,15 +51,17 @@ class VariableDeclarationFormatter extends IFormatter
         {
             final String textWithPossibleLineBreakEquals = formatState.getText(node.equals!.offset, node.initializer!.offset);
             final bool pushLevelEquals = textWithPossibleLineBreakEquals.contains('\n');
-            log('textWithPossibleLineBreakEquals:      ${StringTools.toDisplayString(textWithPossibleLineBreakEquals)}', 0);
-            log('pushLevelEquals:                      $pushLevelEquals', 0);
             final String textWithPossibleLineBreakInitializer = formatState.getText(node.initializer!.offset, node.initializer!.end);
             final bool pushLevelInitializer = textWithPossibleLineBreakInitializer.contains('\n');
-            log('textWithPossibleLineBreakInitializer: ${StringTools.toDisplayString(textWithPossibleLineBreakInitializer)}', 0);
-            log('pushLevelInitializer:                 $pushLevelInitializer', 0);
-
             final bool combinedPushLevel = !pushLevelEquals && pushLevelInitializer;
-            log('combinedPushLevel:                    $combinedPushLevel', 0);
+
+            if (Constants.DEBUG_I_FORMATTER) {
+                log('textWithPossibleLineBreakEquals:      ${StringTools.toDisplayString(textWithPossibleLineBreakEquals)}', 0);
+                log('pushLevelEquals:                      $pushLevelEquals', 0);
+                log('textWithPossibleLineBreakInitializer: ${StringTools.toDisplayString(textWithPossibleLineBreakInitializer)}', 0);
+                log('pushLevelInitializer:                 $pushLevelInitializer', 0);
+                log('combinedPushLevel:                    $combinedPushLevel', 0);
+            }
 
             if (combinedPushLevel)
                 formatState.pushLevel('$methodName/node.initializer/before');

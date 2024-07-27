@@ -324,6 +324,43 @@ void main()
             );
         }
     );
+
+    group('Nested', ()
+    {
+            test('2 layers', ()
+            {
+                const String inputText = '/*/**/*/\n';
+                const String expectedText = inputText;
+
+                final Config config = Config.all();
+                final Formatter formatter = Formatter(config);
+
+                final String actualText = formatter.format(inputText);
+
+                TestTools.expect(actualText, equals(expectedText));
+                logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
+            }
+            );
+
+            test('2 layers with string-start', ()
+            {
+                const String inputText = "/*/**/'*/\n";
+                const String expectedText = inputText;
+
+                final Config config = Config.all();
+                final Formatter formatter = Formatter(config);
+
+                final String actualText = formatter.format(inputText);
+
+                TestTools.expect(actualText, equals(expectedText));
+                logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
+            }
+            );
+
+    }
+    );
+
+
         }
     );
 }
