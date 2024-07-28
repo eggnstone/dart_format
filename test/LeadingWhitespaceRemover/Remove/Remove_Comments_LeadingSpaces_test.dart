@@ -56,10 +56,10 @@ void main()
             test('Multiline block comment, leading spaces in each line', ()
                 {
                     const String inputText =
-                        ' /* Comment1\n'
-                        ' Comment2 */';
+                        '  /* Comment1\n'
+                        '  Comment2 */';
                     const String expectedText =
-                        ' /* Comment1\n'
+                        '  /* Comment1\n'
                         'Comment2 */';
 
                     final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
@@ -71,8 +71,8 @@ void main()
             test('Multiline block comment, leading spaces in each line, remove leading spaces', ()
                 {
                     const String inputText =
-                        ' /* Comment1\n'
-                        ' Comment2 */';
+                        '  /* Comment1\n'
+                        '  Comment2 */';
                     const String expectedText =
                         '/* Comment1\n'
                         'Comment2 */';

@@ -27,13 +27,13 @@ class LeadingWhitespaceRemover
 
             if (part.type == TextType.Comment)
             {
-                final String adjustedComment = _removeFromComment(currentLineSoFar, part.text, '$spacer      ');
+                final String adjustedComment = removeFromComment(currentLineSoFar, part.text, '$spacer    ');
                 if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer    Adding comment:  ${StringTools.toDisplayString(adjustedComment)}');
                 sb.write(adjustedComment);
             }
             else
             {
-                final String adjustedNonComment = _removeFromNonComment(part.text, '$spacer    ');
+                final String adjustedNonComment = removeFromNonComment(part.text, '$spacer    ');
                 if (removeLeadingSpaces && sb.isEmpty && adjustedNonComment.replaceAll(' ', '').isEmpty)
                 {
                     if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer    Skipping leading spaces: ${StringTools.toDisplayString(adjustedNonComment)}');
@@ -64,7 +64,7 @@ class LeadingWhitespaceRemover
         return result;
     }
 
-    static String _removeFromNonComment(String s, String spacer)
+    static String removeFromNonComment(String s, String spacer)
     {
         final StringBuffer sb = StringBuffer();
 
@@ -96,13 +96,13 @@ class LeadingWhitespaceRemover
         return result;
     }
 
-    static String _removeFromComment(String? currentLineSoFar, String s, String spacer)
+    // TODO: sort
+    static String removeFromComment(String? currentLineSoFar, String s, String spacer)
     {
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
         {
-            logInternal('${spacer}removeFromComment()');
-            logInternal('$spacer  currentLineSoFar: ${StringTools.toDisplayString(currentLineSoFar)}');
-            logInternal('$spacer  s:                ${StringTools.toDisplayString(s)}');
+            logInternal('${spacer}removeFromComment(currentLineSoFar: ${StringTools.toDisplayString(currentLineSoFar)})');
+            logInternal('$spacer  IN:  ${StringTools.toDisplayString(s)}');
         }
 
         final List<String> lines = s.split('\n');
@@ -113,8 +113,21 @@ class LeadingWhitespaceRemover
             return result;
         }
 
+        /*
         final int currentLineSoFarIndentation = currentLineSoFar == null ? 0 : currentLineSoFar.length - currentLineSoFar.trimLeft().length;
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  currentLineSoFarIndentation: $currentLineSoFarIndentation');
+        */
+        int currentLineSoFarIndentation = 0;
+        if (currentLineSoFar != null)
+        {
+            final int lastBlockCommentEndPos = currentLineSoFar.lastIndexOf('*''/');
+            if (lastBlockCommentEndPos == -1)
+                currentLineSoFarIndentation = currentLineSoFar.length - currentLineSoFar.trimLeft().length;
+            else
+                currentLineSoFarIndentation = 0;//lastBlockCommentEndPos + 2;
+
+            if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  currentLineSoFarIndentation: $currentLineSoFarIndentation');
+        }
 
         int minIndentation = currentLineSoFarIndentation;
         for (int i = 1; i < lines.length; i++)
@@ -134,29 +147,33 @@ class LeadingWhitespaceRemover
 
         if (minIndentation < currentLineSoFarIndentation)
         {
-            final int newIndentation = currentLineSoFarIndentation - minIndentation;
-            sb.write(' ' * newIndentation);
+            final int line0Indentation = currentLineSoFarIndentation - minIndentation;
+            final String line0IndentationText = ' ' * line0Indentation;
+            sb.write(line0IndentationText);
+            if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  line0 indent:   ${StringTools.padIntLeft(line0Indentation, 2)} for line: ${StringTools.toDisplayString(lines[0])}');
         }
 
+        //if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  line0:                       ${StringTools.toDisplayString(lines[0])}');
+        //if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  line0.trimLeft():            ${StringTools.toDisplayString(lines[0].trimLeft())}');
         sb.write(lines[0].trimLeft());
 
         for (int i = 1; i < lines.length; i++)
         {
             final String line = lines[i];
             final int indentation = line.length - line.trimLeft().length;
-            if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  Current indentation:  ${StringTools.padIntLeft(indentation, 2)} for line: ${StringTools.toDisplayString(line)}');
+            if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  Current indent: ${StringTools.padIntLeft(indentation, 2)} for line: ${StringTools.toDisplayString(line)}');
 
             final int newIndentation = indentation - minIndentation;
             if (newIndentation <= 0)
             {
-                if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  Negative indentation: ${StringTools.padIntLeft(newIndentation, 2)} for line: ${StringTools.toDisplayString(line)}');
+                if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  Neg. indent:    ${StringTools.padIntLeft(newIndentation, 2)} for line: ${StringTools.toDisplayString(line)}');
                 sb.write('\n');
                 sb.write(line.trimLeft());
                 continue;
             }
 
             final String newIndentationText = ' ' * newIndentation;
-            if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  New indentation:      ${StringTools.padIntLeft(newIndentation, 2)} for line: ${StringTools.toDisplayString(line)}');
+            if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  New indent:     ${StringTools.padIntLeft(newIndentation, 2)} for line: ${StringTools.toDisplayString(line)}');
 
             sb.write('\n');
             sb.write(newIndentationText);
@@ -164,7 +181,7 @@ class LeadingWhitespaceRemover
         }
 
         final String result = sb.toString();
-        if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  OUT:     ${StringTools.toDisplayString(result)}');
+        if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  OUT: ${StringTools.toDisplayString(result)}');
         return result;
     }
 }

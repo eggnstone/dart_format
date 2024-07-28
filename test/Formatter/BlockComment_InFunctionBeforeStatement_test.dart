@@ -15,7 +15,8 @@ void main()
         {
             test('Addition of 1 level expected', ()
                 {
-                    const String inputText = 'void f()\n'
+                    const String inputText =
+                        'void f()\n'
                         '{\n'
                         '/*START\n'
                         '    TEXT\n'
@@ -39,7 +40,8 @@ void main()
 
             test('No changes expected', ()
                 {
-                    const String inputText = 'void f()\n'
+                    const String inputText =
+                        'void f()\n'
                         '{\n'
                         '    /*START\n'
                         '        TEXT\n'
@@ -57,7 +59,8 @@ void main()
 
             test('Removal of 1 level expected', ()
                 {
-                    const String inputText = 'void f()\n'
+                    const String inputText =
+                        'void f()\n'
                         '{\n'
                         '        /*START\n'
                         '            TEXT\n'
@@ -81,7 +84,8 @@ void main()
 
             test('Prevent negative indentation', ()
                 {
-                    const String inputText = 'void f()\n'
+                    const String inputText =
+                        'void f()\n'
                         '{\n'
                         '        /*START\n'
                         '    TEXT\n'

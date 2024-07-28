@@ -282,7 +282,8 @@ void main()
                 {
                     test('Not indented', ()
                         {
-                            const String inputText = '/*\n'
+                            const String inputText =
+                                '/*\n'
                                 '*//*\n'
                                 '*/\n';
                             const String expectedText = inputText;
@@ -295,7 +296,8 @@ void main()
 
                     test('Start indented', ()
                         {
-                            const String inputText = '    /*\n'
+                            const String inputText =
+                                '    /*\n'
                                 '*//*\n'
                                 '*/\n';
                             const String expectedText = inputText;
@@ -308,7 +310,8 @@ void main()
 
                     test('Middle indented', ()
                         {
-                            const String inputText = '/*\n'
+                            const String inputText =
+                                '/*\n'
                                 '    *//*\n'
                                 '*/\n';
                             const String expectedText = inputText;
@@ -321,7 +324,8 @@ void main()
 
                     test('End indented', ()
                         {
-                            const String inputText = '/*\n'
+                            const String inputText =
+                                '/*\n'
                                 '*//*\n'
                                 '    */\n';
                             const String expectedText = inputText;
@@ -334,11 +338,13 @@ void main()
 
                     test('Start and middle indented', ()
                         {
-                            const String inputText = '    /*\n'
+                            const String inputText =
+                                '    /*\n'
                                 '    *//*\n'
                                 '*/\n';
-                            const String expectedText = '/*\n'
-                                '*/    /*\n'
+                            const String expectedText =
+                                '/*\n'
+                                '*//*\n'
                                 '*/\n';
 
                             final String actualText = formatterAll.format(inputText);
@@ -349,7 +355,8 @@ void main()
 
                     test('Start and end indented', ()
                         {
-                            const String inputText = '    /*\n'
+                            const String inputText =
+                                '    /*\n'
                                 '*//*\n'
                                 '    */\n';
                             const String expectedText = inputText;
@@ -362,7 +369,8 @@ void main()
 
                     test('Middle and end indented', ()
                         {
-                            const String inputText = '/*\n'
+                            const String inputText =
+                                '/*\n'
                                 '    *//*\n'
                                 '    */\n';
                             const String expectedText = inputText;
