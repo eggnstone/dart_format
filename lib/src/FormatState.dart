@@ -685,28 +685,28 @@ class FormatState
         return sb.toString();
     }
 
-    /*String? getResultAfterLast(String searchText)
+    String getResultAfterLast(String searchText)
     {
         for (int i = _textBuffers.length - 1; i >= 0; i--)
         {
             final String text = _textBuffers[i].toString();
             final int lastPos = text.lastIndexOf(searchText);
             if (lastPos == -1)
-                  continue;
+                continue;
 
             final StringBuffer sb = StringBuffer();
             sb.write(text.substring(lastPos + searchText.length));
             for (int j = i + 1; j < _textBuffers.length; j++)
             {
-                sb.write('LEVEL');
+                sb.write('<New-Level/>');
                 sb.write(_textBuffers[j].toString());
             }
 
             return sb.toString();
         }
 
-        return null;
-    }*/
+        return '';
+    }
 
     String getText(int offset, int end)
     {
@@ -864,24 +864,22 @@ class FormatState
 
     String _getCurrentLineSoFar(int offset)
     {
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('getCurrentLineSoFar($offset)');
+        if (Constants.DEBUG_FORMAT_STATE)
+        {
+            logInternal('getCurrentLineSoFar($offset)');
+            final String x = getResultAfterLast('\n');
+            if (x.isEmpty)
+                logDebug('  ResultAfterLastLineBreak: ${StringTools.toDisplayString(x)}');
+            else
+                logWarning('  ResultAfterLastLineBreak: ${StringTools.toDisplayString(x)}');
+            //return x;
+        }
 
         if (offset == 0)
         {
             if (Constants.DEBUG_FORMAT_STATE) logInternal("  Offset==0 => returning ''");
             return '';
         }
-
-        /*
-        String c = _parseResult.content[offset];
-        logInternal('  c: ${StringTools.toDisplayString(c)}');
-
-        if (c == '\n')
-        {
-            logInternal('  Current line start with a line break => returning null');
-            return null;
-        }
-        */
 
         int currentOffset = offset - 1;
         while (currentOffset >= 0)
@@ -898,6 +896,9 @@ class FormatState
 
                 if (Constants.DEBUG_FORMAT_STATE) logInternal('  Line break found => Returning: ${StringTools.toDisplayString(result)}');
                 return result;
+                final String result2 = result.trimLeft();
+                if (Constants.DEBUG_FORMAT_STATE) logInternal('  Line break found => Returning: ${StringTools.toDisplayString(result2)}');
+                return result2;
             }
 
             currentOffset--;
@@ -906,5 +907,8 @@ class FormatState
         final String result = _parseResult.content.substring(0, offset);
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  No line break found => Returning all: ${StringTools.toDisplayString(result)}');
         return result;
+        final String result2 = result.trimLeft();
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  No line break found => Returning all: ${StringTools.toDisplayString(result2)}');
+        return result2;
     }
 }

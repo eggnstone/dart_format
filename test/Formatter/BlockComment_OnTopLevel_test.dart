@@ -218,7 +218,7 @@ void main()
                             const String inputText = '    int i=0; /*START\n'
                                 '    TEXT\n'
                                 'END*/\n';
-                            const String expectedText = 'int i=0;     /*START\n'
+                            const String expectedText = 'int i=0; /*START\n'
                                 '    TEXT\n'
                                 'END*/\n';
 
@@ -235,7 +235,7 @@ void main()
                                 '    TEXT\n'
                                 'END*/\n'
                                 'var a;\n';
-                            const String expectedText = 'int i=0;     /*START\n'
+                            const String expectedText = 'int i=0; /*START\n'
                                 '    TEXT\n'
                                 'END*/\n'
                                 'var a;\n';
@@ -278,29 +278,54 @@ void main()
                 }
             );
 
+            group('TODO: proper name', ()
+            {
+
+
+
+
+            test('Not indented, between statements', ()
+            {
+                const String inputText =
+                    'var a;/*\n'
+                    '*/var b;\n';
+                const String expectedText = inputText;
+
+                final String actualText = formatterAll.format(inputText);
+
+                TestTools.expect(actualText, equals(expectedText));
+            }
+            );
+
+            test('Not indented, between statements, back-to-back', ()
+            {
+                const String inputText =
+                    'var a;/*\n'
+                    '*//*\n'
+                    '*/var b;\n';
+                const String expectedText = inputText;
+
+                final String actualText = formatterAll.format(inputText);
+
+                TestTools.expect(actualText, equals(expectedText));
+            }
+            );
+            }
+            );
+
+
             group('Back-to-back', ()
                 {
-                    test('Not indented', ()
-                        {
-                            const String inputText =
-                                '/*\n'
-                                '*//*\n'
-                                '*/\n';
-                            const String expectedText = inputText;
-
-                            final String actualText = formatterAll.format(inputText);
-
-                            TestTools.expect(actualText, equals(expectedText));
-                        }
-                    );
-
                     test('Start indented', ()
                         {
                             const String inputText =
                                 '    /*\n'
                                 '*//*\n'
                                 '*/\n';
-                            const String expectedText = inputText;
+                            const String expectedText =
+                                '/*\n'
+                                '*//*\n'
+                                '*/\n';
 
                             final String actualText = formatterAll.format(inputText);
 
@@ -359,7 +384,10 @@ void main()
                                 '    /*\n'
                                 '*//*\n'
                                 '    */\n';
-                            const String expectedText = inputText;
+                            const String expectedText =
+                                '/*\n'
+                                '*//*\n'
+                                '    */\n';
 
                             final String actualText = formatterAll.format(inputText);
 
@@ -373,7 +401,10 @@ void main()
                                 '/*\n'
                                 '    *//*\n'
                                 '    */\n';
-                            const String expectedText = inputText;
+                            const String expectedText =
+                                '/*\n'
+                                '    *//*\n'
+                                '*/\n';
 
                             final String actualText = formatterAll.format(inputText);
 

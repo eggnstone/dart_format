@@ -87,11 +87,14 @@ class LeadingWhitespaceRemover
         int currentLineSoFarIndentation = 0;
         if (currentLineSoFar != null)
         {
-            final int lastBlockCommentEndPos = currentLineSoFar.lastIndexOf('*''/');
+            currentLineSoFarIndentation = currentLineSoFar.length - currentLineSoFar.trimLeft().length;
+            /*
+            final int lastBlockCommentEndPos = currentLineSoFar.lastIndexOf('*''/xxx');
             if (lastBlockCommentEndPos == -1)
                 currentLineSoFarIndentation = currentLineSoFar.length - currentLineSoFar.trimLeft().length;
             else
                 currentLineSoFarIndentation = 0;//lastBlockCommentEndPos + 2;
+            */
 
             if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  currentLineSoFarIndentation: $currentLineSoFarIndentation');
         }
@@ -116,13 +119,16 @@ class LeadingWhitespaceRemover
         {
             final int line0Indentation = currentLineSoFarIndentation - minIndentation;
             final String line0IndentationText = ' ' * line0Indentation;
-            sb.write(line0IndentationText);
+            //sb.write(line0IndentationText);
             if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  line0 indent:   ${StringTools.padIntLeft(line0Indentation, 2)} for line: ${StringTools.toDisplayString(lines[0])}');
         }
 
-        //if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  line0:                       ${StringTools.toDisplayString(lines[0])}');
-        //if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  line0.trimLeft():            ${StringTools.toDisplayString(lines[0].trimLeft())}');
-        sb.write(lines[0].trimLeft());
+        if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  line0:                       ${StringTools.toDisplayString(lines[0])}');
+        if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  line0.trimLeft():            ${StringTools.toDisplayString(lines[0].trimLeft())}');
+        //if (currentLineSoFar != null && currentLineSoFar.trim().isNotEmpty)
+        //sb.write(' ');
+        //sb.write(lines[0].trimLeft());
+        sb.write(lines[0]);
 
         for (int i = 1; i < lines.length; i++)
         {
