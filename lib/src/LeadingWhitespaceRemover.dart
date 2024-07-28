@@ -64,39 +64,6 @@ class LeadingWhitespaceRemover
         return result;
     }
 
-    static String removeFromNonComment(String s, String spacer)
-    {
-        final StringBuffer sb = StringBuffer();
-
-        if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
-        {
-            logInternal('${spacer}removeFromNonComment()');
-            logInternal('$spacer  IN:  ${StringTools.toDisplayString(s)}');
-        }
-
-        final List<String> lines = s.split('\n');
-        for (int i = 0; i < lines.length; i++)
-        {
-            final String line = lines[i];
-            if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer    #${StringTools.padIntLeft0(i, 2)}: ${StringTools.toDisplayString(line)}');
-
-            if (i == 0)
-            {
-                sb.write(line);
-            }
-            else
-            {
-                sb.write('\n');
-                sb.write(line.trimLeft());
-            }
-        }
-
-        final String result = sb.toString();
-        if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  OUT: ${StringTools.toDisplayString(result)}');
-        return result;
-    }
-
-    // TODO: sort
     static String removeFromComment(String? currentLineSoFar, String s, String spacer)
     {
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
@@ -178,6 +145,38 @@ class LeadingWhitespaceRemover
             sb.write('\n');
             sb.write(newIndentationText);
             sb.write(line.trimLeft());
+        }
+
+        final String result = sb.toString();
+        if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  OUT: ${StringTools.toDisplayString(result)}');
+        return result;
+    }
+
+    static String removeFromNonComment(String s, String spacer)
+    {
+        final StringBuffer sb = StringBuffer();
+
+        if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
+        {
+            logInternal('${spacer}removeFromNonComment()');
+            logInternal('$spacer  IN:  ${StringTools.toDisplayString(s)}');
+        }
+
+        final List<String> lines = s.split('\n');
+        for (int i = 0; i < lines.length; i++)
+        {
+            final String line = lines[i];
+            if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer    #${StringTools.padIntLeft0(i, 2)}: ${StringTools.toDisplayString(line)}');
+
+            if (i == 0)
+            {
+                sb.write(line);
+            }
+            else
+            {
+                sb.write('\n');
+                sb.write(line.trimLeft());
+            }
         }
 
         final String result = sb.toString();
