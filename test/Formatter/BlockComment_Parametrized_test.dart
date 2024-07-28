@@ -21,7 +21,11 @@ void main()
         '1 No indent': const Triple<String, String, String>('', '', ''),
         '2 Start indented': const Triple<String, String, String>(INDENT, '', ''),
         '3 Middle indented': const Triple<String, String, String>('', INDENT, ''),
-        '4 End indented': const Triple<String, String, String>('', '', INDENT)
+        '4 End indented': const Triple<String, String, String>('', '', INDENT),
+        '5 Start and Middle indented': const Triple<String, String, String>(INDENT, INDENT, ''),
+        '6 Start and End indented': const Triple<String, String, String>(INDENT, '', INDENT),
+        '7 Middle and End indented': const Triple<String, String, String>('', INDENT, INDENT),
+        '8 Middle-1 and End-2 indented': const Triple<String, String, String>('', INDENT, INDENT + INDENT),
     };
 
     final Map<String, Triple<String, String, String>> contexts = <String, Triple<String, String, String>>

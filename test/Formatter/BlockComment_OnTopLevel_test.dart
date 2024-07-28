@@ -279,40 +279,36 @@ void main()
             );
 
             group('TODO: proper name', ()
-            {
+                {
 
+                    test('Not indented, between statements', ()
+                        {
+                            const String inputText =
+                                'var a;/*\n'
+                                '*/var b;\n';
+                            const String expectedText = inputText;
 
+                            final String actualText = formatterAll.format(inputText);
 
+                            TestTools.expect(actualText, equals(expectedText));
+                        }
+                    );
 
-            test('Not indented, between statements', ()
-            {
-                const String inputText =
-                    'var a;/*\n'
-                    '*/var b;\n';
-                const String expectedText = inputText;
+                    test('Not indented, between statements, back-to-back', ()
+                        {
+                            const String inputText =
+                                'var a;/*\n'
+                                '*//*\n'
+                                '*/var b;\n';
+                            const String expectedText = inputText;
 
-                final String actualText = formatterAll.format(inputText);
+                            final String actualText = formatterAll.format(inputText);
 
-                TestTools.expect(actualText, equals(expectedText));
-            }
+                            TestTools.expect(actualText, equals(expectedText));
+                        }
+                    );
+                }
             );
-
-            test('Not indented, between statements, back-to-back', ()
-            {
-                const String inputText =
-                    'var a;/*\n'
-                    '*//*\n'
-                    '*/var b;\n';
-                const String expectedText = inputText;
-
-                final String actualText = formatterAll.format(inputText);
-
-                TestTools.expect(actualText, equals(expectedText));
-            }
-            );
-            }
-            );
-
 
             group('Back-to-back', ()
                 {
