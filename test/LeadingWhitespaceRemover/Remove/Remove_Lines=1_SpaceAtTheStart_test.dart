@@ -1,22 +1,21 @@
 import 'package:dart_format/src/LeadingWhitespaceRemover.dart';
 import 'package:test/test.dart';
 
-import '../TestTools/TestTools.dart';
+import '../../TestTools/TestTools.dart';
 
 void main()
 {
     TestTools.init();
 
-    group('Remove, 3 lines', ()
+    group('Remove, 1 line, space at the start', ()
         {
-            const String baseText = 'Line 1\nLine 2\nLine 3';
-            const String baseInput = baseText;
-            const String baseExpected = baseInput;
+            const String baseInput = ' Line 1';
+            const String baseExpected = 'Line 1';
 
             test('No newlines', ()
                 {
                     const String inputText = baseInput;
-                    const String expectedText = baseExpected;
+                    const String expectedText = ' $baseExpected';
 
                     final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
 
@@ -27,7 +26,7 @@ void main()
             test('Newline at the end', ()
                 {
                     const String inputText = '$baseInput\n';
-                    const String expectedText = '$baseExpected\n';
+                    const String expectedText = ' $baseExpected\n';
 
                     final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
 

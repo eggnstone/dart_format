@@ -1,17 +1,17 @@
 import 'package:dart_format/src/LeadingWhitespaceRemover.dart';
 import 'package:test/test.dart';
 
-import '../TestTools/TestTools.dart';
+import '../../TestTools/TestTools.dart';
 
 void main()
 {
     TestTools.init();
 
-    group('Remove, comments in strings', ()
+    group('Remove, strings', ()
         {
-            test('"/*"', ()
+            test(r"String s='\'';", ()
                 {
-                    const String inputText = 'String s="/*";';
+                    const String inputText = r"String s='\'';";
                     const String expectedText = inputText;
 
                     final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
@@ -20,9 +20,9 @@ void main()
                 }
             );
 
-            test("'/*'", ()
+            test(r'String s="\"";', ()
                 {
-                    const String inputText = "String s='/*';";
+                    const String inputText = r'String s="\"";';
                     const String expectedText = inputText;
 
                     final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
@@ -31,9 +31,9 @@ void main()
                 }
             );
 
-            test("'//'", ()
+            test(r"r'\', raw mode", ()
                 {
-                    const String inputText = "String s='//';";
+                    const String inputText = r"r'\';";
                     const String expectedText = inputText;
 
                     final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);

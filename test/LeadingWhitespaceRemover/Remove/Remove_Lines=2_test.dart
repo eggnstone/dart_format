@@ -1,15 +1,15 @@
 import 'package:dart_format/src/LeadingWhitespaceRemover.dart';
 import 'package:test/test.dart';
 
-import '../TestTools/TestTools.dart';
+import '../../TestTools/TestTools.dart';
 
 void main()
 {
     TestTools.init();
 
-    group('Remove, 1 line', ()
+    group('Remove, 2 lines', ()
         {
-            const String baseText = 'Line 1';
+            const String baseText = 'Line 1\nLine 2';
             const String baseInput = baseText;
             const String baseExpected = baseInput;
 
