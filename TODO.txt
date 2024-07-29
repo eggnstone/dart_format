@@ -22,7 +22,6 @@ TODO
 - Keep "{}" if it doesn't contain line breaks.
 - Indent "((){});" if contains line breaks.
 - else\nif
-- Important: Undetected change from "€" to "?". Maybe change of encoding? Is this the cause for the problem undetectable changes, too?
 
 DONE (I think)
 ==============
@@ -33,3 +32,4 @@ DONE (I think)
 - Don't add line break between "}" and ";"
 - Don't add line break between "}" and ","
 - Indent assignments when multiline
+- Important: Undetected change from "€" to "?". Maybe change of encoding? Is this the cause for the problem undetectable changes, too?

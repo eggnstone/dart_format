@@ -221,7 +221,7 @@ class WebServiceHandler
     Future<void> _handlePostFormat(HttpRequest request)
     async
     {
-        const String METHOD_NAME = '$CLASS_NAME._handlePostFormat';
+        const String METHOD_NAME = '$CLASS_NAME.handlePostFormat';
         //logDebug('$METHOD_NAME: Request: ${request.contentLength}');
 
         try
@@ -300,7 +300,7 @@ class WebServiceHandler
                 throw DartFormatException.error('Part named "Text" is empty.');
 
             //logDebug('configText: ${StringTools.toDisplayString(configText)}');
-            //logDebug('text: ${StringTools.toDisplayString(text)}');
+            //logDebug('text: ${StringTools.toDisplayString(text, Constants.MAX_DEBUG_LENGTH)}');
 
             final Config config = configText.isEmpty ? Config.all() : Config.fromJsonText(configText);
             final Formatter formatter = Formatter(config);
@@ -354,7 +354,7 @@ class WebServiceHandler
     Future<void> _handleRequest(HttpRequest request, {Function()? onQuit})
     async
     {
-        const String METHOD_NAME = '$CLASS_NAME._handleRequest';
+        const String METHOD_NAME = '$CLASS_NAME.handleRequest';
         final DateTime startTime = DateTime.now();
 
         final int requestCount = ++_requestCount;
@@ -425,7 +425,7 @@ class WebServiceHandler
 
     void _handleServerError(Object error, StackTrace stackTrace)
     {
-        logErrorObject('WebServiceHandler._handleServerError', error, stackTrace);
+        logErrorObject('$CLASS_NAME.handleServerError', error, stackTrace);
     }
 
     String _getHtmlStart(String s)
