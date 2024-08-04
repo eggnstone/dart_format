@@ -38,9 +38,13 @@ class LeadingWhitespaceRemover
             if (part.type == TextType.Comment)
             {
                 final String resultSoFar = sb.toString();
-                logInternal('  currentLineSoFar:         ${StringTools.toDisplayString(currentLineSoFar)}');
-                logInternal('  resultAfterLastLineBreak: ${StringTools.toDisplayString(resultAfterLastLineBreak)}');
-                logInternal('  Result so far:            ${StringTools.toDisplayString(resultSoFar)}');
+                if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
+                {
+                    logInternal('  currentLineSoFar:         ${StringTools.toDisplayString(currentLineSoFar)}');
+                    logInternal('  resultAfterLastLineBreak: ${StringTools.toDisplayString(resultAfterLastLineBreak)}');
+                    logInternal('  Result so far:            ${StringTools.toDisplayString(resultSoFar)}');
+                }
+
                 int removedIndent = currentLineSoFar.length - currentLineSoFar.trimLeft().length;
                 if (currentLineSoFar.trim().isNotEmpty || resultAfterLastLineBreak.trim().isNotEmpty || resultSoFar.trim().isNotEmpty)
                 {
@@ -57,8 +61,8 @@ class LeadingWhitespaceRemover
                         }
                         else
                         {
-                            logInternal('currentLineSoFar (${StringTools.toDisplayString(currentLineSoFar)})'
-                              ' does not end with resultAfterLastLineBreak (${StringTools.toDisplayString(resultAfterLastLineBreak)})');
+                            if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('currentLineSoFar (${StringTools.toDisplayString(currentLineSoFar)})'
+                                    ' does not end with resultAfterLastLineBreak (${StringTools.toDisplayString(resultAfterLastLineBreak)})');
                             removedText = '';
                         }
                     }
@@ -83,12 +87,14 @@ class LeadingWhitespaceRemover
                         }
                     }
 
-                    logInternal('removedText:         ${StringTools.toDisplayString(removedText)}');
+                    if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('removedText:         ${StringTools.toDisplayString(removedText)}');
                 }
                 else
-                    logInternal('removedText:         <only spaces or empty>');
+                {
+                    if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('removedText:         <only spaces or empty>');
+                }
 
-                logInternal('removedIndent:  $removedIndent');
+                if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('removedIndent:  $removedIndent');
 
                 if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer    currentLineSoFarLength:  ${currentLineSoFar.length}');
 
@@ -136,12 +142,15 @@ class LeadingWhitespaceRemover
             logInternal('$methodName END\nOUT from remove():\n-----\n${StringTools.toDisplayString(cleanedResult)}\n-----\n$cleanedResult\n-----');
         }*/
 
-        logInternal('  currentLineSoFar:  ${StringTools.toDisplayString(initialCurrentLineSoFar)}');
-        logInternal('  resultAfterLastLB: ${StringTools.toDisplayString(resultAfterLastLineBreak)}');
-        logInternal('  s:                 ${StringTools.toDisplayString(s)}');
-        logInternal('  =                  ${StringTools.toDisplayString(initialCurrentLineSoFar + s)}');
-        logInternal('  OUT:               ${StringTools.toDisplayString(result)}');
-        logInternal('  =                  ${StringTools.toDisplayString(initialCurrentLineSoFar + result)}');
+        if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
+        {
+            logInternal('  currentLineSoFar:  ${StringTools.toDisplayString(initialCurrentLineSoFar)}');
+            logInternal('  resultAfterLastLB: ${StringTools.toDisplayString(resultAfterLastLineBreak)}');
+            logInternal('  s:                 ${StringTools.toDisplayString(s)}');
+            logInternal('  =                  ${StringTools.toDisplayString(initialCurrentLineSoFar + s)}');
+            logInternal('  OUT:               ${StringTools.toDisplayString(result)}');
+            logInternal('  =                  ${StringTools.toDisplayString(initialCurrentLineSoFar + result)}');
+        }
 
         return result;
     }
@@ -235,7 +244,7 @@ class LeadingWhitespaceRemover
                 sb.write(Constants.INDENT_START);
                 sb.write(lineIndent);
                 sb.write(Constants.INDENT_END);
-              }
+            }
 
             sb.write(line.trimLeft());
 

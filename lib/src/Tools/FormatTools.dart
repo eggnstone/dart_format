@@ -108,28 +108,28 @@ class FormatTools
     {
         final StringBuffer sb = StringBuffer();
 
-        logInfo('resolveIndents()');
-        logInfo('  \n$s');
+        if (Constants.DEBUG_FORMAT_TOOLS) logInfo('resolveIndents()');
+        if (Constants.DEBUG_FORMAT_TOOLS) logInfo('  \n$s');
 
         int currentPos = 0;
         String currentText = '';
         int indentStartPos;
         while ((indentStartPos = s.indexOf(Constants.INDENT_START, currentPos)) >= 0)
         {
-            logInfo('  Indent found:');
+            if (Constants.DEBUG_FORMAT_TOOLS) logInfo('  Indent found:');
 
-            logInfo('    currentText:       ${StringTools.toDisplayString(currentText)}');
+            if (Constants.DEBUG_FORMAT_TOOLS) logInfo('    currentText:       ${StringTools.toDisplayString(currentText)}');
 
-            logInfo('    indentStartPos:    $indentStartPos');
+            if (Constants.DEBUG_FORMAT_TOOLS) logInfo('    indentStartPos:    $indentStartPos');
             final int indentEndPos = s.indexOf(Constants.INDENT_END, indentStartPos + Constants.INDENT_START.length);
-            logInfo('    indentEndPos:      $indentEndPos');
+            if (Constants.DEBUG_FORMAT_TOOLS) logInfo('    indentEndPos:      $indentEndPos');
             if (indentEndPos == -1)
                 throw Exception('Missing ${Constants.INDENT_END} in result.');
 
             final String indentText = s.substring(indentStartPos + Constants.INDENT_START.length, indentEndPos);
-            logInfo('    indentText:        ${StringTools.toDisplayString(indentText)}');
+            if (Constants.DEBUG_FORMAT_TOOLS) logInfo('    indentText:        ${StringTools.toDisplayString(indentText)}');
             final int indent = int.parse(indentText);
-            logInfo('    indent:            $indent');
+            if (Constants.DEBUG_FORMAT_TOOLS) logInfo('    indent:            $indent');
 
             if (indent < 0)
                 throw Exception('Negative indent not allowed: $indent');
@@ -137,23 +137,23 @@ class FormatTools
             final String previousText = s.substring(currentPos, indentStartPos);
             currentText = _writeExceptLastLine(sb, currentText, previousText, 'previousText');
 
-            logInfo('    currentLineLength: ${currentText.length}');
+            if (Constants.DEBUG_FORMAT_TOOLS) logInfo('    currentLineLength: ${currentText.length}');
             final int finalIndent = indent - currentText.length;
 
             if (finalIndent > 0)
             {
-                logInfo('    finalIndent (pos): $finalIndent');
+                if (Constants.DEBUG_FORMAT_TOOLS) logInfo('    finalIndent (pos): $finalIndent');
                 final String finalIndentText = ' ' * finalIndent;
                 if (finalIndentText.isNotEmpty)
                 {
                     currentText = _writeExceptLastLine(sb, currentText, finalIndentText, 'finalIndentText');
-                   // currentLineLength = currentText.length;
+                    // currentLineLength = currentText.length;
                     //logInfo('    currentLineLength: $currentLineLength');
                 }
             }
             else if (finalIndent < 0)
             {
-                logInfo('    finalIndent (neg): $finalIndent => trying to reduce indent');
+                if (Constants.DEBUG_FORMAT_TOOLS) logInfo('    finalIndent (neg): $finalIndent => trying to reduce indent');
                 if (indentText.startsWith('00'))
                 {
                     if (indentText == '00000000')
@@ -178,30 +178,30 @@ class FormatTools
                     final int availableSpaces = currentText.length - currentText.trimRight().length;
                     if (availableSpaces > 0)
                     {
-                        logInfo('    availableSpaces    $availableSpaces');
+                        if (Constants.DEBUG_FORMAT_TOOLS) logInfo('    availableSpaces    $availableSpaces');
                         currentText = currentText.substring(0, currentText.length - availableSpaces);
-                        logInfo('    currentText:       ${StringTools.toDisplayString(currentText)}');
+                        if (Constants.DEBUG_FORMAT_TOOLS) logInfo('    currentText:       ${StringTools.toDisplayString(currentText)}');
                     }
                     else
                     {
-                        logInfo('    availableSpaces <= 0 => cannot not reduce');
+                        if (Constants.DEBUG_FORMAT_TOOLS) logInfo('    availableSpaces <= 0 => cannot not reduce');
                     }
                 }
             }
             else
             {
-                logInfo('    zero finalIndent');
+                if (Constants.DEBUG_FORMAT_TOOLS) logInfo('    zero finalIndent');
             }
 
-             currentPos = indentEndPos + Constants.INDENT_END.length;
+            currentPos = indentEndPos + Constants.INDENT_END.length;
         }
 
         final String restText = s.substring(currentPos);
         if (restText.isNotEmpty)
         {
-          sb.write(currentText);
-          sb.write(restText);
-          logInfo('+ rest:                ${StringTools.toDisplayString(currentText + restText)}');
+            sb.write(currentText);
+            sb.write(restText);
+            if (Constants.DEBUG_FORMAT_TOOLS) logInfo('+ rest:                ${StringTools.toDisplayString(currentText + restText)}');
         }
 
         return sb.toString();
@@ -209,20 +209,20 @@ class FormatTools
 
     static String _writeExceptLastLine(StringBuffer sb, String currentLine, String newText, String label)
     {
-        logInfo('      writeExceptLastLine($label)');
-        logInfo('        currentLine: ${StringTools.toDisplayString(currentLine)}');
-        logInfo('        newText:     ${StringTools.toDisplayString(newText)}');
+        if (Constants.DEBUG_FORMAT_TOOLS) logInfo('      writeExceptLastLine($label)');
+        if (Constants.DEBUG_FORMAT_TOOLS) logInfo('        currentLine: ${StringTools.toDisplayString(currentLine)}');
+        if (Constants.DEBUG_FORMAT_TOOLS) logInfo('        newText:     ${StringTools.toDisplayString(newText)}');
 
         final int lastLineBreak = newText.lastIndexOf('\n');
         if (lastLineBreak == -1)
         {
-            logInfo('        writing:     <nothing>');
-            logInfo('        keeping:     ${StringTools.toDisplayString(currentLine + newText)}');
+            if (Constants.DEBUG_FORMAT_TOOLS) logInfo('        writing:     <nothing>');
+            if (Constants.DEBUG_FORMAT_TOOLS) logInfo('        keeping:     ${StringTools.toDisplayString(currentLine + newText)}');
             return currentLine + newText;
         }
 
-        logInfo('+       writing:     ${StringTools.toDisplayString(currentLine + newText.substring(0, lastLineBreak + 1))}');
-        logInfo('        keeping:     ${StringTools.toDisplayString(newText.substring(lastLineBreak + 1))}');
+        if (Constants.DEBUG_FORMAT_TOOLS) logInfo('+       writing:     ${StringTools.toDisplayString(currentLine + newText.substring(0, lastLineBreak + 1))}');
+        if (Constants.DEBUG_FORMAT_TOOLS) logInfo('        keeping:     ${StringTools.toDisplayString(newText.substring(lastLineBreak + 1))}');
         sb.write(currentLine + newText.substring(0, lastLineBreak + 1));
         return newText.substring(lastLineBreak + 1);
     }

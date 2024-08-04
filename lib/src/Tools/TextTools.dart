@@ -47,13 +47,13 @@ class TextTools
         return sb.toString();
     }
 
-  static String removeTrailingSpaces(String s)
-  {
+    static String removeTrailingSpaces(String s)
+    {
         String result = s;
 
         while (result.endsWith(' '))
             result = result.substring(0, result.length - 1);
 
         return result;
-  }
+    }
 }

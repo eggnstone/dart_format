@@ -690,7 +690,7 @@ class FormatState
         final String text = _textBuffers.last.toString();
         final int lastPos = text.lastIndexOf('\n');
         final String r = lastPos == -1 ? '' : text.substring(lastPos + 1);
-        logInternal('getResultAfterLastLineBreak: ${StringTools.toDisplayString(r)}');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('getResultAfterLastLineBreak: ${StringTools.toDisplayString(r)}');
         return r;
     }
 
