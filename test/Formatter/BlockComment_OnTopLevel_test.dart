@@ -51,10 +51,7 @@ void main()
                                 '    /*START\n'
                                 '        TEXT\n'
                                 '    END*/\n';
-                            const String expectedText =
-                                '/*START\n'
-                                '    TEXT\n'
-                                'END*/\n';
+                            const String expectedText = inputText;
 
                             final String actualText = formatterAll.format(inputText);
 
@@ -91,9 +88,9 @@ void main()
                                 '    END*/\n'
                                 '    var a;\n';
                             const String expectedText =
-                                '/*START\n'
-                                '    TEXT\n'
-                                'END*/\n'
+                                '    /*START\n'
+                                '        TEXT\n'
+                                '    END*/\n'
                                 'var a;\n';
 
                             final String actualText = formatterAll.format(inputText);
@@ -109,7 +106,8 @@ void main()
                 {
                     test('No changes expected', ()
                         {
-                            const String inputText = 'int i=0; /*START\n'
+                            const String inputText =
+                                'int i=0; /*START\n'
                                 '        TEXT\n'
                                 '    END*/\n';
                             const String expectedText = inputText;
@@ -125,14 +123,16 @@ void main()
                         {
                             test('Comment starts on separate line', ()
                                 {
-                                    const String inputText = '    int i=0;\n'
+                                    const String inputText =
+                                        '    int i=0;\n'
                                         '    /*START\n'
                                         '        TEXT\n'
                                         '    END*/\n';
-                                    const String expectedText = 'int i=0;\n'
-                                        '/*START\n'
-                                        '    TEXT\n'
-                                        'END*/\n';
+                                    const String expectedText =
+                                        'int i=0;\n'
+                                        '    /*START\n'
+                                        '        TEXT\n'
+                                        '    END*/\n';
 
                                     final String actualText = formatterAll.format(inputText);
 
@@ -143,15 +143,17 @@ void main()
 
                             test('Comment starts on separate line 2', ()
                                 {
-                                    const String inputText = '    int i=0;\n'
+                                    const String inputText =
+                                        '    int i=0;\n'
                                         '    /*START\n'
                                         '        TEXT\n'
                                         '    END*/\n'
                                         '    var a;\n';
-                                    const String expectedText = 'int i=0;\n'
-                                        '/*START\n'
-                                        '    TEXT\n'
-                                        'END*/\n'
+                                    const String expectedText =
+                                        'int i=0;\n'
+                                        '    /*START\n'
+                                        '        TEXT\n'
+                                        '    END*/\n'
                                         'var a;\n';
 
                                     final String actualText = formatterAll.format(inputText);
@@ -163,12 +165,14 @@ void main()
 
                             test('Comment starts on the same line', ()
                                 {
-                                    const String inputText = '    int i=0; /*START\n'
+                                    const String inputText =
+                                        '    int i=0; /*START\n'
                                         '        TEXT\n'
                                         '    END*/';
-                                    const String expectedText = 'int i=0; /*START\n'
-                                        '    TEXT\n'
-                                        'END*/\n';
+                                    const String expectedText =
+                                        'int i=0;     /*START\n'
+                                        '        TEXT\n'
+                                        '    END*/\n';
 
                                     final String actualText = formatterAll.format(inputText);
 
@@ -179,12 +183,14 @@ void main()
 
                             test('Comment starts on the same line before line break', ()
                                 {
-                                    const String inputText = '    int i=0; /*START\n'
+                                    const String inputText =
+                                        '    int i=0; /*START\n'
                                         '        TEXT\n'
                                         '    END*/\n';
-                                    const String expectedText = 'int i=0; /*START\n'
-                                        '    TEXT\n'
-                                        'END*/\n';
+                                    const String expectedText =
+                                        'int i=0;     /*START\n'
+                                        '        TEXT\n'
+                                        '    END*/\n';
 
                                     final String actualText = formatterAll.format(inputText);
 
@@ -195,13 +201,15 @@ void main()
 
                             test('Comment starts on the same line before statement', ()
                                 {
-                                    const String inputText = '    int i=0; /*START\n'
+                                    const String inputText =
+                                        '    int i=0; /*START\n'
                                         '        TEXT\n'
                                         '    END*/\n'
                                         '    var a;\n';
-                                    const String expectedText = 'int i=0; /*START\n'
-                                        '    TEXT\n'
-                                        'END*/\n'
+                                    const String expectedText =
+                                        'int i=0;     /*START\n'
+                                        '        TEXT\n'
+                                        '    END*/\n'
                                         'var a;\n';
 
                                     final String actualText = formatterAll.format(inputText);
@@ -215,10 +223,12 @@ void main()
 
                     test('Prevent negative indentation', ()
                         {
-                            const String inputText = '    int i=0; /*START\n'
+                            const String inputText =
+                                '    int i=0; /*START\n'
                                 '    TEXT\n'
                                 'END*/\n';
-                            const String expectedText = 'int i=0; /*START\n'
+                            const String expectedText =
+                                'int i=0;     /*START\n'
                                 '    TEXT\n'
                                 'END*/\n';
 
@@ -231,11 +241,13 @@ void main()
 
                     test('Prevent negative indentation before statement', ()
                         {
-                            const String inputText = '    int i=0; /*START\n'
+                            const String inputText =
+                                '    int i=0; /*START\n'
                                 '    TEXT\n'
                                 'END*/\n'
                                 'var a;\n';
-                            const String expectedText = 'int i=0; /*START\n'
+                            const String expectedText =
+                                'int i=0;     /*START\n'
                                 '    TEXT\n'
                                 'END*/\n'
                                 'var a;\n';
@@ -318,10 +330,7 @@ void main()
                                 '    /*\n'
                                 '*//*\n'
                                 '*/\n';
-                            const String expectedText =
-                                '/*\n'
-                                '*//*\n'
-                                '*/\n';
+                            const String expectedText = inputText;
 
                             final String actualText = formatterAll.format(inputText);
 
@@ -363,10 +372,7 @@ void main()
                                 '    /*\n'
                                 '    *//*\n'
                                 '*/\n';
-                            const String expectedText =
-                                '/*\n'
-                                '*//*\n'
-                                '*/\n';
+                            const String expectedText = inputText;
 
                             final String actualText = formatterAll.format(inputText);
 
@@ -380,10 +386,7 @@ void main()
                                 '    /*\n'
                                 '*//*\n'
                                 '    */\n';
-                            const String expectedText =
-                                '/*\n'
-                                '*//*\n'
-                                '    */\n';
+                            const String expectedText = inputText;
 
                             final String actualText = formatterAll.format(inputText);
 
@@ -397,10 +400,7 @@ void main()
                                 '/*\n'
                                 '    *//*\n'
                                 '    */\n';
-                            const String expectedText =
-                                '/*\n'
-                                '    *//*\n'
-                                '*/\n';
+                            const String expectedText = inputText;
 
                             final String actualText = formatterAll.format(inputText);
 

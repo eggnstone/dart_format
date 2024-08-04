@@ -33,6 +33,28 @@ class StringTools
         return IntTuple(indexInput, indexResult);
     }
 
+    static int? indexOfOrNull(String s, String pattern, int start)
+    {
+        final int index = s.indexOf(pattern, start);
+        return index < 0 ? null : index;
+    }
+
+    static String padIntLeft(int i, int length) => i.toString().padLeft(length);
+
+    static String padIntLeft0(int i, int length) => i.toString().padLeft(length, '0');
+
+    static String removeTrailingSpaces(String s)
+    {
+        if (s.isEmpty)
+            return s;
+
+        int pos = s.length;
+        while (pos > 0 && s[pos - 1] == ' ')
+            pos--;
+
+        return s.substring(0, pos);
+    }
+
     static String shorten50(String s)
     => shorten(s, 50);
 
@@ -79,14 +101,4 @@ class StringTools
 
         return r;
     }
-
-    static int? indexOfOrNull(String s, String pattern, int start)
-    {
-        final int index = s.indexOf(pattern, start);
-        return index < 0 ? null : index;
-    }
-
-    static String padIntLeft(int i, int length) => i.toString().padLeft(length);
-
-    static String padIntLeft0(int i, int length) => i.toString().padLeft(length, '0');
 }

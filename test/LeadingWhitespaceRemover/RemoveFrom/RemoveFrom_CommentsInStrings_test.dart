@@ -7,36 +7,36 @@ void main()
 {
     TestTools.init();
 
-    group('Remove, strings', ()
+    group('RemoveFrom, comments in strings', ()
         {
-            test(r"String s='\'';", ()
+            test('"/*"', ()
                 {
-                    const String inputText = r"String s='\'';";
+                    const String inputText = 'String s="/*";';
                     const String expectedText = inputText;
 
-                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
+                    final String actualText = LeadingWhitespaceRemover.removeFrom(inputText, removeLeadingSpaces: false);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
             );
 
-            test(r'String s="\"";', ()
+            test("'/*'", ()
                 {
-                    const String inputText = r'String s="\"";';
+                    const String inputText = "String s='/*';";
                     const String expectedText = inputText;
 
-                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
+                    final String actualText = LeadingWhitespaceRemover.removeFrom(inputText, removeLeadingSpaces: false);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
             );
 
-            test(r"r'\', raw mode", ()
+            test("'//'", ()
                 {
-                    const String inputText = r"r'\';";
+                    const String inputText = "String s='//';";
                     const String expectedText = inputText;
 
-                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
+                    final String actualText = LeadingWhitespaceRemover.removeFrom(inputText, removeLeadingSpaces: false);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }

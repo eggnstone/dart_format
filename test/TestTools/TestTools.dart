@@ -77,7 +77,7 @@ class TestTools
                                 if (formatter != null)
                                     finalFormatFunction = (FormatState formatState, TestGroupConfig testGroupConfig, TestConfig testConfig, AstNode node) => _useIFormatter(formatter, formatState, testGroupConfig, testConfig, node);
 
-                                actualText = finalFormatFunction(formatState, testGroupConfig, testConfig, inputNode);
+                                actualText = FormatTools.resolveIndents(finalFormatFunction(formatState, testGroupConfig, testConfig, inputNode));
                             }
                             catch (e)
                             {
@@ -86,7 +86,7 @@ class TestTools
                                 rethrow;
                             }
 
-                            final String actualTextWithoutIgnore = FormatTools.removeIgnoreTagsCompletely(actualText);
+                            final String actualTextWithoutIgnore = FormatTools.resolveIgnores(actualText);
                             TestTools.expect(actualTextWithoutIgnore, Test.equals(testConfig.expectedText ?? testGroupConfig.inputMiddle), alternativeStackTrace: finalStackTrace);
 
                             Test.expect(astVisitor.currentVisitorIndex, Test.equals(astVisitors?.length ?? 0), reason: 'Not all expected visitors called.');

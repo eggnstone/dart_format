@@ -685,6 +685,15 @@ class FormatState
         return sb.toString();
     }
 
+    String getResultAfterLastLineBreak()
+    {
+        final String text = _textBuffers.last.toString();
+        final int lastPos = text.lastIndexOf('\n');
+        final String r = lastPos == -1 ? '' : text.substring(lastPos + 1);
+        logInternal('getResultAfterLastLineBreak: ${StringTools.toDisplayString(r)}');
+        return r;
+    }
+
     String getResultAfterLast(String searchText)
     {
         for (int i = _textBuffers.length - 1; i >= 0; i--)
@@ -750,23 +759,23 @@ class FormatState
         String s = (previousTextEndsWithNewLine ? '\n' : '') + poppedStringBuffer.toString();
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  s: ${StringTools.toDisplayString(s)}');
 
-        String indentation = '';
+        String indent = '';
         if (lastLevel.type == IndentationType.single)
         {
             if (!s.trim().startsWith('{'))
-                indentation = ' ' * _indentationSpacesPerLevel;
+                indent = ' ' * _indentationSpacesPerLevel;
         }
         else if (lastLevel.type == IndentationType.multiple)
         {
-            indentation = ' ' * _indentationSpacesPerLevel;
+            indent = ' ' * _indentationSpacesPerLevel;
         }
 
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  indentation: ${StringTools.toDisplayString(indentation)}');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  indent:      ${StringTools.toDisplayString(indent)}');
         final bool endsWithNewLine = s.endsWith('\n');
         if (endsWithNewLine)
             s = s.substring(0, s.length - 1);
 
-        s = s.replaceAll('\n', '\n$indentation');
+        s = s.replaceAll('\n', '\n$indent');
         s = s.replaceAll(RegExp('\n\\s+\n'), '\n\n');
 
         if (endsWithNewLine)
@@ -842,9 +851,12 @@ class FormatState
 
         try
         {
-            return offset == 0
-                ? LeadingWhitespaceRemover.remove(s, removeLeadingSpaces: true)
-                : LeadingWhitespaceRemover.remove(s, removeLeadingSpaces: false, initialCurrentLineSoFar: _getCurrentLineSoFar(offset));
+            if (offset == 0)
+                return LeadingWhitespaceRemover.removeFrom(s, removeLeadingSpaces: true);
+
+            final String resultAfterLastLineBreak = getResultAfterLastLineBreak();
+            final String currentLineSoFar = _getCurrentLineSoFar(offset);
+            return LeadingWhitespaceRemover.removeFrom(s, removeLeadingSpaces: false, initialCurrentLineSoFar: currentLineSoFar, resultAfterLastLineBreak: resultAfterLastLineBreak);
         }
         on DartFormatException catch(e, stackTrace)
         {
@@ -864,16 +876,7 @@ class FormatState
 
     String _getCurrentLineSoFar(int offset)
     {
-        if (Constants.DEBUG_FORMAT_STATE)
-        {
-            logInternal('getCurrentLineSoFar($offset)');
-            final String x = getResultAfterLast('\n');
-            if (x.isEmpty)
-                logDebug('  ResultAfterLastLineBreak: ${StringTools.toDisplayString(x)}');
-            else
-                logWarning('  ResultAfterLastLineBreak: ${StringTools.toDisplayString(x)}');
-            //return x;
-        }
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('getCurrentLineSoFar($offset)');
 
         if (offset == 0)
         {
@@ -896,9 +899,6 @@ class FormatState
 
                 if (Constants.DEBUG_FORMAT_STATE) logInternal('  Line break found => Returning: ${StringTools.toDisplayString(result)}');
                 return result;
-                final String result2 = result.trimLeft();
-                if (Constants.DEBUG_FORMAT_STATE) logInternal('  Line break found => Returning: ${StringTools.toDisplayString(result2)}');
-                return result2;
             }
 
             currentOffset--;
@@ -907,8 +907,5 @@ class FormatState
         final String result = _parseResult.content.substring(0, offset);
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  No line break found => Returning all: ${StringTools.toDisplayString(result)}');
         return result;
-        final String result2 = result.trimLeft();
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  No line break found => Returning all: ${StringTools.toDisplayString(result2)}');
-        return result2;
     }
 }

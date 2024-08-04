@@ -5,7 +5,7 @@ class Constants
 
     static const bool DEBUG_DART_FORMAT_HANDLERS = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_FORMAT_STATE = (DEBUG && false) || DEBUG_ALL;
-    static const bool DEBUG_FORMAT_TOOLS = (DEBUG && false) || DEBUG_ALL;
+    static const bool DEBUG_FORMAT_TOOLS = DEBUG && false; // || DEBUG_ALL;
     static const bool DEBUG_FORMATTER = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_FORMATTER_DEFAULT = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_I_FORMATTER = (DEBUG && false) || DEBUG_ALL;
@@ -28,6 +28,10 @@ class Constants
     static const String REMOVE_TAG = 'DART_FORMAT_REMOVE';
     static const String REMOVE_START = '<$REMOVE_TAG>';
     static const String REMOVE_END = '</$REMOVE_TAG>';
+
+    static const String INDENT_TAG = 'DART_FORMAT_INDENT';
+    static const String INDENT_START = '<$INDENT_TAG=';
+    static const String INDENT_END = '/>';
 
     static const int WEB_SERVICE_HANDLER_WAIT_FOR_TERMINATE_IN_MILLISECONDS = 500;
 }

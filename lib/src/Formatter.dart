@@ -62,6 +62,7 @@ class Formatter
 
         final TextTools textTools = TextTools(_config);
         result = textTools.removeEmptyLines(result);
+        //result = FormatTools.resolveRelativeIndentations(result);
         result = textTools.addNewLineAtEndOfText(result);
 
         return _verifyResult(cleanedS, result, parseResult.lineInfo);
@@ -83,13 +84,12 @@ class Formatter
     {
         final String condensedInput = s.replaceAll(RegExp(r'\s'), '').trim();
         final String condensedResultWithIgnores = result.replaceAll(RegExp(r'\s'), '').trim();
-
-        final String condensedResultWithoutIgnores = FormatTools.removeIgnoreTagsOnly(condensedResultWithIgnores);
+        final String condensedResultWithoutIgnores = FormatTools.removeIndentTags(FormatTools.removeIgnoreTags(condensedResultWithIgnores));
         if (condensedResultWithoutIgnores == condensedInput)
         {
             if (Constants.DEBUG_FORMATTER) logInternal('  result: ${StringTools.toDisplayString(result, Constants.MAX_DEBUG_LENGTH)}"');
 
-            final String resultWithoutIgnores = FormatTools.removeIgnoreTagsCompletely(result);
+            final String resultWithoutIgnores = FormatTools.resolveIndents(FormatTools.resolveIgnores(result));
             if (Constants.DEBUG_FORMATTER) logInternal('  resultWithoutIgnores: ${StringTools.toDisplayString(resultWithoutIgnores, Constants.MAX_DEBUG_LENGTH)}"');
             return resultWithoutIgnores;
         }

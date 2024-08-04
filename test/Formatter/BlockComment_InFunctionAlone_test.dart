@@ -1,7 +1,6 @@
 import 'package:dart_format/src/Data/Config.dart';
 import 'package:dart_format/src/Formatter.dart';
 import 'package:dart_format/src/Tools/LogTools.dart';
-import 'package:dart_format/src/Tools/StringTools.dart';
 import 'package:test/test.dart';
 
 import '../TestTools/TestTools.dart';
@@ -90,9 +89,9 @@ void main()
                     const String inputText =
                         'void f()\n'
                         '{\n'
-                        '    /* Comment\n'
+                        '    /* Comment1\n'
                         '\n'
-                        '    Comment */\n'
+                        '    Comment2 */\n'
                         '}\n';
                     const String expectedText = inputText;
 
@@ -105,22 +104,23 @@ void main()
 
             group('Back-to-back', ()
                 {
-                    test('Not indented at all', ()
+                    test('No indentation', ()
                         {
                             const String inputText =
                                 'void f()\n'
                                 '{\n'
-                                '/*\n'
-                                '*//*\n'
-                                '*/\n'
+                                '/*a\n'
+                                'b*//*c\n'
+                                'd*/\n'
                                 '}\n';
-                            const String expectedText =
+                            const String expectedText = inputText;
+                            /*const String expectedText =
                                 'void f()\n'
                                 '{\n'
                                 '    /*\n'
                                 '    *//*\n'
                                 '    */\n'
-                                '}\n';
+                                '}\n';*/
 
                             final String actualText = formatterAll.format(inputText);
 
@@ -128,7 +128,7 @@ void main()
                         }
                     );
 
-                    test('Not indented', ()
+                    test('Normal indentation', ()
                         {
                             const String inputText =
                                 'void f()\n'
@@ -158,13 +158,14 @@ void main()
                                 '    *//*\n'
                                 '    */\n'
                                 '}\n';
-                            const String expectedText =
+                            const String expectedText = inputText;
+                            /*const String expectedText =
                                 'void f()\n'
                                 '{\n'
                                 '    /*\n'
-                                '    *//*\n'
-                                '    */\n'
-                                '}\n';
+                                '*//*\n'
+                                '*/\n'
+                                '}\n';*/
 
                             final String actualText = formatterAll.format(inputText);
 
@@ -215,13 +216,14 @@ void main()
                                 '        *//*\n'
                                 '    */\n'
                                 '}\n';
-                            const String expectedText =
+                            const String expectedText = inputText;
+                            /*const String expectedText =
                                 'void f()\n'
                                 '{\n'
                                 '    /*\n'
                                 '    *//*\n'
-                                '    */\n'
-                                '}\n';
+                                '*/\n'
+                                '}\n';*/
 
                             final String actualText = formatterAll.format(inputText);
 
@@ -234,17 +236,11 @@ void main()
                             const String inputText =
                                 'void f()\n'
                                 '{\n'
-                                '        /*\n'
-                                '    *//*\n'
-                                '        */\n'
+                                '        /*a\n'
+                                '    b*//*c\n'
+                                '        d*/\n'
                                 '}\n';
-                            const String expectedText =
-                                'void f()\n'
-                                '{\n'
-                                '    /*\n'
-                                '    *//*\n'
-                                '        */\n'
-                                '}\n';
+                            const String expectedText = inputText;
 
                             final String actualText = formatterAll.format(inputText);
 
@@ -261,19 +257,14 @@ void main()
                                 '        *//*\n'
                                 '        */\n'
                                 '}\n';
-                            const String expectedText =
-                                'void f()\n'
-                                '{\n'
-                                '    /*\n'
-                                '        *//*\n'
-                                '    */\n'
-                                '}\n';
+                            const String expectedText = inputText;
 
                             final String actualText = formatterAll.format(inputText);
 
                             TestTools.expect(actualText, equals(expectedText));
                         }
                     );
+
                 }
             );
         }

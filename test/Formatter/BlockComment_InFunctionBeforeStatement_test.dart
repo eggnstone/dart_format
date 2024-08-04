@@ -23,14 +23,7 @@ void main()
                         'END*/\n'
                         '    s;\n'
                         '}\n';
-                    const String expectedText =
-                        'void f()\n'
-                        '{\n'
-                        '    /*START\n'
-                        '        TEXT\n'
-                        '    END*/\n'
-                        '    s;\n'
-                        '}\n';
+                    const String expectedText = inputText;
 
                     final String actualText = formatterAll.format(inputText);
 
@@ -68,14 +61,7 @@ void main()
                         '        END*/\n'
                         '    s;\n'
                         '}\n';
-                    const String expectedText =
-                        'void f()\n'
-                        '{\n'
-                        '    /*START\n'
-                        '        TEXT\n'
-                        '    END*/\n'
-                        '    s;\n'
-                        '}\n';
+                    const String expectedText = inputText;
 
                     final String actualText = formatterAll.format(inputText);
 
@@ -94,14 +80,7 @@ void main()
                         'END*/\n'
                         '    s;\n'
                         '}\n';
-                    const String expectedText =
-                        'void f()\n'
-                        '{\n'
-                        '    /*START\n'
-                        '        TEXT\n'
-                        '    END*/\n'
-                        '    s;\n'
-                        '}\n';
+                    const String expectedText = inputText;
 
                     final String actualText = formatterAll.format(inputText);
 

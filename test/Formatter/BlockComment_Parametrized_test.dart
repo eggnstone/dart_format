@@ -16,7 +16,7 @@ void main()
     final Config configAll = Config.all();
     final Formatter formatterAll = Formatter(configAll);
 
-    final Map<String, Triple<String, String, String>> indentationSets = <String, Triple<String, String, String>>
+    final Map<String, Triple<String, String, String>> indentSets = <String, Triple<String, String, String>>
     {
         '1 No indent': const Triple<String, String, String>('', '', ''),
         '2 Start indented': const Triple<String, String, String>(INDENT, '', ''),
@@ -44,14 +44,14 @@ void main()
 
     group('Block comments parametrized', ()
         {
-            for (final String indentationsName in indentationSets.keys)
+            for (final String indentSetName in indentSets.keys)
             {
-                final Triple<String, String, String> indentations = indentationSets[indentationsName]!;
-                final String indentationStart = indentations.item1;
-                final String indentationMiddle = indentations.item2;
-                final String indentationEnd = indentations.item3;
+                final Triple<String, String, String> indentSet = indentSets[indentSetName]!;
+                final String indentStart = indentSet.item1;
+                final String indentMiddle = indentSet.item2;
+                final String indentEnd = indentSet.item3;
 
-                group(indentationsName, ()
+                group(indentSetName, ()
                     {                
                         for (final String statementsName in statementSets.keys)
                         {
@@ -66,25 +66,27 @@ void main()
                                         final Triple<String, String, String> context = contexts[contextName]!;
                                         final String blockStart = context.item1;
                                         final String blockEnd = context.item2;
-                                        final String blockIndentation = context.item3;
+                                        final String blockIndent = context.item3;
 
                                         group(contextName, ()
                                             {
-                                                final String expectedIndentationStart = statementA.isEmpty ? '' : indentationStart;
+                                                //final String expectedIndentStart = statementA.isEmpty ? '' : indentStart;
+                                                final String expectedIndentStart = indentStart;
 
-                                                if (indentationMiddle.isEmpty)
+                                                if (indentMiddle.isEmpty)
                                                     test(r'/*\n*/', ()
                                                         {
                                                             final String inputText =
-                                                                '$blockStart$blockIndentation$statementA$indentationStart/*\n'
-                                                                '$blockIndentation$indentationEnd*/$statementB\n'
+                                                                '$blockStart$blockIndent$statementA$indentStart/*\n'
+                                                                '$blockIndent$indentEnd*/$statementB\n'
                                                                 '$blockEnd';
                                                             final String expectedText =
-                                                                '$blockStart$blockIndentation$statementA$expectedIndentationStart/*\n'
-                                                                '$blockIndentation$indentationEnd*/$statementB\n'
+                                                                '$blockStart$blockIndent$statementA$expectedIndentStart/*\n'
+                                                                '$blockIndent$indentEnd*/$statementB\n'
                                                                 '$blockEnd';
 
                                                             logDebug('inputText:\n$inputText');
+                                                            logDebug('expectedText:\n$expectedText');
 
                                                             final String actualText = formatterAll.format(inputText);
 
@@ -99,17 +101,18 @@ void main()
                                                 test(r'/*\n*//*\n*/', ()
                                                     {
                                                         final String inputText =
-                                                            '$blockStart$blockIndentation$statementA$indentationStart/*\n'
-                                                            '$blockIndentation$indentationMiddle*//*\n'
-                                                            '$blockIndentation$indentationEnd*/$statementB\n'
+                                                            '$blockStart$blockIndent$statementA$indentStart/*\n'
+                                                            '$blockIndent$indentMiddle*//*\n'
+                                                            '$blockIndent$indentEnd*/$statementB\n'
                                                             '$blockEnd';
                                                         final String expectedText =
-                                                            '$blockStart$blockIndentation$statementA$expectedIndentationStart/*\n'
-                                                            '$blockIndentation$indentationMiddle*//*\n'
-                                                            '$blockIndentation$indentationEnd*/$statementB\n'
+                                                            '$blockStart$blockIndent$statementA$expectedIndentStart/*\n'
+                                                            '$blockIndent$indentMiddle*//*\n'
+                                                            '$blockIndent$indentEnd*/$statementB\n'
                                                             '$blockEnd';
 
                                                         logDebug('inputText:\n$inputText');
+                                                        logDebug('expectedText:\n$expectedText');
 
                                                         final String actualText = formatterAll.format(inputText);
 

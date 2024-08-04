@@ -1,3 +1,4 @@
+import 'package:dart_format/src/Constants/Constants.dart';
 import 'package:dart_format/src/LeadingWhitespaceRemover.dart';
 import 'package:dart_format/src/Tools/LogTools.dart';
 import 'package:test/test.dart';
@@ -14,7 +15,7 @@ void main()
                 {
                     const String currentLineSoFar = '';
                     const String inputText = '';
-                    const String expectedText = '';
+                    const String expectedText = inputText;
 
                     final String actualText = LeadingWhitespaceRemover.removeFromComment(currentLineSoFar, inputText, '');
 
@@ -22,11 +23,11 @@ void main()
                 }
             );
 
-            test('Leading block comment, single line block comment', ()
+            test('Leading spaces+text, single line block comment', ()
                 {
-                    const String currentLineSoFar = '    */';
+                    const String currentLineSoFar = '    TEXT';
                     const String inputText = '/**/';
-                    const String expectedText = '/**/';
+                    const String expectedText = inputText;
 
                     final String actualText = LeadingWhitespaceRemover.removeFromComment(currentLineSoFar, inputText, '');
 
@@ -34,11 +35,11 @@ void main()
                 }
             );
 
-            test('Leading block comment, single line block comment 2', ()
+            test('Leading spaces+text+space, single line block comment', ()
                 {
-                    const String currentLineSoFar = '    */ ';
+                    const String currentLineSoFar = '    TEXT ';
                     const String inputText = '/**/';
-                    const String expectedText = '/**/';
+                    const String expectedText = inputText;
 
                     final String actualText = LeadingWhitespaceRemover.removeFromComment(currentLineSoFar, inputText, '');
 
@@ -51,29 +52,11 @@ void main()
                 }
             );
 
-            test('Leading block comment, multiline block comment', ()
-                {
-                    const String currentLineSoFar = '    */';
-                    const String inputText = '/*\n*/';
-                    const String expectedText = '/*\n*/';
-
-                    final String actualText = LeadingWhitespaceRemover.removeFromComment(currentLineSoFar, inputText, '');
-
-                    logDebug('currentLineSoFar:\n$currentLineSoFar');
-                    logDebug('inputText:\n$inputText');
-                    logDebug('actualText:\n$actualText');
-                    logDebug('expectedText:\n$expectedText');
-
-                    TestTools.expect(actualText, equals(expectedText));
-                }
-            );
-
-            // TODO: Replace all "leading block comment" with "leading spaces+text" if possible.
             test('Leading spaces+text, multiline block comment', ()
                 {
                     const String currentLineSoFar = '    TEXT';
                     const String inputText = '/*\n*/';
-                    const String expectedText = '/*\n*/';
+                    const String expectedText = '${Constants.INDENT_START}8${Constants.INDENT_END}/*\n${Constants.INDENT_START}0${Constants.INDENT_END}*/';
 
                     final String actualText = LeadingWhitespaceRemover.removeFromComment(currentLineSoFar, inputText, '');
 
@@ -86,28 +69,11 @@ void main()
                 }
             );
 
-            test('Leading block comment, multiline block comment 2', ()
-                {
-                    const String currentLineSoFar = '    */ ';
-                    const String inputText = '/*\n*/';
-                    const String expectedText = '/*\n*/';
-
-                    final String actualText = LeadingWhitespaceRemover.removeFromComment(currentLineSoFar, inputText, '');
-
-                    logDebug('currentLineSoFar:\n$currentLineSoFar');
-                    logDebug('inputText:\n$inputText');
-                    logDebug('actualText:\n$actualText');
-                    logDebug('expectedText:\n$expectedText');
-
-                    TestTools.expect(actualText, equals(expectedText));
-                }
-            );
-
-            test('TODO: proper name', ()
+            test('Leading spaces+text, multiline block comment', ()
                 {
                     const String currentLineSoFar = '    TEXT';
-                    const String inputText = '/*\n    */';
-                    const String expectedText = '/*\n*/';
+                    const String inputText = '/*\n*/';
+                    const String expectedText = '${Constants.INDENT_START}8${Constants.INDENT_END}/*\n${Constants.INDENT_START}0${Constants.INDENT_END}*/';
 
                     final String actualText = LeadingWhitespaceRemover.removeFromComment(currentLineSoFar, inputText, '');
 
@@ -120,11 +86,28 @@ void main()
                 }
             );
 
-            test('TODO: proper name 2', ()
+            test('Leading spaces+text+space, multiline block comment', ()
                 {
-                    const String currentLineSoFar = '    */';
-                    const String inputText = '/*\n    */';
-                    const String expectedText = '/*\n*/';
+                    const String currentLineSoFar = '    TEXT ';
+                    const String inputText = '/*\n*/';
+                    const String expectedText = '${Constants.INDENT_START}009${Constants.INDENT_END}/*\n${Constants.INDENT_START}0${Constants.INDENT_END}*/';
+
+                    final String actualText = LeadingWhitespaceRemover.removeFromComment(currentLineSoFar, inputText, '');
+
+                    logDebug('currentLineSoFar:\n$currentLineSoFar');
+                    logDebug('inputText:\n$inputText');
+                    logDebug('actualText:\n$actualText');
+                    logDebug('expectedText:\n$expectedText');
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
+
+            test('Leading spaces+text+space, multiline block comment, second line has leading spaces', ()
+                {
+                    const String currentLineSoFar = '    TEXT';
+                    const String inputText = '/*a\n    b*/';
+                    const String expectedText = '${Constants.INDENT_START}8${Constants.INDENT_END}/*a\n${Constants.INDENT_START}4${Constants.INDENT_END}b*/';
 
                     final String actualText = LeadingWhitespaceRemover.removeFromComment(currentLineSoFar, inputText, '');
 

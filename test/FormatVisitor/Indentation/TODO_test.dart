@@ -8,14 +8,17 @@ void main()
     TestTools.init();
 
     //const String text = 'class C{void m(){}/*Comment*/}';
-    const String text = 'class C{}/*\n*//*\n*/';
+    const String text =
+        'class C{}/*\n'
+        '*//*\n'
+        '*/';
     final TestGroupConfig testGroupConfig = TestGroupConfig(
         inputNodeCreator: AstCreator.createDeclaration,
         inputMiddle: text,
         name: 'TODO',
         testConfigs: <TestConfig>[
             TestConfig.none(),
-            TestConfig('class C\n{\n}/*\n*//*\n*/')
+            TestConfig('class C\n{\n}        /*\n*//*\n*/')
         //TestConfig('class C\n{\n    void m()\n    {\n    }\n/*Comment*/\n}\n')
         ]
     );

@@ -7,14 +7,14 @@ void main()
 {
     TestTools.init();
 
-    group('Remove, comments, leading comments', ()
+    group('RemoveFrom, comments, leading comments', ()
         {
             test('EndOfLine comment', ()
                 {
                     const String inputText = ' // Comment';
                     const String expectedText = ' // Comment';
 
-                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
+                    final String actualText = LeadingWhitespaceRemover.removeFrom(inputText, removeLeadingSpaces: false);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -25,7 +25,7 @@ void main()
                     const String inputText = ' // Comment';
                     const String expectedText = '// Comment';
 
-                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: true);
+                    final String actualText = LeadingWhitespaceRemover.removeFrom(inputText, removeLeadingSpaces: true);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -36,7 +36,7 @@ void main()
                     const String inputText = ' /* Comment */';
                     const String expectedText = ' /* Comment */';
 
-                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
+                    final String actualText = LeadingWhitespaceRemover.removeFrom(inputText, removeLeadingSpaces: false);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -47,7 +47,7 @@ void main()
                     const String inputText = ' /* Comment */';
                     const String expectedText = '/* Comment */';
 
-                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: true);
+                    final String actualText = LeadingWhitespaceRemover.removeFrom(inputText, removeLeadingSpaces: true);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -59,10 +59,10 @@ void main()
                         '  /* Comment1\n'
                         '  Comment2 */';
                     const String expectedText =
-                        '  /* Comment1\n'
-                        'Comment2 */';
+                        '  <DART_FORMAT_INDENT=00002/>/* Comment1\n'
+                        '<DART_FORMAT_INDENT=2/>Comment2 */';
 
-                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
+                    final String actualText = LeadingWhitespaceRemover.removeFrom(inputText, removeLeadingSpaces: false);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -74,10 +74,10 @@ void main()
                         '  /* Comment1\n'
                         '  Comment2 */';
                     const String expectedText =
-                        '/* Comment1\n'
-                        'Comment2 */';
+                        '<DART_FORMAT_INDENT=00002/>/* Comment1\n'
+                        '<DART_FORMAT_INDENT=2/>Comment2 */';
 
-                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: true);
+                    final String actualText = LeadingWhitespaceRemover.removeFrom(inputText, removeLeadingSpaces: true);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }

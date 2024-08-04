@@ -7,18 +7,17 @@ void main()
 {
     TestTools.init();
 
-    group('Remove, 3 lines', ()
+    group('RemoveFrom, 1 line, space at the start', ()
         {
-            const String baseText = 'Line 1\nLine 2\nLine 3';
-            const String baseInput = baseText;
-            const String baseExpected = baseInput;
+            const String baseInput = ' Line 1';
+            const String baseExpected = 'Line 1';
 
             test('No newlines', ()
                 {
                     const String inputText = baseInput;
-                    const String expectedText = baseExpected;
+                    const String expectedText = ' $baseExpected';
 
-                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
+                    final String actualText = LeadingWhitespaceRemover.removeFrom(inputText, removeLeadingSpaces: false);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -27,9 +26,9 @@ void main()
             test('Newline at the end', ()
                 {
                     const String inputText = '$baseInput\n';
-                    const String expectedText = '$baseExpected\n';
+                    const String expectedText = ' $baseExpected\n';
 
-                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
+                    final String actualText = LeadingWhitespaceRemover.removeFrom(inputText, removeLeadingSpaces: false);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -40,7 +39,7 @@ void main()
                     const String inputText = '\n$baseInput';
                     const String expectedText = '\n$baseExpected';
 
-                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
+                    final String actualText = LeadingWhitespaceRemover.removeFrom(inputText, removeLeadingSpaces: false);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -51,7 +50,7 @@ void main()
                     const String inputText = '\n$baseInput\n';
                     const String expectedText = '\n$baseExpected\n';
 
-                    final String actualText = LeadingWhitespaceRemover.remove(inputText, removeLeadingSpaces: false);
+                    final String actualText = LeadingWhitespaceRemover.removeFrom(inputText, removeLeadingSpaces: false);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }

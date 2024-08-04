@@ -13,7 +13,12 @@ void main()
 
     test('ExpressionStatement and PropertyAccess', ()
         {
-            const String inputText = 'void f()\n{\n    a\n        ..b;\n}\n';
+            const String inputText =
+                'void f()\n'
+                '{\n'
+                '    a\n'
+                '        ..b;\n'
+                '}\n';
             const String expectedText = inputText;
 
             final String actualText = formatterAll.format(inputText);
