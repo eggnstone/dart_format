@@ -45,71 +45,10 @@ class LeadingWhitespaceRemover
                     logInternal('  Result so far:            ${StringTools.toDisplayString(resultSoFar)}');
                 }
 
-                int removedIndent = currentLineSoFar.length - currentLineSoFar.trimLeft().length;
-                if (currentLineSoFar.trim().isNotEmpty || resultAfterLastLineBreak.trim().isNotEmpty || resultSoFar.trim().isNotEmpty)
-                {
-                    String removedText;
-                    if (currentLineSoFar.endsWith(resultAfterLastLineBreak))
-                    {
-                        removedText = currentLineSoFar.substring(0, currentLineSoFar.length - resultAfterLastLineBreak.length);
-                    }
-                    else
-                    {
-                        if (currentLineSoFar.trimRight().endsWith(resultAfterLastLineBreak))
-                        {
-                            removedText = currentLineSoFar.substring(0, currentLineSoFar.trimRight().length - resultAfterLastLineBreak.length);
-                        }
-                        else
-                        {
-                            if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('currentLineSoFar (${StringTools.toDisplayString(currentLineSoFar)})'
-                                    ' does not end with resultAfterLastLineBreak (${StringTools.toDisplayString(resultAfterLastLineBreak)})');
-                            removedText = '';
-                        }
-                    }
-
-                    removedIndent = removedText.length;
-
-                    if (removedText.replaceAll(' ', '').isNotEmpty)
-                    {
-                        logDebug('removedText (${StringTools.toDisplayString(removedText)}) ($removedIndent) is not empty');
-                        if (removedText.contains('*/'))
-                        {
-                            logDebug('  contains */');
-                            removedIndent = 0;
-                            removedText = '';
-                        }
-                        else
-                        {
-                            removedIndent = removedText.length - removedText.trimLeft().length;
-                            logDebug('reduced removedIndent: ${StringTools.toDisplayString(removedIndent)}');
-                            removedText = removedText.substring(removedIndent);
-                            //throw Exception('removedText (${StringTools.toDisplayString(removedText)}) is not empty');
-                        }
-                    }
-
-                    if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('removedText:         ${StringTools.toDisplayString(removedText)}');
-                }
-                else
-                {
-                    if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('removedText:         <only spaces or empty>');
-                }
-
-                if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('removedIndent:  $removedIndent');
-
                 if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer    currentLineSoFarLength:  ${currentLineSoFar.length}');
 
-                //final String adjustedComment = removeFromComment(sb.toString(), currentLineSoFar, part.text, '$spacer    ');
                 final String adjustedComment = removeFromComment(currentLineSoFar, part.text, '$spacer    ');
                 if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInfo('$spacer    Adding comment:  ${StringTools.toDisplayString(adjustedComment)}');
-                /*//final String adjustedComment2 = adjustedComment;
-                final String adjustedComment2 = removedIndent == 0
-                    ? adjustedComment
-                    : adjustedComment.splitMapJoin('\n',
-                    onNonMatch: (String nonMatch) => 'NonMatch_${nonMatch}_NonMatch',
-                    //onMatch: (Match match) => 'Match_${match}_Match'
-                );
-                if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer    Adding comment:  ${StringTools.toDisplayString(adjustedComment2)}');
-                */
                 sb.write(adjustedComment);
             }
             else
@@ -134,13 +73,7 @@ class LeadingWhitespaceRemover
         }
 
         final String result = sb.toString();
-        /*if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
-        {
-            final String cleanedResult = result
-                .replaceAll(Constants.REMOVE_START, '')
-                .replaceAll(Constants.REMOVE_END, '');
-            logInternal('$methodName END\nOUT from remove():\n-----\n${StringTools.toDisplayString(cleanedResult)}\n-----\n$cleanedResult\n-----');
-        }*/
+
 
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
         {
@@ -172,29 +105,8 @@ class LeadingWhitespaceRemover
             return result;
         }
 
-        //int minIndentation = currentLineSoFarLength;
-        /*int minIndentation = removedIndentation;
-        for (int i = 1; i < lines.length; i++)
-        {
-            final String line = lines[i];
-            if (line.trim().isEmpty)
-                continue;
-
-            final int indentation = line.length - line.trimLeft().length;
-            if (minIndentation == -1 || indentation < minIndentation)
-                minIndentation = indentation;
-        }
-
-        if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  minIndentation:              $minIndentation');*/
-
-        /*if (minIndentation > toDoIndentation)
-        {
-            minIndentation -= toDoIndentation;
-            if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  minIndentation-todo:         $minIndentation');
-        }*/
 
         final StringBuffer sb = StringBuffer();
-        //sb.write(Constants.INDENT_START);
 
         if (currentLineSoFar.isEmpty)
         {

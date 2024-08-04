@@ -83,15 +83,17 @@ class Formatter
     String _verifyResult(String s, String result, LineInfo lineInfo)
     {
         final String condensedInput = s.replaceAll(RegExp(r'\s'), '').trim();
-        final String condensedResultWithIgnores = result.replaceAll(RegExp(r'\s'), '').trim();
-        final String condensedResultWithoutIgnores = FormatTools.removeIndentTags(FormatTools.removeIgnoreTags(condensedResultWithIgnores));
-        if (condensedResultWithoutIgnores == condensedInput)
+        final String condensedResult = result.replaceAll(RegExp(r'\s'), '').trim();
+        final String cleanedCondensedResult = FormatTools.removeIndentTags(FormatTools.removeIgnoreTags(condensedResult));
+        if (cleanedCondensedResult == condensedInput)
         {
-            if (Constants.DEBUG_FORMATTER) logInternal('  result: ${StringTools.toDisplayString(result, Constants.MAX_DEBUG_LENGTH)}"');
-
-            final String resultWithoutIgnores = FormatTools.resolveIndents(FormatTools.resolveIgnores(result));
-            if (Constants.DEBUG_FORMATTER) logInternal('  resultWithoutIgnores: ${StringTools.toDisplayString(resultWithoutIgnores, Constants.MAX_DEBUG_LENGTH)}"');
-            return resultWithoutIgnores;
+            final String resolvedResult = FormatTools.resolveIndents(FormatTools.resolveIgnores(result));
+            if (Constants.DEBUG_FORMATTER)
+            {
+                logInternal('  result:         ${StringTools.toDisplayString(result, Constants.MAX_DEBUG_LENGTH)}"');
+                logInternal('  resolvedResult: ${StringTools.toDisplayString(resolvedResult, Constants.MAX_DEBUG_LENGTH)}"');
+            }
+            return resolvedResult;
         }
 
         final IntTuple positions = StringTools.findDiff(s, result);
@@ -118,22 +120,27 @@ class Formatter
             'Input:  ${StringTools.toDisplayString(s.substring(positions.item1), Constants.MAX_DEBUG_LENGTH)}\n'
             'Result: ${StringTools.toDisplayString(result.substring(positions.item2), Constants.MAX_DEBUG_LENGTH)}';
 
-            //if (Constants.DEBUG_FORMATTER)
-            logInternal('Invalid changes detected:\n-----\n$result\n-----');
+            if (Constants.DEBUG_FORMATTER) logInternal('Invalid changes detected:\n-----\n$result\n-----');
         }
 
         if (Constants.DEBUG_FORMATTER)
         {
             logInternal('$message1\n$message2');
 
-            final IntTuple positions2 = StringTools.findDiff(condensedInput, condensedResultWithIgnores);
-            if (positions2 != createEmptyIntTuple())
+            final IntTuple positions2 = StringTools.findDiff(condensedInput, cleanedCondensedResult);
+            if (positions2 == createEmptyIntTuple())
+            {
+                logInternal('Nothing found, even when comparing condensedInput and condensedResultWithIgnores.');
+                logInternal('condensedInput:\n$condensedInput');
+                logInternal('cleanedCondensedResult:\n$cleanedCondensedResult');
+            }
+            else
             {
                 final String message2a =
-                    'Same:                       ${StringTools.toDisplayStringCutAtFront(condensedResultWithIgnores.substring(0, positions2.item2), Constants.MAX_DEBUG_LENGTH)}\n'
-                    'CondensedInput:             ${StringTools.toDisplayString(condensedInput.substring(positions2.item1), Constants.MAX_DEBUG_LENGTH)}\n'
-                    'CondensedResultWithIgnores: ${StringTools.toDisplayString(condensedResultWithIgnores.substring(positions2.item2), Constants.MAX_DEBUG_LENGTH)}';
-                if (Constants.DEBUG_FORMATTER) logInternal('\n$message2a');
+                    'Same:                   ${StringTools.toDisplayStringCutAtFront(cleanedCondensedResult.substring(0, positions2.item2), Constants.MAX_DEBUG_LENGTH)}\n'
+                    'condensedInput:         ${StringTools.toDisplayString(condensedInput.substring(positions2.item1), Constants.MAX_DEBUG_LENGTH)}\n'
+                    'cleanedCondensedResult: ${StringTools.toDisplayString(cleanedCondensedResult.substring(positions2.item2), Constants.MAX_DEBUG_LENGTH)}';
+                logInternal('\n$message2a');
             }
         }
 
