@@ -47,11 +47,95 @@ void main()
                 }
             );
 
+            test('Raw single-quote string', ()
+                {
+                    const String inputText = "r'abc'\n";
+                    const List<TextInfo> expectedResult = <TextInfo>[
+                        TextInfo(type: TextType.String, text: "r'abc'"),
+                        TextInfo(type: TextType.Normal, text: '\n')
+                    ];
+
+                    final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+
+                    expect(actualResult, equals(expectedResult));
+                }
+            );
+
+            test('Triple single-quote string', ()
+                {
+                    const String inputText = "'''abc'''\n";
+                    const List<TextInfo> expectedResult = <TextInfo>[
+                        TextInfo(type: TextType.String, text: "'''abc'''"),
+                        TextInfo(type: TextType.Normal, text: '\n')
+                    ];
+
+                    final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+
+                    expect(actualResult, equals(expectedResult));
+                }
+            );
+
+            test('Raw triple single-quote string', ()
+                {
+                    const String inputText = "r'''abc'''\n";
+                    const List<TextInfo> expectedResult = <TextInfo>[
+                        TextInfo(type: TextType.String, text: "r'''abc'''"),
+                        TextInfo(type: TextType.Normal, text: '\n')
+                    ];
+
+                    final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+
+                    expect(actualResult, equals(expectedResult));
+                }
+            );
+
             test('Double-quote string', ()
                 {
                     const String inputText = '"abc"\n';
                     const List<TextInfo> expectedResult = <TextInfo>[
                         TextInfo(type: TextType.String, text: '"abc"'),
+                        TextInfo(type: TextType.Normal, text: '\n')
+                    ];
+
+                    final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+
+                    expect(actualResult, equals(expectedResult));
+                }
+            );
+
+            test('Raw double-quote string', ()
+                {
+                    const String inputText = 'r"abc"\n';
+                    const List<TextInfo> expectedResult = <TextInfo>[
+                        TextInfo(type: TextType.String, text: 'r"abc"'),
+                        TextInfo(type: TextType.Normal, text: '\n')
+                    ];
+
+                    final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+
+                    expect(actualResult, equals(expectedResult));
+                }
+            );
+
+            test('Triple double-quote string', ()
+                {
+                    const String inputText = '"""abc"""\n';
+                    const List<TextInfo> expectedResult = <TextInfo>[
+                        TextInfo(type: TextType.String, text: '"""abc"""'),
+                        TextInfo(type: TextType.Normal, text: '\n')
+                    ];
+
+                    final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+
+                    expect(actualResult, equals(expectedResult));
+                }
+            );
+
+            test('Raw triple double-quote string', ()
+                {
+                    const String inputText = 'r"""abc"""\n';
+                    const List<TextInfo> expectedResult = <TextInfo>[
+                        TextInfo(type: TextType.String, text: 'r"""abc"""'),
                         TextInfo(type: TextType.Normal, text: '\n')
                     ];
 

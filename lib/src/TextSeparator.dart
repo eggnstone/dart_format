@@ -9,6 +9,24 @@ import 'Types/TextType.dart';
 
 class TextSeparator
 {
+    static const String SINGLE_QUOTE = "'";
+    static const String DOUBLE_QUOTE = '"';
+
+    static const String RAW_SINGLE_QUOTE = "r'";
+    static const String RAW_DOUBLE_QUOTE = 'r"';
+
+    static const String TRIPLE_SINGLE_QUOTE = "'''";
+    static const String TRIPLE_DOUBLE_QUOTE = '"""';
+
+    static const String RAW_TRIPLE_SINGLE_QUOTE = "r'''";
+    static const String RAW_TRIPLE_DOUBLE_QUOTE = 'r"""';
+
+    static const String END_OF_LINE_COMMENT_START = '//';
+    static const String END_OF_LINE_COMMENT_END = '\n';
+
+    static const String BLOCK_COMMENT_START = '/*';
+    static const String BLOCK_COMMENT_END = '*/';
+
     static List<TextInfo> separate(String s, String spacer)
     {
         if (s.isEmpty)
@@ -27,71 +45,130 @@ class TextSeparator
                 logInternal('$spacer  Rest:       ${StringTools.toDisplayString(s.substring(currentPos))}');
             }
 
-            final int? singleQuotePos = StringTools.indexOfOrNull(s, "'", currentPos);
-            final int? rawSingleQuotePos = StringTools.indexOfOrNull(s, "r'", currentPos);
-            final int? doubleQuotePos = StringTools.indexOfOrNull(s, '"', currentPos);
-            final int? rawDoubleQuotePos = StringTools.indexOfOrNull(s, 'r"', currentPos);
-            final int? endOfLineCommentStartPos = StringTools.indexOfOrNull(s, '//', currentPos);
-            final int? blockCommentStartPos = StringTools.indexOfOrNull(s, '/*', currentPos);
+            final int? singleQuotePos = StringTools.indexOfOrNull(s, SINGLE_QUOTE, currentPos);
+            final int? rawSingleQuotePos = StringTools.indexOfOrNull(s, RAW_SINGLE_QUOTE, currentPos);
+            final int? doubleQuotePos = StringTools.indexOfOrNull(s, DOUBLE_QUOTE, currentPos);
+            final int? rawDoubleQuotePos = StringTools.indexOfOrNull(s, RAW_DOUBLE_QUOTE, currentPos);
+            final int? tripleSingleQuotePos = StringTools.indexOfOrNull(s, TRIPLE_SINGLE_QUOTE, currentPos);
+            final int? rawTripleSingleQuotePos = StringTools.indexOfOrNull(s, RAW_TRIPLE_SINGLE_QUOTE, currentPos);
+            final int? tripleDoubleQuotePos = StringTools.indexOfOrNull(s, TRIPLE_DOUBLE_QUOTE, currentPos);
+            final int? rawTripleDoubleQuotePos = StringTools.indexOfOrNull(s, RAW_TRIPLE_DOUBLE_QUOTE, currentPos);
+            final int? endOfLineCommentStartPos = StringTools.indexOfOrNull(s, END_OF_LINE_COMMENT_START, currentPos);
+            final int? blockCommentStartPos = StringTools.indexOfOrNull(s, BLOCK_COMMENT_START, currentPos);
             if (Constants.DEBUG_TEXT_EXTRACTOR)
             {
                 logInternal('${spacer}    singleQuotePos:           $singleQuotePos');
                 logInternal('${spacer}    rawSingleQuotePos:        $rawSingleQuotePos');
                 logInternal('${spacer}    doubleQuotePos:           $doubleQuotePos');
                 logInternal('${spacer}    rawDoubleQuotePos:        $rawDoubleQuotePos');
+                logInternal('${spacer}    tripleSingleQuotePos:     $tripleSingleQuotePos');
+                logInternal('${spacer}    rawTripleSingleQuotePos:  $rawTripleSingleQuotePos');
+                logInternal('${spacer}    tripleDoubleQuotePos:     $tripleDoubleQuotePos');
+                logInternal('${spacer}    rawTripleDoubleQuotePos:  $rawTripleDoubleQuotePos');
                 logInternal('${spacer}    endOfLineCommentStartPos: $endOfLineCommentStartPos');
                 logInternal('${spacer}    blockCommentStartPos:     $blockCommentStartPos');
             }
 
-            final int? first = _getFirst(singleQuotePos, rawSingleQuotePos, doubleQuotePos, rawDoubleQuotePos, endOfLineCommentStartPos, blockCommentStartPos);
-            if (first != null && first > currentPos)
+            final int? first = _getFirst(<int?>[singleQuotePos, rawSingleQuotePos, doubleQuotePos, rawDoubleQuotePos, endOfLineCommentStartPos, blockCommentStartPos]);
+            if (first != null)
             {
-                final TextInfo info = TextInfo(type: TextType.Normal, text: s.substring(currentPos, first));
-                if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
-                result.add(info);
-                currentPos += info.text.length;
-            }
+                if (first > currentPos)
+                {
+                    final TextInfo info = TextInfo(type: TextType.Normal, text: s.substring(currentPos, first));
+                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
+                    result.add(info);
+                    currentPos += info.text.length;
+                }
 
-            if (_isFirst(singleQuotePos, doubleQuotePos, blockCommentStartPos, endOfLineCommentStartPos))
-            {
-                final bool isRaw = rawSingleQuotePos != null && rawSingleQuotePos + 1 == singleQuotePos;
-                final int startPos = isRaw ? rawSingleQuotePos : singleQuotePos!;
-                final String startMarker = isRaw ? "r'" : "'";
-                final TextInfo info = TextExtractor.extract(s.substring(startPos), TextType.String, startMarker, "'", spacer: '$spacer  ', isRaw: isRaw);
-                if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
-                result.add(info);
-                currentPos += info.text.length;
-                continue;
-            }
+                if (rawTripleSingleQuotePos == first)
+                {
+                    final TextInfo info = TextExtractor.extract(s.substring(rawTripleSingleQuotePos!), TextType.String, RAW_TRIPLE_SINGLE_QUOTE, TRIPLE_SINGLE_QUOTE, spacer: '$spacer  ', isRaw: true);
+                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
+                    result.add(info);
+                    currentPos += info.text.length;
+                    continue;
+                }
 
-            if (_isFirst(doubleQuotePos, singleQuotePos, blockCommentStartPos, endOfLineCommentStartPos))
-            {
-                final bool isRaw = rawDoubleQuotePos != null && rawDoubleQuotePos + 1 == doubleQuotePos;
-                final int startPos = isRaw ? rawDoubleQuotePos : doubleQuotePos!;
-                final String startMarker = isRaw ? 'r"' : '"';
-                final TextInfo info = TextExtractor.extract(s.substring(startPos), TextType.String, startMarker, '"', spacer: '$spacer  ', isRaw: isRaw);
-                if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
-                result.add(info);
-                currentPos += info.text.length;
-                continue;
-            }
+                if (tripleSingleQuotePos == first)
+                {
+                    final TextInfo info = TextExtractor.extract(s.substring(tripleSingleQuotePos!), TextType.String, TRIPLE_SINGLE_QUOTE, TRIPLE_SINGLE_QUOTE, spacer: '$spacer  ');
+                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
+                    result.add(info);
+                    currentPos += info.text.length;
+                    continue;
+                }
 
-            if (_isFirst(endOfLineCommentStartPos, singleQuotePos, doubleQuotePos, blockCommentStartPos))
-            {
-                final TextInfo info = TextExtractor.extract(s.substring(endOfLineCommentStartPos!), TextType.Comment, '//', '\n', forceClosed: false, spacer: '$spacer  ');
-                if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
-                result.add(info);
-                currentPos += info.text.length;
-                continue;
-            }
+                if (rawSingleQuotePos == first)
+                {
+                    final TextInfo info = TextExtractor.extract(s.substring(rawSingleQuotePos!), TextType.String, RAW_SINGLE_QUOTE, SINGLE_QUOTE, spacer: '$spacer  ', isRaw: true);
+                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
+                    result.add(info);
+                    currentPos += info.text.length;
+                    continue;
+                }
 
-            if (_isFirst(blockCommentStartPos, singleQuotePos, doubleQuotePos, endOfLineCommentStartPos))
-            {
-                final TextInfo info = TextExtractor.extract(s.substring(blockCommentStartPos!), TextType.Comment, '/*', '*/', allowNested: true, spacer: '$spacer  ');
-                if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
-                result.add(info);
-                currentPos += info.text.length;
-                continue;
+                if (singleQuotePos == first)
+                {
+                    final TextInfo info = TextExtractor.extract(s.substring(singleQuotePos!), TextType.String, SINGLE_QUOTE, SINGLE_QUOTE, spacer: '$spacer  ');
+                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
+                    result.add(info);
+                    currentPos += info.text.length;
+                    continue;
+                }
+
+                if (rawTripleDoubleQuotePos == first)
+                {
+                    final TextInfo info = TextExtractor.extract(s.substring(rawTripleDoubleQuotePos!), TextType.String, RAW_TRIPLE_DOUBLE_QUOTE, TRIPLE_DOUBLE_QUOTE, spacer: '$spacer  ', isRaw: true);
+                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
+                    result.add(info);
+                    currentPos += info.text.length;
+                    continue;
+                }
+
+                if (tripleDoubleQuotePos == first)
+                {
+                    final TextInfo info = TextExtractor.extract(s.substring(tripleDoubleQuotePos!), TextType.String, TRIPLE_DOUBLE_QUOTE, TRIPLE_DOUBLE_QUOTE, spacer: '$spacer  ');
+                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
+                    result.add(info);
+                    currentPos += info.text.length;
+                    continue;
+                }
+
+                if (rawDoubleQuotePos == first)
+                {
+                    final TextInfo info = TextExtractor.extract(s.substring(rawDoubleQuotePos!), TextType.String, RAW_DOUBLE_QUOTE, DOUBLE_QUOTE, spacer: '$spacer  ', isRaw: true);
+                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
+                    result.add(info);
+                    currentPos += info.text.length;
+                    continue;
+                }
+
+                if (doubleQuotePos == first)
+                {
+                    final TextInfo info = TextExtractor.extract(s.substring(doubleQuotePos!), TextType.String, DOUBLE_QUOTE, DOUBLE_QUOTE, spacer: '$spacer  ');
+                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
+                    result.add(info);
+                    currentPos += info.text.length;
+                    continue;
+                }
+
+                if (endOfLineCommentStartPos == first)
+                {
+                    final TextInfo info = TextExtractor.extract(s.substring(endOfLineCommentStartPos!), TextType.Comment, END_OF_LINE_COMMENT_START, END_OF_LINE_COMMENT_END, forceClosed: false, spacer: '$spacer  ');
+                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
+                    result.add(info);
+                    currentPos += info.text.length;
+                    continue;
+                }
+
+                if (blockCommentStartPos == first)
+                {
+                    final TextInfo info = TextExtractor.extract(s.substring(blockCommentStartPos!), TextType.Comment, BLOCK_COMMENT_START, BLOCK_COMMENT_END, allowNested: true, spacer: '$spacer  ');
+                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
+                    result.add(info);
+                    currentPos += info.text.length;
+                    continue;
+                }
             }
 
             final TextInfo info = TextInfo(type: TextType.Normal, text: s.substring(currentPos));
@@ -103,44 +180,18 @@ class TextSeparator
         return result;
     }
 
-    static bool _isFirst(int? main, int? other1, int? other2, int? other3)
-    {
-        if (main == null)
-            return false;
-
-        if (other1 != null && other1 < main)
-            return false;
-
-        if (other2 != null && other2 < main)
-            return false;
-
-        if (other3 != null && other3 < main)
-            return false;
-
-        return true;
-    }
-
-    static int? _getFirst(int? i1,     int? i2,     int? i3,     int? i4,     int? i5,     int? i6)
+    static int? _getFirst(List<int?> values)
     {
         int? result;
 
-        if (i1 != null)
-            result = i1;
+        for (int? value in values)
+        {
+            if (value == null)
+                continue;
 
-        if (i2 != null && (result == null || i2 < result))
-            result = i2;
-
-        if (i3 != null && (result == null || i3 < result))
-            result = i3;
-
-        if (i4 != null && (result == null || i4 < result))
-            result = i4;
-
-        if (i5 != null && (result == null || i5 < result))
-            result = i5;
-
-        if (i6 != null && (result == null || i6 < result))
-            result = i6;
+            if (result == null || value < result)
+                result = value;
+        }
 
         return result;
     }
