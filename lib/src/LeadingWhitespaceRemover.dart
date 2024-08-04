@@ -74,7 +74,6 @@ class LeadingWhitespaceRemover
 
         final String result = sb.toString();
 
-
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
         {
             logInternal('  currentLineSoFar:  ${StringTools.toDisplayString(initialCurrentLineSoFar)}');
@@ -104,7 +103,6 @@ class LeadingWhitespaceRemover
             if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  Only 1 line:      ${StringTools.toDisplayString(result)}');
             return result;
         }
-
 
         final StringBuffer sb = StringBuffer();
 

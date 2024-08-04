@@ -1,3 +1,4 @@
+import 'package:dart_format/src/Constants/Constants.dart';
 import 'package:dart_format/src/LeadingWhitespaceRemover.dart';
 import 'package:test/test.dart';
 
@@ -59,8 +60,8 @@ void main()
                         '  /* Comment1\n'
                         '  Comment2 */';
                     const String expectedText =
-                        '  <DART_FORMAT_INDENT=00002/>/* Comment1\n'
-                        '<DART_FORMAT_INDENT=2/>Comment2 */';
+                        '  ${Constants.INDENT_START}00002${Constants.INDENT_END}/* Comment1\n'
+                        '${Constants.INDENT_START}2${Constants.INDENT_END}Comment2 */';
 
                     final String actualText = LeadingWhitespaceRemover.removeFrom(inputText, removeLeadingSpaces: false);
 
@@ -74,8 +75,8 @@ void main()
                         '  /* Comment1\n'
                         '  Comment2 */';
                     const String expectedText =
-                        '<DART_FORMAT_INDENT=00002/>/* Comment1\n'
-                        '<DART_FORMAT_INDENT=2/>Comment2 */';
+                        '${Constants.INDENT_START}00002${Constants.INDENT_END}/* Comment1\n'
+                        '${Constants.INDENT_START}2${Constants.INDENT_END}Comment2 */';
 
                     final String actualText = LeadingWhitespaceRemover.removeFrom(inputText, removeLeadingSpaces: true);
 
