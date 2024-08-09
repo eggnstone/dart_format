@@ -91,13 +91,13 @@ class TextFinder
         return result;
     }
 
-    static bool isFirst(int main, List<int> others)
+    static bool isFirst(int? main, List<int?> others)
     {
-        if (main == -1)
+        if (main == null)
             return false;
 
-        for (int other in others)
-            if (other != -1 && other < main)
+        for (int? other in others)
+            if (other != null && other < main)
                 return false;
 
         return true;
