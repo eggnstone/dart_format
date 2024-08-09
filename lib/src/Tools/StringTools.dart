@@ -33,9 +33,12 @@ class StringTools
         return IntTuple(indexInput, indexResult);
     }
 
-    static int? indexOfOrNull(String s, String pattern, int start)
+    static int? indexOfOrNull(String s, Pattern pattern, int start, {required bool handleEscape})
     {
         final int index = s.indexOf(pattern, start);
+        if (handleEscape && index > 0 && s[index - 1] == r'\')
+            return indexOfOrNull(s, pattern, index + 1, handleEscape: true);
+
         return index < 0 ? null : index;
     }
 

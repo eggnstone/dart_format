@@ -44,37 +44,70 @@ void main()
                 }
             );
 
+            test(r'Single-quote string with ${}', ()
+                {
+                    const String inputText = r"'${x}'";
+                    const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: inputText)];
+
+                    final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+
+                    expect(actualResult, equals(expectedResult));
+                }
+            );
+
+            test(r'Single-quote string with ${?:}', ()
+                {
+                    const String inputText = r"'${x ? 'a' : 'b'}'";
+                    const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: inputText)];
+
+                    final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+
+                    expect(actualResult, equals(expectedResult));
+                }
+            );
+
+            test(r'Single-quote string with ${?:} and \}', ()
+                {
+                    const String inputText = r"'${x ? '\}a\}' : '\}b\}'}'";
+                    const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: inputText)];
+
+                    final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+
+                    expect(actualResult, equals(expectedResult));
+                }
+            );
+
             test('Raw single-quote string', ()
-            {
-                const String inputText = "r'abc'";
-                const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: "r'abc'")];
+                {
+                    const String inputText = "r'abc'";
+                    const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: "r'abc'")];
 
-                final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+                    final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
 
-                expect(actualResult, equals(expectedResult));
-            }
+                    expect(actualResult, equals(expectedResult));
+                }
             );
 
             test('Triple single-quote string', ()
-            {
-                const String inputText = "'''abc'''";
-                const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: "'''abc'''")];
+                {
+                    const String inputText = "'''abc'''";
+                    const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: "'''abc'''")];
 
-                final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+                    final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
 
-                expect(actualResult, equals(expectedResult));
-            }
+                    expect(actualResult, equals(expectedResult));
+                }
             );
 
             test('Raw triple single-quote string', ()
-            {
-                const String inputText = "r'''abc'''";
-                const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: "r'''abc'''")];
+                {
+                    const String inputText = "r'''abc'''";
+                    const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: "r'''abc'''")];
 
-                final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+                    final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
 
-                expect(actualResult, equals(expectedResult));
-            }
+                    expect(actualResult, equals(expectedResult));
+                }
             );
 
             test('Double-quote string', ()
@@ -89,36 +122,36 @@ void main()
             );
 
             test('Raw double-quote string', ()
-            {
-                const String inputText = 'r"abc"';
-                const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: 'r"abc"')];
+                {
+                    const String inputText = 'r"abc"';
+                    const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: 'r"abc"')];
 
-                final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+                    final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
 
-                expect(actualResult, equals(expectedResult));
-            }
+                    expect(actualResult, equals(expectedResult));
+                }
             );
 
             test('Triple double-quote string', ()
-            {
-                const String inputText = '"""abc"""';
-                const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: '"""abc"""')];
+                {
+                    const String inputText = '"""abc"""';
+                    const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: '"""abc"""')];
 
-                final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+                    final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
 
-                expect(actualResult, equals(expectedResult));
-            }
+                    expect(actualResult, equals(expectedResult));
+                }
             );
 
             test('Raw triple double-quote string', ()
-            {
-                const String inputText = 'r"""abc"""';
-                const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: 'r"""abc"""')];
+                {
+                    const String inputText = 'r"""abc"""';
+                    const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: 'r"""abc"""')];
 
-                final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+                    final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
 
-                expect(actualResult, equals(expectedResult));
-            }
+                    expect(actualResult, equals(expectedResult));
+                }
             );
 
             test('EndOfLine comment', ()
@@ -176,7 +209,7 @@ void main()
                 }
             );
 
-            test(r'Triple single-quote string with ${}', ()
+            test(r'Triple single-quote string with ${?:}', ()
                 {
                     const String inputText = r"'''${x ? '''a''' : '''b'''}'''";
                     const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: inputText)];
@@ -187,7 +220,7 @@ void main()
                 }
             );
 
-            test(r'Triple single-quote string with ${} and \}', ()
+            test(r'Triple single-quote string with ${?:} and \}', ()
                 {
                     const String inputText = r"'''${x ? '''\}a\}''' : '''\}b\}'''}'''";
                     const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.String, text: inputText)];

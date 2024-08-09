@@ -1,8 +1,11 @@
 // ignore_for_file: always_put_control_body_on_new_line
 
 import 'Constants/Constants.dart';
+import 'Constants/TextConstants.dart';
 import 'Data/TextInfo.dart';
 import 'Exceptions/DartFormatException.dart';
+import 'FindEndTextResult.dart';
+import 'TextFinder.dart';
 import 'Tools/LogTools.dart';
 import 'Tools/StringTools.dart';
 import 'Types/TextType.dart';
@@ -21,8 +24,18 @@ class TextExtractor
         int currentPos = startMarker.length;
         while (currentPos < s.length)
         {
-            final int endMarkerPos = s.indexOf(endMarker, currentPos);
-            if (endMarkerPos == -1)
+            int currentPos2 = currentPos;
+            FindEndTextResult endInfo = TextFinder.findEnd(s, currentPos2, endMarker, isRaw: isRaw, spacer: '$spacer  ');
+            while (endInfo.interpolationEndPos != null)
+            {
+                currentPos2 = endInfo.interpolationEndPos! + TextConstants.INTERPOLATION_END.length;
+                endInfo = TextFinder.findEnd(s, currentPos2, endMarker, isRaw: isRaw, spacer: '$spacer    ');
+            }
+
+            final int? endMarkerPos = endInfo.endMarkerPos;
+            if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('${spacer}  endMarkerPos: $endMarkerPos');
+
+            if (endMarkerPos == null)
             {
                 if (forceClosed)
                     throw DartFormatException.error('No end marker found: ${StringTools.toDisplayString(s)}');
@@ -31,23 +44,23 @@ class TextExtractor
                 return TextInfo(type: type, text: s);
             }
 
-            final int start2MarkerPos = allowNested ? s.indexOf(startMarker, currentPos) : -1;
+            final int? start2MarkerPos = allowNested ? StringTools.indexOfOrNull(s, startMarker, currentPos, handleEscape: !isRaw) : null;
             final int escapePos = isRaw ? -1 : s.indexOf(r'\', currentPos);
             if (Constants.DEBUG_TEXT_EXTRACTOR)
             {
-                logInternal('${spacer}  escapePos:       $escapePos');
+                logInternal('!!!!  escapePos:       $escapePos');
                 logInternal('${spacer}  start2MarkerPos: $start2MarkerPos');
                 logInternal('${spacer}  endMarkerPos:    $endMarkerPos');
             }
 
-            if (_isFirst(escapePos, endMarkerPos, start2MarkerPos))
+            /*if (TextFinder.isFirst(escapePos, <int>[endMarkerPos, start2MarkerPos]))
             {
                 if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('${spacer}  Skipping escaped marker at $escapePos: ${StringTools.toDisplayString(s.substring(escapePos, escapePos + 2))}');
                 currentPos = escapePos + 2;
                 continue;
-            }
+            }*/
 
-            if (_isFirst(start2MarkerPos, endMarkerPos, escapePos))
+            if (start2MarkerPos != null && TextFinder.isFirst(start2MarkerPos, <int>[endMarkerPos/*, escapePos*/]))
             {
                 if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('${spacer}  Increasing depth at $start2MarkerPos');
                 depth++;
@@ -84,19 +97,5 @@ class TextExtractor
 
         if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('${spacer}  Only escaped end marker found => Returning all');
         return TextInfo(type: type, text: s);
-    }
-
-    static bool _isFirst(int main, int other1, int other2)
-    {
-        if (main == -1)
-            return false;
-
-        if (other1 != -1 && other1 < main)
-            return false;
-
-        if (other2 != -1 && other2 < main)
-            return false;
-
-        return true;
     }
 }
