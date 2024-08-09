@@ -13,8 +13,9 @@ void main()
         {
             test('Empty', ()
                 {
-                    const String inputText = '\n';
-                    const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.Normal, text: '\n')];
+                    const String baseText = '';
+                    const String inputText = '$baseText\n';
+                    const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.Normal, text: inputText)];
 
                     final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
 
@@ -24,8 +25,9 @@ void main()
 
             test('Normal text', ()
                 {
-                    const String inputText = 'abc\n';
-                    const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.Normal, text: 'abc\n')];
+                    const String baseText = 'abc';
+                    const String inputText = '$baseText\n';
+                    const List<TextInfo> expectedResult = <TextInfo>[TextInfo(type: TextType.Normal, text: inputText)];
 
                     final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
 
@@ -35,9 +37,10 @@ void main()
 
             test('Single-quote string', ()
                 {
-                    const String inputText = "'abc'\n";
+                    const String baseText = "'abc'";
+                    const String inputText = '$baseText\n';
                     const List<TextInfo> expectedResult = <TextInfo>[
-                        TextInfo(type: TextType.String, text: "'abc'"),
+                        TextInfo(type: TextType.String, text: baseText),
                         TextInfo(type: TextType.Normal, text: '\n')
                     ];
 
@@ -49,9 +52,10 @@ void main()
 
             test('Raw single-quote string', ()
                 {
-                    const String inputText = "r'abc'\n";
+                    const String baseText = "r'abc'";
+                    const String inputText = '$baseText\n';
                     const List<TextInfo> expectedResult = <TextInfo>[
-                        TextInfo(type: TextType.String, text: "r'abc'"),
+                        TextInfo(type: TextType.String, text: baseText),
                         TextInfo(type: TextType.Normal, text: '\n')
                     ];
 
@@ -63,9 +67,10 @@ void main()
 
             test('Triple single-quote string', ()
                 {
-                    const String inputText = "'''abc'''\n";
+                    const String baseText = "'''abc'''";
+                    const String inputText = '$baseText\n';
                     const List<TextInfo> expectedResult = <TextInfo>[
-                        TextInfo(type: TextType.String, text: "'''abc'''"),
+                        TextInfo(type: TextType.String, text: baseText),
                         TextInfo(type: TextType.Normal, text: '\n')
                     ];
 
@@ -77,9 +82,10 @@ void main()
 
             test('Raw triple single-quote string', ()
                 {
-                    const String inputText = "r'''abc'''\n";
+                    const String baseText = "r'''abc'''";
+                    const String inputText = '$baseText\n';
                     const List<TextInfo> expectedResult = <TextInfo>[
-                        TextInfo(type: TextType.String, text: "r'''abc'''"),
+                        TextInfo(type: TextType.String, text: baseText),
                         TextInfo(type: TextType.Normal, text: '\n')
                     ];
 
@@ -91,9 +97,10 @@ void main()
 
             test('Double-quote string', ()
                 {
-                    const String inputText = '"abc"\n';
+                    const String baseText = '"abc"';
+                    const String inputText = '$baseText\n';
                     const List<TextInfo> expectedResult = <TextInfo>[
-                        TextInfo(type: TextType.String, text: '"abc"'),
+                        TextInfo(type: TextType.String, text: baseText),
                         TextInfo(type: TextType.Normal, text: '\n')
                     ];
 
@@ -105,9 +112,10 @@ void main()
 
             test('Raw double-quote string', ()
                 {
-                    const String inputText = 'r"abc"\n';
+                    const String baseText = 'r"abc"';
+                    const String inputText = '$baseText\n';
                     const List<TextInfo> expectedResult = <TextInfo>[
-                        TextInfo(type: TextType.String, text: 'r"abc"'),
+                        TextInfo(type: TextType.String, text: baseText),
                         TextInfo(type: TextType.Normal, text: '\n')
                     ];
 
@@ -119,9 +127,10 @@ void main()
 
             test('Triple double-quote string', ()
                 {
-                    const String inputText = '"""abc"""\n';
+                    const String baseText = '"""abc"""';
+                    const String inputText = '$baseText\n';
                     const List<TextInfo> expectedResult = <TextInfo>[
-                        TextInfo(type: TextType.String, text: '"""abc"""'),
+                        TextInfo(type: TextType.String, text: baseText),
                         TextInfo(type: TextType.Normal, text: '\n')
                     ];
 
@@ -133,9 +142,10 @@ void main()
 
             test('Raw triple double-quote string', ()
                 {
-                    const String inputText = 'r"""abc"""\n';
+                    const String baseText = 'r"""abc"""';
+                    const String inputText = '$baseText\n';
                     const List<TextInfo> expectedResult = <TextInfo>[
-                        TextInfo(type: TextType.String, text: 'r"""abc"""'),
+                        TextInfo(type: TextType.String, text: baseText),
                         TextInfo(type: TextType.Normal, text: '\n')
                     ];
 
@@ -147,9 +157,10 @@ void main()
 
             test('EndOfLine comment', ()
                 {
-                    const String inputText = '//Comment\n';
+                    const String baseText = '//Comment';
+                    const String inputText = '$baseText\n';
                     const List<TextInfo> expectedResult = <TextInfo>[
-                        TextInfo(type: TextType.Comment, text: '//Comment'),
+                        TextInfo(type: TextType.Comment, text: baseText),
                         TextInfo(type: TextType.Normal, text: '\n')
                     ];
 
@@ -161,9 +172,10 @@ void main()
 
             test('Block comment', ()
                 {
-                    const String inputText = '/*Comment*/\n';
+                    const String baseText = '/*Comment*/';
+                    const String inputText = '$baseText\n';
                     const List<TextInfo> expectedResult = <TextInfo>[
-                        TextInfo(type: TextType.Comment, text: '/*Comment*/'),
+                        TextInfo(type: TextType.Comment, text: baseText),
                         TextInfo(type: TextType.Normal, text: '\n')
                     ];
 
@@ -171,6 +183,81 @@ void main()
 
                     expect(actualResult, equals(expectedResult));
                 }
+            );
+
+            test('Triple single-quote string', ()
+            {
+                const String baseText = "'''TEXT'''";
+                const String inputText = '$baseText\n';
+                const List<TextInfo> expectedResult = <TextInfo>[
+                    TextInfo(type: TextType.String, text: baseText),
+                    TextInfo(type: TextType.Normal, text: '\n')
+                ];
+
+                final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+
+                expect(actualResult, equals(expectedResult));
+            }
+            );
+
+            test('Triple double-quote string', ()
+            {
+                const String baseText = '"""TEXT"""';
+                const String inputText = '$baseText\n';
+                const List<TextInfo> expectedResult = <TextInfo>[
+                    TextInfo(type: TextType.String, text: baseText),
+                    TextInfo(type: TextType.Normal, text: '\n')
+                ];
+
+                final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+
+                expect(actualResult, equals(expectedResult));
+            }
+            );
+
+            test(r'Triple single-quote string with ${}', ()
+            {
+                const String baseText = r"'''${x}'''";
+                const String inputText = '$baseText\n';
+                const List<TextInfo> expectedResult = <TextInfo>[
+                    TextInfo(type: TextType.String, text: baseText),
+                    TextInfo(type: TextType.Normal, text: '\n')
+                ];
+
+                final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+
+                expect(actualResult, equals(expectedResult));
+            }
+            );
+
+            test(r'Triple single-quote string with ${}', ()
+            {
+                const String baseText = r"'''${x ? '''a''' : '''b'''}'''";
+                const String inputText = '$baseText\n';
+                const List<TextInfo> expectedResult = <TextInfo>[
+                    TextInfo(type: TextType.String, text: baseText),
+                    TextInfo(type: TextType.Normal, text: '\n')
+                ];
+
+                final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+
+                expect(actualResult, equals(expectedResult));
+            }
+            );
+
+            test(r'Triple single-quote string with ${} and \}', ()
+            {
+                const String baseText = r"'''${x ? '''\}a\}''' : '''\}b\}'''}'''";
+                const String inputText = '$baseText\n';
+                const List<TextInfo> expectedResult = <TextInfo>[
+                    TextInfo(type: TextType.String, text: baseText),
+                    TextInfo(type: TextType.Normal, text: '\n')
+                ];
+
+                final List<TextInfo> actualResult = TextSeparator.separate(inputText, '');
+
+                expect(actualResult, equals(expectedResult));
+            }
             );
         }
     );

@@ -45,6 +45,8 @@ class TextSeparator
                 logInternal('$spacer  Rest:       ${StringTools.toDisplayString(s.substring(currentPos))}');
             }
 
+            final int? endOfLineCommentStartPos = StringTools.indexOfOrNull(s, END_OF_LINE_COMMENT_START, currentPos);
+            final int? blockCommentStartPos = StringTools.indexOfOrNull(s, BLOCK_COMMENT_START, currentPos);
             final int? singleQuotePos = StringTools.indexOfOrNull(s, SINGLE_QUOTE, currentPos);
             final int? rawSingleQuotePos = StringTools.indexOfOrNull(s, RAW_SINGLE_QUOTE, currentPos);
             final int? doubleQuotePos = StringTools.indexOfOrNull(s, DOUBLE_QUOTE, currentPos);
@@ -53,10 +55,10 @@ class TextSeparator
             final int? rawTripleSingleQuotePos = StringTools.indexOfOrNull(s, RAW_TRIPLE_SINGLE_QUOTE, currentPos);
             final int? tripleDoubleQuotePos = StringTools.indexOfOrNull(s, TRIPLE_DOUBLE_QUOTE, currentPos);
             final int? rawTripleDoubleQuotePos = StringTools.indexOfOrNull(s, RAW_TRIPLE_DOUBLE_QUOTE, currentPos);
-            final int? endOfLineCommentStartPos = StringTools.indexOfOrNull(s, END_OF_LINE_COMMENT_START, currentPos);
-            final int? blockCommentStartPos = StringTools.indexOfOrNull(s, BLOCK_COMMENT_START, currentPos);
             if (Constants.DEBUG_TEXT_EXTRACTOR)
             {
+                logInternal('${spacer}    endOfLineCommentStartPos: $endOfLineCommentStartPos');
+                logInternal('${spacer}    blockCommentStartPos:     $blockCommentStartPos');
                 logInternal('${spacer}    singleQuotePos:           $singleQuotePos');
                 logInternal('${spacer}    rawSingleQuotePos:        $rawSingleQuotePos');
                 logInternal('${spacer}    doubleQuotePos:           $doubleQuotePos');
@@ -65,8 +67,6 @@ class TextSeparator
                 logInternal('${spacer}    rawTripleSingleQuotePos:  $rawTripleSingleQuotePos');
                 logInternal('${spacer}    tripleDoubleQuotePos:     $tripleDoubleQuotePos');
                 logInternal('${spacer}    rawTripleDoubleQuotePos:  $rawTripleDoubleQuotePos');
-                logInternal('${spacer}    endOfLineCommentStartPos: $endOfLineCommentStartPos');
-                logInternal('${spacer}    blockCommentStartPos:     $blockCommentStartPos');
             }
 
             final int? first = _getFirst(<int?>[singleQuotePos, rawSingleQuotePos, doubleQuotePos, rawDoubleQuotePos, endOfLineCommentStartPos, blockCommentStartPos]);
@@ -80,36 +80,29 @@ class TextSeparator
                     currentPos += info.text.length;
                 }
 
+                if (endOfLineCommentStartPos == first)
+                {
+                    final TextInfo info = TextExtractor.extract(s.substring(endOfLineCommentStartPos!), TextType.Comment, END_OF_LINE_COMMENT_START, END_OF_LINE_COMMENT_END, forceClosed: false, spacer: '$spacer  ');
+                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
+                    result.add(info);
+                    currentPos += info.text.length;
+                    continue;
+                }
+
+                if (blockCommentStartPos == first)
+                {
+                    final TextInfo info = TextExtractor.extract(s.substring(blockCommentStartPos!), TextType.Comment, BLOCK_COMMENT_START, BLOCK_COMMENT_END, allowNested: true, spacer: '$spacer  ');
+                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
+                    result.add(info);
+                    currentPos += info.text.length;
+                    continue;
+                }
+
+                // Raw triple quotes before triple quotes
+
                 if (rawTripleSingleQuotePos == first)
                 {
                     final TextInfo info = TextExtractor.extract(s.substring(rawTripleSingleQuotePos!), TextType.String, RAW_TRIPLE_SINGLE_QUOTE, TRIPLE_SINGLE_QUOTE, spacer: '$spacer  ', isRaw: true);
-                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
-                    result.add(info);
-                    currentPos += info.text.length;
-                    continue;
-                }
-
-                if (tripleSingleQuotePos == first)
-                {
-                    final TextInfo info = TextExtractor.extract(s.substring(tripleSingleQuotePos!), TextType.String, TRIPLE_SINGLE_QUOTE, TRIPLE_SINGLE_QUOTE, spacer: '$spacer  ');
-                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
-                    result.add(info);
-                    currentPos += info.text.length;
-                    continue;
-                }
-
-                if (rawSingleQuotePos == first)
-                {
-                    final TextInfo info = TextExtractor.extract(s.substring(rawSingleQuotePos!), TextType.String, RAW_SINGLE_QUOTE, SINGLE_QUOTE, spacer: '$spacer  ', isRaw: true);
-                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
-                    result.add(info);
-                    currentPos += info.text.length;
-                    continue;
-                }
-
-                if (singleQuotePos == first)
-                {
-                    final TextInfo info = TextExtractor.extract(s.substring(singleQuotePos!), TextType.String, SINGLE_QUOTE, SINGLE_QUOTE, spacer: '$spacer  ');
                     if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
                     result.add(info);
                     currentPos += info.text.length;
@@ -125,9 +118,31 @@ class TextSeparator
                     continue;
                 }
 
+                // Triple quotes before quotes
+
+                if (tripleSingleQuotePos == first)
+                {
+                    final TextInfo info = TextExtractor.extract(s.substring(tripleSingleQuotePos!), TextType.String, TRIPLE_SINGLE_QUOTE, TRIPLE_SINGLE_QUOTE, spacer: '$spacer  ');
+                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
+                    result.add(info);
+                    currentPos += info.text.length;
+                    continue;
+                }
+
                 if (tripleDoubleQuotePos == first)
                 {
                     final TextInfo info = TextExtractor.extract(s.substring(tripleDoubleQuotePos!), TextType.String, TRIPLE_DOUBLE_QUOTE, TRIPLE_DOUBLE_QUOTE, spacer: '$spacer  ');
+                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
+                    result.add(info);
+                    currentPos += info.text.length;
+                    continue;
+                }
+
+                // Raw quotes before quotes
+
+                if (rawSingleQuotePos == first)
+                {
+                    final TextInfo info = TextExtractor.extract(s.substring(rawSingleQuotePos!), TextType.String, RAW_SINGLE_QUOTE, SINGLE_QUOTE, spacer: '$spacer  ', isRaw: true);
                     if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
                     result.add(info);
                     currentPos += info.text.length;
@@ -143,27 +158,20 @@ class TextSeparator
                     continue;
                 }
 
+                // Quotes
+
+                if (singleQuotePos == first)
+                {
+                    final TextInfo info = TextExtractor.extract(s.substring(singleQuotePos!), TextType.String, SINGLE_QUOTE, SINGLE_QUOTE, spacer: '$spacer  ');
+                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
+                    result.add(info);
+                    currentPos += info.text.length;
+                    continue;
+                }
+
                 if (doubleQuotePos == first)
                 {
                     final TextInfo info = TextExtractor.extract(s.substring(doubleQuotePos!), TextType.String, DOUBLE_QUOTE, DOUBLE_QUOTE, spacer: '$spacer  ');
-                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
-                    result.add(info);
-                    currentPos += info.text.length;
-                    continue;
-                }
-
-                if (endOfLineCommentStartPos == first)
-                {
-                    final TextInfo info = TextExtractor.extract(s.substring(endOfLineCommentStartPos!), TextType.Comment, END_OF_LINE_COMMENT_START, END_OF_LINE_COMMENT_END, forceClosed: false, spacer: '$spacer  ');
-                    if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
-                    result.add(info);
-                    currentPos += info.text.length;
-                    continue;
-                }
-
-                if (blockCommentStartPos == first)
-                {
-                    final TextInfo info = TextExtractor.extract(s.substring(blockCommentStartPos!), TextType.Comment, BLOCK_COMMENT_START, BLOCK_COMMENT_END, allowNested: true, spacer: '$spacer  ');
                     if (Constants.DEBUG_TEXT_SEPARATOR) logInternal('$spacer    Found: ${info.type} ${StringTools.toDisplayString(info.text)}');
                     result.add(info);
                     currentPos += info.text.length;
