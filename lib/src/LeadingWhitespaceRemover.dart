@@ -9,7 +9,7 @@ import 'Types/TextType.dart';
 
 class LeadingWhitespaceRemover
 {
-    static String removeFrom(String s, {required bool removeLeadingSpaces, String initialCurrentLineSoFar = '', String resultAfterLastLineBreak = ''})
+    static String removeFrom(String s, {required bool removeLeadingSpaces, String initialCurrentLineSoFar = '', String resultAfterLastLineBreak = '', bool isString = false})
     {
         const String methodName = 'LeadingWhitespaceRemover.removeFrom';
         const String spacer = '  ';
@@ -22,6 +22,9 @@ class LeadingWhitespaceRemover
             logError('  s:                 ${StringTools.toDisplayString(s)}');
             logError('  =                  ${StringTools.toDisplayString(initialCurrentLineSoFar + s)}');
         }
+
+        if (isString)
+            return removeFromNonComment(s, spacer);
 
         final StringBuffer sb = StringBuffer();
 

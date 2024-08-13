@@ -17,14 +17,24 @@ class TextFinder
 
         result.endOfLineCommentStartPos = StringTools.indexOfOrNull(s, TextConstants.END_OF_LINE_COMMENT_START, startPos, handleEscape: true);
         result.blockCommentStartPos = StringTools.indexOfOrNull(s, TextConstants.BLOCK_COMMENT_START, startPos, handleEscape: true);
-        result.singleQuotePos = StringTools.indexOfOrNull(s, TextConstants.SINGLE_QUOTE, startPos, handleEscape: true);
+
+        result.singleQuotePos = null;
+        result.rawSingleQuotePos = null;
+        result.doubleQuotePos = null;
+        result.rawDoubleQuotePos = null;
+        result.tripleSingleQuotePos = null;
+        result.rawTripleSingleQuotePos = null;
+        result.tripleDoubleQuotePos = null;
+        result.rawTripleDoubleQuotePos = null;
+
+        /*result.singleQuotePos = StringTools.indexOfOrNull(s, TextConstants.SINGLE_QUOTE, startPos, handleEscape: true);
         result.rawSingleQuotePos = StringTools.indexOfOrNull(s, TextConstants.RAW_SINGLE_QUOTE, startPos, handleEscape: true);
         result.doubleQuotePos = StringTools.indexOfOrNull(s, TextConstants.DOUBLE_QUOTE, startPos, handleEscape: true);
         result.rawDoubleQuotePos = StringTools.indexOfOrNull(s, TextConstants.RAW_DOUBLE_QUOTE, startPos, handleEscape: true);
         result.tripleSingleQuotePos = StringTools.indexOfOrNull(s, TextConstants.TRIPLE_SINGLE_QUOTE, startPos, handleEscape: true);
         result.rawTripleSingleQuotePos = StringTools.indexOfOrNull(s, TextConstants.RAW_TRIPLE_SINGLE_QUOTE, startPos, handleEscape: true);
         result.tripleDoubleQuotePos = StringTools.indexOfOrNull(s, TextConstants.TRIPLE_DOUBLE_QUOTE, startPos, handleEscape: true);
-        result.rawTripleDoubleQuotePos = StringTools.indexOfOrNull(s, TextConstants.RAW_TRIPLE_DOUBLE_QUOTE, startPos, handleEscape: true);
+        result.rawTripleDoubleQuotePos = StringTools.indexOfOrNull(s, TextConstants.RAW_TRIPLE_DOUBLE_QUOTE, startPos, handleEscape: true);*/
 
         if (Constants.DEBUG_TEXT_EXTRACTOR)
         {

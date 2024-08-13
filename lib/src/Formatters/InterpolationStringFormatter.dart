@@ -9,26 +9,26 @@ import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
-class SimpleStringLiteralFormatter extends IFormatter
+class InterpolationStringFormatter extends IFormatter
 {
     final AstVisitor<void> astVisitor;
     final Config config;
     final FormatState formatState;
 
-    SimpleStringLiteralFormatter(this.config, this.astVisitor, this.formatState);
+    InterpolationStringFormatter(this.config, this.astVisitor, this.formatState);
 
     @override
     void format(AstNode node)
     {
-        const String methodName = 'SimpleStringLiteralFormatter.format';
+        const String methodName = 'InterpolationStringFormatter.format';
         if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
-        if (node is! SimpleStringLiteral)
-            throw FormatException('Not a SimpleStringLiteral: ${node.runtimeType}');
+        if (node is! InterpolationString)
+            throw FormatException('Not an InterpolationString: ${node.runtimeType}');
 
-        //logError('Before node.literal: ${node.literal.runtimeType} ${StringTools.toDisplayString(node.literal, Constants.MAX_DEBUG_LENGTH)}');
-        formatState.copyString(node.literal.offset, node.literal.end, '$methodName/node.literal');
-        //logError('After  node.literal: ${node.literal.runtimeType} ${StringTools.toDisplayString(node.literal, Constants.MAX_DEBUG_LENGTH)}');
+        logError('Before node.contents: ${node.contents.runtimeType} ${StringTools.toDisplayString(node.contents, Constants.MAX_DEBUG_LENGTH)}');
+        formatState.copyEntity(node.contents, astVisitor, '$methodName/node.contents');
+        logError('After  node.contents: ${node.contents.runtimeType} ${StringTools.toDisplayString(node.contents, Constants.MAX_DEBUG_LENGTH)}');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

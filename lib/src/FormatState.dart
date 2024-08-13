@@ -326,7 +326,7 @@ class FormatState
         consumeText(lastConsumedPosition, lastConsumedPosition, s, fullSource);
     }
 
-    void consumeText(int offset, int end, String s, String source)
+    void consumeText(int offset, int end, String s, String source, {bool isString = false})
     {
         const String methodName = 'consumeText';
         final String fullSource = '$source/$methodName';
@@ -378,7 +378,7 @@ class FormatState
         }
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
-        final String fixedS = _removeLeadingWhitespace(s, offset);
+        final String fixedS = _removeLeadingWhitespace(s, offset, isString: isString);
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  S w/o leading ws:          ${StringTools.toDisplayString(fixedS)}');
         write(fixedS);
 
@@ -519,6 +519,16 @@ class FormatState
 
         final String s = getText(offset, end);
         consumeText(offset, end, s, fullSource);
+    }
+
+    void copyString(int offset, int end, String source)
+    {
+        const String methodName = 'copyString';
+        final String fullSource = '$source/$methodName';
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, $source)');
+
+        final String s = getText(offset, end);
+        consumeText(offset, end, s, fullSource, isString: true);
     }
 
     void copyToken(Token token, String source, {
@@ -848,7 +858,7 @@ class FormatState
         logAndThrowError(finalMessage, getLocation(offset1));
     }
 
-    String _removeLeadingWhitespace(String s, int offset)
+    String _removeLeadingWhitespace(String s, int offset, {bool isString = false})
     {
         if (_indentationSpacesPerLevel < 0)
             return s;
@@ -860,7 +870,13 @@ class FormatState
 
             final String resultAfterLastLineBreak = getResultAfterLastLineBreak();
             final String currentLineSoFar = _getCurrentLineSoFar(offset);
-            return LeadingWhitespaceRemover.removeFrom(s, removeLeadingSpaces: false, initialCurrentLineSoFar: currentLineSoFar, resultAfterLastLineBreak: resultAfterLastLineBreak);
+            return LeadingWhitespaceRemover.removeFrom(
+                s,
+                initialCurrentLineSoFar: currentLineSoFar,
+                isString: isString,
+                removeLeadingSpaces: false,
+                resultAfterLastLineBreak: resultAfterLastLineBreak
+            );
         }
         on DartFormatException catch(e, stackTrace)
         {
