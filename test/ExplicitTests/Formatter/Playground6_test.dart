@@ -14,7 +14,7 @@ void main()
 
     group('Playground 6', ()
         {
-            test("format: Text in 3x'", ()
+            test('format: Indent', ()
                 {
                     const String inputText =
                     'void f()\n'

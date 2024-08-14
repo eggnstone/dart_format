@@ -108,8 +108,11 @@ class FormatTools
     {
         final StringBuffer sb = StringBuffer();
 
-        if (Constants.DEBUG_FORMAT_TOOLS) logInfo('resolveIndents()');
-        if (Constants.DEBUG_FORMAT_TOOLS) logInfo('  \n$s');
+        if (Constants.DEBUG_FORMAT_TOOLS)
+        {
+            logInfo('resolveIndents()');
+            logInfo('  \n$s');
+        }
 
         int currentPos = 0;
         String currentText = '';
@@ -158,18 +161,20 @@ class FormatTools
                 {
                     if (indentText == '00000000')
                     {
-                        logWarning('    Previous text is completely empty => remove trailing spaces');
+                        // 00000000 => Indicator for "completely empty"
+                        if (Constants.DEBUG_FORMAT_TOOLS) logDebug('    Previous text is completely empty => remove trailing spaces');
                         currentText = StringTools.removeTrailingSpaces(currentText);
                     }
                     else if (indentText.startsWith('0000'))
                     {
-                        logWarning('    Previous text is empty after trim => ?');
-                        logDebug(s);
-                        throw Exception('TODO: Previous text is empty after trim');
+                        // 0000 => Indicator for "empty after trim"
+                        if (Constants.DEBUG_FORMAT_TOOLS) logDebug('    Previous text is empty after trim => remove trailing spaces except and add old amount of spaces');
+                        currentText = StringTools.removeTrailingSpaces(currentText) + ' ' * indent;
                     }
                     else
                     {
-                        logWarning('    Previous text ends with a space => remove trailing spaces except one');
+                        // 00 => Indicator for "ends with a space"
+                        if (Constants.DEBUG_FORMAT_TOOLS) logDebug('    Previous text ends with a space => remove trailing spaces except one');
                         // ignore: prefer_interpolation_to_compose_strings
                         currentText = StringTools.removeTrailingSpaces(currentText) + ' ';
                     }

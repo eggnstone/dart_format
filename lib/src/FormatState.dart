@@ -294,7 +294,7 @@ class FormatState
         if (Constants.DEBUG_FORMAT_STATE)
         {
             logInternal('  lastConsumedPosition:            $lastConsumedPosition');
-            logInternal('  token.precedingComments:         ${token.precedingComments}');
+            logInternal('  token.precedingComments:         ${StringTools.toDisplayString(token.precedingComments)}');
             logInternal('  token.precedingComments?.offset: ${token.precedingComments?.offset}');
             logInternal('  token.offset:                    ${token.offset}');
             logInternal('  end:                             $end');

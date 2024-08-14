@@ -16,11 +16,11 @@ class LeadingWhitespaceRemover
 
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
         {
-            logError('removeFrom()');
-            logError('  currentLineSoFar:  ${StringTools.toDisplayString(initialCurrentLineSoFar)}');
-            logError('  resultAfterLastLB: ${StringTools.toDisplayString(resultAfterLastLineBreak)}');
-            logError('  s:                 ${StringTools.toDisplayString(s)}');
-            logError('  =                  ${StringTools.toDisplayString(initialCurrentLineSoFar + s)}');
+            logDebug('removeFrom()');
+            logDebug('  currentLineSoFar:  ${StringTools.toDisplayString(initialCurrentLineSoFar)}');
+            logDebug('  resultAfterLastLB: ${StringTools.toDisplayString(resultAfterLastLineBreak)}');
+            logDebug('  s:                 ${StringTools.toDisplayString(s)}');
+            logDebug('  =                  ${StringTools.toDisplayString(initialCurrentLineSoFar + s)}');
         }
 
         if (isString)
@@ -51,7 +51,7 @@ class LeadingWhitespaceRemover
                 if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer    currentLineSoFarLength:  ${currentLineSoFar.length}');
 
                 final String adjustedComment = removeFromComment(currentLineSoFar, part.text, '$spacer    ');
-                if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInfo('$spacer    Adding comment:  ${StringTools.toDisplayString(adjustedComment)}');
+                if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer    Adding comment:  ${StringTools.toDisplayString(adjustedComment)}');
                 sb.write(adjustedComment);
             }
             else
@@ -94,9 +94,9 @@ class LeadingWhitespaceRemover
     {
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
         {
-            logWarning('${spacer}removeFromComment()');
-            logWarning('$spacer  currentLineSoFar:            ${StringTools.toDisplayString(currentLineSoFar)}');
-            logWarning('$spacer  s:                           ${StringTools.toDisplayString(s)}');
+            logDebug('${spacer}removeFromComment()');
+            logDebug('$spacer  currentLineSoFar:            ${StringTools.toDisplayString(currentLineSoFar)}');
+            logDebug('$spacer  s:                           ${StringTools.toDisplayString(s)}');
         }
 
         final List<String> lines = s.split('\n');
