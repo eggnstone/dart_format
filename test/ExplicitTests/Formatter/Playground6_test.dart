@@ -17,15 +17,24 @@ void main()
             test('format: Indent', ()
                 {
                     const String inputText =
-                    'void f()\n'
-                    '{\n'
-                    '    a(()\n'
-                    '    {\n'
-                    '        /*\n'
-                    '         */\n'
-                    '    });\n'
-                    '}\n';
-                    const String expectedText = inputText;
+                        'void f()\n'
+                        '{\n'
+                        '    a(()\n'
+                        '    {\n'
+                        '        /*\n'
+                        '         */\n'
+                        '    });\n'
+                        '}\n';
+                    const String expectedText =
+                        'void f()\n'
+                        '{\n'
+                        '    a(()\n'
+                        '        {\n'
+                        '        /*\n'
+                        '         */\n'
+                        '        }\n'
+                        '    );\n'
+                        '}\n';
 
                     final String actualText = formatterAll.format(inputText);
 
