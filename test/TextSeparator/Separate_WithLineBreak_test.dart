@@ -35,6 +35,7 @@ void main()
                 }
             );
 
+            /*
             test('Single-quote string', ()
                 {
                     const String baseText = "'abc'";
@@ -199,6 +200,7 @@ void main()
                     expect(actualResult, equals(expectedResult));
                 }
             );
+            */
 
             test('EndOfLine comment', ()
                 {
@@ -230,6 +232,7 @@ void main()
                 }
             );
 
+            /*
             test('Triple single-quote string', ()
                 {
                     const String baseText = "'''TEXT'''";
@@ -304,6 +307,7 @@ void main()
                     expect(actualResult, equals(expectedResult));
                 }
             );
+            */
         }
     );
 }

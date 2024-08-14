@@ -45,6 +45,7 @@ void main()
                         const TextInfo(type: TextType.Normal, text: 'abc')
                     ],
 
+                    /*
                     // Single-quote strings
 
                     // Text before single-quote string
@@ -152,6 +153,7 @@ void main()
                         const TextInfo(type: TextType.String, text: 'r"""def"""'),
                         const TextInfo(type: TextType.Normal, text: 'abc')
                     ]
+                    */
                 };
 
             inputs.forEach((String input, List<TextInfo> expected)

@@ -40,14 +40,14 @@ class TextFinder
         {
             logInternal('${spacer}  endOfLineCommentStartPos: ${result.endOfLineCommentStartPos}');
             logInternal('${spacer}  blockCommentStartPos:     ${result.blockCommentStartPos}');
-            logInternal('${spacer}  singleQuotePos:           ${result.singleQuotePos}');
+            /*logInternal('${spacer}  singleQuotePos:           ${result.singleQuotePos}');
             logInternal('${spacer}  rawSingleQuotePos:        ${result.rawSingleQuotePos}');
             logInternal('${spacer}  doubleQuotePos:           ${result.doubleQuotePos}');
             logInternal('${spacer}  rawDoubleQuotePos:        ${result.rawDoubleQuotePos}');
             logInternal('${spacer}  tripleSingleQuotePos:     ${result.tripleSingleQuotePos}');
             logInternal('${spacer}  rawTripleSingleQuotePos:  ${result.rawTripleSingleQuotePos}');
             logInternal('${spacer}  tripleDoubleQuotePos:     ${result.tripleDoubleQuotePos}');
-            logInternal('${spacer}  rawTripleDoubleQuotePos:  ${result.rawTripleDoubleQuotePos}');
+            logInternal('${spacer}  rawTripleDoubleQuotePos:  ${result.rawTripleDoubleQuotePos}');*/
         }
 
         return result;

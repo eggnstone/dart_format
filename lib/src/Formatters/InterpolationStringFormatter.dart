@@ -26,9 +26,10 @@ class InterpolationStringFormatter extends IFormatter
         if (node is! InterpolationString)
             throw FormatException('Not an InterpolationString: ${node.runtimeType}');
 
-        logError('Before node.contents: ${node.contents.runtimeType} ${StringTools.toDisplayString(node.contents, Constants.MAX_DEBUG_LENGTH)}');
-        formatState.copyEntity(node.contents, astVisitor, '$methodName/node.contents');
-        logError('After  node.contents: ${node.contents.runtimeType} ${StringTools.toDisplayString(node.contents, Constants.MAX_DEBUG_LENGTH)}');
+        if (Constants.DEBUG_I_FORMATTER) logError('Before node.contents: ${node.contents.runtimeType} ${StringTools.toDisplayString(node.contents, Constants.MAX_DEBUG_LENGTH)}');
+        //formatState.copyEntity(node.contents, astVisitor, '$methodName/node.contents');
+        formatState.copyString(node.contents.offset, node.contents.end, '$methodName/node.contents');
+        if (Constants.DEBUG_I_FORMATTER) logError('After  node.contents: ${node.contents.runtimeType} ${StringTools.toDisplayString(node.contents, Constants.MAX_DEBUG_LENGTH)}');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
