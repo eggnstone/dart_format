@@ -43,7 +43,7 @@ void main()
                     [
                         const TextInfo(type: TextType.Comment, text: '/*Comment*/'),
                         const TextInfo(type: TextType.Normal, text: 'abc')
-                    ],
+                    ]
 
                     /*
                     // Single-quote strings
