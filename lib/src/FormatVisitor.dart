@@ -65,7 +65,6 @@ import 'Formatters/ReturnStatementFormatter.dart';
 import 'Formatters/SetOrMapLiteralFormatter.dart';
 import 'Formatters/ShowCombinatorFormatter.dart';
 import 'Formatters/SimpleStringLiteralFormatter.dart';
-import 'Formatters/StringInterpolationFormatter.dart';
 import 'Formatters/SwitchExpressionFormatter.dart';
 import 'Formatters/SwitchPatternCaseFormatter.dart';
 import 'Formatters/SwitchStatementFormatter.dart';

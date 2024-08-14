@@ -22,6 +22,8 @@ TODO
 - Keep "{}" if it doesn't contain line breaks.
 - Indent "((){});" if contains line breaks.
 - else\nif
+- Indent triple single-quote strings
+- Indent interpolations?
 
 DONE (I think)
 ==============

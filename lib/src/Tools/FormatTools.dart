@@ -163,7 +163,8 @@ class FormatTools
                     }
                     else if (indentText.startsWith('0000'))
                     {
-                        //logWarning('    Previous text is empty after trim => ?');
+                        logWarning('    Previous text is empty after trim => ?');
+                        logDebug(s);
                         throw Exception('TODO: Previous text is empty after trim');
                     }
                     else
