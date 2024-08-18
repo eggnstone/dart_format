@@ -22,6 +22,7 @@ class WebServiceHandler
 {
     static const String CLASS_NAME = 'WebServiceHandler';
     static int _requestCount = 0;
+    static double maxMillisecondsPerKiloCharacter = 0;
 
     final bool skipVersionCheck;
     final DateTime _startTime = DateTime.now();
@@ -395,7 +396,11 @@ class WebServiceHandler
         finally
         {
             final double seconds = DateTime.now().difference(startTime).inMilliseconds / 1000;
-            logDebug('$METHOD_NAME END   #$requestCount: ${request.method} ${request.uri} took ${seconds}s');
+            final double millisecondsPerKiloCharacter = request.contentLength <= 1000 ? -1 : seconds * 1000 / (request.contentLength / 1000);
+            if (millisecondsPerKiloCharacter > maxMillisecondsPerKiloCharacter)
+                maxMillisecondsPerKiloCharacter = millisecondsPerKiloCharacter;
+            logDebug('$METHOD_NAME END   #$requestCount: ${request.method} ${request.uri} took ${seconds}s'
+                ' (${millisecondsPerKiloCharacter.toStringAsPrecision(2)} ms/kchar, max: ${maxMillisecondsPerKiloCharacter.toStringAsPrecision(2)} ms/kchar)');
         }
     }
 
