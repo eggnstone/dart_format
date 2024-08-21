@@ -9,7 +9,7 @@ import 'Types/TextType.dart';
 
 class LeadingWhitespaceRemover
 {
-    static String removeFrom(String s, {required bool removeLeadingSpaces, String initialCurrentLineSoFar = '', String resultAfterLastLineBreak = '', bool isString = false})
+    static String removeFrom(String s, {required bool removeLeadingSpaces, String initialCurrentLineSoFar = '', String resultAfterLastLineBreak = ''})
     {
         const String methodName = 'LeadingWhitespaceRemover.removeFrom';
         const String spacer = '  ';
@@ -21,15 +21,6 @@ class LeadingWhitespaceRemover
             logDebug('  resultAfterLastLB: ${StringTools.toDisplayString(resultAfterLastLineBreak)}');
             logDebug('  s:                 ${StringTools.toDisplayString(s)}');
             logDebug('  =                  ${StringTools.toDisplayString(initialCurrentLineSoFar + s)}');
-        }
-
-        if (isString)
-        {
-            final bool isTripleQuotedString = s.startsWith("'''") || s.startsWith("r'''") || s.startsWith('"""') || s.startsWith('r"""');
-            if (isTripleQuotedString)
-                return removeFromTripleQuotedString(s, spacer);
-
-            return removeFromNonComment(s, spacer);
         }
 
         final StringBuffer sb = StringBuffer();
@@ -208,9 +199,9 @@ class LeadingWhitespaceRemover
         return result;
     }
 
-    static String removeFromTripleQuotedString(String s, String spacer)
+    static String removeFromString(String s, String spacer)
     {
-        const String methodName = 'LeadingWhitespaceRemover.removeFromTripleQuotedString';
+        const String methodName = 'LeadingWhitespaceRemover.removeFromString';
         final StringBuffer sb = StringBuffer();
 
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)

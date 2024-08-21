@@ -824,6 +824,9 @@ class FormatState
 
         try
         {
+            if (isString)
+                return LeadingWhitespaceRemover.removeFromString(s, '  ');
+
             if (offset == 0)
                 return LeadingWhitespaceRemover.removeFrom(s, removeLeadingSpaces: true);
 
@@ -832,7 +835,6 @@ class FormatState
             return LeadingWhitespaceRemover.removeFrom(
                 s,
                 initialCurrentLineSoFar: currentLineSoFar,
-                isString: isString,
                 removeLeadingSpaces: false,
                 resultAfterLastLineBreak: resultAfterLastLineBreak
             );

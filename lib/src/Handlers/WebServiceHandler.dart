@@ -399,11 +399,19 @@ class WebServiceHandler
         finally
         {
             final double seconds = DateTime.now().difference(startTime).inMilliseconds / 1000;
-            final double millisecondsPerKiloCharacter = request.contentLength <= 1000 ? -1 : seconds * 1000 / (request.contentLength / 1000);
-            if (millisecondsPerKiloCharacter > maxMillisecondsPerKiloCharacter)
-                maxMillisecondsPerKiloCharacter = millisecondsPerKiloCharacter;
-            logDebug('$METHOD_NAME END   #$requestCount: ${request.method} ${request.uri} took ${seconds}s'
-                ' (${millisecondsPerKiloCharacter.toStringAsPrecision(2)} ms/kchar, max: ${maxMillisecondsPerKiloCharacter.toStringAsPrecision(2)} ms/kchar)');
+            if (request.method == 'POST')
+            {
+                final double millisecondsPerKiloCharacter = seconds * 1000 / (request.contentLength / 1000);
+                if (request.contentLength >= 1000 && millisecondsPerKiloCharacter > maxMillisecondsPerKiloCharacter)
+                    maxMillisecondsPerKiloCharacter = millisecondsPerKiloCharacter;
+                final String kCharsText = '${(request.contentLength / 1000).toStringAsFixed(2)} kChars';
+                final String kCharsPerMillisecondText = '${millisecondsPerKiloCharacter.toStringAsFixed(2)} ms/kChar';
+                final String maxKCharsPerMillisecondText = maxMillisecondsPerKiloCharacter == 0 ? '' : ', max: ${maxMillisecondsPerKiloCharacter.toStringAsFixed(2)} ms/kChar';
+                logDebug('$METHOD_NAME END   #$requestCount: ${request.method} ${request.uri} took ${seconds}s'
+                    ' ($kCharsText, $kCharsPerMillisecondText$maxKCharsPerMillisecondText)');
+            }
+            else
+                logDebug('$METHOD_NAME END   #$requestCount: ${request.method} ${request.uri} took ${seconds}s');
         }
     }
 
