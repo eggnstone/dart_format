@@ -155,39 +155,12 @@ class LeadingWhitespaceRemover
             final int lineIndent = line.length - line.trimLeft().length;
             if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  Current indent: ${StringTools.padIntLeft(lineIndent, 2)} for line: ${StringTools.toDisplayString(line)}');
 
-            /*final int relativeIndentation = currentLineSoFarLength - lineIndent;
-            if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logError('$spacer  relativeIndentation: $relativeIndentation for line: ${StringTools.toDisplayString(line)}');*/
-
             sb.write('\n');
-            //if (lineIndent >= 0)
-            {
-                sb.write(Constants.INDENT_START);
-                sb.write(lineIndent);
-                sb.write(Constants.INDENT_END);
-            }
-
+            sb.write(Constants.INDENT_START);
+            sb.write(lineIndent);
+            sb.write(Constants.INDENT_END);
             sb.write(line.trimLeft());
-
-            /*
-            final int newIndentation = lineIndent - (minIndentation);// - removedIndentation) - removedIndentation;
-            if (newIndentation <= 0)
-            {
-                if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  Neg. indent:    ${StringTools.padIntLeft(newIndentation, 2)} for line: ${StringTools.toDisplayString(line)}');
-                sb.write('\n');
-                sb.write(line.trimLeft());
-                continue;
-            }
-
-            final String newIndentationText = ' ' * newIndentation;
-            if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  New indent:     ${StringTools.padIntLeft(newIndentation, 2)} for line: ${StringTools.toDisplayString(line)}');
-
-            sb.write('\n');
-            sb.write(newIndentationText);
-            sb.write(line.trimLeft());
-            */
         }
-
-        //sb.write(Constants.INDENT_END);
 
         final String result = sb.toString();
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  OUT: ${StringTools.toDisplayString(result)}');
@@ -265,15 +238,9 @@ class LeadingWhitespaceRemover
             }
             else
             {
+                final int lineIndent = line.length - line.trimLeft().length;
                 sb.write('\n');
                 sb.write(Constants.INDENT_START);
-
-                final int lineIndent = line.length - line.trimLeft().length;
-                if (lineIndent == 0)
-                    sb.write('00000000'); // Indicator for "completely empty"
-                else
-                    sb.write('0000'); // Indicator for "empty after trim"
-
                 sb.write(lineIndent);
                 sb.write(Constants.INDENT_END);
                 sb.write(line.trimLeft());

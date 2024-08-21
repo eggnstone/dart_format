@@ -36,10 +36,6 @@ class Formatter
         }
 
         final String cleanedS = s.replaceAll('\r', '');
-        /*final int firstNoSpacePos = cleanedS.indexOf(RegExp(r'\S'));
-        if (firstNoSpacePos > 0)
-            cleanedS = cleanedS.substring(firstNoSpacePos);*/
-
         final ParseStringResult parseResult = AnalyzerUtilities.parseString(content: cleanedS, throwIfDiagnostics: false);
 
         final List<AnalysisError> errors = parseResult.errors;

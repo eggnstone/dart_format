@@ -45,23 +45,15 @@ class TextExtractor
             }
 
             final int? start2MarkerPos = allowNested ? StringTools.indexOfOrNull(s, startMarker, currentPos, handleEscape: !isRaw) : null;
-            //final int escapePos = isRaw ? -1 : s.indexOf(r'\', currentPos);
             if (Constants.DEBUG_TEXT_EXTRACTOR)
             {
-                //logInternal('!!!!  escapePos:       $escapePos');
                 logInternal('${spacer}  start2MarkerPos: $start2MarkerPos');
                 logInternal('${spacer}  endMarkerPos:    $endMarkerPos');
             }
 
-            /*if (TextFinder.isFirst(escapePos, <int>[endMarkerPos, start2MarkerPos]))
+            if (TextFinder.isFirst(start2MarkerPos, <int?>[endMarkerPos]))
             {
-                if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('${spacer}  Skipping escaped marker at $escapePos: ${StringTools.toDisplayString(s.substring(escapePos, escapePos + 2))}');
-                currentPos = escapePos + 2;
-                continue;
-            }*/
-
-            if (TextFinder.isFirst(start2MarkerPos, <int?>[endMarkerPos/*, escapePos*/]))
-            {
+                // Start marker 2 is first
                 if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('${spacer}  Increasing depth at $start2MarkerPos');
                 depth++;
                 currentPos = start2MarkerPos! + startMarker.length;

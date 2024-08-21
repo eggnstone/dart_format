@@ -204,14 +204,9 @@ class FormatState
 
         final Token? nextToken = token.next;
         if (nextToken == null)
-        {
-            //addText('\n', fullSource);
             return;
-        }
 
         final int end = nextToken.offset;
-        /*if (nextToken.precedingComments != null)
-        end = nextToken.precedingComments!.offset;*/
 
         final String filler = getText(token.end, end);
         if (Constants.DEBUG_FORMAT_STATE)
@@ -264,15 +259,9 @@ class FormatState
         const String methodName = 'addNewLineBeforeToken';
         final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(add=$add, beforeComments=$beforeComments, ${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
-        //if (Constants.DEBUG_FORMAT_STATE) logInternal('  sb: ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
-        //if (Constants.DEBUG_FORMAT_STATE) logInternal('  sb.lastText: ${StringTools.toDisplayString(getLastText())}');
 
         if (token == null || !add)
             return;
-
-        /*int end = token.offset;
-        if (token.precedingComments != null)
-        end = token.precedingComments!.offset;*/
 
         if (lastConsumedPosition > token.offset)
             logAndThrowErrorWithOffsets('Internal error: lastConsumedPosition > token.offset', '>', null, lastConsumedPosition, token.offset, source);
@@ -419,20 +408,6 @@ class FormatState
             if (Constants.DEBUG_FORMAT_STATE) logInternal('  lastText2:                 ${StringTools.toDisplayString(lastText)}');
         }
 
-        /*bool removeLeadingWhitespace = lastText.trim().isEmpty;
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  removeLeadingWhitespace:   $removeLeadingWhitespace');
-        if (!removeLeadingWhitespace)
-        {
-            final String firstLine = filler.split('\n').first;
-            removeLeadingWhitespace = firstLine.trim().isEmpty;
-        }
-
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  removeLeadingWhitespace:   $removeLeadingWhitespace');
-        if (removeLeadingWhitespace)
-        */
-
-        /*if (true)
-        {*/
         final String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
         if (Constants.DEBUG_FORMAT_STATE)
         {
@@ -441,11 +416,6 @@ class FormatState
         }
 
         write(fixedFiller);
-        /*}
-        else
-        {
-            write(filler);
-        }*/
 
         _setLastConsumedPosition(end, fullSource);
     }
@@ -470,21 +440,6 @@ class FormatState
             addNewLineAfter: config.addNewLineAfterSemicolon
         );
     }
-
-    /*void copyRawStringEntity(SyntacticEntity? entity, AstVisitor<void> astVisitor, String source)
-    {
-        const String methodName = 'copyRawStringEntity';
-
-        if (entity is! Token)
-            throw ArgumentError('Not a Token: ${entity.runtimeType}');
-
-        if (entity.type != TokenType.STRING)
-            throw ArgumentError('Not a string: ${entity.type}');
-
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('${entity.type}');
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('${entity.value()}');
-        copyEntity(entity, astVisitor, source, isRaw: true);
-    }*/
 
     void copyEntity(SyntacticEntity? entity, AstVisitor<void> astVisitor, String source)
     {
