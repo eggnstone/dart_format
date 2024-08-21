@@ -227,6 +227,9 @@ class WebServiceHandler
 
         try
         {
+            //throw DartFormatException.warning('WARNING', CharacterLocation(1, 1));
+            //throw DartFormatException.error('ERROR', CharacterLocation(1, 1));
+
             //logDebug('Request.contentLength: request.contentLength: ${request.contentLength}');
 
             final List<String>? contentTypeList = request.headers['content-type'];

@@ -25,9 +25,7 @@ class SimpleStringLiteralFormatter extends IFormatter
         if (node is! SimpleStringLiteral)
             throw FormatException('Not a SimpleStringLiteral: ${node.runtimeType}');
 
-        //logError('Before node.literal: ${node.literal.runtimeType} ${StringTools.toDisplayString(node.literal, Constants.MAX_DEBUG_LENGTH)}');
         formatState.copyString(node.literal.offset, node.literal.end, '$methodName/node.literal');
-        //logError('After  node.literal: ${node.literal.runtimeType} ${StringTools.toDisplayString(node.literal, Constants.MAX_DEBUG_LENGTH)}');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

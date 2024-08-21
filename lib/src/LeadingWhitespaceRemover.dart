@@ -24,7 +24,13 @@ class LeadingWhitespaceRemover
         }
 
         if (isString)
+        {
+            final bool isTripleQuotedString = s.startsWith("'''") || s.startsWith('"""');
+            if (isTripleQuotedString)
+                return removeFromTripleQuotedString(s, spacer);
+
             return removeFromNonComment(s, spacer);
+        }
 
         final StringBuffer sb = StringBuffer();
 
@@ -92,9 +98,10 @@ class LeadingWhitespaceRemover
 
     static String removeFromComment(String currentLineSoFar, String s, String spacer)
     {
+        const String methodName = 'LeadingWhitespaceRemover.removeFromComment';
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
         {
-            logDebug('${spacer}removeFromComment()');
+            logDebug('${spacer}$methodName()');
             logDebug('$spacer  currentLineSoFar:            ${StringTools.toDisplayString(currentLineSoFar)}');
             logDebug('$spacer  s:                           ${StringTools.toDisplayString(s)}');
         }
@@ -190,12 +197,12 @@ class LeadingWhitespaceRemover
     /// Removes leading spaces from each line, but keeps the indentation of the first line.
     static String removeFromNonComment(String s, String spacer)
     {
+        const String methodName = 'LeadingWhitespaceRemover.removeFromNonComment';
         final StringBuffer sb = StringBuffer();
 
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
         {
-            logInternal('${spacer}removeLeadingSpaces2()');
-            //logInternal('$spacer  toDoRename:  ${StringTools.toDisplayString(toDoRename)}');
+            logInternal('${spacer}$methodName()');
             logInternal('$spacer  s:           ${StringTools.toDisplayString(s)}');
         }
 
@@ -219,6 +226,56 @@ class LeadingWhitespaceRemover
             else
             {
                 sb.write('\n');
+                sb.write(line.trimLeft());
+            }
+        }
+
+        final String result = sb.toString();
+        if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  OUT: ${StringTools.toDisplayString(result)}');
+        return result;
+    }
+
+    static String removeFromTripleQuotedString(String s, String spacer)
+    {
+        const String methodName = 'LeadingWhitespaceRemover.removeFromTripleQuotedString';
+        final StringBuffer sb = StringBuffer();
+
+        if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
+        {
+            logInternal('${spacer}$methodName()');
+            logInternal('$spacer  s:           ${StringTools.toDisplayString(s)}');
+        }
+
+        final List<String> lines = s.split('\n');
+        if (lines.length == 1)
+        {
+            final String result = lines[0].trimLeft();
+            if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  Only 1 line: ${StringTools.toDisplayString(result)}');
+            return result;
+        }
+
+        for (int i = 0; i < lines.length; i++)
+        {
+            final String line = lines[i];
+            if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer    #${StringTools.padIntLeft0(i, 2)}: ${StringTools.toDisplayString(line)}');
+
+            if (i == 0)
+            {
+                sb.write(line.trimLeft());
+            }
+            else
+            {
+                sb.write('\n');
+                sb.write(Constants.INDENT_START);
+
+                final int lineIndent = line.length - line.trimLeft().length;
+                if (lineIndent == 0)
+                    sb.write('00000000'); // Indicator for "completely empty"
+                else
+                    sb.write('0000'); // Indicator for "empty after trim"
+
+                sb.write(lineIndent);
+                sb.write(Constants.INDENT_END);
                 sb.write(line.trimLeft());
             }
         }

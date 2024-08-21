@@ -525,9 +525,13 @@ class FormatState
     {
         const String methodName = 'copyString';
         final String fullSource = '$source/$methodName';
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, $source)');
-
         final String s = getText(offset, end);
+        if (Constants.DEBUG_FORMAT_STATE)
+        {
+            logInternal('# START $methodName($offset, $end, $source)');
+            logInternal('  ${StringTools.toDisplayString(s)}');
+        }
+
         consumeText(offset, end, s, fullSource, isString: true);
     }
 
