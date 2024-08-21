@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.21
+
+- Better formatting of strings and comments.
+ 
 ## 1.1.20
 
 - Many improvements and bug fixes.
