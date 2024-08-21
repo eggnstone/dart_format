@@ -7,15 +7,19 @@ String s2 = 'a\n'
     ${true ? '''}''' : '''No default side'''}
     ''';
 
-String s3 =
-    '''a
+String s3 = '''a
         b    
-    ''';
+''';
 
 String s4 = ''
     '''a
         b    
-    ''';
+''';
+
+String s5 = ''
+    r'''a
+        b    
+''';
 
 void main()
 {

@@ -13,25 +13,38 @@ void main()
 
     group('Formatter.format: SimpleStringLiteral', ()
         {
-            test('No indents', ()
+            final Map<String, String> inputs =
+                <String, String>
                 {
-                    const String inputText = "var s=\n'''abc\nxyz''';";
-                    const String expectedText = "var s=\n    '''abc\nxyz''';\n";
+                    '"""' : '"""',
+                    'r""""' : '"""',
+                    "'''": "'''",
+                    "r'''": "'''"
+                };
 
-                    final String actualText = formatterAll.format(inputText);
-
-                    TestTools.expect(actualText, equals(expectedText));
-                }
-            );
-
-            test('Indents preserved', ()
+            inputs.forEach((String start, String end)
                 {
-                    const String inputText = "var s=\n'''abc\nMIDDLE\n        xyz''';";
-                    const String expectedText = "var s=\n    '''abc\nMIDDLE\n        xyz''';\n";
+                    test('No indents with $start/$end', ()
+                        {
+                            final String inputText = 'var s=\n${start}abc\nxyz$end;';
+                            final String expectedText = 'var s=\n    ${start}abc\nxyz$end;\n';
 
-                    final String actualText = formatterAll.format(inputText);
+                            final String actualText = formatterAll.format(inputText);
 
-                    TestTools.expect(actualText, equals(expectedText));
+                            TestTools.expect(actualText, equals(expectedText));
+                        }
+                    );
+
+                    test('No indents with $start/$end', ()
+                        {
+                            final String inputText = 'var s=\n${start}abc\nMIDDLE\n        xyz$end;';
+                            final String expectedText = 'var s=\n    ${start}abc\nMIDDLE\n        xyz$end;\n';
+
+                            final String actualText = formatterAll.format(inputText);
+
+                            TestTools.expect(actualText, equals(expectedText));
+                        }
+                    );
                 }
             );
         }

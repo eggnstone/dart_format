@@ -15,17 +15,50 @@ void main()
             inputLeading: 'var s=\n',
             inputMiddle: "'''abc\nxyz'''",
             inputTrailing: ';\n',
-            name: 'SimpleStringLiteral no indents'
+            name: "SimpleStringLiteral triple ' no indents"
         ),
         TestGroupConfig(
             inputNodeCreator: AstCreator.createInitializerInTopLevelVariable,
             inputLeading: 'var s=\n',
             inputMiddle: "    '''abc\n    xyz'''",
             inputTrailing: ';\n',
-            name: 'SimpleStringLiteral first indent removed, second indent preserved',
+            name: "SimpleStringLiteral triple ' first indent removed, second indent preserved",
             testConfigs: <TestConfig>[
                 TestConfig.none("'''abc\n    xyz'''"),
                 TestConfig("'''abc\n    xyz'''")
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createInitializerInTopLevelVariable,
+            inputLeading: 'var s=\n',
+            inputMiddle: "    r'''abc\n    xyz'''",
+            inputTrailing: ';\n',
+            name: "SimpleStringLiteral raw triple ' first indent removed, second indent preserved",
+            testConfigs: <TestConfig>[
+                TestConfig.none("r'''abc\n    xyz'''"),
+                TestConfig("r'''abc\n    xyz'''")
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createInitializerInTopLevelVariable,
+            inputLeading: 'var s=\n',
+            inputMiddle: '    """abc\n    xyz"""',
+            inputTrailing: ';\n',
+            name: 'SimpleStringLiteral triple " first indent removed, second indent preserved',
+            testConfigs: <TestConfig>[
+                TestConfig.none('"""abc\n    xyz"""'),
+                TestConfig('"""abc\n    xyz"""')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createInitializerInTopLevelVariable,
+            inputLeading: 'var s=\n',
+            inputMiddle: '    r"""abc\n    xyz"""',
+            inputTrailing: ';\n',
+            name: 'SimpleStringLiteral raw triple " first indent removed, second indent preserved',
+            testConfigs: <TestConfig>[
+                TestConfig.none('r"""abc\n    xyz"""'),
+                TestConfig('r"""abc\n    xyz"""')
             ]
         )
     ];

@@ -25,7 +25,7 @@ class LeadingWhitespaceRemover
 
         if (isString)
         {
-            final bool isTripleQuotedString = s.startsWith("'''") || s.startsWith('"""');
+            final bool isTripleQuotedString = s.startsWith("'''") || s.startsWith("r'''") || s.startsWith('"""') || s.startsWith('r"""');
             if (isTripleQuotedString)
                 return removeFromTripleQuotedString(s, spacer);
 
