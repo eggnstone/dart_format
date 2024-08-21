@@ -24,8 +24,8 @@ void main()
                     const String expectedText =
                         'String s =\n'
                         "    '''\n"
-                        '    ab\n'
-                        "    ''';\n";
+                        'ab\n'
+                        "''';\n";
 
                     final String actualText = formatterAll.format(inputText);
 
@@ -71,8 +71,8 @@ void main()
                     const String expectedText =
                         'String s =\n'
                         "    '''\n"
-                        "    a'b\n"
-                        "    ''';\n";
+                        "a'b\n"
+                        "''';\n";
 
                     final String actualText = formatterAll.format(inputText);
 
@@ -90,8 +90,8 @@ void main()
                     const String expectedText =
                         'String s =\n'
                         '    """\n'
-                        '    a"b\n'
-                        '    """;\n';
+                        'a"b\n'
+                        '""";\n';
 
                     final String actualText = formatterAll.format(inputText);
 

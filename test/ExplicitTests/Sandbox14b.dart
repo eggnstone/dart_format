@@ -13,7 +13,7 @@ String s3 =
     ''';
 
 String s4 = ''
-'''a
+    '''a
         b    
     ''';
 
