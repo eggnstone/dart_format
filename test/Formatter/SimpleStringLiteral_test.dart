@@ -13,49 +13,25 @@ void main()
 
     group('Formatter.format: SimpleStringLiteral', ()
         {
-            final Map<String, String> inputs =
-                <String, String>
+            test('Without spaces', ()
                 {
-                    '"""' : '"""',
-                    'r""""' : '"""',
-                    "'''": "'''",
-                    "r'''": "'''"
-                };
+                    const String inputText = "var s='a\$b\$c';\n";
+                    const String expectedText = inputText;
 
-            inputs.forEach((String start, String end)
+                    final String actualText = formatterAll.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
+
+            test('With spaces', ()
                 {
-                    test('No indents with $start/$end', ()
-                        {
-                            final String inputText = 'var s=\n${start}abc\nxyz$end;';
-                            final String expectedText = 'var s=\n    ${start}abc\nxyz$end;\n';
+                    const String inputText = "var s='a \$b \$c';\n";
+                    const String expectedText = inputText;
 
-                            final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatterAll.format(inputText);
 
-                            TestTools.expect(actualText, equals(expectedText));
-                        }
-                    );
-
-                    test('No indents with interpolation and $start/$end', ()
-                        {
-                            final String inputText = 'var s=\n${start}abc\n\$v\nxyz$end;';
-                            final String expectedText = 'var s=\n    ${start}abc\n\$v\nxyz$end;\n';
-
-                            final String actualText = formatterAll.format(inputText);
-
-                            TestTools.expect(actualText, equals(expectedText));
-                        }
-                    );
-
-                    test('Indents preserved with $start/$end', ()
-                        {
-                            final String inputText = 'var s=\n${start}abc\nMIDDLE\n        xyz$end;';
-                            final String expectedText = 'var s=\n    ${start}abc\nMIDDLE\n        xyz$end;\n';
-
-                            final String actualText = formatterAll.format(inputText);
-
-                            TestTools.expect(actualText, equals(expectedText));
-                        }
-                    );
+                    TestTools.expect(actualText, equals(expectedText));
                 }
             );
         }

@@ -21,6 +21,9 @@ String s5 = ''
         b    
 ''';
 
+String s5 = 'a$b$c';
+String s5 = 'a $b $c';
+
 void f()
 {
     String s = ''

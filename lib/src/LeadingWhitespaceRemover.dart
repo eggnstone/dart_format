@@ -213,7 +213,7 @@ class LeadingWhitespaceRemover
         final List<String> lines = s.split('\n');
         if (lines.length == 1)
         {
-            final String result = lines[0].trimLeft();
+            final String result = lines[0];
             if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER) logInternal('$spacer  Only 1 line: ${StringTools.toDisplayString(result)}');
             return result;
         }
@@ -225,7 +225,7 @@ class LeadingWhitespaceRemover
 
             if (i == 0)
             {
-                sb.write(line.trimLeft());
+                sb.write(line);
             }
             else
             {
