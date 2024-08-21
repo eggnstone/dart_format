@@ -9,7 +9,7 @@ abstract class IFormatter
 
     void log(String s, int indent, {int? offset, DateTime? startDateTime})
     {
-        final String indentation = '  ' * indent;
+        final String indentText = '  ' * indent;
         String prefix = '';
 
         if (Constants.DEBUG_I_FORMATTER_OFFSETS && offset != null)
@@ -18,7 +18,7 @@ abstract class IFormatter
         if (Constants.DEBUG_I_FORMATTER_TIME && startDateTime != null)
             prefix += '${DateTime.now().difference(startDateTime).inMilliseconds}ms ';
 
-        final String finalS = indentation + prefix + s;
+        final String finalS = indentText + prefix + s;
         logInternal(finalS);
     }
 

@@ -22,6 +22,7 @@ class WebServiceHandler
 {
     static const String CLASS_NAME = 'WebServiceHandler';
     static int _requestCount = 0;
+    static double maxMillisecondsPerKiloCharacter = 0;
 
     final bool skipVersionCheck;
     final DateTime _startTime = DateTime.now();
@@ -81,8 +82,7 @@ class WebServiceHandler
                 {
                     logDebug('$METHOD_NAME: Quitting because server.listen()/onDone called.');
                     terminate = true;
-                }
-                ,
+                },
                 onError: (Object error, StackTrace stackTrace)
                 {
                     logError('$METHOD_NAME: Quitting because server.listen()/onError called: $error');
@@ -92,12 +92,12 @@ class WebServiceHandler
             );
 
             /*stdin.handleError(
-            (Object error, StackTrace stackTrace)
-            {
-            logError('$METHOD_NAME: Quitting because stdin.handleError()/onError called: $error');
-            terminate = true;
-            terminateWithError = true;
-            }
+                (Object error, StackTrace stackTrace)
+                {
+                    logError('$METHOD_NAME: Quitting because stdin.handleError()/onError called: $error');
+                    terminate = true;
+                    terminateWithError = true;
+                }
             );*/
 
             stdin.listen(
@@ -105,14 +105,12 @@ class WebServiceHandler
                 {
                     final String input = systemEncoding.decode(event);
                     logDebug('$METHOD_NAME: Unexpected input via stdin.listen()/onData: ${StringTools.toDisplayString(input, Constants.MAX_DEBUG_LENGTH)}');
-                }
-                ,
+                },
                 onDone: ()
                 {
                     logDebug('$METHOD_NAME: Quitting because stdin.listen()/onDone called.');
                     terminate = true;
-                }
-                ,
+                },
                 onError: (Object error, StackTrace stackTrace)
                 {
                     logError('$METHOD_NAME: Quitting because stdin.listen()/onError called: $error');
@@ -224,11 +222,14 @@ class WebServiceHandler
     Future<void> _handlePostFormat(HttpRequest request)
     async
     {
-        const String METHOD_NAME = '$CLASS_NAME._handlePostFormat';
+        const String METHOD_NAME = '$CLASS_NAME.handlePostFormat';
         //logDebug('$METHOD_NAME: Request: ${request.contentLength}');
 
         try
         {
+            //throw DartFormatException.warning('WARNING', CharacterLocation(1, 1));
+            //throw DartFormatException.error('ERROR', CharacterLocation(1, 1));
+
             //logDebug('Request.contentLength: request.contentLength: ${request.contentLength}');
 
             final List<String>? contentTypeList = request.headers['content-type'];
@@ -303,7 +304,7 @@ class WebServiceHandler
                 throw DartFormatException.error('Part named "Text" is empty.');
 
             //logDebug('configText: ${StringTools.toDisplayString(configText)}');
-            //logDebug('text: ${StringTools.toDisplayString(text)}');
+            //logDebug('text: ${StringTools.toDisplayString(text, Constants.MAX_DEBUG_LENGTH)}');
 
             final Config config = configText.isEmpty ? Config.all() : Config.fromJsonText(configText);
             final Formatter formatter = Formatter(config);
@@ -338,14 +339,14 @@ class WebServiceHandler
         /*// ignore: avoid_catching_errors
         on Error catch (e, st)
         {
-        // necessary?
-        logErrorObject(METHOD_NAME, e, st);
+            // necessary?
+            logErrorObject(METHOD_NAME, e, st);
 
-        final DartFormatException dartFormatException = DartFormatException.error(e.toString());
-        request.response.statusCode = HttpStatus.ok;
-        request.response.headers.contentType = ContentType.text;
-        request.response.headers.add('X-DartFormat-Result', 'Fail');
-        request.response.headers.add('X-DartFormat-Exception', jsonEncode(dartFormatException.toJson()));
+            final DartFormatException dartFormatException = DartFormatException.error(e.toString());
+            request.response.statusCode = HttpStatus.ok;
+            request.response.headers.contentType = ContentType.text;
+            request.response.headers.add('X-DartFormat-Result', 'Fail');
+            request.response.headers.add('X-DartFormat-Exception', jsonEncode(dartFormatException.toJson()));
         }*/
         finally
         {
@@ -357,7 +358,7 @@ class WebServiceHandler
     Future<void> _handleRequest(HttpRequest request, {Function()? onQuit})
     async
     {
-        const String METHOD_NAME = '$CLASS_NAME._handleRequest';
+        const String METHOD_NAME = '$CLASS_NAME.handleRequest';
         final DateTime startTime = DateTime.now();
 
         final int requestCount = ++_requestCount;
@@ -392,13 +393,25 @@ class WebServiceHandler
         /*// ignore: avoid_catching_errors
         on Error catch (e, st)
         {
-        // necessary?
-        logErrorObject(METHOD_NAME, e, st);
+            // necessary?
+            logErrorObject(METHOD_NAME, e, st);
         }*/
         finally
         {
             final double seconds = DateTime.now().difference(startTime).inMilliseconds / 1000;
-            logDebug('$METHOD_NAME END   #$requestCount: ${request.method} ${request.uri} took ${seconds}s');
+            if (request.method == 'POST')
+            {
+                final double millisecondsPerKiloCharacter = seconds * 1000 / (request.contentLength / 1000);
+                if (request.contentLength >= 1000 && millisecondsPerKiloCharacter > maxMillisecondsPerKiloCharacter)
+                    maxMillisecondsPerKiloCharacter = millisecondsPerKiloCharacter;
+                final String kCharsText = '${(request.contentLength / 1000).toStringAsFixed(2)} kChars';
+                final String kCharsPerMillisecondText = '${millisecondsPerKiloCharacter.toStringAsFixed(2)} ms/kChar';
+                final String maxKCharsPerMillisecondText = maxMillisecondsPerKiloCharacter == 0 ? '' : ', max: ${maxMillisecondsPerKiloCharacter.toStringAsFixed(2)} ms/kChar';
+                logDebug('$METHOD_NAME END   #$requestCount: ${request.method} ${request.uri} took ${seconds}s'
+                    ' ($kCharsText, $kCharsPerMillisecondText$maxKCharsPerMillisecondText)');
+            }
+            else
+                logDebug('$METHOD_NAME END   #$requestCount: ${request.method} ${request.uri} took ${seconds}s');
         }
     }
 
@@ -428,7 +441,7 @@ class WebServiceHandler
 
     void _handleServerError(Object error, StackTrace stackTrace)
     {
-        logErrorObject('WebServiceHandler._handleServerError', error, stackTrace);
+        logErrorObject('$CLASS_NAME.handleServerError', error, stackTrace);
     }
 
     String _getHtmlStart(String s)

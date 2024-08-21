@@ -35,9 +35,8 @@ class Formatter
             logInternal('  maxEmptyLines: ${_config.maxEmptyLines}');
         }
 
-        final String sWithoutCarriageReturns = s.replaceAll('\r', '');
-
-        final ParseStringResult parseResult = AnalyzerUtilities.parseString(content: sWithoutCarriageReturns, throwIfDiagnostics: false);
+        final String cleanedS = s.replaceAll('\r', '');
+        final ParseStringResult parseResult = AnalyzerUtilities.parseString(content: cleanedS, throwIfDiagnostics: false);
 
         final List<AnalysisError> errors = parseResult.errors;
         if (errors.isNotEmpty)
@@ -59,9 +58,10 @@ class Formatter
 
         final TextTools textTools = TextTools(_config);
         result = textTools.removeEmptyLines(result);
+        //result = FormatTools.resolveRelativeIndentations(result);
         result = textTools.addNewLineAtEndOfText(result);
 
-        return _verifyResult(sWithoutCarriageReturns, result, parseResult.lineInfo);
+        return _verifyResult(cleanedS, result, parseResult.lineInfo);
     }
 
     void _logWarning(String s)
@@ -79,22 +79,25 @@ class Formatter
     String _verifyResult(String s, String result, LineInfo lineInfo)
     {
         final String condensedInput = s.replaceAll(RegExp(r'\s'), '').trim();
-        final String condensedResultWithIgnores = result.replaceAll(RegExp(r'\s'), '').trim();
-
-        final String condensedResultWithoutIgnores = FormatTools.removeIgnoreTagsOnly(condensedResultWithIgnores);
-        if (condensedResultWithoutIgnores == condensedInput)
+        final String condensedResult = result.replaceAll(RegExp(r'\s'), '').trim();
+        final String cleanedCondensedResult = FormatTools.removeIndentTags(FormatTools.removeIgnoreTags(condensedResult));
+        if (cleanedCondensedResult == condensedInput)
         {
-            if (Constants.DEBUG_FORMATTER) logInternal('  result: ${StringTools.toDisplayString(result, Constants.MAX_DEBUG_LENGTH)}"');
-
-            final String resultWithoutIgnores = FormatTools.removeIgnoreTagsCompletely(result);
-            if (Constants.DEBUG_FORMATTER) logInternal('  resultWithoutIgnores: ${StringTools.toDisplayString(resultWithoutIgnores, Constants.MAX_DEBUG_LENGTH)}"');
-            return resultWithoutIgnores;
+            final String resolvedResult = FormatTools.resolveIndents(FormatTools.resolveIgnores(result));
+            if (Constants.DEBUG_FORMATTER)
+            {
+                logInternal('  result:         ${StringTools.toDisplayString(result, Constants.MAX_DEBUG_LENGTH)}"');
+                logInternal('  resolvedResult: ${StringTools.toDisplayString(resolvedResult, Constants.MAX_DEBUG_LENGTH)}"');
+            }
+            return resolvedResult;
         }
 
         final IntTuple positions = StringTools.findDiff(s, result);
 
         final String message1;
         final String message2;
+        CharacterLocation? reportLocation;
+
         if (positions == createEmptyIntTuple())
         {
             message1 = 'Internal error: Invalid changes detected but no differences to show.';
@@ -104,30 +107,39 @@ class Formatter
         }
         else
         {
+            reportLocation = lineInfo.getLocation(positions.item1);
             final CharacterLocation location1 = lineInfo.getLocation(positions.item1);
             final CharacterLocation location2 = lineInfo.getLocation(positions.item2);
             message1 = 'Internal error: Invalid changes detected at index ${location1.lineNumber},${location1.columnNumber} / ${location2.lineNumber},${location2.columnNumber}';
             message2 =
-            'Same:   ${StringTools.toDisplayStringCutAtEnd(result.substring(0, positions.item2), Constants.MAX_DEBUG_LENGTH)}\n'
+            'Same:   ${StringTools.toDisplayStringCutAtFront(result.substring(0, positions.item2), Constants.MAX_DEBUG_LENGTH)}\n'
             'Input:  ${StringTools.toDisplayString(s.substring(positions.item1), Constants.MAX_DEBUG_LENGTH)}\n'
             'Result: ${StringTools.toDisplayString(result.substring(positions.item2), Constants.MAX_DEBUG_LENGTH)}';
-        }
 
-        if (Constants.DEBUG_FORMATTER) logInternal('$message1\n$message2');
+            if (Constants.DEBUG_FORMATTER) logInternal('Invalid changes detected:\n-----\n$result\n-----');
+        }
 
         if (Constants.DEBUG_FORMATTER)
         {
-            final IntTuple positions2 = StringTools.findDiff(condensedInput, condensedResultWithIgnores);
-            if (positions2 != createEmptyIntTuple())
+            logInternal('$message1\n$message2');
+
+            final IntTuple positions2 = StringTools.findDiff(condensedInput, cleanedCondensedResult);
+            if (positions2 == createEmptyIntTuple())
+            {
+                logInternal('Nothing found, even when comparing condensedInput and condensedResultWithIgnores.');
+                logInternal('condensedInput:\n$condensedInput');
+                logInternal('cleanedCondensedResult:\n$cleanedCondensedResult');
+            }
+            else
             {
                 final String message2a =
-                    'Same:                       ${StringTools.toDisplayStringCutAtEnd(condensedResultWithIgnores.substring(0, positions2.item2), Constants.MAX_DEBUG_LENGTH)}\n'
-                    'condensedInput:             ${StringTools.toDisplayString(condensedInput.substring(positions2.item1), Constants.MAX_DEBUG_LENGTH)}\n'
-                    'condensedResultWithIgnores: ${StringTools.toDisplayString(condensedResultWithIgnores.substring(positions2.item2), Constants.MAX_DEBUG_LENGTH)}';
-                if (Constants.DEBUG_FORMATTER) logInternal('\n$message2a');
+                    'Same:                   ${StringTools.toDisplayStringCutAtFront(cleanedCondensedResult.substring(0, positions2.item2), Constants.MAX_DEBUG_LENGTH)}\n'
+                    'condensedInput:         ${StringTools.toDisplayString(condensedInput.substring(positions2.item1), Constants.MAX_DEBUG_LENGTH)}\n'
+                    'cleanedCondensedResult: ${StringTools.toDisplayString(cleanedCondensedResult.substring(positions2.item2), Constants.MAX_DEBUG_LENGTH)}';
+                logInternal('\n$message2a');
             }
         }
 
-        throw DartFormatException.error('$message1|$message2');
+        throw DartFormatException.error('$message1|$message2', reportLocation);
     }
 }

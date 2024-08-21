@@ -21,6 +21,8 @@ TODO
 - No more than maxEmptyLines blank lines at file end.
 - Keep "{}" if it doesn't contain line breaks.
 - Indent "((){});" if contains line breaks.
+- else\nif
+- Indent interpolations?
 
 DONE (I think)
 ==============
@@ -31,3 +33,5 @@ DONE (I think)
 - Don't add line break between "}" and ";"
 - Don't add line break between "}" and ","
 - Indent assignments when multiline
+- Important: Undetected change from "€" to "?". Maybe change of encoding? Is this the cause for the problem undetectable changes, too?
+- Indent triple quoted strings

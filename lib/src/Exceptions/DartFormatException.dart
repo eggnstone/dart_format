@@ -29,8 +29,8 @@ class DartFormatException with _$DartFormatException implements Exception
     => DartFormatException(message: message, type: FailType.error, line: location?.lineNumber, column: location?.columnNumber);
 
     /// Create a new warning DartFormatException with the given message.
-    factory DartFormatException.warning(String message, CharacterLocation location)
-    => DartFormatException(message: message, type: FailType.warning, line: location.lineNumber, column: location.columnNumber);
+    factory DartFormatException.warning(String message, [CharacterLocation? location])
+    => DartFormatException(message: message, type: FailType.warning, line: location?.lineNumber, column: location?.columnNumber);
 
     /// Create a new DartFormatException from the given JSON.
     factory DartFormatException.fromJson(Map<String, dynamic> json)

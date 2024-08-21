@@ -10,14 +10,14 @@ import 'Tools/StringTools.dart';
 
 class Analyzer
 {
-    void analyze(String s)
+    static void analyze(String s)
     {
         final ParseStringResult parseResult = AnalyzerUtilities.parseString(content: s, throwIfDiagnostics: false);
 
         _analyzeSyntacticEntities(parseResult.unit.childEntities, 0);
     }
 
-    void _analyzeSyntacticEntities(Iterable<SyntacticEntity> items, int logIndent)
+    static void _analyzeSyntacticEntities(Iterable<SyntacticEntity> items, int logIndent)
     {
         for (final SyntacticEntity item in items)
         {
@@ -36,31 +36,11 @@ class Analyzer
             else if (item is Token)
             {
                 _log('${_getSpacer(logIndent)}Token:   ${item.runtimeType} ${StringTools.toDisplayString(item, Constants.MAX_DEBUG_LENGTH)}');
-                /*if (item is Comment)
+                Token? ct = item.precedingComments;
+                while (ct != null)
                 {
-                _log('!!${_getSpacer(logIndent - 1)}  Ignoring Comment in favour of precedingComments');
-                }
-                else*/ /*if (item is CommentImpl)
-                {
-                _log('!!${_getSpacer(logIndent - 1)}  Ignoring CommentImpl in favour of precedingComments');
-                }
-                else*/ /*if (item is CommentTokenImpl)
-                {
-                _log('!!${_getSpacer(logIndent - 1)}  Ignoring CommentTokenImpl in favour of precedingComments');
-                }
-                else*/ /*if (item is DartDocToken)
-                //else if (item.runtimeType.toString() == 'DartDocToken')
-                {
-                _log('!!${_getSpacer(logIndent - 1)}  Ignoring DartDocToken in favour of precedingComments');
-                }
-                else*/
-                {
-                    Token? ct = item.precedingComments;
-                    while (ct != null)
-                    {
-                        _log('!!${_getSpacer(logIndent - 1)}  precedingComment: ${StringTools.toDisplayString(ct, Constants.MAX_DEBUG_LENGTH)}');
-                        ct = ct.next;
-                    }
+                    _log('!!${_getSpacer(logIndent - 1)}  precedingComment: ${StringTools.toDisplayString(ct, Constants.MAX_DEBUG_LENGTH)}');
+                    ct = ct.next;
                 }
             }
             else
@@ -70,12 +50,11 @@ class Analyzer
         }
     }
 
-    String _getSpacer(int logIndent)
+    static String _getSpacer(int logIndent)
     => '  ' * logIndent;
 
-    void _log(String s)
+    static void _log(String s)
     {
-        if (Constants.DEBUG_ANALYZER)
-            logDebug(s);
+        logDebug(s);
     }
 }
