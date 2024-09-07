@@ -9,6 +9,7 @@ class TestVisitor<T extends AstNode> extends SimpleVisitor
     final int offset;
     final int end;
     final String text;
+    final String? appendText;
 
     late FormatState _formatState;
 
@@ -19,7 +20,7 @@ class TestVisitor<T extends AstNode> extends SimpleVisitor
     set formatState(FormatState formatState)
     => _formatState = formatState;
 
-    TestVisitor(this.offset, this.text) : end = offset + text.length;
+    TestVisitor(this.offset, this.text, [this.appendText]) : end = offset + text.length;
 
     @override
     void visit(AstNode node)
@@ -28,5 +29,8 @@ class TestVisitor<T extends AstNode> extends SimpleVisitor
             throw Exception('Expected ${T} but got ${node.runtimeType}');
 
         formatState.consumeText(offset, end, text, 'TestVisitor<${node.runtimeType}>');
+
+        if (appendText != null)
+            formatState.addText(appendText!, 'TestVisitor<${node.runtimeType}>');
     }
 }

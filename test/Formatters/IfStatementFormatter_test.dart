@@ -149,11 +149,27 @@ void main()
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<BooleanLiteral>(12, 'true'),
                 TestVisitor<EmptyStatement>(17, ';'),
-                TestVisitor<EmptyStatement>(22, ';')
+                TestVisitor<EmptyStatement>(22, ';'),
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
                 TestConfig('if (true); else;')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createStatementInFunction,
+            inputLeading: 'void f(){',
+            inputMiddle: 'if(true);else;',
+            inputTrailing: '}',
+            name: 'if ; else ; (too little spacing, with line breaks)',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(12, 'true'),
+                TestVisitor<EmptyStatement>(17, ';', '\n'),
+                TestVisitor<EmptyStatement>(22, ';', '\n'),
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none('if(true);\nelse;\n'),
+                TestConfig('if (true);\nelse;\n')
             ]
         ),
         TestGroupConfig(

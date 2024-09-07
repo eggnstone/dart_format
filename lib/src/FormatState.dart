@@ -329,7 +329,12 @@ class FormatState
             if (Constants.DEBUG_FORMAT_STATE) logInternal('  No filler');
 
             if (spaces != null)
-                write(' ' * spaces);
+            {
+                final String lastText = _textBuffers.last.toString();
+                if (Constants.DEBUG_FORMAT_STATE_SPACING) logDebug('lastText: ${StringTools.toDisplayString(lastText)}');
+                if (!lastText.endsWith('\n'))
+                    write(' ' * spaces);
+            }
         }
         else
         {
@@ -364,36 +369,71 @@ class FormatState
                 String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
                 if (Constants.DEBUG_FORMAT_STATE)
                 {
-                    logInternal('  fixedFiller/4c:   ${StringTools.toDisplayString(fixedFiller)}');
+                    logInternal('  fixedFiller/4a:   ${StringTools.toDisplayString(fixedFiller)}');
                     logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
                 }
 
                 if (spaces != null)
                 {
-                    if (fixedFiller.trim().isEmpty) // TODO: trimSpacesOnly
+                    final int existingSpacesLeft = StringTools.countSpacesLeft(fixedFiller);
+                    if (Constants.DEBUG_FORMAT_STATE_SPACING)
+                    {
+                        logInternal('  spaces:           $spaces');
+                        logInternal('    fixedFiller/4b: ${StringTools.toDisplayString(fixedFiller)}');
+                        logInternal('    spacesLeft:     $existingSpacesLeft');
+                    }
+
+                    if (existingSpacesLeft == fixedFiller.length)
+                    {
+                        if (existingSpacesLeft != spaces)
                         {
-                            if (fixedFiller.length != spaces)
-                            {
-                                fixedFiller = ' ' * spaces;
-                                if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('  fixedFiller/4d:   ${StringTools.toDisplayString(fixedFiller)}');
-                            }
+                            fixedFiller = ' ' * spaces;
+                            if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('    fixedFiller/4c: ${StringTools.toDisplayString(fixedFiller)}');
                         }
+                    }
                     else
                     {
-                        // TODO: trimSpacesOnly
-
-                        final int existingSpacesLeft = fixedFiller.length - fixedFiller.trimLeft().length;
                         if (existingSpacesLeft != 1)
                         {
-                            fixedFiller = ' ${fixedFiller.trimLeft()}';
-                            if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('  fixedFiller/4e:   ${StringTools.toDisplayString(fixedFiller)}');
+                            final String fixedFillerTrimmedLeft = fixedFiller.substring(existingSpacesLeft);
+                            if (fixedFillerTrimmedLeft.startsWith('\n'))
+                            {
+                                fixedFiller = fixedFillerTrimmedLeft;
+                                if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('    fixedFiller/4d: ${StringTools.toDisplayString(fixedFiller)}');
+                            }
+                            else
+                            {
+                                final String lastText = _textBuffers.last.toString();
+                                if (Constants.DEBUG_FORMAT_STATE_SPACING) logDebug('lastText: ${StringTools.toDisplayString(lastText)}');
+                                if (lastText.endsWith('\n'))
+                                {
+                                    fixedFiller = fixedFillerTrimmedLeft;
+                                    if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('    fixedFiller/4e: ${StringTools.toDisplayString(fixedFiller)}');
+                                }
+                                else
+                                {                                
+                                    fixedFiller = ' $fixedFillerTrimmedLeft';
+                                    if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('    fixedFiller/4f: ${StringTools.toDisplayString(fixedFiller)}');
+                                }
+                            }
                         }
 
-                        final int existingSpacesRight = fixedFiller.length - fixedFiller.trimRight().length;
+                        final int existingSpacesRight = StringTools.countSpacesRight(fixedFiller);
+                        if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('      spacesRight:  $existingSpacesLeft');
+
                         if (existingSpacesRight != spaces)
                         {
-                            fixedFiller = fixedFiller.trimRight() + ' ' * spaces;
-                            if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('  fixedFiller/4f:   ${StringTools.toDisplayString(fixedFiller)}');
+                            final String fixedFillerTrimmedRight = fixedFiller.substring(0, fixedFiller.length - existingSpacesRight);
+                            if (fixedFillerTrimmedRight.endsWith('\n'))
+                            {
+                                fixedFiller = fixedFillerTrimmedRight;
+                                if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('    fixedFiller/4g: ${StringTools.toDisplayString(fixedFiller)}');
+                            }
+                            else
+                            {
+                                fixedFiller = fixedFillerTrimmedRight + ' ' * spaces;
+                                if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('    fixedFiller/4h: ${StringTools.toDisplayString(fixedFiller)}');
+                            }
                         }
                     }
                 }
@@ -701,9 +741,9 @@ class FormatState
 
     String getResultAfterLastLineBreak()
     {
-        final String text = _textBuffers.last.toString();
-        final int lastPos = text.lastIndexOf('\n');
-        final String r = lastPos == -1 ? '' : text.substring(lastPos + 1);
+        final String lastText = _textBuffers.last.toString();
+        final int lastPos = lastText.lastIndexOf('\n');
+        final String r = lastPos == -1 ? '' : lastText.substring(lastPos + 1);
         if (Constants.DEBUG_FORMAT_STATE) logInternal('getResultAfterLastLineBreak: ${StringTools.toDisplayString(r)}');
         return r;
     }

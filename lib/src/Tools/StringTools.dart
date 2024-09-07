@@ -104,4 +104,24 @@ class StringTools
 
         return r;
     }
+
+    static int countSpacesLeft(String s)
+    {
+        int count = 0;
+
+        while (count < s.length && s[count] == ' ')
+            count++;
+
+        return count;
+    }
+
+    static int countSpacesRight(String s)
+    {
+        int count = 0;
+
+        while (count < s.length && s[s.length - count - 1] == ' ')
+            count++;
+
+        return count;
+    }
 }
