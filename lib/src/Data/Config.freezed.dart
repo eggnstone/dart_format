@@ -38,6 +38,9 @@ mixin _$Config {
   /// Whether to add a new line before an opening brace.
   bool get addNewLineBeforeOpeningBrace => throw _privateConstructorUsedError;
 
+  /// TODO
+  bool get fixSpaces => throw _privateConstructorUsedError;
+
   /// The number of spaces to use for indentation. -1 = do not change indentation.
   int get indentationSpacesPerLevel => throw _privateConstructorUsedError;
 
@@ -68,6 +71,7 @@ abstract class $ConfigCopyWith<$Res> {
       bool addNewLineAtEndOfText,
       bool addNewLineBeforeClosingBrace,
       bool addNewLineBeforeOpeningBrace,
+      bool fixSpaces,
       int indentationSpacesPerLevel,
       int maxEmptyLines,
       bool removeTrailingCommas});
@@ -94,6 +98,7 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config>
     Object? addNewLineAtEndOfText = null,
     Object? addNewLineBeforeClosingBrace = null,
     Object? addNewLineBeforeOpeningBrace = null,
+    Object? fixSpaces = null,
     Object? indentationSpacesPerLevel = null,
     Object? maxEmptyLines = null,
     Object? removeTrailingCommas = null,
@@ -122,6 +127,10 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config>
       addNewLineBeforeOpeningBrace: null == addNewLineBeforeOpeningBrace
           ? _value.addNewLineBeforeOpeningBrace
           : addNewLineBeforeOpeningBrace // ignore: cast_nullable_to_non_nullable
+              as bool,
+      fixSpaces: null == fixSpaces
+          ? _value.fixSpaces
+          : fixSpaces // ignore: cast_nullable_to_non_nullable
               as bool,
       indentationSpacesPerLevel: null == indentationSpacesPerLevel
           ? _value.indentationSpacesPerLevel
@@ -153,6 +162,7 @@ abstract class _$$ConfigImplCopyWith<$Res> implements $ConfigCopyWith<$Res> {
       bool addNewLineAtEndOfText,
       bool addNewLineBeforeClosingBrace,
       bool addNewLineBeforeOpeningBrace,
+      bool fixSpaces,
       int indentationSpacesPerLevel,
       int maxEmptyLines,
       bool removeTrailingCommas});
@@ -177,6 +187,7 @@ class __$$ConfigImplCopyWithImpl<$Res>
     Object? addNewLineAtEndOfText = null,
     Object? addNewLineBeforeClosingBrace = null,
     Object? addNewLineBeforeOpeningBrace = null,
+    Object? fixSpaces = null,
     Object? indentationSpacesPerLevel = null,
     Object? maxEmptyLines = null,
     Object? removeTrailingCommas = null,
@@ -206,6 +217,10 @@ class __$$ConfigImplCopyWithImpl<$Res>
           ? _value.addNewLineBeforeOpeningBrace
           : addNewLineBeforeOpeningBrace // ignore: cast_nullable_to_non_nullable
               as bool,
+      fixSpaces: null == fixSpaces
+          ? _value.fixSpaces
+          : fixSpaces // ignore: cast_nullable_to_non_nullable
+              as bool,
       indentationSpacesPerLevel: null == indentationSpacesPerLevel
           ? _value.indentationSpacesPerLevel
           : indentationSpacesPerLevel // ignore: cast_nullable_to_non_nullable
@@ -233,6 +248,7 @@ class _$ConfigImpl extends _Config {
       required this.addNewLineAtEndOfText,
       required this.addNewLineBeforeClosingBrace,
       required this.addNewLineBeforeOpeningBrace,
+      required this.fixSpaces,
       required this.indentationSpacesPerLevel,
       required this.maxEmptyLines,
       required this.removeTrailingCommas})
@@ -265,6 +281,10 @@ class _$ConfigImpl extends _Config {
   @override
   final bool addNewLineBeforeOpeningBrace;
 
+  /// TODO
+  @override
+  final bool fixSpaces;
+
   /// The number of spaces to use for indentation. -1 = do not change indentation.
   @override
   final int indentationSpacesPerLevel;
@@ -279,7 +299,7 @@ class _$ConfigImpl extends _Config {
 
   @override
   String toString() {
-    return 'Config(addNewLineAfterClosingBrace: $addNewLineAfterClosingBrace, addNewLineAfterOpeningBrace: $addNewLineAfterOpeningBrace, addNewLineAfterSemicolon: $addNewLineAfterSemicolon, addNewLineAtEndOfText: $addNewLineAtEndOfText, addNewLineBeforeClosingBrace: $addNewLineBeforeClosingBrace, addNewLineBeforeOpeningBrace: $addNewLineBeforeOpeningBrace, indentationSpacesPerLevel: $indentationSpacesPerLevel, maxEmptyLines: $maxEmptyLines, removeTrailingCommas: $removeTrailingCommas)';
+    return 'Config(addNewLineAfterClosingBrace: $addNewLineAfterClosingBrace, addNewLineAfterOpeningBrace: $addNewLineAfterOpeningBrace, addNewLineAfterSemicolon: $addNewLineAfterSemicolon, addNewLineAtEndOfText: $addNewLineAtEndOfText, addNewLineBeforeClosingBrace: $addNewLineBeforeClosingBrace, addNewLineBeforeOpeningBrace: $addNewLineBeforeOpeningBrace, fixSpaces: $fixSpaces, indentationSpacesPerLevel: $indentationSpacesPerLevel, maxEmptyLines: $maxEmptyLines, removeTrailingCommas: $removeTrailingCommas)';
   }
 
   @override
@@ -295,8 +315,7 @@ class _$ConfigImpl extends _Config {
                     addNewLineAfterOpeningBrace) ||
                 other.addNewLineAfterOpeningBrace ==
                     addNewLineAfterOpeningBrace) &&
-            (identical(
-                    other.addNewLineAfterSemicolon, addNewLineAfterSemicolon) ||
+            (identical(other.addNewLineAfterSemicolon, addNewLineAfterSemicolon) ||
                 other.addNewLineAfterSemicolon == addNewLineAfterSemicolon) &&
             (identical(other.addNewLineAtEndOfText, addNewLineAtEndOfText) ||
                 other.addNewLineAtEndOfText == addNewLineAtEndOfText) &&
@@ -308,6 +327,8 @@ class _$ConfigImpl extends _Config {
                     addNewLineBeforeOpeningBrace) ||
                 other.addNewLineBeforeOpeningBrace ==
                     addNewLineBeforeOpeningBrace) &&
+            (identical(other.fixSpaces, fixSpaces) ||
+                other.fixSpaces == fixSpaces) &&
             (identical(other.indentationSpacesPerLevel, indentationSpacesPerLevel) ||
                 other.indentationSpacesPerLevel == indentationSpacesPerLevel) &&
             (identical(other.maxEmptyLines, maxEmptyLines) ||
@@ -326,6 +347,7 @@ class _$ConfigImpl extends _Config {
       addNewLineAtEndOfText,
       addNewLineBeforeClosingBrace,
       addNewLineBeforeOpeningBrace,
+      fixSpaces,
       indentationSpacesPerLevel,
       maxEmptyLines,
       removeTrailingCommas);
@@ -354,6 +376,7 @@ abstract class _Config extends Config {
       required final bool addNewLineAtEndOfText,
       required final bool addNewLineBeforeClosingBrace,
       required final bool addNewLineBeforeOpeningBrace,
+      required final bool fixSpaces,
       required final int indentationSpacesPerLevel,
       required final int maxEmptyLines,
       required final bool removeTrailingCommas}) = _$ConfigImpl;
@@ -384,6 +407,10 @@ abstract class _Config extends Config {
   /// Whether to add a new line before an opening brace.
   @override
   bool get addNewLineBeforeOpeningBrace;
+
+  /// TODO
+  @override
+  bool get fixSpaces;
 
   /// The number of spaces to use for indentation. -1 = do not change indentation.
   @override

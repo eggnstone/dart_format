@@ -1,5 +1,7 @@
 // ignore_for_file: always_put_control_body_on_new_line
 
+import 'dart:math';
+
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/syntactic_entity.dart';
@@ -315,7 +317,7 @@ class FormatState
         consumeText(lastConsumedPosition, lastConsumedPosition, s, fullSource);
     }
 
-    void consumeText(int offset, int end, String s, String source, {bool isString = false})
+    void consumeText(int offset, int end, String s, String source, {bool isString = false, int? spacesLeft, int? spacesRight})
     {
         const String methodName = 'consumeText';
         final String fullSource = '$source/$methodName';
@@ -355,11 +357,48 @@ class FormatState
             }
             else
             {
-                final String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
+                String fixedFiller = _removeLeadingWhitespace(filler, lastConsumedPosition);
                 if (Constants.DEBUG_FORMAT_STATE)
                 {
-                    logInternal('  fixedFiller/4:    ${StringTools.toDisplayString(fixedFiller)}');
+                    logInternal('  fixedFiller/4c:   ${StringTools.toDisplayString(fixedFiller)}');
                     logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
+                }
+
+                final int? minSpaces = spacesLeft != null && spacesRight != null ? min(spacesLeft, spacesRight) : spacesLeft ?? spacesRight;
+                if (minSpaces != null)
+                {
+                    if (fixedFiller.trim().isEmpty) // TODO: trimSpacesOnly
+                        {
+                            if (fixedFiller.length != minSpaces)
+                            {
+                                fixedFiller = ' ' * minSpaces;
+                                logInternal('  fixedFiller/4d:   ${StringTools.toDisplayString(fixedFiller)}');
+                            }
+                        }
+                    else
+                    {
+                        // TODO: trimSpacesOnly
+
+                        if (spacesLeft != null)
+                        {
+                            final int existingSpacesLeft = fixedFiller.length - fixedFiller.trimLeft().length;
+                            if (existingSpacesLeft != spacesLeft)
+                            {
+                                fixedFiller = ' ' * spacesLeft + fixedFiller.trimLeft();
+                                logInternal('  fixedFiller/4e:   ${StringTools.toDisplayString(fixedFiller)}');
+                            }
+                        }
+
+                        if (spacesRight != null)
+                        {
+                            final int existingSpacesRight = fixedFiller.length - fixedFiller.trimRight().length;
+                            if (existingSpacesRight != spacesRight)
+                            {
+                                fixedFiller = fixedFiller.trimRight() + ' ' * spacesRight;
+                                logInternal('  fixedFiller/4f:   ${StringTools.toDisplayString(fixedFiller)}');
+                            }
+                        }
+                    }
                 }
 
                 write(fixedFiller);
@@ -441,7 +480,7 @@ class FormatState
         );
     }
 
-    void copyEntity(SyntacticEntity? entity, AstVisitor<void> astVisitor, String source)
+    void copyEntity(SyntacticEntity? entity, AstVisitor<void> astVisitor, String source, [int? spacesLeft, int? spacesRight])
     {
         const String methodName = 'copyEntity';
         final String fullSource = '$source/$methodName';
@@ -454,9 +493,14 @@ class FormatState
         }
 
         if (entity is AstNode)
+        {
+            if (spacesLeft != null || spacesRight != null)
+                throw DartFormatException.error('Unnecessary spaces for AstNode: ${entity.runtimeType}');
+
             entity.accept(astVisitor);
+        }
         else
-            copyText(entity.offset, entity.end, fullSource);
+            copyText(entity.offset, entity.end, fullSource, spacesLeft, spacesRight);
     }
 
     void copyOpeningBraceAndPushLevel(Token token, Config config, String source)
@@ -466,14 +510,14 @@ class FormatState
         pushLevel: true
     );
 
-    void copyText(int offset, int end, String source)
+    void copyText(int offset, int end, String source, [int? spacesLeft, int? spacesRight])
     {
         const String methodName = 'copyText';
         final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, $source)');
 
         final String s = getText(offset, end);
-        consumeText(offset, end, s, fullSource);
+        consumeText(offset, end, s, fullSource, spacesLeft: spacesLeft, spacesRight: spacesRight);
     }
 
     void copyString(int offset, int end, String source)

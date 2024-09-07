@@ -23,6 +23,9 @@ TODO
 - Indent "((){});" if contains line breaks.
 - else\nif
 - Indent interpolations?
+- Force line break after if/else/...
+- Add/remove spaces
+- Fix too big block indentation after "if () // comment\n"
 
 DONE (I think)
 ==============

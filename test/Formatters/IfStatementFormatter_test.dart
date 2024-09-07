@@ -135,6 +135,38 @@ void main()
                 TestConfig.none(),
                 TestConfig('if (true)\n    ;\nelse if(true)\n{\n}')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createStatementInFunction,
+            inputLeading: 'void f(){',
+            inputMiddle: 'if  (  true  )  ;  else  ;',
+            inputTrailing: '}',
+            name: 'if ; else ; (too much spacing)',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(14, '  true'),
+                TestVisitor<EmptyStatement>(23, '  ;'),
+                TestVisitor<EmptyStatement>(32, '  ;')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('if (  true)  ; else  ;')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createStatementInFunction,
+            inputLeading: 'void f(){',
+            inputMiddle: 'if  /**/  (  /**/  true  /**/  )  /**/  ;  /**/  else  /**/  ;',
+            inputTrailing: '}',
+            name: 'if ; else ; (too much spacing with comments)',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(20, '  /**/  true'),
+                TestVisitor<EmptyStatement>(41, '  /**/  ;'),
+                TestVisitor<EmptyStatement>(62, '  /**/  ;')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('if /**/ (  /**/  true /**/)  /**/  ; /**/ else  /**/  ;')
+            ]
         )
     ];
 
