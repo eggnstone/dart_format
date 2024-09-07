@@ -60,7 +60,7 @@ void main()
             test('Function / IfStatement / EmptyStatement', ()
                 {
                     const String inputText = 'void f(){if(true)\n;}';
-                    const String expectedText = 'void f()\n{\n    if(true)\n        ;\n}\n';
+                    const String expectedText = 'void f()\n{\n    if (true)\n        ;\n}\n';
 
                     final String actualText = formatterAll.format(inputText);
 
@@ -71,7 +71,7 @@ void main()
             test('Function / IfStatement / ExpressionStatement', ()
                 {
                     const String inputText = 'void f(){if(true)\na;}';
-                    const String expectedText = 'void f()\n{\n    if(true)\n        a;\n}\n';
+                    const String expectedText = 'void f()\n{\n    if (true)\n        a;\n}\n';
 
                     final String actualText = formatterAll.format(inputText);
 
@@ -82,7 +82,7 @@ void main()
             test('Function / IfStatement / empty Block', ()
                 {
                     const String inputText = 'void f(){if(true)\n{}}';
-                    const String expectedText = 'void f()\n{\n    if(true)\n    {\n    }\n}\n';
+                    const String expectedText = 'void f()\n{\n    if (true)\n    {\n    }\n}\n';
 
                     final String actualText = formatterAll.format(inputText);
 
@@ -93,7 +93,7 @@ void main()
             test('Function / IfStatement / Block / ExpressionStatement', ()
                 {
                     const String inputText = 'void f(){if(true)\n{a;}}';
-                    const String expectedText = 'void f()\n{\n    if(true)\n    {\n        a;\n    }\n}\n';
+                    const String expectedText = 'void f()\n{\n    if (true)\n    {\n        a;\n    }\n}\n';
 
                     final String actualText = formatterAll.format(inputText);
 

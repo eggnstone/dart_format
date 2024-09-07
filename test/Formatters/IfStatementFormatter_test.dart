@@ -63,45 +63,49 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createStatementInFunction,
             inputLeading: 'void f(){',
-            inputMiddle: 'if (true);else;',
+            inputMiddle: 'if (true); else;',
             inputTrailing: '}',
             name: 'if ; else ;',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<BooleanLiteral>(13, 'true'),
                 TestVisitor<EmptyStatement>(18, ';'),
-                TestVisitor<EmptyStatement>(23, ';')
+                TestVisitor<EmptyStatement>(24, ';')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('if (true); else;')
             ]
         ),
         TestGroupConfig(
             inputNodeCreator: AstCreator.createStatementInFunction,
             inputLeading: 'void f(){',
-            inputMiddle: 'if (true)\n;else\n;',
+            inputMiddle: 'if (true)\n; else\n;',
             inputTrailing: '}',
             name: r'if \n; else \n;',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<BooleanLiteral>(13, 'true'),
                 TestVisitor<EmptyStatement>(19, ';'),
-                TestVisitor<EmptyStatement>(25, ';')
+                TestVisitor<EmptyStatement>(26, ';')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('if (true)\n    ;else\n    ;')
+                TestConfig('if (true)\n    ; else\n    ;')
             ]
         ),
         TestGroupConfig(
             inputNodeCreator: AstCreator.createStatementInFunction,
             inputLeading: 'void f(){',
-            inputMiddle: 'if (true)\n;else if(true)\n;',
+            inputMiddle: 'if (true)\n; else if(true)\n;',
             inputTrailing: '}',
             name: r'if \n ; else if \n ;',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<BooleanLiteral>(13, 'true'),
                 TestVisitor<EmptyStatement>(19, ';'),
-                TestVisitor<IfStatement>(25, 'if(true)\n;')
+                TestVisitor<IfStatement>(26, 'if(true)\n;')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('if (true)\n    ;else if(true)\n;')
+                TestConfig('if (true)\n    ; else if(true)\n;')
             ]
         ),
         TestGroupConfig(
@@ -139,6 +143,22 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createStatementInFunction,
             inputLeading: 'void f(){',
+            inputMiddle: 'if(true);else;',
+            inputTrailing: '}',
+            name: 'if ; else ; (too little spacing)',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(12, 'true'),
+                TestVisitor<EmptyStatement>(17, ';'),
+                TestVisitor<EmptyStatement>(22, ';')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('if (true); else;')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createStatementInFunction,
+            inputLeading: 'void f(){',
             inputMiddle: 'if  (  true  )  ;  else  ;',
             inputTrailing: '}',
             name: 'if ; else ; (too much spacing)',
@@ -150,6 +170,22 @@ void main()
             testConfigs: <TestConfig>[
                 TestConfig.none(),
                 TestConfig('if (  true)  ; else  ;')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createStatementInFunction,
+            inputLeading: 'void f(){',
+            inputMiddle: 'if/**/(/**/true/**/)/**/;/**/else/**/;',
+            inputTrailing: '}',
+            name: 'if ; else ; (too little spacing with comments)',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(16, '/**/true'),
+                TestVisitor<EmptyStatement>(29, '/**/;'),
+                TestVisitor<EmptyStatement>(42, '/**/;')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('if /**/ (/**/true /**/)/**/; /**/ else/**/;')
             ]
         ),
         TestGroupConfig(

@@ -25,10 +25,12 @@ class ForPartsWithExpressionFormatter extends IFormatter
         if (node is! ForPartsWithExpression)
             throw FormatException('Not a ForPartsWithExpression: ${node.runtimeType}');
 
+        final int? space0 = config.fixSpaces ? 0 : null;
+
         formatState.copyEntity(node.initialization, astVisitor, '$methodName/node.initialization');
-        formatState.copyEntity(node.leftSeparator, astVisitor, '$methodName/node.leftSeparator');
+        formatState.copyEntity(node.leftSeparator, astVisitor, '$methodName/node.leftSeparator', space0);
         formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
-        formatState.copyEntity(node.rightSeparator, astVisitor, '$methodName/node.rightSeparator');
+        formatState.copyEntity(node.rightSeparator, astVisitor, '$methodName/node.rightSeparator', space0);
         formatState.acceptListWithComma(node.updaters, null, astVisitor, '$methodName/node.updaters');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

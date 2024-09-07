@@ -29,10 +29,10 @@ class IfStatementFormatter extends IFormatter
         final int? space1 = config.fixSpaces ? 1 : null;
 
         formatState.copyEntity(node.ifKeyword, astVisitor, '$methodName/node.ifKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', space1, space1);
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', space1);
         formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');
-        formatState.copyEntity(node.caseClause, astVisitor, '$methodName/node.caseClause', space1, space1);
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', space1, space0);
+        formatState.copyEntity(node.caseClause, astVisitor, '$methodName/node.caseClause', space1);
+        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', space0);
 
         formatState.pushLevel('$methodName/node.thenStatement');
         formatState.copyEntity(node.thenStatement, astVisitor, '$methodName/node.thenStatement');
@@ -43,7 +43,7 @@ class IfStatementFormatter extends IFormatter
 
         final bool indentElse = node.elseStatement is! IfStatement;
 
-        formatState.copyEntity(node.elseKeyword, astVisitor, '$methodName/node.elseKeyword', space1, space1);
+        formatState.copyEntity(node.elseKeyword, astVisitor, '$methodName/node.elseKeyword', space1);
 
         if (indentElse)
             formatState.pushLevel('$methodName/node.elseKeyword');
