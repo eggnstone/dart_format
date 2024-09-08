@@ -149,7 +149,7 @@ void main()
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<BooleanLiteral>(12, 'true'),
                 TestVisitor<EmptyStatement>(17, ';'),
-                TestVisitor<EmptyStatement>(22, ';'),
+                TestVisitor<EmptyStatement>(22, ';')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -165,7 +165,7 @@ void main()
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<BooleanLiteral>(12, 'true'),
                 TestVisitor<EmptyStatement>(17, ';', '\n'),
-                TestVisitor<EmptyStatement>(22, ';', '\n'),
+                TestVisitor<EmptyStatement>(22, ';', '\n')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none('if(true);\nelse;\n'),

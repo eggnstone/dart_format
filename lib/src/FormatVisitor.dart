@@ -31,6 +31,7 @@ import 'Formatters/ForPartsWithDeclarationsFormatter.dart';
 import 'Formatters/ForPartsWithExpressionFormatter.dart';
 import 'Formatters/ForStatementFormatter.dart';
 import 'Formatters/FormalParameterListFormatter.dart';
+import 'Formatters/FunctionDeclarationFormatter.dart';
 import 'Formatters/FunctionTypeAliasFormatter.dart';
 import 'Formatters/FunctionTypedFormalParameterFormatter.dart';
 import 'Formatters/GenericTypeAliasFormatter.dart';
@@ -116,6 +117,7 @@ class FormatVisitor extends AstVisitor<void>
     late final ForPartsWithDeclarationsFormatter _forPartsWithDeclarationsFormatter = ForPartsWithDeclarationsFormatter(config, this, _formatState);
     late final ForPartsWithExpressionFormatter _forPartsWithExpressionFormatter = ForPartsWithExpressionFormatter(config, this, _formatState);
     late final ForStatementFormatter _forStatementFormatter = ForStatementFormatter(config, this, _formatState);
+    late final FunctionDeclarationFormatter _functionDeclarationFormatter = FunctionDeclarationFormatter(config, this, _formatState);
     late final FunctionTypeAliasFormatter _functionTypeAliasFormatter = FunctionTypeAliasFormatter(config, this, _formatState);
     late final FunctionTypedFormalParameterFormatter _functionTypedFormalParameterFormatter = FunctionTypedFormalParameterFormatter(config, this, _formatState);
     late final GenericTypeAliasFormatter _genericTypeAliasFormatter = GenericTypeAliasFormatter(config, this, _formatState);
@@ -428,7 +430,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitFunctionDeclaration(FunctionDeclaration node)
-    => _defaultFormatter.format(node);
+    => _functionDeclarationFormatter.format(node);
 
     @override
     void visitFunctionDeclarationStatement(FunctionDeclarationStatement node)

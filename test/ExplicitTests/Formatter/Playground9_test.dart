@@ -11,16 +11,14 @@ void main()
     final Config configAll = Config.all();
     final Formatter formatterAll = Formatter(configAll);
 
-    group('Playground 8', ()
+    group('Playground 9', ()
         {
-            test('format: if', ()
+            test("format: 'void f(){}'", ()
                 {
-                    const String inputText = 'void f(){if  /**/  (  /**/  true  /**/  )  /**/  ;                  /**/  else  /**/  ;}';
+                    const String inputText = 'void  f  (  )  {  }';
                     const String expectedText =
-                        'void f()\n'
+                        'void f  (  )\n'
                         '{\n'
-                        '    if /**/ (  /**/  true /**/)  /**/  ;\n'
-                        '    /**/ else  /**/  ;\n'
                         '}\n';
 
                     final String actualText = formatterAll.format(inputText);
