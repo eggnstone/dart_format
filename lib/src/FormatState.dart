@@ -173,7 +173,7 @@ class FormatState
                     if (lastNode.end < lastConsumedPosition)
                     {
                         final String alreadyConsumedText = getText(lastNode.end, lastConsumedPosition);
-                        if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
+                        if (Constants.DEBUG_TODOS) logInternal('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
                         if (CommentTools.isEmptyOrComments(alreadyConsumedText))
                         {
                             // TODO: test
@@ -319,7 +319,11 @@ class FormatState
     {
         const String methodName = 'consumeText';
         final String fullSource = '$source/$methodName';
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
+        if (Constants.DEBUG_FORMAT_STATE)
+        {
+            logInternal('# $methodName($offset, $end, $source)');
+            logInternal('  s: ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
+        }
 
         if (lastConsumedPosition > offset)
             logAndThrowErrorWithOffsets('Internal error: offset < lastConsumedPosition:', '<', null, offset, lastConsumedPosition, source);
@@ -331,9 +335,22 @@ class FormatState
             if (spaces != null)
             {
                 final String lastText = _textBuffers.last.toString();
-                if (Constants.DEBUG_FORMAT_STATE_SPACING) logDebug('lastText: ${StringTools.toDisplayString(lastText)}');
-                if (!lastText.endsWith('\n'))
+
+                if (Constants.DEBUG_FORMAT_STATE_SPACING)
+                {
+                    logInternal('  spaces/1:         $spaces');
+                    logInternal('    lastText:       ${StringTools.toDisplayString(lastText)}');
+                }
+
+                if (lastText.endsWith('\n'))
+                {
+                    if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('    Not adding any spaces because lastText ends with line break');
+                }
+                else
+                {
+                    if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('    Adding $spaces spaces because lastText does not end with line break');
                     write(' ' * spaces);
+                }
             }
         }
         else
@@ -360,7 +377,6 @@ class FormatState
             if (filler.replaceAll(' ', '').isEmpty && _textBuffers.length == 1 && _textBuffers.last.toString().isEmpty)
             {
                 if (Constants.DEBUG_FORMAT_STATE) logInternal('  Skipping space-only filler');
-
                 if (spaces != null)
                     throw DartFormatException.error('TODO');
             }
@@ -378,7 +394,8 @@ class FormatState
                     final int existingSpacesLeft = StringTools.countSpacesLeft(fixedFiller);
                     if (Constants.DEBUG_FORMAT_STATE_SPACING)
                     {
-                        logInternal('  spaces:           $spaces');
+                        logInternal('  spaces/2:         $spaces');
+                        logInternal('    lastText:       ${StringTools.toDisplayString(_textBuffers.last.toString())}');
                         logInternal('    fixedFiller/4b: ${StringTools.toDisplayString(fixedFiller)}');
                         logInternal('    spacesLeft:     $existingSpacesLeft');
                     }
@@ -404,7 +421,6 @@ class FormatState
                             else
                             {
                                 final String lastText = _textBuffers.last.toString();
-                                if (Constants.DEBUG_FORMAT_STATE_SPACING) logDebug('lastText: ${StringTools.toDisplayString(lastText)}');
                                 if (lastText.endsWith('\n'))
                                 {
                                     fixedFiller = fixedFillerTrimmedLeft;
@@ -506,14 +522,15 @@ class FormatState
         popLevel: true
     );
 
-    void copySemicolon(Token? token, Config config, String source)
+    void copySemicolon(Token? token, Config config, String source, [int? spaces])
     {
         if (token == null)
             return;
 
         copyToken(token, source,
             addNewLineBefore: false,
-            addNewLineAfter: config.addNewLineAfterSemicolon
+            addNewLineAfter: config.addNewLineAfterSemicolon,
+            spaces: spaces
         );
     }
 
@@ -575,7 +592,8 @@ class FormatState
             required bool addNewLineBefore,
             required bool addNewLineAfter,
             bool pushLevel = false,
-            bool popLevel = false
+            bool popLevel = false,
+            int? spaces
         })
     {
         const String methodName = 'copyToken';
@@ -588,14 +606,14 @@ class FormatState
         if (popLevel)
             popLevelAndIndent();
 
-        _copyTokenWithoutComments(token, fullSource);
+        _copyTokenWithoutComments(token, fullSource, spaces);
         addNewLineAfterToken(token, add: addNewLineAfter, fullSource);
 
         if (pushLevel)
             this.pushLevel(fullSource);
     }
 
-    void _copyTokenCommentsOnly(Token? token, String source)
+    void _copyTokenCommentsOnly(Token? token, String source/*, [int? spaces]*/)
     {
         const String methodName = 'copyTokenCommentsOnly';
         final String fullSource = '$source/$methodName';
@@ -626,7 +644,7 @@ class FormatState
         if (commentsOffset < lastConsumedPosition)
         {
             final String alreadyConsumedText = getText(commentsOffset, lastConsumedPosition);
-            if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
+            if (Constants.DEBUG_TODOS) logInternal('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
             if (CommentTools.isEmptyOrComments(alreadyConsumedText))
             {
                 // TODO: test
@@ -637,14 +655,16 @@ class FormatState
 
         // TODO: test
         if (adjustedCommentsOffset < commentsEnd)
-            copyText(adjustedCommentsOffset, commentsEnd, fullSource);
+        {
+            copyText(adjustedCommentsOffset, commentsEnd, fullSource/*, spaces*/);
+        }
         else
         {
             if (Constants.DEBUG_FORMAT_STATE) logWarning('Comments not consumed: adjustedCommentsOffset ($adjustedCommentsOffset) < commentsEnd ($commentsEnd): ${StringTools.toDisplayString(token)}');
         }
     }
 
-    void _copyTokenWithoutComments(Token? token, String source)
+    void _copyTokenWithoutComments(Token? token, String source, [int? spaces])
     {
         const String methodName = 'copyTokenWithoutComments';
         final String fullSource = '$source/$methodName';
@@ -666,7 +686,7 @@ class FormatState
 
         if (commentTokenEnd == null)
         {
-            copyText(token.offset, token.end, fullSource);
+            copyText(token.offset, token.end, fullSource, spaces);
             return;
         }
 
@@ -674,7 +694,7 @@ class FormatState
         if (commentTokenEnd < lastConsumedPosition)
         {
             final String alreadyConsumedText = getText(commentTokenEnd, lastConsumedPosition);
-            if (Constants.DEBUG_TODOS) logDebug('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
+            if (Constants.DEBUG_TODOS) logInternal('$methodName: alreadyConsumedText: ${StringTools.toDisplayString(alreadyConsumedText)}');
             if (CommentTools.isEmptyOrComments(alreadyConsumedText))
             {
                 // TODO: test
@@ -685,7 +705,9 @@ class FormatState
 
         // TODO: test
         if (adjustedCommentTokenEnd < token.end)
-            copyText(adjustedCommentTokenEnd, token.end, fullSource);
+        {
+            copyText(adjustedCommentTokenEnd, token.end, fullSource, spaces);
+        }
         else
         {
             if (Constants.DEBUG_FORMAT_STATE) logWarning('Comments not consumed: adjustedCommentTokenEnd ($adjustedCommentTokenEnd) < token.end (${token.end}): ${StringTools.toDisplayString(token)}');

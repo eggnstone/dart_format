@@ -124,4 +124,17 @@ class StringTools
 
         return count;
     }
+
+    static String trimSpaces(String s)
+    {
+        int start = 0;
+        while (start < s.length && s[start] == ' ')
+            start++;
+
+        int end = s.length;
+        while (end > start && s[end - 1] == ' ')
+            end--;
+
+        return s.substring(start, end);
+    }
 }

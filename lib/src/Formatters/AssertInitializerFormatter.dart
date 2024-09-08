@@ -27,10 +27,12 @@ class AssertInitializerFormatter extends IFormatter
         if (node is! AssertInitializer)
             throw FormatException('Not an AssertInitializer: ${node.runtimeType}');
 
+        final int? space0 = config.fixSpaces ? 0 : null;
+
         formatState.copyEntity(node.assertKeyword, astVisitor, '$methodName/node.assertKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', space0);
         formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
-        formatState.copyEntity(node.comma, astVisitor, '$methodName/node.comma');
+        formatState.copyEntity(node.comma, astVisitor, '$methodName/node.comma', space0);
         formatState.copyEntity(node.message, astVisitor, '$methodName/node.message');
 
         final SyntacticEntity nodeBeforeRightParenthesis = node.message ?? node.comma ?? node.condition;
@@ -40,6 +42,7 @@ class AssertInitializerFormatter extends IFormatter
             log('node.message: ${node.message}', formatState.logIndent);
             log('node.nodeBeforeRightParenthesis: $nodeBeforeRightParenthesis', formatState.logIndent);
         }
+
         final int start = nodeBeforeRightParenthesis.end;
         final int end = node.rightParenthesis.offset;
         String commaText = formatState.getText(start, end);
@@ -49,11 +52,16 @@ class AssertInitializerFormatter extends IFormatter
             if (config.removeTrailingCommas)
                 commaText = commaText.replaceFirst(',', '${Constants.REMOVE_START},${Constants.REMOVE_END}');
 
-            formatState.consumeText(start, end, commaText, '$methodName/TrailingComma');
+            if (config.fixSpaces)
+            {
+                commaText = StringTools.trimSpaces(commaText);
+                if (Constants.DEBUG_I_FORMATTER) log('commaText: ${StringTools.toDisplayString(commaText)}', formatState.logIndent - 1);
+            }
+
+            formatState.consumeText(start, end, commaText, '$methodName/TrailingComma', spaces: space0);
         }
 
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
-        //formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', space0);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

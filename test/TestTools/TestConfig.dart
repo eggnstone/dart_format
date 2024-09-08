@@ -11,6 +11,8 @@ class TestConfig
     TestConfig([this.expectedText, this.restText])
         : config = Config.all(), name = 'Default';
 
+    TestConfig.custom(this.name, this.config, [this.expectedText, this.restText]);
+
     TestConfig.none([this.expectedText, this.restText])
         : config = Config.none(), name = 'None';
 }
