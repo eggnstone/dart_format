@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -32,15 +33,15 @@ class ImportDirectiveFormatter extends IFormatter
         formatState.copyEntity(node.importKeyword, astVisitor, '$methodName/node.importKeyword');
 
         //if (pushLevel)
-        formatState.pushLevel('$methodName/node.classKeyword/after');
+        formatState.pushLevel('$methodName/node.importKeyword/after');
 
-        formatState.copyEntity(node.uri, astVisitor, '$methodName/node.uri');
+        formatState.copyEntity(node.uri, astVisitor, '$methodName/node.uri');//, config.space1);
         formatState.acceptList(node.configurations, astVisitor, '$methodName/node.configurations');
         formatState.copyEntity(node.deferredKeyword, astVisitor, '$methodName/node.deferredKeyword');
-        formatState.copyEntity(node.asKeyword, astVisitor, '$methodName/node.asKeyword');
+        formatState.copyEntity(node.asKeyword, astVisitor, '$methodName/node.asKeyword', config.space1);
         formatState.copyEntity(node.prefix, astVisitor, '$methodName/node.prefix');
         formatState.acceptList(node.combinators, astVisitor, '$methodName/node.combinators');
-        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
 
         //if (pushLevel)
         formatState.popLevelAndIndent();

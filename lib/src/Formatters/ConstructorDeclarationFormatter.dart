@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -34,7 +35,7 @@ class ConstructorDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters');
         formatState.pushLevel('$methodName/node.statements');
-        formatState.copyEntity(node.separator, astVisitor, '$methodName/node.separator');
+        formatState.copyEntity(node.separator, astVisitor, '$methodName/node.separator', config.space1);
         formatState.copyEntity(node.redirectedConstructor, astVisitor, '$methodName/node.redirectedConstructor');
         formatState.acceptListWithComma(node.initializers, null, astVisitor, '$methodName/node.initializers');
         formatState.popLevelAndIndent();

@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -28,7 +29,7 @@ class SwitchPatternCaseFormatter extends IFormatter
         formatState.acceptList(node.labels, astVisitor, '$methodName/node.labels');
         formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword');
         formatState.copyEntity(node.guardedPattern, astVisitor, '$methodName/node.guardedPattern');
-        formatState.copyEntity(node.colon, astVisitor, '$methodName/node.colon');
+        formatState.copyEntity(node.colon, astVisitor, '$methodName/node.colon', config.space0);
         formatState.pushLevel('$methodName/node.statements');
         formatState.acceptList(node.statements, astVisitor, '$methodName/node.statements');
         formatState.popLevelAndIndent();

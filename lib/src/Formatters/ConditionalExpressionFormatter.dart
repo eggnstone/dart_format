@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -28,12 +29,12 @@ class ConditionalExpressionFormatter extends IFormatter
         formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
 
         formatState.pushLevel('$methodName/node.question+thenExpression');
-        formatState.copyEntity(node.question, astVisitor, '$methodName/node.question');
+        formatState.copyEntity(node.question, astVisitor, '$methodName/node.question', config.space1);
         formatState.copyEntity(node.thenExpression, astVisitor, '$methodName/node.thenExpression');
         formatState.popLevelAndIndent();
 
         formatState.pushLevel('$methodName/node.colon+elseExpression');
-        formatState.copyEntity(node.colon, astVisitor,  '$methodName/node.colon');
+        formatState.copyEntity(node.colon, astVisitor,  '$methodName/node.colon', config.space1);
         formatState.copyEntity(node.elseExpression, astVisitor, '$methodName/node.elseExpression');
         formatState.popLevelAndIndent();
 

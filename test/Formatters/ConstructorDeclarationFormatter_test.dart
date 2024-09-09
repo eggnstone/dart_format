@@ -84,6 +84,10 @@ void main()
                 TestVisitor<FormalParameterList>(23, '()'),
                 TestVisitor<ConstructorName>(26, '_C'),
                 TestVisitor<EmptyFunctionBody>(28, ';')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('const factory C() =_C;')
             ]
         ),
         TestGroupConfig(
@@ -97,6 +101,10 @@ void main()
                 TestVisitor<FormalParameterList>(9, '()'),
                 TestVisitor<SuperConstructorInvocation>(12, 'super()'),
                 TestVisitor<BlockFunctionBody>(19, '{}')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('C() :super(){}')
             ]
         ),
         TestGroupConfig(
@@ -110,6 +118,10 @@ void main()
                 TestVisitor<FormalParameterList>(15, '()'),
                 TestVisitor<SuperConstructorInvocation>(18, 'super()'),
                 TestVisitor<EmptyFunctionBody>(25, ';')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('const C() :super();')
             ]
         ),
         TestGroupConfig(
@@ -124,6 +136,10 @@ void main()
                 TestVisitor<ConstructorFieldInitializer>(18, 'a=0'),
                 TestVisitor<ConstructorFieldInitializer>(22, 'b=0'),
                 TestVisitor<EmptyFunctionBody>(25, ';')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('const C() :a=0,b=0;')
             ]
         ),
         TestGroupConfig(
