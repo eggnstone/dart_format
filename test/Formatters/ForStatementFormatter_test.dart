@@ -21,6 +21,10 @@ void main()
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<ForPartsWithExpression>(13, ';;'),
                 TestVisitor<EmptyStatement>(16, ';')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('for (;;);')
             ]
         ),
         TestGroupConfig(
@@ -35,7 +39,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('for(;;)\n    ;')
+                TestConfig('for (;;)\n    ;')
             ]
         ),
         TestGroupConfig(
@@ -47,6 +51,10 @@ void main()
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<ForEachPartsWithIdentifier>(24, 'a in b'),
                 TestVisitor<EmptyStatement>(31, ';')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('await for (a in b);')
             ]
         )
     ];

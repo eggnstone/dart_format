@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -25,14 +26,11 @@ class IfStatementFormatter extends IFormatter
         if (node is! IfStatement)
             throw FormatException('Not an IfStatement: ${node.runtimeType}');
 
-        final int? space0 = config.fixSpaces ? 0 : null;
-        final int? space1 = config.fixSpaces ? 1 : null;
-
         formatState.copyEntity(node.ifKeyword, astVisitor, '$methodName/node.ifKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', space1);
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space1);
         formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');
-        formatState.copyEntity(node.caseClause, astVisitor, '$methodName/node.caseClause', space1);
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', space0);
+        formatState.copyEntity(node.caseClause, astVisitor, '$methodName/node.caseClause', config.space1);
+        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
 
         formatState.pushLevel('$methodName/node.thenStatement');
         formatState.copyEntity(node.thenStatement, astVisitor, '$methodName/node.thenStatement');
@@ -43,7 +41,7 @@ class IfStatementFormatter extends IFormatter
 
         final bool indentElse = node.elseStatement is! IfStatement;
 
-        formatState.copyEntity(node.elseKeyword, astVisitor, '$methodName/node.elseKeyword', space1);
+        formatState.copyEntity(node.elseKeyword, astVisitor, '$methodName/node.elseKeyword', config.space1);
 
         if (indentElse)
             formatState.pushLevel('$methodName/node.elseKeyword');

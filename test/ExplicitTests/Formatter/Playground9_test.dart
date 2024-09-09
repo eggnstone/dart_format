@@ -17,7 +17,7 @@ void main()
                 {
                     const String inputText = 'void  f  (  )  {  }';
                     const String expectedText =
-                        'void f  (  )\n'
+                        'void f()\n'
                         '{\n'
                         '}\n';
 

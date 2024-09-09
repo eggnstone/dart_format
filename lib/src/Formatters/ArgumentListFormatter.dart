@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -25,11 +26,11 @@ class ArgumentListFormatter extends IFormatter
         if (node is! ArgumentList)
             throw FormatException('Not an ArgumentList: ${node.runtimeType}');
 
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space0);
         formatState.pushLevel('$methodName/node.leftParenthesis');
         formatState.acceptListWithComma(node.arguments, node.rightParenthesis, astVisitor, '$methodName/node.arguments');
         formatState.popLevelAndIndent();
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
+        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

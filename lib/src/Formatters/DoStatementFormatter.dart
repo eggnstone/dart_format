@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -28,10 +29,10 @@ class DoStatementFormatter extends IFormatter
         formatState.copyEntity(node.doKeyword, astVisitor, '$methodName/node.doKeyword');
         formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
         formatState.copyEntity(node.whileKeyword, astVisitor, '$methodName/node.whileKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space1);
         formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
-        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
+        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

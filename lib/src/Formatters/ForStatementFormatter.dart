@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -27,9 +28,9 @@ class ForStatementFormatter extends IFormatter
 
         formatState.copyEntity(node.awaitKeyword, astVisitor, '$methodName/node.awaitKeyword');
         formatState.copyEntity(node.forKeyword, astVisitor, '$methodName/node.forKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space1);
         formatState.copyEntity(node.forLoopParts, astVisitor, '$methodName/node.forLoopParts');
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
+        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
         formatState.pushLevel('$methodName/node.body');
         formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
         formatState.popLevelAndIndent();

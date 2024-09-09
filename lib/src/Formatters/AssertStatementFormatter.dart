@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/syntactic_entity.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/FormatTools.dart';
 import '../Tools/StringTools.dart';
@@ -27,12 +28,10 @@ class AssertStatementFormatter extends IFormatter
         if (node is! AssertStatement)
             throw FormatException('Not an AssertStatement: ${node.runtimeType}');
 
-        final int? space0 = config.fixSpaces ? 0 : null;
-
         formatState.copyEntity(node.assertKeyword, astVisitor, '$methodName/node.assertKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', space0);
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space0);
         formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
-        formatState.copyEntity(node.comma, astVisitor, '$methodName/node.comma', space0);
+        formatState.copyEntity(node.comma, astVisitor, '$methodName/node.comma', config.space0);
         formatState.copyEntity(node.message, astVisitor, '$methodName/node.message');
 
         final SyntacticEntity nodeBeforeRightParenthesis = node.message ?? node.comma ?? node.condition;
@@ -58,11 +57,11 @@ class AssertStatementFormatter extends IFormatter
                 if (Constants.DEBUG_I_FORMATTER) log('commaText: ${StringTools.toDisplayString(commaText)}', formatState.logIndent - 1);
             }
 
-            formatState.consumeText(start, end, commaText, '$methodName/TrailingComma', spaces: space0);
+            formatState.consumeText(start, end, commaText, '$methodName/TrailingComma', spaces: config.space0);
         }
 
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', space0);
-        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', space0);
+        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
+        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
