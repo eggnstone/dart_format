@@ -30,12 +30,12 @@ class ConditionalExpressionFormatter extends IFormatter
 
         formatState.pushLevel('$methodName/node.question+thenExpression');
         formatState.copyEntity(node.question, astVisitor, '$methodName/node.question', config.space1);
-        formatState.copyEntity(node.thenExpression, astVisitor, '$methodName/node.thenExpression');
+        formatState.copyEntity(node.thenExpression, astVisitor, '$methodName/node.thenExpression', config.space1);
         formatState.popLevelAndIndent();
 
         formatState.pushLevel('$methodName/node.colon+elseExpression');
         formatState.copyEntity(node.colon, astVisitor,  '$methodName/node.colon', config.space1);
-        formatState.copyEntity(node.elseExpression, astVisitor, '$methodName/node.elseExpression');
+        formatState.copyEntity(node.elseExpression, astVisitor, '$methodName/node.elseExpression', config.space1);
         formatState.popLevelAndIndent();
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

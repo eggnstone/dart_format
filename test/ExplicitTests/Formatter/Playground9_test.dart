@@ -13,7 +13,7 @@ void main()
 
     group('Playground 9', ()
         {
-            test("format: 'void f() { g(i: 0); }'", ()
+            test('format: void f() { g(i: 0); }', ()
                 {
                     const String inputText = 'void  f  (  )  {  g  (  i  :  0  )  ;  }  ';
                     const String expectedText =

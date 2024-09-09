@@ -11,19 +11,16 @@ void main()
     final Config configAll = Config.all();
     final Formatter formatterAll = Formatter(configAll);
 
-    group('Playground 11', ()
+    group('Playground 13', ()
         {
-            test('format: class C extends E', ()
+            test('format: void f() { g(T<String>.t()); }', ()
                 {
-                    const String inputText = 'class  C  extends  E  {   C  (  {  super  .  key  }  )  ;  const  C  (  {  super  .  key  }  )  ;  }  ';
+                    const String inputText = 'void f() async { await Future<void>.delayed(); }';
                     const String expectedText =
-                        'class C extends E\n'
+                        'void f() async\n'
                         '{\n'
-                        '    C({  super.key  });\n'
-                        //'    C({super.key});\n'
-                        '    const C({  super.key  });\n'
-                        //'    const C({super.key});\n'
-                        '}  \n';
+                        '    await Future<void>.delayed();\n'
+                        '}\n';
 
                     final String actualText = formatterAll.format(inputText);
 

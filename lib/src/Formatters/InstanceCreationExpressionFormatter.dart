@@ -4,7 +4,6 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
-import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -27,7 +26,10 @@ class InstanceCreationExpressionFormatter extends IFormatter
             throw FormatException('Not an InstanceCreationExpression: ${node.runtimeType}');
 
         formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword');
-        formatState.copyEntity(node.constructorName, astVisitor, '$methodName/node.constructorName', config.space1);
+
+        final int? spacesForConstructorName = config.fixSpaces ? (node.offset == node.constructorName.offset ? null : 1) : null;
+        formatState.copyEntity(node.constructorName, astVisitor, '$methodName/node.constructorName', spacesForConstructorName);
+
         formatState.copyEntity(node.argumentList, astVisitor, '$methodName/node.argumentList');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

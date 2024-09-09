@@ -4,6 +4,13 @@ import '../Data/IntTuple.dart';
 
 class StringTools
 {
+    static const int Number0 = 48;
+    static const int Number9 = 57;
+    static const int UpperA = 65;
+    static const int UpperZ = 90;
+    static const int LowerA = 97;
+    static const int LowerZ = 122;
+
     static IntTuple findDiff(String s1, String s2)
     {
         int indexInput = 0;
@@ -136,5 +143,82 @@ class StringTools
             end--;
 
         return s.substring(start, end);
+    }
+
+    static String condense(String s)
+    {
+        if (s.isEmpty)
+            return s;
+
+        final StringBuffer sb = StringBuffer();
+
+        //String? previousChar;
+        bool isPreviousNormal = false;
+        //bool isPreviousWhitespace = false;
+        //bool isPreviousSpecial = false;
+        String? currentChar = s[0];
+        bool isCurrentNormal = isNormalChar(currentChar);
+        bool isCurrentWhitespace = isWhitespaceChar(currentChar);
+        //bool isCurrentSpecial = !isCurrentNormal && !isCurrentWhitespace;
+
+        for (int i = 0; i < s.length; i++)
+        {
+            final String? nextChar = i + 1 < s.length ? s[i + 1] : null;
+            final bool isNextNormal = nextChar == null ? false : isNormalChar(nextChar);
+            final bool isNextWhitespace = nextChar == null ? false : isWhitespaceChar(nextChar);
+            //final bool isNextSpecial = nextChar == null ? false : !isNextNormal && !isNextWhitespace;
+
+            /*logDebug('current:  ${toDisplayString(currentChar)}${isCurrentNormal ? ' Normal' : ''}${isCurrentWhitespace ? ' Whitespace' : ''}${isCurrentSpecial ? ' Special' : ''}');
+            logDebug('  prev:   ${toDisplayString(previousChar)}${isPreviousNormal ? ' Normal' : ''}${isPreviousWhitespace ? ' Whitespace' : ''}${isPreviousSpecial ? ' Special' : ''}');
+            logDebug('  next:   ${toDisplayString(nextChar)}${isNextNormal ? ' Normal' : ''}${isNextWhitespace ? ' Whitespace' : ''}${isNextSpecial ? ' Special' : ''}');*/
+
+            if (isCurrentNormal)
+            {
+                sb.write(currentChar);
+            }
+            else if (isCurrentWhitespace)
+            {
+                if (isNextWhitespace)
+                {
+                    currentChar = nextChar;
+                    isCurrentNormal = isNextNormal;
+                    isCurrentWhitespace = isNextWhitespace;
+                    //isCurrentSpecial = isNextSpecial;
+                    continue;
+                }
+
+                if (isPreviousNormal && isNextNormal)
+                {
+                    //logDebug('  Adding space.');
+                    sb.write(' ');
+                }
+            }
+            else
+            {
+                // not normal + not whitespace => special
+                sb.write(currentChar);
+            }
+
+            //previousChar = currentChar;
+            isPreviousNormal = isCurrentNormal;
+            //isPreviousWhitespace = isCurrentWhitespace;
+            //isPreviousSpecial = isCurrentSpecial;
+
+            currentChar = nextChar;
+            isCurrentNormal = isNextNormal;
+            isCurrentWhitespace = isNextWhitespace;
+            //isCurrentSpecial = isNextSpecial;
+        }
+
+        return sb.toString();//.trim();
+    }
+
+    static bool isWhitespaceChar(String currentChar) => currentChar == ' ' || currentChar == '\n' || currentChar == '\r' || currentChar == '\t';
+
+    static bool isNormalChar(String currentChar)
+    {
+        final int currentCharCode = currentChar.codeUnitAt(0);
+        //logDebug('isNormalChar: ${toDisplayString(currentChar)}: $currentCharCode');
+        return currentCharCode >= LowerA && currentCharCode <= LowerZ || currentCharCode >= UpperA && currentCharCode <= UpperZ || currentCharCode >= Number0 && currentCharCode <= Number9;
     }
 }

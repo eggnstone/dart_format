@@ -13,7 +13,7 @@ void main()
 
     group('Playground 10', ()
         {
-            test("format: 'runApp(const MyApp());'", ()
+            test('format: runApp(const MyApp());', ()
                 {
                     const String inputText = 'void f  (  )  {  runApp  (  MyApp  (  )  )  ;  runApp  (  const  MyApp  (  )  )  ;  }  ';
                     const String expectedText =

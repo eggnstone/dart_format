@@ -1009,7 +1009,7 @@ class FormatState
         if (Constants.DEBUG_FORMAT_STATE_SPACING)
         {
             final String lastText = _textBuffers.last.toString();
-            logInternal('consumeSpaces:');
+            logInternal('consumeSpaces($spaces):');
             logInternal('  entity:   ${StringTools.toDisplayString(getText(entity.offset, entity.end))}');
             logInternal('  lastText: ${StringTools.toDisplayString(lastText)}');
             logInternal('  filler:   ${StringTools.toDisplayString(getText(lastConsumedPosition, entity.offset))}');

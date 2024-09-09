@@ -78,10 +78,19 @@ class Formatter
 
     String _verifyResult(String s, String result, LineInfo lineInfo)
     {
-        final String condensedInput = s.replaceAll(RegExp(r'\s'), '').trim();
-        final String condensedResult = result.replaceAll(RegExp(r'\s'), '').trim();
-        final String cleanedCondensedResult = FormatTools.removeIndentTags(FormatTools.removeIgnoreTags(condensedResult));
-        if (cleanedCondensedResult == condensedInput)
+        // Remove all spaces and line breaks, but reduce spaces between letters to one space, otherwise changes like "await Future<>" to "awaitFuture<>" are not detected.
+
+        if (Constants.DEBUG_FORMATTER) logInternal('Input:                   ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
+        final String condensedInput = StringTools.condense(s);
+        if (Constants.DEBUG_FORMATTER) logInternal('condensedInput:          ${StringTools.toDisplayString(condensedInput, Constants.MAX_DEBUG_LENGTH)}');
+
+        if (Constants.DEBUG_FORMATTER) logInternal('result:                  ${StringTools.toDisplayString(result, Constants.MAX_DEBUG_LENGTH)}');
+        final String cleanedResult = FormatTools.removeIndentTags(FormatTools.removeIgnoreTags(result));
+        if (Constants.DEBUG_FORMATTER) logInternal('cleanedResult:           ${StringTools.toDisplayString(cleanedResult, Constants.MAX_DEBUG_LENGTH)}');
+        final String condensedCleanedResult = StringTools.condense(cleanedResult);
+        if (Constants.DEBUG_FORMATTER) logInternal('condensedCleanedResult:  ${StringTools.toDisplayString(condensedCleanedResult, Constants.MAX_DEBUG_LENGTH)}');
+
+        if (condensedCleanedResult == condensedInput)
         {
             final String resolvedResult = FormatTools.resolveIndents(FormatTools.resolveIgnores(result));
             if (Constants.DEBUG_FORMATTER)
@@ -103,7 +112,9 @@ class Formatter
             message1 = 'Internal error: Invalid changes detected but no differences to show.';
             message2 =
             'Input:  ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}\n'
-            'Result: ${StringTools.toDisplayString(result, Constants.MAX_DEBUG_LENGTH)}';
+            'Result: ${StringTools.toDisplayString(result, Constants.MAX_DEBUG_LENGTH)}\n'
+            'condensedInput:  ${StringTools.toDisplayString(condensedInput, Constants.MAX_DEBUG_LENGTH)}\n'
+            'condensedResult: ${StringTools.toDisplayString(condensedCleanedResult, Constants.MAX_DEBUG_LENGTH)}';
         }
         else
         {
@@ -114,7 +125,9 @@ class Formatter
             message2 =
             'Same:   ${StringTools.toDisplayStringCutAtFront(result.substring(0, positions.item2), Constants.MAX_DEBUG_LENGTH)}\n'
             'Input:  ${StringTools.toDisplayString(s.substring(positions.item1), Constants.MAX_DEBUG_LENGTH)}\n'
-            'Result: ${StringTools.toDisplayString(result.substring(positions.item2), Constants.MAX_DEBUG_LENGTH)}';
+            'Result: ${StringTools.toDisplayString(result.substring(positions.item2), Constants.MAX_DEBUG_LENGTH)}\n'
+            'condensedInput:  ${StringTools.toDisplayString(condensedInput, Constants.MAX_DEBUG_LENGTH)}\n'
+            'condensedResult: ${StringTools.toDisplayString(condensedCleanedResult, Constants.MAX_DEBUG_LENGTH)}';
 
             if (Constants.DEBUG_FORMATTER) logInternal('Invalid changes detected:\n-----\n$result\n-----');
         }
@@ -123,19 +136,19 @@ class Formatter
         {
             logInternal('$message1\n$message2');
 
-            final IntTuple positions2 = StringTools.findDiff(condensedInput, cleanedCondensedResult);
+            final IntTuple positions2 = StringTools.findDiff(condensedInput, condensedCleanedResult);
             if (positions2 == createEmptyIntTuple())
             {
                 logInternal('Nothing found, even when comparing condensedInput and condensedResultWithIgnores.');
                 logInternal('condensedInput:\n$condensedInput');
-                logInternal('cleanedCondensedResult:\n$cleanedCondensedResult');
+                logInternal('condensedResult:\n$condensedCleanedResult');
             }
             else
             {
                 final String message2a =
-                    'Same:                   ${StringTools.toDisplayStringCutAtFront(cleanedCondensedResult.substring(0, positions2.item2), Constants.MAX_DEBUG_LENGTH)}\n'
-                    'condensedInput:         ${StringTools.toDisplayString(condensedInput.substring(positions2.item1), Constants.MAX_DEBUG_LENGTH)}\n'
-                    'cleanedCondensedResult: ${StringTools.toDisplayString(cleanedCondensedResult.substring(positions2.item2), Constants.MAX_DEBUG_LENGTH)}';
+                    'Same:            ${StringTools.toDisplayStringCutAtFront(condensedCleanedResult.substring(0, positions2.item2), Constants.MAX_DEBUG_LENGTH)}\n'
+                    'condensedInput:  ${StringTools.toDisplayString(condensedInput.substring(positions2.item1), Constants.MAX_DEBUG_LENGTH)}\n'
+                    'condensedResult: ${StringTools.toDisplayString(condensedCleanedResult.substring(positions2.item2), Constants.MAX_DEBUG_LENGTH)}';
                 logInternal('\n$message2a');
             }
         }
