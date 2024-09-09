@@ -24,7 +24,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('switch(0)\n{\n    0=>0\n}')
+                TestConfig('switch (0)\n{\n    0=>0\n}')
             ]
         )
     ];

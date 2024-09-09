@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -26,9 +27,9 @@ class WhileStatementFormatter extends IFormatter
             throw FormatException('Not a WhileStatement: ${node.runtimeType}');
 
         formatState.copyEntity(node.whileKeyword, astVisitor, '$methodName/node.whileKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space1);
         formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis');
+        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
         formatState.pushLevel('$methodName/node.body');
         formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
         formatState.popLevelAndIndent();

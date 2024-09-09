@@ -24,7 +24,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('while(true)\n    ;')
+                TestConfig('while (true)\n    ;')
             ]
         ),
         TestGroupConfig(
@@ -36,6 +36,10 @@ void main()
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<BooleanLiteral>(15, 'true'),
                 TestVisitor<Block>(20, '{}')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('while (true){}')
             ]
         )
     ];
