@@ -1,4 +1,4 @@
-import'package    :    flutter/material    .    dart'    ;
+import    'package:flutter/material.dart'    ;
 
 void    main    (    )    
     {    
@@ -13,11 +13,11 @@ const    MyApp    (    {    super    .    key    }    )    ;
 Widget    build    (    BuildContext    context    )    
     {    
 return    MaterialApp    (    
-title    :    'FlutterDemo'    ,    
+title    :    'Flutter Demo'    ,    
 theme    :    ThemeData    (    
 primarySwatch    :    Colors    .    blue
     )    ,    
-home    :    const    MyHomePage    (    title    :    'FlutterDemoHomePage'    )    
+home    :    const    MyHomePage    (    title    :    'Flutter Demo Home Page'    )    
     )    ;
     }    
     }    
@@ -57,7 +57,7 @@ child    :    Column    (
 mainAxisAlignment    :    MainAxisAlignment    .    center    ,    
 children    :    <    Widget    >    [
 const    Text    (    
-'Youhavepushedthebuttonthismanytimes:'
+'You have pushed the button this many times:'
     )    ,    
 Text    (    
 '$_counter'    ,    
