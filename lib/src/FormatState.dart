@@ -549,7 +549,27 @@ class FormatState
         if (entity is AstNode)
         {
             if (spaces != null)
-                throw DartFormatException.error('Unnecessary spaces for AstNode: ${entity.runtimeType}=${StringTools.toDisplayString(entity)}');
+            {
+                final String filler = getText(lastConsumedPosition, entity.offset);
+                if (StringTools.trimSpaces(filler).isEmpty)
+                {
+                    if (Constants.DEBUG_FORMAT_STATE_SPACING)
+                    {
+                        final String lastText = _textBuffers.last.toString();
+                        logInternal('    entity:   ${StringTools.toDisplayString(getText(entity.offset, entity.end))}');
+                        logInternal('    lastText: ${StringTools.toDisplayString(lastText)}');
+                        logInternal('    filler:   ${StringTools.toDisplayString(getText(lastConsumedPosition, entity.offset))}');
+                    }
+
+                    consumeText(lastConsumedPosition, entity.offset, '', fullSource, spaces: spaces);
+
+                    if (Constants.DEBUG_FORMAT_STATE_SPACING)
+                    {
+                        final String lastText = _textBuffers.last.toString();
+                        logInternal('    lastText: ${StringTools.toDisplayString(lastText)}');
+                    }
+                }
+            }
 
             entity.accept(astVisitor);
         }

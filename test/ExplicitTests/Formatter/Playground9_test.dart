@@ -19,8 +19,8 @@ void main()
                     const String expectedText =
                         'void f()\n'
                         '{\n'
-                        '    g(  i:  0)  ;\n'
-                        '}\n';
+                        '    g(  i: 0)  ;\n'
+                        '}  \n';
 
                     final String actualText = formatterAll.format(inputText);
 

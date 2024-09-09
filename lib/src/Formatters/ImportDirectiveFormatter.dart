@@ -35,7 +35,7 @@ class ImportDirectiveFormatter extends IFormatter
         //if (pushLevel)
         formatState.pushLevel('$methodName/node.importKeyword/after');
 
-        formatState.copyEntity(node.uri, astVisitor, '$methodName/node.uri');//, config.space1);
+        formatState.copyEntity(node.uri, astVisitor, '$methodName/node.uri', config.space1);
         formatState.acceptList(node.configurations, astVisitor, '$methodName/node.configurations');
         formatState.copyEntity(node.deferredKeyword, astVisitor, '$methodName/node.deferredKeyword');
         formatState.copyEntity(node.asKeyword, astVisitor, '$methodName/node.asKeyword', config.space1);

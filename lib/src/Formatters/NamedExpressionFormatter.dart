@@ -27,7 +27,7 @@ class NamedExpressionFormatter extends IFormatter
             throw FormatException('Not a NamedExpression: ${node.runtimeType}');
 
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
-        formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');//, config.space1);
+        formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression', config.space1);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
