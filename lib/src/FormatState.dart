@@ -127,7 +127,7 @@ class FormatState
         const String methodName = 'acceptListWithComma';
 
         if (nodes.isNotEmpty)
-            _consumeSpaces(nodes.first, spaces);
+            consumeSpaces(nodes.first, spaces);
 
         AstNode? lastNode;
         for (final AstNode node in nodes)
@@ -551,7 +551,7 @@ class FormatState
 
         if (entity is AstNode)
         {
-            _consumeSpaces(entity, spaces);
+            consumeSpaces(entity, spaces);
             entity.accept(astVisitor);
         }
         else
@@ -994,29 +994,33 @@ class FormatState
         return result;
     }
 
-    void _consumeSpaces(SyntacticEntity entity, int? spaces)
+    void consumeSpaces(SyntacticEntity entity, int? spaces)
     {
         if (spaces == null)
             return;
 
         final String filler = getText(lastConsumedPosition, entity.offset);
-        if (StringTools.trimSpaces(filler).isEmpty)
+        if (StringTools.trimSpaces(filler).isNotEmpty)
         {
-            if (Constants.DEBUG_FORMAT_STATE_SPACING)
-            {
-                final String lastText = _textBuffers.last.toString();
-                logInternal('    entity:   ${StringTools.toDisplayString(getText(entity.offset, entity.end))}');
-                logInternal('    lastText: ${StringTools.toDisplayString(lastText)}');
-                logInternal('    filler:   ${StringTools.toDisplayString(getText(lastConsumedPosition, entity.offset))}');
-            }
+            if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('consumeSpaces: filler has non-spaces: ${StringTools.toDisplayString(filler)}');
+            return;
+        }
 
-            consumeText(lastConsumedPosition, entity.offset, '', 'consumeSpaces', spaces: spaces);
+        if (Constants.DEBUG_FORMAT_STATE_SPACING)
+        {
+            final String lastText = _textBuffers.last.toString();
+            logInternal('consumeSpaces:');
+            logInternal('  entity:   ${StringTools.toDisplayString(getText(entity.offset, entity.end))}');
+            logInternal('  lastText: ${StringTools.toDisplayString(lastText)}');
+            logInternal('  filler:   ${StringTools.toDisplayString(getText(lastConsumedPosition, entity.offset))}');
+        }
 
-            if (Constants.DEBUG_FORMAT_STATE_SPACING)
-            {
-                final String lastText = _textBuffers.last.toString();
-                logInternal('    lastText: ${StringTools.toDisplayString(lastText)}');
-            }
+        consumeText(lastConsumedPosition, entity.offset, '', 'consumeSpaces', spaces: spaces);
+
+        if (Constants.DEBUG_FORMAT_STATE_SPACING)
+        {
+            final String lastText = _textBuffers.last.toString();
+            logInternal('  lastText: ${StringTools.toDisplayString(lastText)}');
         }
     }
 }

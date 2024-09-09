@@ -11,16 +11,17 @@ void main()
     final Config configAll = Config.all();
     final Formatter formatterAll = Formatter(configAll);
 
-    group('Playground 9', ()
+    group('Playground 11', ()
         {
-            test("format: 'void f() { g(i: 0); }'", ()
+            test("format: 'class  C  extends  E'", ()
                 {
-                    const String inputText = 'void  f  (  )  {  g  (  i  :  0  )  ;  }  ';
+                    const String inputText = 'class  C  extends  E  {   C  (  {  super  .  key  }  )  ;  const  C  (  {  super  .  key  }  )  ;  }  ';
                     const String expectedText =
-                        'void f()\n'
+                        'class C extends E\n'
                         '{\n'
-                        '    g(i: 0);\n'
-                        '}  \n';
+                        '    C({super.key});\n'
+                        '    const C({super.key});\n'
+                        '}\n';
 
                     final String actualText = formatterAll.format(inputText);
 

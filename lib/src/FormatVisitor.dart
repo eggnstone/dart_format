@@ -24,6 +24,7 @@ import 'Formatters/EnumDeclarationFormatter.dart';
 import 'Formatters/ExportDirectiveFormatter.dart';
 import 'Formatters/ExpressionFunctionBodyFormatter.dart';
 import 'Formatters/ExpressionStatementFormatter.dart';
+import 'Formatters/ExtendsClauseFormatter.dart';
 import 'Formatters/ExtensionDeclarationFormatter.dart';
 import 'Formatters/FieldDeclarationFormatter.dart';
 import 'Formatters/ForElementFormatter.dart';
@@ -69,6 +70,7 @@ import 'Formatters/ReturnStatementFormatter.dart';
 import 'Formatters/SetOrMapLiteralFormatter.dart';
 import 'Formatters/ShowCombinatorFormatter.dart';
 import 'Formatters/SimpleStringLiteralFormatter.dart';
+import 'Formatters/SuperFormalParameterFormatter.dart';
 import 'Formatters/SwitchExpressionFormatter.dart';
 import 'Formatters/SwitchPatternCaseFormatter.dart';
 import 'Formatters/SwitchStatementFormatter.dart';
@@ -109,6 +111,7 @@ class FormatVisitor extends AstVisitor<void>
     late final EmptyFunctionBodyFormatter _emptyFunctionBodyFormatter = EmptyFunctionBodyFormatter(config, this, _formatState);
     late final EmptyStatementFormatter _emptyStatementFormatter = EmptyStatementFormatter(config, this, _formatState);
     late final EnumDeclarationFormatter _enumDeclarationFormatter = EnumDeclarationFormatter(config, this, _formatState);
+    late final ExtendsClauseFormatter _extendsClauseFormatter = ExtendsClauseFormatter(config, this, _formatState);
     late final ExtensionDeclarationFormatter _extensionDeclarationFormatter = ExtensionDeclarationFormatter(config, this, _formatState);
     late final ExportDirectiveFormatter _exportDirectiveFormatter = ExportDirectiveFormatter(config, this, _formatState);
     late final ExpressionFunctionBodyFormatter _expressionFunctionBodyFormatter = ExpressionFunctionBodyFormatter(config, this, _formatState);
@@ -159,6 +162,7 @@ class FormatVisitor extends AstVisitor<void>
     late final ShowCombinatorFormatter _showCombinatorFormatter = ShowCombinatorFormatter(config, this, _formatState);
     late final SimpleStringLiteralFormatter _simpleStringLiteralFormatter = SimpleStringLiteralFormatter(config, this, _formatState);
     //late final StringInterpolationFormatter _stringInterpolationFormatter = StringInterpolationFormatter(config, this, _formatState);
+    late final SuperFormalParameterFormatter _superFormalParameterFormatter = SuperFormalParameterFormatter(config, this, _formatState);
     late final SwitchExpressionFormatter _switchExpressionFormatter = SwitchExpressionFormatter(config, this, _formatState);
     late final SwitchStatementFormatter _switchStatementFormatter = SwitchStatementFormatter(config, this, _formatState);
     late final SwitchPatternCaseFormatter _switchPatternCaseFormatter = SwitchPatternCaseFormatter(config, this, _formatState);
@@ -375,7 +379,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitExtendsClause(ExtendsClause node)
-    => _defaultFormatter.format(node);
+    => _extendsClauseFormatter.format(node);
 
     @override
     void visitExtensionDeclaration(ExtensionDeclaration node)
@@ -771,7 +775,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitSuperFormalParameter(SuperFormalParameter node)
-    => _defaultFormatter.format(node);
+    => _superFormalParameterFormatter.format(node);
 
     @override
     void visitSwitchCase(SwitchCase node)

@@ -32,6 +32,10 @@ class FormalParameterListFormatter extends IFormatter
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space0);
         formatState.pushLevel('$methodName/node.leftParenthesis');
 
+        // TODO: move above "pushLevel"?
+        if (node.leftDelimiter != null)
+            formatState.consumeSpaces(node.leftDelimiter!, config.space0);
+
         // TODO: move to FormatState
         AstNode? lastNode;
         bool wroteLeftDelimiter = false;

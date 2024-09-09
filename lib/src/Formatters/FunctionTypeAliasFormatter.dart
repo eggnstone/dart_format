@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -31,7 +32,7 @@ class FunctionTypeAliasFormatter extends IFormatter
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
         formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters');
-        formatState.copySemicolon(node.semicolon, config, methodName);
+        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

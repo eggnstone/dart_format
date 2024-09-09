@@ -19,8 +19,8 @@ void main()
                     const String expectedText =
                         'void f()\n'
                         '{\n'
-                        '    runApp(MyApp())  ;\n'
-                        '    runApp(const MyApp())  ;\n'
+                        '    runApp(MyApp());\n'
+                        '    runApp(const MyApp());\n'
                         '}  \n';
 
                     final String actualText = formatterAll.format(inputText);

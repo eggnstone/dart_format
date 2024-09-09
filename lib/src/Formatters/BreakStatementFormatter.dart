@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -27,7 +28,7 @@ class BreakStatementFormatter extends IFormatter
 
         formatState.copyEntity(node.breakKeyword,astVisitor, '$methodName/node.breakKeyword');
         formatState.copyEntity(node.label, astVisitor, '$methodName/node.label');
-        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

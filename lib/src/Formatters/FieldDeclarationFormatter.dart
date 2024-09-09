@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -30,7 +31,7 @@ class FieldDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.externalKeyword, astVisitor, '$methodName/node.externalKeyword');
         formatState.copyEntity(node.staticKeyword, astVisitor, '$methodName/node.staticKeyword');
         formatState.copyEntity(node.fields, astVisitor, '$methodName/node.fields');
-        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

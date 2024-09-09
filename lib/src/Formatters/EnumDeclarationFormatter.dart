@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/token.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -34,7 +35,7 @@ class EnumDeclarationFormatter extends IFormatter
         // TODO: precedingComments: on semicolon, too. Check other formatters, too.
         final Token endTokenForConstants = node.semicolon ?? node.rightBracket.precedingComments ?? node.rightBracket;
         formatState.acceptListWithComma(node.constants, endTokenForConstants, astVisitor, '$methodName/node.constants');
-        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon');
+        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
         formatState.acceptList(node.members, astVisitor, '$methodName/node.members');
         formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');
 

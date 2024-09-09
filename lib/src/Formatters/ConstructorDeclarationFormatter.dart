@@ -30,7 +30,10 @@ class ConstructorDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.externalKeyword, astVisitor, '$methodName/node.externalKeyword');
         formatState.copyEntity(node.constKeyword, astVisitor, '$methodName/node.constKeyword');
         formatState.copyEntity(node.factoryKeyword, astVisitor, '$methodName/node.factoryKeyword');
-        formatState.copyEntity(node.returnType, astVisitor, '$methodName/node.returnType');
+
+        final int? spacesForReturnType = config.fixSpaces ? (node.offset == node.returnType.offset ? 0 : 1) : null;
+        formatState.copyEntity(node.returnType, astVisitor, '$methodName/node.returnType', spacesForReturnType);
+
         formatState.copyEntity(node.period, astVisitor, '$methodName/node.period');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters');

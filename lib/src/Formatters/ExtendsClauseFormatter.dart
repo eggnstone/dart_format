@@ -9,26 +9,25 @@ import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
-class ReturnStatementFormatter extends IFormatter
+class ExtendsClauseFormatter extends IFormatter
 {
     final AstVisitor<void> astVisitor;
     final Config config;
     final FormatState formatState;
 
-    ReturnStatementFormatter(this.config, this.astVisitor, this.formatState);
+    ExtendsClauseFormatter(this.config, this.astVisitor, this.formatState);
 
     @override
     void format(AstNode node)
     {
-        const String methodName = 'ReturnStatementFormatter.format';
+        const String methodName = 'ExtendsClauseFormatter.format';
         if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
-        if (node is! ReturnStatement)
-            throw FormatException('Not a ReturnStatement: ${node.runtimeType}');
+        if (node is! ExtendsClause)
+            throw FormatException('Not an ExtendsClause: ${node.runtimeType}');
 
-        formatState.copyEntity(node.returnKeyword, astVisitor, '$methodName/node.returnKeyword');
-        formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');
-        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
+        formatState.copyEntity(node.extendsKeyword, astVisitor, '$methodName/node.extendsKeyword');
+        formatState.copyEntity(node.superclass, astVisitor, '$methodName/node.superclass', config.space1);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
