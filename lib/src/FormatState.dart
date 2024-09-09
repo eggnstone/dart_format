@@ -122,9 +122,12 @@ class FormatState
         nodes.forEach((AstNode node) => node.accept(astVisitor));
     }
 
-    void acceptListWithComma(NodeList<AstNode> nodes, Token? endToken, AstVisitor<void> astVisitor, String source)
+    void acceptListWithComma(NodeList<AstNode> nodes, Token? endToken, AstVisitor<void> astVisitor, String source, [int? spaces])
     {
         const String methodName = 'acceptListWithComma';
+
+        if (nodes.isNotEmpty)
+            _consumeSpaces(nodes.first, spaces);
 
         AstNode? lastNode;
         for (final AstNode node in nodes)
@@ -548,29 +551,7 @@ class FormatState
 
         if (entity is AstNode)
         {
-            if (spaces != null)
-            {
-                final String filler = getText(lastConsumedPosition, entity.offset);
-                if (StringTools.trimSpaces(filler).isEmpty)
-                {
-                    if (Constants.DEBUG_FORMAT_STATE_SPACING)
-                    {
-                        final String lastText = _textBuffers.last.toString();
-                        logInternal('    entity:   ${StringTools.toDisplayString(getText(entity.offset, entity.end))}');
-                        logInternal('    lastText: ${StringTools.toDisplayString(lastText)}');
-                        logInternal('    filler:   ${StringTools.toDisplayString(getText(lastConsumedPosition, entity.offset))}');
-                    }
-
-                    consumeText(lastConsumedPosition, entity.offset, '', fullSource, spaces: spaces);
-
-                    if (Constants.DEBUG_FORMAT_STATE_SPACING)
-                    {
-                        final String lastText = _textBuffers.last.toString();
-                        logInternal('    lastText: ${StringTools.toDisplayString(lastText)}');
-                    }
-                }
-            }
-
+            _consumeSpaces(entity, spaces);
             entity.accept(astVisitor);
         }
         else
@@ -1011,5 +992,31 @@ class FormatState
         final String result = _parseResult.content.substring(0, offset);
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  No line break found => Returning all: ${StringTools.toDisplayString(result)}');
         return result;
+    }
+
+    void _consumeSpaces(SyntacticEntity entity, int? spaces)
+    {
+        if (spaces == null)
+            return;
+
+        final String filler = getText(lastConsumedPosition, entity.offset);
+        if (StringTools.trimSpaces(filler).isEmpty)
+        {
+            if (Constants.DEBUG_FORMAT_STATE_SPACING)
+            {
+                final String lastText = _textBuffers.last.toString();
+                logInternal('    entity:   ${StringTools.toDisplayString(getText(entity.offset, entity.end))}');
+                logInternal('    lastText: ${StringTools.toDisplayString(lastText)}');
+                logInternal('    filler:   ${StringTools.toDisplayString(getText(lastConsumedPosition, entity.offset))}');
+            }
+
+            consumeText(lastConsumedPosition, entity.offset, '', 'consumeSpaces', spaces: spaces);
+
+            if (Constants.DEBUG_FORMAT_STATE_SPACING)
+            {
+                final String lastText = _textBuffers.last.toString();
+                logInternal('    lastText: ${StringTools.toDisplayString(lastText)}');
+            }
+        }
     }
 }

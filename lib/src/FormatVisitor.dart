@@ -40,6 +40,7 @@ import 'Formatters/IfStatementFormatter.dart';
 import 'Formatters/ImplementsClauseFormatter.dart';
 import 'Formatters/ImportDirectiveFormatter.dart';
 import 'Formatters/IndexExpressionFormatter.dart';
+import 'Formatters/InstanceCreationExpressionFormatter.dart';
 import 'Formatters/InterpolationExpressionFormatter.dart';
 import 'Formatters/InterpolationStringFormatter.dart';
 import 'Formatters/LabelFormatter.dart';
@@ -128,6 +129,7 @@ class FormatVisitor extends AstVisitor<void>
     late final ImplementsClauseFormatter _implementsClauseFormatter = ImplementsClauseFormatter(config, this, _formatState);
     late final ImportDirectiveFormatter _importDirectiveFormatter = ImportDirectiveFormatter(config, this, _formatState);
     late final IndexExpressionFormatter _indexExpressionFormatter = IndexExpressionFormatter(config, this, _formatState);
+    late final InstanceCreationExpressionFormatter _instanceCreationExpressionFormatter = InstanceCreationExpressionFormatter(config, this, _formatState);
     late final InterpolationExpressionFormatter _interpolationExpressionFormatter = InterpolationExpressionFormatter(config, this, _formatState);
     late final InterpolationStringFormatter _interpolationStringFormatter = InterpolationStringFormatter(config, this, _formatState);
     late final LabelFormatter _labelFormatter = LabelFormatter(config, this, _formatState);
@@ -506,7 +508,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitInstanceCreationExpression(InstanceCreationExpression node)
-    => _defaultFormatter.format(node);
+    => _instanceCreationExpressionFormatter.format(node);
 
     @override
     void visitIntegerLiteral(IntegerLiteral node)

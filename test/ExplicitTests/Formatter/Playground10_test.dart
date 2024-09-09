@@ -11,15 +11,16 @@ void main()
     final Config configAll = Config.all();
     final Formatter formatterAll = Formatter(configAll);
 
-    group('Playground 9', ()
+    group('Playground 10', ()
         {
-            test("format: 'void f() { g(i: 0); }'", ()
+            test("format: 'runApp(const MyApp());'", ()
                 {
-                    const String inputText = 'void  f  (  )  {  g  (  i  :  0  )  ;  }  ';
+                    const String inputText = 'void f  (  )  {  runApp  (  MyApp  (  )  )  ;  runApp  (  const  MyApp  (  )  )  ;  }  ';
                     const String expectedText =
                         'void f()\n'
                         '{\n'
-                        '    g(i: 0)  ;\n'
+                        '    runApp(MyApp())  ;\n'
+                        '    runApp(const MyApp())  ;\n'
                         '}  \n';
 
                     final String actualText = formatterAll.format(inputText);
