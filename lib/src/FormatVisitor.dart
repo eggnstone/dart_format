@@ -42,6 +42,7 @@ import 'Formatters/ImportDirectiveFormatter.dart';
 import 'Formatters/IndexExpressionFormatter.dart';
 import 'Formatters/InterpolationExpressionFormatter.dart';
 import 'Formatters/InterpolationStringFormatter.dart';
+import 'Formatters/LabelFormatter.dart';
 import 'Formatters/LibraryAugmentationDirectiveFormatter.dart';
 import 'Formatters/LibraryDirectiveFormatter.dart';
 import 'Formatters/LibraryIdentifierFormatter.dart';
@@ -51,6 +52,7 @@ import 'Formatters/MapPatternFormatter.dart';
 import 'Formatters/MethodInvocationFormatter.dart';
 import 'Formatters/MixinDeclarationFormatter.dart';
 import 'Formatters/MixinOnClauseFormatter.dart';
+import 'Formatters/NamedExpressionFormatter.dart';
 import 'Formatters/NativeFunctionBodyFormatter.dart';
 import 'Formatters/ObjectPatternFormatter.dart';
 import 'Formatters/PartDirectiveFormatter.dart';
@@ -128,6 +130,7 @@ class FormatVisitor extends AstVisitor<void>
     late final IndexExpressionFormatter _indexExpressionFormatter = IndexExpressionFormatter(config, this, _formatState);
     late final InterpolationExpressionFormatter _interpolationExpressionFormatter = InterpolationExpressionFormatter(config, this, _formatState);
     late final InterpolationStringFormatter _interpolationStringFormatter = InterpolationStringFormatter(config, this, _formatState);
+    late final LabelFormatter _labelFormatter = LabelFormatter(config, this, _formatState);
     late final LibraryAugmentationDirectiveFormatter _libraryAugmentationDirectiveFormatter = LibraryAugmentationDirectiveFormatter(config, this, _formatState);
     late final LibraryDirectiveFormatter _libraryDirectiveFormatter = LibraryDirectiveFormatter(config, this, _formatState);
     late final LibraryIdentifierFormatter _libraryIdentifierFormatter = LibraryIdentifierFormatter(config, this, _formatState);
@@ -137,6 +140,7 @@ class FormatVisitor extends AstVisitor<void>
     late final MethodInvocationFormatter _methodInvocationFormatter = MethodInvocationFormatter(config, this, _formatState);
     late final MixinDeclarationFormatter _mixinDeclarationFormatter = MixinDeclarationFormatter(config, this, _formatState);
     late final MixinOnClauseFormatter _mixinOnClauseFormatter = MixinOnClauseFormatter(config, this, _formatState);
+    late final NamedExpressionFormatter _namedExpressionFormatter = NamedExpressionFormatter(config, this, _formatState);
     late final NativeFunctionBodyFormatter _nativeFunctionBodyFormatter = NativeFunctionBodyFormatter(config, this, _formatState);
     late final ObjectPatternFormatter _objectPatternFormatter = ObjectPatternFormatter(config, this, _formatState);
     late final PartDirectiveFormatter _partDirectiveFormatter = PartDirectiveFormatter(config, this, _formatState);
@@ -522,7 +526,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitLabel(Label node)
-    => _defaultFormatter.format(node);
+    => _labelFormatter.format(node);
 
     @override
     void visitLabeledStatement(LabeledStatement node)
@@ -582,7 +586,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitNamedExpression(NamedExpression node)
-    => _defaultFormatter.format(node);
+    => _namedExpressionFormatter.format(node);
 
     @override
     void visitNamedType(NamedType node)

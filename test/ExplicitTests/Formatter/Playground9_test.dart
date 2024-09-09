@@ -15,10 +15,11 @@ void main()
         {
             test("format: 'void f(){}'", ()
                 {
-                    const String inputText = 'void  f  (  )  {  }';
+                    const String inputText = 'void  f  (  )  {  g  (  i  :  0  )  ;  }  ';
                     const String expectedText =
                         'void f()\n'
                         '{\n'
+                        '    g(  i:  0)  ;\n'
                         '}\n';
 
                     final String actualText = formatterAll.format(inputText);
