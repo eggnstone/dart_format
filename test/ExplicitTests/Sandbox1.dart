@@ -74,9 +74,9 @@ const String s = 'a'
 
 void f()
 {
-    int i=0    ;
-    int i=0    ;
-    int i=0    ;
+    int i=0;
+    int i=0;
+    int i=0;
 }
 
 class C
@@ -88,15 +88,15 @@ class C
 
 class C
 {
-    late int i=0    ;
-    late int i=0    ;
-    late int i=0    ;
+    late int i=0;
+    late int i=0;
+    late int i=0;
 
     void f()
     {
-        int i=0    ;
-        int i=0    ;
-        int i=0    ;
+        int i=0;
+        int i=0;
+        int i=0;
     }
 }
 

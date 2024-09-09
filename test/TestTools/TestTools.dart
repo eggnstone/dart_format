@@ -75,7 +75,7 @@ class TestTools
                             {
                                 FormatFunction finalFormatFunction = _useFormatVisitor;
                                 if (formatter != null)
-                                    finalFormatFunction = (FormatState formatState, TestGroupConfig testGroupConfig, TestConfig testConfig, AstNode node) => _useIFormatter(formatter, formatState, testGroupConfig, testConfig, node);
+                                    finalFormatFunction =(FormatState formatState, TestGroupConfig testGroupConfig, TestConfig testConfig, AstNode node) => _useIFormatter(formatter, formatState, testGroupConfig, testConfig, node);
 
                                 actualText = FormatTools.resolveIndents(finalFormatFunction(formatState, testGroupConfig, testConfig, inputNode));
                             }

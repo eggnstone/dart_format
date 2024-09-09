@@ -63,7 +63,7 @@ void main()
         ),
         TestGroupConfig(
             inputNodeCreator: AstCreator.createClassMember,
-            inputLeading:  'class C{',
+            inputLeading: 'class C{',
             inputMiddle: 'factory C.f(){}',
             inputTrailing: '}',
             name: 'With factory with class+factory name',
@@ -93,7 +93,7 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createClassMember,
             inputLeading: 'class C{',
-            inputMiddle:  'C():super(){}',
+            inputMiddle: 'C():super(){}',
             inputTrailing: '}',
             name: 'With super',
             astVisitors: <TestVisitor<void>>[
@@ -110,7 +110,7 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createClassMember,
             inputLeading: 'class C{',
-            inputMiddle:  'const C():super();',
+            inputMiddle: 'const C():super();',
             inputTrailing: '}',
             name: 'Const with super',
             astVisitors: <TestVisitor<void>>[

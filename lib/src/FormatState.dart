@@ -70,7 +70,7 @@ class FormatState
             parseResult,
             indentationSpacesPerLevel: indentationSpacesPerLevel,
             maxDateTime: maxDateTime,
-            removeTrailingCommas : removeTrailingCommas,
+            removeTrailingCommas: removeTrailingCommas,
             startDateTime: startDateTime
         )
             .._lastConsumedPosition = leading?.length ?? 0
@@ -614,7 +614,7 @@ class FormatState
             this.pushLevel(fullSource);
     }
 
-    void _copyTokenCommentsOnly(Token? token, String source/*, [int? spaces]*/)
+    void _copyTokenCommentsOnly(Token? token, String source /*, [int? spaces]*/)
     {
         const String methodName = 'copyTokenCommentsOnly';
         final String fullSource = '$source/$methodName';
@@ -657,7 +657,7 @@ class FormatState
         // TODO: test
         if (adjustedCommentsOffset < commentsEnd)
         {
-            copyText(adjustedCommentsOffset, commentsEnd, fullSource/*, spaces*/);
+            copyText(adjustedCommentsOffset, commentsEnd, fullSource /*, spaces*/);
         }
         else
         {
