@@ -93,6 +93,12 @@ class AstCreator
     static FormalParameter createFormalParameterInFunction(String s)
     => createFormalParameterListInFunction(s).parameters[0];
 
+    static DefaultFormalParameter createDefaultFormalParameterInFunction(String s)
+    => createFormalParameterInFunction(s) as DefaultFormalParameter;
+
+    static FormalParameter createFormalParameterInDefaultFormalParameterInFunction(String s)
+    => createDefaultFormalParameterInFunction(s).parameter;
+
     static FormalParameterList createFormalParameterListInFunction(String s)
     => createFunctionExpression(s).parameters!;
 
