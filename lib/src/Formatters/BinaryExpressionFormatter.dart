@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -27,8 +28,8 @@ class BinaryExpressionFormatter extends IFormatter
 
         formatState.copyEntity(node.leftOperand, astVisitor, '$methodName/node.leftOperand');
         formatState.pushLevel('$methodName/node.leftOperand/after');
-        formatState.copyEntity(node.operator, astVisitor, '$methodName/node.operator');
-        formatState.copyEntity(node.rightOperand, astVisitor, '$methodName/node.rightOperand');
+        formatState.copyEntity(node.operator, astVisitor, '$methodName/node.operator', config.space1);
+        formatState.copyEntity(node.rightOperand, astVisitor, '$methodName/node.rightOperand', config.space1);
         formatState.popLevelAndIndent();
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

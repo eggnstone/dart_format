@@ -28,9 +28,9 @@ class ForPartsWithDeclarationsFormatter extends IFormatter
 
         formatState.copyEntity(node.variables, astVisitor, '$methodName/node.variables');
         formatState.copyEntity(node.leftSeparator, astVisitor, '$methodName/node.leftSeparator', config.space0);
-        formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
+        formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition', config.space1);
         formatState.copyEntity(node.rightSeparator, astVisitor, '$methodName/node.rightSeparator', config.space0);
-        formatState.acceptListWithComma(node.updaters, null, astVisitor, '$methodName/node.updaters');//, config.space1);
+        formatState.acceptListWithComma(node.updaters, null, astVisitor, '$methodName/node.updaters', config.space1);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

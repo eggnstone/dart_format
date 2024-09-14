@@ -20,6 +20,10 @@ void main()
             name: 'VariableDeclaration i=f.a.b',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<PropertyAccess>(6, 'f.a.b')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('i = f.a.b')
             ]
         ),
         TestGroupConfig(
@@ -33,7 +37,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('i\n    =f.a.b')
+                TestConfig('i\n    = f.a.b')
             ]
         ),
         TestGroupConfig(
@@ -47,7 +51,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('i=\n    f.a.b')
+                TestConfig('i =\n    f.a.b')
             ]
         ),
         TestGroupConfig(

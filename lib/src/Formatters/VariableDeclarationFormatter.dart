@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -45,7 +46,7 @@ class VariableDeclarationFormatter extends IFormatter
         if (pushLevel)
             formatState.pushLevel('$methodName/node.name/after');
 
-        formatState.copyEntity(node.equals, astVisitor, '$methodName/node.equals');
+        formatState.copyEntity(node.equals, astVisitor, '$methodName/node.equals', config.space1);
 
         if (node.initializer is AdjacentStrings)
         {
@@ -73,7 +74,7 @@ class VariableDeclarationFormatter extends IFormatter
                 formatState.popLevelAndIndent();
         }
         else
-            formatState.copyEntity(node.initializer, astVisitor, '$methodName/node.initializer');
+            formatState.copyEntity(node.initializer, astVisitor, '$methodName/node.initializer', config.space1);
 
         if (pushLevel)
             formatState.popLevelAndIndent();

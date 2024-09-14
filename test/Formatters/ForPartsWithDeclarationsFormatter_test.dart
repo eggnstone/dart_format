@@ -22,6 +22,10 @@ void main()
                 TestVisitor<VariableDeclarationList>(13, 'int i=0,j=0'),
                 TestVisitor<PostfixExpression>(26, 'i++'),
                 TestVisitor<PostfixExpression>(30, 'j--')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('int i=0,j=0;; i++,j--')
             ]
         ),
         TestGroupConfig(
@@ -32,8 +36,8 @@ void main()
             name: 'ForPartsWithDeclarations: int i = 0; i < 10; i++ (normal spacing)',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<VariableDeclarationList>(13, 'int i = 0'),
-                TestVisitor<BinaryExpression>(23, ' i < 10'),
-                TestVisitor<PostfixExpression>(31, ' i++')
+                TestVisitor<BinaryExpression>(24, 'i < 10'),
+                TestVisitor<PostfixExpression>(32, 'i++')
             ]
         ),
         TestGroupConfig(
@@ -49,7 +53,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('int i=0;i<10;i++')
+                TestConfig('int i=0; i<10; i++')
             ]
         ),
         TestGroupConfig(
@@ -60,12 +64,12 @@ void main()
             name: 'ForPartsWithDeclarations: int i = 0; i < 10; i++ (too much spacing)',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<VariableDeclarationList>(13, 'int  i  =  0'),
-                TestVisitor<BinaryExpression>(28, '  i  <  10'),
-                TestVisitor<PostfixExpression>(41, '  i++')
+                TestVisitor<BinaryExpression>(30, 'i  <  10'),
+                TestVisitor<PostfixExpression>(43, 'i++')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('int  i  =  0;  i  <  10;  i++')
+                TestConfig('int  i  =  0; i  <  10; i++')
             ]
         )
     ];
