@@ -28,6 +28,12 @@ class SuperFormalParameterFormatter extends IFormatter
 
         formatState.copyEntity(node.requiredKeyword, astVisitor, '$methodName/node.requiredKeyword');
 
+        if (node.type != null)
+        {
+            final int? spacesForType = config.fixSpaces ? (node.offset == node.type!.offset ? null : 1) : null;
+            formatState.copyEntity(node.type, astVisitor, '$methodName/node.type', spacesForType);
+        }
+
         final int? spacesForSuperKeyword = config.fixSpaces ? (node.offset == node.superKeyword.offset ? null : 1) : null;
         formatState.copyEntity(node.superKeyword, astVisitor, '$methodName/node.superKeyword', spacesForSuperKeyword);
 

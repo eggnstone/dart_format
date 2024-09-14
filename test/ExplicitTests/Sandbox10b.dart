@@ -11,8 +11,8 @@ String s =
 void g()
 {
     final String s = ''' ${true ? ''' ''' : ''' '''} ''';
-    final String s2 =        '''        ''';
-    final String s3 =        '''  //      ''';
+    final String s2 = '''        ''';
+    final String s3 = '''  //      ''';
 }
 
 void f()
