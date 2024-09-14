@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.22
+
+- Added experimental setting  "Fix spaces".
+ 
 ## 1.1.21
 
 - Better formatting of strings and comments.
