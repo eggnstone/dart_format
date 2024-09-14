@@ -26,7 +26,11 @@ class SuperFormalParameterFormatter extends IFormatter
         if (node is! SuperFormalParameter)
             throw FormatException('Not a SuperFormalParameter: ${node.runtimeType}');
 
-        formatState.copyEntity(node.superKeyword, astVisitor, '$methodName/node.superKeyword');
+        formatState.copyEntity(node.requiredKeyword, astVisitor, '$methodName/node.requiredKeyword');
+
+        final int? spacesForSuperKeyword = config.fixSpaces ? (node.offset == node.superKeyword.offset ? null : 1) : null;
+        formatState.copyEntity(node.superKeyword, astVisitor, '$methodName/node.superKeyword', spacesForSuperKeyword);
+
         formatState.copyEntity(node.period, astVisitor, '$methodName/node.period', config.space0);
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name', config.space0);
 

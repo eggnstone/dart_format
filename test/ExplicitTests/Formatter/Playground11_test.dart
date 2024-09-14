@@ -15,13 +15,18 @@ void main()
         {
             test('format: class C extends E', ()
                 {
-                    const String inputText = 'class  C  extends  E  {   C  (  {  super  .  key  }  )  ;  const  C  (  {  super  .  key  }  )  ;  }  ';
+                    const String inputText = 'class  C  extends  E  {'
+                        '  C  (  {  super  .  key  }  )  ;'
+                        '  C  (  {  required  super  .  key  }  )  ;'
+                        '  const  C  (  {  super  .  key  }  )  ;'
+                        '  }  ';
                     const String expectedText =
                         'class C extends E\n'
                         '{\n'
                         //'    C({  super.key  });\n'
                         //'    const C({  super.key  });\n'
                         '    C({super.key});\n'
+                        '    C({required super.key});\n'
                         '    const C({super.key});\n'
                         '}  \n';
 
