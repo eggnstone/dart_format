@@ -8,8 +8,8 @@ void main()
 {
     TestTools.init();
 
-    final Config configAll = Config.all();
-    final Formatter formatterAll = Formatter(configAll);
+    final Config config = Config.experimental();
+    final Formatter formatter = Formatter(config);
 
     group('Playground 3', ()
         {
@@ -20,7 +20,7 @@ void main()
 
                     //Analyzer.analyze(inputText);
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
@@ -34,7 +34,7 @@ void main()
 
                     //Analyzer.analyze(inputText);
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
@@ -48,7 +48,7 @@ void main()
 
                     //Analyzer.analyze(inputText);
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
@@ -62,7 +62,7 @@ void main()
 
                     //Analyzer.analyze(inputText);
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');

@@ -8,8 +8,8 @@ void main()
 {
     TestTools.init();
 
-    final Config configAll = Config.all();
-    final Formatter formatterAll = Formatter(configAll);
+    final Config config = Config.experimental();
+    final Formatter formatter = Formatter(config);
 
     group('Playground 12', ()
         {
@@ -22,7 +22,7 @@ void main()
                         '    g(T<String>.t());\n'
                         '}\n';
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }

@@ -38,7 +38,7 @@ mixin _$Config {
   /// Whether to add a new line before an opening brace.
   bool get addNewLineBeforeOpeningBrace => throw _privateConstructorUsedError;
 
-  /// TODO
+  /// Whether to fix spaces.
   bool get fixSpaces => throw _privateConstructorUsedError;
 
   /// The number of spaces to use for indentation. -1 = do not change indentation.
@@ -281,7 +281,7 @@ class _$ConfigImpl extends _Config {
   @override
   final bool addNewLineBeforeOpeningBrace;
 
-  /// TODO
+  /// Whether to fix spaces.
   @override
   final bool fixSpaces;
 
@@ -408,7 +408,7 @@ abstract class _Config extends Config {
   @override
   bool get addNewLineBeforeOpeningBrace;
 
-  /// TODO
+  /// Whether to fix spaces.
   @override
   bool get fixSpaces;
 

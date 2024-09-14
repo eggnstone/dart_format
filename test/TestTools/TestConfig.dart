@@ -9,7 +9,7 @@ class TestConfig
     final String name;
 
     TestConfig([this.expectedText, this.restText])
-        : config = Config.all(), name = 'Default';
+        : config = Config.experimental(), name = 'Default';
 
     TestConfig.custom(this.name, this.config, [this.expectedText, this.restText]);
 

@@ -9,8 +9,8 @@ void main()
 {
     TestTools.init();
 
-    final Config configAll = Config.all();
-    final Formatter formatterAll = Formatter(configAll);
+    final Config config = Config.experimental();
+    final Formatter formatter = Formatter(config);
 
     group('Playground 5', ()
         {
@@ -27,7 +27,7 @@ void main()
                         'ab\n'
                         "''';\n";
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -41,7 +41,7 @@ void main()
                         "''';\n";
                     const String expectedText = inputText;
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -55,7 +55,7 @@ void main()
                         "''';\n";
                     const String expectedText = inputText;
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -74,7 +74,7 @@ void main()
                         "a'b\n"
                         "''';\n";
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -93,7 +93,7 @@ void main()
                         'a"b\n'
                         '""";\n';
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -146,7 +146,7 @@ void main()
                     const String inputText = "String s = '''\${true ? '''a''' : '''b'''}''';\n";
                     const String expectedText = inputText;
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -157,7 +157,7 @@ void main()
                     const String inputText = "String s = '''start\${true ? '''a''' : '''b'''}end''';\n";
                     const String expectedText = inputText;
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -168,7 +168,7 @@ void main()
                     const String inputText = "String s = '''start1\nstart2\n\${true ? '''a''' : '''b'''}\nend1\nend2''';\n";
                     const String expectedText = inputText;
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -179,7 +179,7 @@ void main()
                     const String inputText = "String s = \n    '''start1\n    start2\n    \${true ? '''a''' : '''b'''}\n    end1\n    end2''';\n";
                     const String expectedText = inputText;
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -190,7 +190,7 @@ void main()
                     const String inputText = "String s = \n    'A'\n    '''start1\n    start2\n    \${true ? '''a''' : '''b'''}\n    end1\n    end2'''\n    'B';\n";
                     const String expectedText = inputText;
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -201,7 +201,7 @@ void main()
                     const String inputText = "String s = /*Comment1*/'start\${true ? 'a' : 'b'}end';/*Comment2*/\n";
                     const String expectedText = inputText;
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -212,7 +212,7 @@ void main()
                     const String inputText = "String s = '''\${true ? '''}''' : '''}'''}''';\n";
                     const String expectedText = inputText;
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -223,7 +223,7 @@ void main()
                     const String inputText = "String s = \n    'A';\n";
                     const String expectedText = inputText;
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -234,7 +234,7 @@ void main()
                     const String inputText = "String s = \n    '''start\n    end''';\n";
                     const String expectedText = inputText;
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -245,7 +245,7 @@ void main()
                     const String inputText = "String s = 'start\${X}end';\n";
                     const String expectedText = inputText;
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -256,7 +256,7 @@ void main()
                     const String inputText = "String s = '''start\${X}end''';\n";
                     const String expectedText = inputText;
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
@@ -267,7 +267,7 @@ void main()
                     const String inputText = "String s = '\$a/*';\n";
                     const String expectedText = inputText;
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }

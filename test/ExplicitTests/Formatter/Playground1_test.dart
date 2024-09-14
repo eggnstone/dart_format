@@ -8,8 +8,8 @@ void main()
 {
     TestTools.init();
 
-    final Config configAll = Config.all();
-    final Formatter formatterAll = Formatter(configAll);
+    final Config config = Config.experimental();
+    final Formatter formatter = Formatter(config);
 
     group('Playground 1', ()
         {
@@ -18,7 +18,7 @@ void main()
                     const String inputText = "String s = '/*';\n";
                     const String expectedText = inputText;
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
@@ -32,7 +32,7 @@ void main()
                         "    'a';\n";
                     const String expectedText = inputText;
 
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
@@ -48,7 +48,7 @@ void main()
                     const String expectedText = inputText;
 
                     //Analyzer.analyze(inputText);
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
@@ -63,7 +63,7 @@ void main()
                     const String expectedText = inputText;
 
                     //Analyzer.analyze(inputText);
-                    final String actualText = formatterAll.format(inputText);
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');

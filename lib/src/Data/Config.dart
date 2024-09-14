@@ -46,9 +46,9 @@ class Config with _$Config
     /// Default value when all options are turned off: Whether to break set or map literals.
     static const bool BREAK_SET_OR_MAP_LITERALS_NONE = false;
 
-    /// Default value when all options are turned on: TODO
-    static const bool FIX_SPACES_DEFAULT = true;
-    /// Default value when all options are turned off: TODO
+    /// Default value when all options are turned on: Whether to fix spaces.
+    static const bool FIX_SPACES_DEFAULT = false; //true; experimental!
+    /// Default value when all options are turned off: Whether to fix spaces.
     static const bool FIX_SPACES_NONE = false;
 
     /// Default value when all options are turned on: The number of spaces to use for indentation.
@@ -84,7 +84,7 @@ class Config with _$Config
         required bool addNewLineBeforeClosingBrace,
         /// Whether to add a new line before an opening brace.
         required bool addNewLineBeforeOpeningBrace,
-        /// TODO
+        /// Whether to fix spaces.
         required bool fixSpaces,
         /// The number of spaces to use for indentation. -1 = do not change indentation.
         required int indentationSpacesPerLevel,
@@ -93,6 +93,8 @@ class Config with _$Config
         /// Whether to remove trailing commas.
         required bool removeTrailingCommas
     }) = _Config;
+
+    static Config experimental() => Config.all(fixSpaces: true);
 
     /// Create a new instance of [Config] with all options turned on.
     // ignore: prefer_constructors_over_static_methods
@@ -146,7 +148,7 @@ class Config with _$Config
         bool addNewLineBeforeClosingBrace = ADD_NEW_LINE_BEFORE_CLOSING_BRACE_NONE,
         /// Whether to add a new line before an opening brace.
         bool addNewLineBeforeOpeningBrace = ADD_NEW_LINE_BEFORE_OPENING_BRACE_NONE,
-        /// TODO
+        /// Whether to fix spaces.
         bool fixSpaces = FIX_SPACES_NONE,
         /// The number of spaces to use for indentation. -1 = do not change indentation.
         int indentationSpacesPerLevel = INDENTATION_SPACES_PER_LEVEL_NONE,
