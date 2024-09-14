@@ -84,14 +84,14 @@ class Config with _$Config
         required bool addNewLineBeforeClosingBrace,
         /// Whether to add a new line before an opening brace.
         required bool addNewLineBeforeOpeningBrace,
-        /// Whether to fix spaces.
-        @Default(false) required bool fixSpaces,
         /// The number of spaces to use for indentation. -1 = do not change indentation.
         required int indentationSpacesPerLevel,
         /// The maximum number of empty lines to allow. -1 = do not change empty lines.
         required int maxEmptyLines,
         /// Whether to remove trailing commas.
-        required bool removeTrailingCommas
+        required bool removeTrailingCommas,
+        /// Whether to fix spaces.
+        @Default(false) bool fixSpaces
     }) = _Config;
 
     static Config experimental() => Config.all(fixSpaces: true);

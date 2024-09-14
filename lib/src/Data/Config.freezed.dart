@@ -38,9 +38,6 @@ mixin _$Config {
   /// Whether to add a new line before an opening brace.
   bool get addNewLineBeforeOpeningBrace => throw _privateConstructorUsedError;
 
-  /// Whether to fix spaces.
-  bool get fixSpaces => throw _privateConstructorUsedError;
-
   /// The number of spaces to use for indentation. -1 = do not change indentation.
   int get indentationSpacesPerLevel => throw _privateConstructorUsedError;
 
@@ -49,6 +46,9 @@ mixin _$Config {
 
   /// Whether to remove trailing commas.
   bool get removeTrailingCommas => throw _privateConstructorUsedError;
+
+  /// Whether to fix spaces.
+  bool get fixSpaces => throw _privateConstructorUsedError;
 
   /// Serializes this Config to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -71,10 +71,10 @@ abstract class $ConfigCopyWith<$Res> {
       bool addNewLineAtEndOfText,
       bool addNewLineBeforeClosingBrace,
       bool addNewLineBeforeOpeningBrace,
-      bool fixSpaces,
       int indentationSpacesPerLevel,
       int maxEmptyLines,
-      bool removeTrailingCommas});
+      bool removeTrailingCommas,
+      bool fixSpaces});
 }
 
 /// @nodoc
@@ -98,10 +98,10 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config>
     Object? addNewLineAtEndOfText = null,
     Object? addNewLineBeforeClosingBrace = null,
     Object? addNewLineBeforeOpeningBrace = null,
-    Object? fixSpaces = null,
     Object? indentationSpacesPerLevel = null,
     Object? maxEmptyLines = null,
     Object? removeTrailingCommas = null,
+    Object? fixSpaces = null,
   }) {
     return _then(_value.copyWith(
       addNewLineAfterClosingBrace: null == addNewLineAfterClosingBrace
@@ -128,10 +128,6 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config>
           ? _value.addNewLineBeforeOpeningBrace
           : addNewLineBeforeOpeningBrace // ignore: cast_nullable_to_non_nullable
               as bool,
-      fixSpaces: null == fixSpaces
-          ? _value.fixSpaces
-          : fixSpaces // ignore: cast_nullable_to_non_nullable
-              as bool,
       indentationSpacesPerLevel: null == indentationSpacesPerLevel
           ? _value.indentationSpacesPerLevel
           : indentationSpacesPerLevel // ignore: cast_nullable_to_non_nullable
@@ -143,6 +139,10 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config>
       removeTrailingCommas: null == removeTrailingCommas
           ? _value.removeTrailingCommas
           : removeTrailingCommas // ignore: cast_nullable_to_non_nullable
+              as bool,
+      fixSpaces: null == fixSpaces
+          ? _value.fixSpaces
+          : fixSpaces // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -162,10 +162,10 @@ abstract class _$$ConfigImplCopyWith<$Res> implements $ConfigCopyWith<$Res> {
       bool addNewLineAtEndOfText,
       bool addNewLineBeforeClosingBrace,
       bool addNewLineBeforeOpeningBrace,
-      bool fixSpaces,
       int indentationSpacesPerLevel,
       int maxEmptyLines,
-      bool removeTrailingCommas});
+      bool removeTrailingCommas,
+      bool fixSpaces});
 }
 
 /// @nodoc
@@ -187,10 +187,10 @@ class __$$ConfigImplCopyWithImpl<$Res>
     Object? addNewLineAtEndOfText = null,
     Object? addNewLineBeforeClosingBrace = null,
     Object? addNewLineBeforeOpeningBrace = null,
-    Object? fixSpaces = null,
     Object? indentationSpacesPerLevel = null,
     Object? maxEmptyLines = null,
     Object? removeTrailingCommas = null,
+    Object? fixSpaces = null,
   }) {
     return _then(_$ConfigImpl(
       addNewLineAfterClosingBrace: null == addNewLineAfterClosingBrace
@@ -217,10 +217,6 @@ class __$$ConfigImplCopyWithImpl<$Res>
           ? _value.addNewLineBeforeOpeningBrace
           : addNewLineBeforeOpeningBrace // ignore: cast_nullable_to_non_nullable
               as bool,
-      fixSpaces: null == fixSpaces
-          ? _value.fixSpaces
-          : fixSpaces // ignore: cast_nullable_to_non_nullable
-              as bool,
       indentationSpacesPerLevel: null == indentationSpacesPerLevel
           ? _value.indentationSpacesPerLevel
           : indentationSpacesPerLevel // ignore: cast_nullable_to_non_nullable
@@ -232,6 +228,10 @@ class __$$ConfigImplCopyWithImpl<$Res>
       removeTrailingCommas: null == removeTrailingCommas
           ? _value.removeTrailingCommas
           : removeTrailingCommas // ignore: cast_nullable_to_non_nullable
+              as bool,
+      fixSpaces: null == fixSpaces
+          ? _value.fixSpaces
+          : fixSpaces // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -248,10 +248,10 @@ class _$ConfigImpl extends _Config {
       required this.addNewLineAtEndOfText,
       required this.addNewLineBeforeClosingBrace,
       required this.addNewLineBeforeOpeningBrace,
-      required this.fixSpaces = false,
       required this.indentationSpacesPerLevel,
       required this.maxEmptyLines,
-      required this.removeTrailingCommas})
+      required this.removeTrailingCommas,
+      this.fixSpaces = false})
       : super._();
 
   factory _$ConfigImpl.fromJson(Map<String, dynamic> json) =>
@@ -281,11 +281,6 @@ class _$ConfigImpl extends _Config {
   @override
   final bool addNewLineBeforeOpeningBrace;
 
-  /// Whether to fix spaces.
-  @override
-  @JsonKey()
-  final bool fixSpaces;
-
   /// The number of spaces to use for indentation. -1 = do not change indentation.
   @override
   final int indentationSpacesPerLevel;
@@ -298,9 +293,14 @@ class _$ConfigImpl extends _Config {
   @override
   final bool removeTrailingCommas;
 
+  /// Whether to fix spaces.
+  @override
+  @JsonKey()
+  final bool fixSpaces;
+
   @override
   String toString() {
-    return 'Config(addNewLineAfterClosingBrace: $addNewLineAfterClosingBrace, addNewLineAfterOpeningBrace: $addNewLineAfterOpeningBrace, addNewLineAfterSemicolon: $addNewLineAfterSemicolon, addNewLineAtEndOfText: $addNewLineAtEndOfText, addNewLineBeforeClosingBrace: $addNewLineBeforeClosingBrace, addNewLineBeforeOpeningBrace: $addNewLineBeforeOpeningBrace, fixSpaces: $fixSpaces, indentationSpacesPerLevel: $indentationSpacesPerLevel, maxEmptyLines: $maxEmptyLines, removeTrailingCommas: $removeTrailingCommas)';
+    return 'Config(addNewLineAfterClosingBrace: $addNewLineAfterClosingBrace, addNewLineAfterOpeningBrace: $addNewLineAfterOpeningBrace, addNewLineAfterSemicolon: $addNewLineAfterSemicolon, addNewLineAtEndOfText: $addNewLineAtEndOfText, addNewLineBeforeClosingBrace: $addNewLineBeforeClosingBrace, addNewLineBeforeOpeningBrace: $addNewLineBeforeOpeningBrace, indentationSpacesPerLevel: $indentationSpacesPerLevel, maxEmptyLines: $maxEmptyLines, removeTrailingCommas: $removeTrailingCommas, fixSpaces: $fixSpaces)';
   }
 
   @override
@@ -328,14 +328,14 @@ class _$ConfigImpl extends _Config {
                     addNewLineBeforeOpeningBrace) ||
                 other.addNewLineBeforeOpeningBrace ==
                     addNewLineBeforeOpeningBrace) &&
-            (identical(other.fixSpaces, fixSpaces) ||
-                other.fixSpaces == fixSpaces) &&
             (identical(other.indentationSpacesPerLevel, indentationSpacesPerLevel) ||
                 other.indentationSpacesPerLevel == indentationSpacesPerLevel) &&
             (identical(other.maxEmptyLines, maxEmptyLines) ||
                 other.maxEmptyLines == maxEmptyLines) &&
             (identical(other.removeTrailingCommas, removeTrailingCommas) ||
-                other.removeTrailingCommas == removeTrailingCommas));
+                other.removeTrailingCommas == removeTrailingCommas) &&
+            (identical(other.fixSpaces, fixSpaces) ||
+                other.fixSpaces == fixSpaces));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -348,10 +348,10 @@ class _$ConfigImpl extends _Config {
       addNewLineAtEndOfText,
       addNewLineBeforeClosingBrace,
       addNewLineBeforeOpeningBrace,
-      fixSpaces,
       indentationSpacesPerLevel,
       maxEmptyLines,
-      removeTrailingCommas);
+      removeTrailingCommas,
+      fixSpaces);
 
   /// Create a copy of Config
   /// with the given fields replaced by the non-null parameter values.
@@ -377,10 +377,10 @@ abstract class _Config extends Config {
       required final bool addNewLineAtEndOfText,
       required final bool addNewLineBeforeClosingBrace,
       required final bool addNewLineBeforeOpeningBrace,
-      required final bool fixSpaces,
       required final int indentationSpacesPerLevel,
       required final int maxEmptyLines,
-      required final bool removeTrailingCommas}) = _$ConfigImpl;
+      required final bool removeTrailingCommas,
+      final bool fixSpaces}) = _$ConfigImpl;
   const _Config._() : super._();
 
   factory _Config.fromJson(Map<String, dynamic> json) = _$ConfigImpl.fromJson;
@@ -409,10 +409,6 @@ abstract class _Config extends Config {
   @override
   bool get addNewLineBeforeOpeningBrace;
 
-  /// Whether to fix spaces.
-  @override
-  bool get fixSpaces;
-
   /// The number of spaces to use for indentation. -1 = do not change indentation.
   @override
   int get indentationSpacesPerLevel;
@@ -424,6 +420,10 @@ abstract class _Config extends Config {
   /// Whether to remove trailing commas.
   @override
   bool get removeTrailingCommas;
+
+  /// Whether to fix spaces.
+  @override
+  bool get fixSpaces;
 
   /// Create a copy of Config
   /// with the given fields replaced by the non-null parameter values.

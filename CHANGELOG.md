@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.23
+## 1.2.0
 
 - Added experimental setting "Fix spaces".
  
