@@ -15,7 +15,7 @@ _$ConfigImpl _$$ConfigImplFromJson(Map<String, dynamic> json) => _$ConfigImpl(
           json['AddNewLineBeforeClosingBrace'] as bool,
       addNewLineBeforeOpeningBrace:
           json['AddNewLineBeforeOpeningBrace'] as bool,
-      fixSpaces: json['FixSpaces'] as bool,
+      fixSpaces: json['FixSpaces'] as bool? ?? false,
       indentationSpacesPerLevel:
           (json['IndentationSpacesPerLevel'] as num).toInt(),
       maxEmptyLines: (json['MaxEmptyLines'] as num).toInt(),

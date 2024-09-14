@@ -85,7 +85,7 @@ class Config with _$Config
         /// Whether to add a new line before an opening brace.
         required bool addNewLineBeforeOpeningBrace,
         /// Whether to fix spaces.
-        required bool fixSpaces,
+        @Default(false) required bool fixSpaces,
         /// The number of spaces to use for indentation. -1 = do not change indentation.
         required int indentationSpacesPerLevel,
         /// The maximum number of empty lines to allow. -1 = do not change empty lines.

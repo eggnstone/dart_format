@@ -248,7 +248,7 @@ class _$ConfigImpl extends _Config {
       required this.addNewLineAtEndOfText,
       required this.addNewLineBeforeClosingBrace,
       required this.addNewLineBeforeOpeningBrace,
-      required this.fixSpaces,
+      required this.fixSpaces = false,
       required this.indentationSpacesPerLevel,
       required this.maxEmptyLines,
       required this.removeTrailingCommas})
@@ -283,6 +283,7 @@ class _$ConfigImpl extends _Config {
 
   /// Whether to fix spaces.
   @override
+  @JsonKey()
   final bool fixSpaces;
 
   /// The number of spaces to use for indentation. -1 = do not change indentation.

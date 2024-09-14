@@ -4,7 +4,7 @@ class VersionConstants
 {
     static const int MAJOR = 1;
     static const int MINOR = 1;
-    static const int PATCH = 22;
+    static const int PATCH = 23;
 
     static const Version VERSION = Version(MAJOR, MINOR, PATCH);
 }
