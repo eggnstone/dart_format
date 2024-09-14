@@ -26,7 +26,11 @@ class RecordLiteralFormatter extends IFormatter
         if (node is! RecordLiteral)
             throw FormatException('Not a RecordLiteral: ${node.runtimeType}');
 
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space1);
+        formatState.copyEntity(node.constKeyword, astVisitor, '$methodName/node.constKeyword', config.space0);
+
+        final int? spacesForLeftParenthesis = config.fixSpaces ? (node.offset == node.leftParenthesis.offset ? null : 1) : null;
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', spacesForLeftParenthesis);
+
         formatState.acceptListWithComma(node.fields, node.rightParenthesis, astVisitor, '$methodName/node.fields');
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
 
