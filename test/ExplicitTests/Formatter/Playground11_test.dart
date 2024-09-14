@@ -19,10 +19,10 @@ void main()
                     const String expectedText =
                         'class C extends E\n'
                         '{\n'
-                        '    C({  super.key  });\n'
-                        //'    C({super.key});\n'
-                        '    const C({  super.key  });\n'
-                        //'    const C({super.key});\n'
+                        //'    C({  super.key  });\n'
+                        //'    const C({  super.key  });\n'
+                        '    C({super.key});\n'
+                        '    const C({super.key});\n'
                         '}  \n';
 
                     final String actualText = formatter.format(inputText);

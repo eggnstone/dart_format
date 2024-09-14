@@ -31,8 +31,6 @@ class FormalParameterListFormatter extends IFormatter
 
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space0);
         formatState.pushLevel('$methodName/node.leftParenthesis');
-
-        // TODO: move above "pushLevel"?
         if (node.leftDelimiter != null)
             formatState.consumeSpaces(node.leftDelimiter!, config.space0);
 
@@ -61,6 +59,7 @@ class FormalParameterListFormatter extends IFormatter
                 formatState.copyEntity(node.leftDelimiter, astVisitor, '$methodName/node.leftDelimiter');
                 formatState.pushLevel('$methodName/node.leftDelimiter');
                 wroteLeftDelimiter = true;
+                formatState.consumeSpaces(parameter, config.space0);
             }
 
             parameter.accept(astVisitor);
@@ -88,7 +87,7 @@ class FormalParameterListFormatter extends IFormatter
         if (node.rightDelimiter != null)
         {
             formatState.popLevelAndIndent();
-            formatState.copyEntity(node.rightDelimiter, astVisitor, '$methodName/node.rightDelimiter');
+            formatState.copyEntity(node.rightDelimiter, astVisitor, '$methodName/node.rightDelimiter', config.space0);
         }
 
         formatState.popLevelAndIndent();
