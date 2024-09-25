@@ -94,6 +94,7 @@ class Config with _$Config
         @Default(false) bool fixSpaces
     }) = _Config;
 
+    /// Create a new instance of [Config] with all options turned on, including experimental options.
     static Config experimental() => Config.all(fixSpaces: true);
 
     /// Create a new instance of [Config] with all options turned on.
@@ -111,7 +112,7 @@ class Config with _$Config
         bool addNewLineBeforeClosingBrace = ADD_NEW_LINE_BEFORE_CLOSING_BRACE_DEFAULT,
         /// Whether to add a new line before an opening brace.
         bool addNewLineBeforeOpeningBrace = ADD_NEW_LINE_BEFORE_OPENING_BRACE_DEFAULT,
-        /// TODO
+        /// Whether to fix spaces.
         bool fixSpaces = FIX_SPACES_DEFAULT,
         /// The number of spaces to use for indentation. -1 = do not change indentation.
         int indentationSpacesPerLevel = INDENTATION_SPACES_PER_LEVEL_DEFAULT,
