@@ -24,7 +24,7 @@ void main()
 
             test('Normal', ()
                 {
-                    const String inputText = '${startMarker}a${endMarker}';
+                    const String inputText = '${startMarker}a$endMarker';
                     const TextInfo expectedResult = TextInfo(type: TextType.Normal, text: inputText);
 
                     final TextInfo actualResult = TextExtractor.extract(inputText, TextType.Normal, startMarker, endMarker, allowNested: true);
@@ -35,7 +35,7 @@ void main()
 
             test('Nested', ()
                 {
-                    const String inputText = '${startMarker}a${startMarker}b${endMarker}c${endMarker}';
+                    const String inputText = '${startMarker}a${startMarker}b${endMarker}c$endMarker';
                     const TextInfo expectedResult = TextInfo(type: TextType.Normal, text: inputText);
 
                     final TextInfo actualResult = TextExtractor.extract(inputText, TextType.Normal, startMarker, endMarker, allowNested: true);
@@ -46,7 +46,7 @@ void main()
 
             test('Nested with escaped second starter', ()
                 {
-                    const String inputText = '${startMarker}a\\${startMarker}b${endMarker}';
+                    const String inputText = '${startMarker}a\\${startMarker}b$endMarker';
                     const TextInfo expectedResult = TextInfo(type: TextType.Normal, text: inputText);
 
                     final TextInfo actualResult = TextExtractor.extract(inputText, TextType.Normal, startMarker, endMarker, allowNested: true);
@@ -57,7 +57,7 @@ void main()
 
             test('Nested with escaped first finisher', ()
                 {
-                    const String inputText = '${startMarker}a${startMarker}b\\${endMarker}c${endMarker}d${endMarker}';
+                    const String inputText = '${startMarker}a${startMarker}b\\${endMarker}c${endMarker}d$endMarker';
                     const TextInfo expectedResult = TextInfo(type: TextType.Normal, text: inputText);
 
                     final TextInfo actualResult = TextExtractor.extract(inputText, TextType.Normal, startMarker, endMarker, allowNested: true);
@@ -68,7 +68,7 @@ void main()
 
             test('Nested with escaped first finisher, unclosed', ()
                 {
-                    const String inputText = '${startMarker}a${startMarker}b\\${endMarker}c${endMarker}';
+                    const String inputText = '${startMarker}a${startMarker}b\\${endMarker}c$endMarker';
 
                     expect(() => TextExtractor.extract(inputText, TextType.Normal, startMarker, endMarker, allowNested: true), throwsA(isA<Exception>()));
                 }
@@ -76,7 +76,7 @@ void main()
 
             test('Nested with escaped second finisher', ()
                 {
-                    const String inputText = '${startMarker}a${startMarker}b${endMarker}c\\${endMarker}d${endMarker}';
+                    const String inputText = '${startMarker}a${startMarker}b${endMarker}c\\${endMarker}d$endMarker';
                     const TextInfo expectedResult = TextInfo(type: TextType.Normal, text: inputText);
 
                     final TextInfo actualResult = TextExtractor.extract(inputText, TextType.Normal, startMarker, endMarker, allowNested: true);
@@ -87,7 +87,7 @@ void main()
 
             test('Nested with escaped second finisher, unclosed', ()
                 {
-                    const String inputText = '${startMarker}a${startMarker}b${endMarker}c\\${endMarker}';
+                    const String inputText = '${startMarker}a${startMarker}b${endMarker}c\\$endMarker';
 
                     expect(() => TextExtractor.extract(inputText, TextType.Normal, startMarker, endMarker, allowNested: true), throwsA(isA<Exception>()));
                 }

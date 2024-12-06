@@ -92,7 +92,7 @@ class LeadingWhitespaceRemover
         const String methodName = 'LeadingWhitespaceRemover.removeFromComment';
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
         {
-            logDebug('${spacer}$methodName()');
+            logDebug('$spacer$methodName()');
             logDebug('$spacer  currentLineSoFar:            ${StringTools.toDisplayString(currentLineSoFar)}');
             logDebug('$spacer  s:                           ${StringTools.toDisplayString(s)}');
         }
@@ -166,7 +166,7 @@ class LeadingWhitespaceRemover
 
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
         {
-            logInternal('${spacer}$methodName()');
+            logInternal('$spacer$methodName()');
             logInternal('$spacer  s:           ${StringTools.toDisplayString(s)}');
         }
 
@@ -206,7 +206,7 @@ class LeadingWhitespaceRemover
 
         if (Constants.DEBUG_LEADING_WHITESPACE_REMOVER)
         {
-            logInternal('${spacer}$methodName()');
+            logInternal('$spacer$methodName()');
             logInternal('$spacer  s:           ${StringTools.toDisplayString(s)}');
         }
 

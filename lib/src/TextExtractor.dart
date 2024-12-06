@@ -33,35 +33,35 @@ class TextExtractor
             }
 
             final int? endMarkerPos = endInfo.endMarkerPos;
-            if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('${spacer}  endMarkerPos: $endMarkerPos');
+            if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('$spacer  endMarkerPos: $endMarkerPos');
 
             if (endMarkerPos == null)
             {
                 if (forceClosed)
                     throw DartFormatException.error('No end marker found: ${StringTools.toDisplayString(s)}');
 
-                if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('${spacer}  No end marker found => Returning all');
+                if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('$spacer  No end marker found => Returning all');
                 return TextInfo(type: type, text: s);
             }
 
             final int? start2MarkerPos = allowNested ? StringTools.indexOfOrNull(s, startMarker, currentPos, handleEscape: !isRaw) : null;
             if (Constants.DEBUG_TEXT_EXTRACTOR)
             {
-                logInternal('${spacer}  start2MarkerPos: $start2MarkerPos');
-                logInternal('${spacer}  endMarkerPos:    $endMarkerPos');
+                logInternal('$spacer  start2MarkerPos: $start2MarkerPos');
+                logInternal('$spacer  endMarkerPos:    $endMarkerPos');
             }
 
             if (TextFinder.isFirst(start2MarkerPos, <int?>[endMarkerPos]))
             {
                 // Start marker 2 is first
-                if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('${spacer}  Increasing depth at $start2MarkerPos');
+                if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('$spacer  Increasing depth at $start2MarkerPos');
                 depth++;
                 currentPos = start2MarkerPos! + startMarker.length;
                 continue;
             }
 
             // End marker is first
-            if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('${spacer}  Handling end marker at $endMarkerPos');
+            if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('$spacer  Handling end marker at $endMarkerPos');
 
             if (depth > 1)
             {
@@ -73,12 +73,12 @@ class TextExtractor
             if (forceClosed)
             {
                 final String resultText = s.substring(0, endMarkerPos + endMarker.length);
-                if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('${spacer}  Returning substring including end marker: ${StringTools.toDisplayString(resultText)}');
+                if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('$spacer  Returning substring including end marker: ${StringTools.toDisplayString(resultText)}');
                 return TextInfo(type: type, text: resultText);
             }
 
             final String resultText = s.substring(0, endMarkerPos);
-            if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('${spacer}  Returning substring excluding end marker: ${StringTools.toDisplayString(resultText)}');
+            if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('$spacer  Returning substring excluding end marker: ${StringTools.toDisplayString(resultText)}');
             return TextInfo(type: type, text: resultText);
         }
 
@@ -87,7 +87,7 @@ class TextExtractor
         if (forceClosed)
             throw DartFormatException.error('Only escaped end marker found => unclosed: ${StringTools.toDisplayString(s)}');
 
-        if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('${spacer}  Only escaped end marker found => Returning all');
+        if (Constants.DEBUG_TEXT_EXTRACTOR) logInternal('$spacer  Only escaped end marker found => Returning all');
         return TextInfo(type: type, text: s);
     }
 }

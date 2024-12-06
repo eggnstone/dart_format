@@ -1,5 +1,5 @@
 import 'package:analyzer/dart/analysis/results.dart';
-import 'package:analyzer/dart/analysis/utilities.dart' as AnalyzerUtilities; // ignore: library_prefixes
+import 'package:analyzer/dart/analysis/utilities.dart' as analyzer_utilities;
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/syntactic_entity.dart';
 import 'package:analyzer/dart/ast/token.dart';
@@ -12,7 +12,7 @@ class Analyzer
 {
     static void analyze(String s)
     {
-        final ParseStringResult parseResult = AnalyzerUtilities.parseString(content: s, throwIfDiagnostics: false);
+        final ParseStringResult parseResult = analyzer_utilities.parseString(content: s, throwIfDiagnostics: false);
 
         _analyzeSyntacticEntities(parseResult.unit.childEntities, 0);
     }

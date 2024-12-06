@@ -1,5 +1,5 @@
 /// The main library of the package.
-library dart_format;
+library;
 
 export 'src/Constants/ExitCodes.dart';
 export 'src/Data/Config.dart';

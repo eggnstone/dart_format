@@ -35,7 +35,7 @@ void main()
 
             test('Unclosed with escaped end 1', ()
                 {
-                    const String inputText = '${startMarker}abc\\${endMarker}';
+                    const String inputText = '${startMarker}abc\\$endMarker';
                     const TextInfo expectedResult = TextInfo(type: TextType.Normal, text: inputText);
 
                     final TextInfo actualResult = TextExtractor.extract(inputText, TextType.Normal, startMarker, endMarker, forceClosed: false);
@@ -57,7 +57,7 @@ void main()
 
             test('Normal', ()
                 {
-                    const String inputText = '${startMarker}abc${endMarker}';
+                    const String inputText = '${startMarker}abc$endMarker';
                     const String expectedText = '${startMarker}abc';
                     const TextInfo expectedResult = TextInfo(type: TextType.Normal, text: expectedText);
 
@@ -69,7 +69,7 @@ void main()
 
             test('Normal with escaped end', ()
                 {
-                    const String inputText = '${startMarker}abc\\${endMarker}def${endMarker}';
+                    const String inputText = '${startMarker}abc\\${endMarker}def$endMarker';
                     const String expectedText = '${startMarker}abc\\${endMarker}def';
                     const TextInfo expectedResult = TextInfo(type: TextType.Normal, text: expectedText);
 
@@ -81,7 +81,7 @@ void main()
 
             test('Normal with escaped other', ()
                 {
-                    const String inputText = '${startMarker}abc\\ndef${endMarker}';
+                    const String inputText = '${startMarker}abc\\ndef$endMarker';
                     const String expectedText = '${startMarker}abc\\ndef';
                     const TextInfo expectedResult = TextInfo(type: TextType.Normal, text: expectedText);
 
@@ -93,7 +93,7 @@ void main()
 
             test('Before something else', ()
                 {
-                    const String inputText = '${startMarker}abc${endMarker} something else';
+                    const String inputText = '${startMarker}abc$endMarker something else';
                     const String expectedText = '${startMarker}abc';
                     const TextInfo expectedResult = TextInfo(type: TextType.Normal, text: expectedText);
 

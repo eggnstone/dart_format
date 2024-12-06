@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:dart_format/src/FormatState.dart';
 import 'package:meta/meta.dart';

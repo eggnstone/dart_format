@@ -13,7 +13,7 @@ abstract class IFormatter
         String prefix = '';
 
         if (Constants.DEBUG_I_FORMATTER_OFFSETS && offset != null)
-            prefix += '${offset} ';
+            prefix += '$offset ';
 
         if (Constants.DEBUG_I_FORMATTER_TIME && startDateTime != null)
             prefix += '${DateTime.now().difference(startDateTime).inMilliseconds}ms ';

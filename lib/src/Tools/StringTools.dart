@@ -164,8 +164,8 @@ class StringTools
         for (int i = 0; i < s.length; i++)
         {
             final String? nextChar = i + 1 < s.length ? s[i + 1] : null;
-            final bool isNextNormal = nextChar == null ? false : isNormalChar(nextChar);
-            final bool isNextWhitespace = nextChar == null ? false : isWhitespaceChar(nextChar);
+            final bool isNextNormal = nextChar != null && isNormalChar(nextChar);
+            final bool isNextWhitespace = nextChar != null && isWhitespaceChar(nextChar);
             //final bool isNextSpecial = nextChar == null ? false : !isNextNormal && !isNextWhitespace;
 
             /*logDebug('current:  ${toDisplayString(currentChar)}${isCurrentNormal ? ' Normal' : ''}${isCurrentWhitespace ? ' Whitespace' : ''}${isCurrentSpecial ? ' Special' : ''}');

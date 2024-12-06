@@ -68,6 +68,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
+                // ignore: avoid_redundant_argument_values
                 TestConfig.custom('Custom1', Config.all(fixSpaces: false), "assert(true,'message')"),
                 TestConfig.custom('Custom2', Config.all(fixSpaces: true, removeTrailingCommas: false), "assert(true,'message',)"),
                 TestConfig("assert(true,'message')")
@@ -85,6 +86,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
+                // ignore: avoid_redundant_argument_values
                 TestConfig.custom('Custom1', Config.all(fixSpaces: false), "assert  (  true  ,  'message'    )"),
                 TestConfig.custom('Custom2', Config.all(fixSpaces: true, removeTrailingCommas: false), "assert(  true,  'message',)"),
                 TestConfig("assert(  true,  'message')")

@@ -27,6 +27,8 @@ TODO
 - Add/remove spaces
 - Fix too big block indentation after "if () // comment\n"
 - Sort imports
+- Remove empty lines at start and end
+- Spaces: "a . b"
 
 DONE (I think)
 ==============

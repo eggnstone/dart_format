@@ -20,8 +20,8 @@ class TextFinder
 
         if (Constants.DEBUG_TEXT_EXTRACTOR)
         {
-            logInternal('${spacer}  endOfLineCommentStartPos: ${result.endOfLineCommentStartPos}');
-            logInternal('${spacer}  blockCommentStartPos:     ${result.blockCommentStartPos}');
+            logInternal('$spacer  endOfLineCommentStartPos: ${result.endOfLineCommentStartPos}');
+            logInternal('$spacer  blockCommentStartPos:     ${result.blockCommentStartPos}');
         }
 
         return result;
@@ -51,9 +51,9 @@ class TextFinder
 
         if (Constants.DEBUG_TEXT_EXTRACTOR)
         {
-            logInternal('${spacer}  endMarkerPos:             ${result.endMarkerPos}');
-            logInternal('${spacer}  interpolationStartPos:    ${result.interpolationStartPos}');
-            logInternal('${spacer}  interpolationEndPos:      ${result.interpolationEndPos}');
+            logInternal('$spacer  endMarkerPos:             ${result.endMarkerPos}');
+            logInternal('$spacer  interpolationStartPos:    ${result.interpolationStartPos}');
+            logInternal('$spacer  interpolationEndPos:      ${result.interpolationEndPos}');
         }
 
         return result;
@@ -63,7 +63,7 @@ class TextFinder
     {
         int? result;
 
-        for (int? value in values)
+        for (final int? value in values)
         {
             if (value == null)
                 continue;
@@ -80,7 +80,7 @@ class TextFinder
         if (main == null)
             return false;
 
-        for (int? other in others)
+        for (final int? other in others)
             if (other != null && other < main)
                 return false;
 

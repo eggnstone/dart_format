@@ -7,6 +7,7 @@ analyzer:
   errors:
     # Otherwise cause the import of all_lint_rules to warn because of some rules conflicts.
     # The conflicts are fixed in this file instead, so we can safely ignore the warning.
+    document_ignores: ignore
     included_file_warning: ignore
     missing_required_param: error
     missing_return: error

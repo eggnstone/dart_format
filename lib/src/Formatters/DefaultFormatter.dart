@@ -34,38 +34,37 @@ class DefaultFormatter extends IFormatter
             log(message, formatState.logIndent++, offset: node.offset, startDateTime: formatState.startDateTime);
         }
 
-        node.childEntities.forEach((SyntacticEntity child)
+        for (final SyntacticEntity child in node.childEntities)
+        {
+            if (child is AstNode)
             {
-                if (child is AstNode)
+                if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('! AstNode-Child: ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
+                if (child is CommentReference)
                 {
-                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('! AstNode-Child: ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
-                    if (child is CommentReference)
-                    {
-                        if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Ignoring "CommentReference"');
-                    }
-                    else
-                    {
-                        if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Accepting');
-                        child.accept(astVisitor);
-                    }
-                }
-                else if (child is Token)
-                {
-                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('! Token-Child:   ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
-                    if (child.runtimeType.toString() == 'DartDocToken')
-                    {
-                        if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Ignoring "DartDocToken"');
-                    }
-                    else
-                    {
-                        if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Copying');
-                        formatState.copyEntity(child, astVisitor, '$methodName/child=${child.runtimeType}');
-                    }
+                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Ignoring "CommentReference"');
                 }
                 else
-                    throw Exception('Unhandled type: ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
+                {
+                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Accepting');
+                    child.accept(astVisitor);
+                }
             }
-        );
+            else if (child is Token)
+            {
+                if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('! Token-Child:   ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
+                if (child.runtimeType.toString() == 'DartDocToken')
+                {
+                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Ignoring "DartDocToken"');
+                }
+                else
+                {
+                    if (Constants.DEBUG_FORMATTER_DEFAULT) logInternal('    Copying');
+                    formatState.copyEntity(child, astVisitor, '$methodName/child=${child.runtimeType}');
+                }
+            }
+            else
+                throw Exception('Unhandled type: ${child.runtimeType} ${StringTools.toDisplayString(child, 50)}');
+        }
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${node.runtimeType}: ${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent, offset: node.end);
     }
