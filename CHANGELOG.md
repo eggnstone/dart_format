@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+- Update analyzer to 6.9.0.
+
 ## 1.2.0
 
 - Added experimental setting "Fix spaces".

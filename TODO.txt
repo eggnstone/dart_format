@@ -29,6 +29,7 @@ TODO
 - Sort imports
 - Remove empty lines at start and end
 - Spaces: "a . b"
+- Do not remove trailing commas from end-of-line comments
 
 DONE (I think)
 ==============

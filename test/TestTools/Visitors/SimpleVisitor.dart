@@ -705,4 +705,8 @@ abstract class SimpleVisitor extends AstVisitor<void>
     @override
     void visitMixinOnClause(MixinOnClause node)
     => visit(node);
+
+    @override
+    void visitNullAwareElement(NullAwareElement node)
+    => visit(node);
 }

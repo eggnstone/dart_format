@@ -884,4 +884,8 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitMixinOnClause(MixinOnClause node)
     => _mixinOnClauseFormatter.format(node);
+
+    @override
+    void visitNullAwareElement(NullAwareElement node)
+    => _mixinOnClauseFormatter.format(node);
 }
