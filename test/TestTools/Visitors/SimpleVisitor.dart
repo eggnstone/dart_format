@@ -41,9 +41,9 @@ abstract class SimpleVisitor extends AstVisitor<void>
     void visitAssignmentExpression(AssignmentExpression node)
     => visit(node);
 
-    @override
+    /*@override
     void visitAugmentationImportDirective(AugmentationImportDirective node)
-    => visit(node);
+    => visit(node);*/
 
     @override
     void visitAwaitExpression(AwaitExpression node)
@@ -361,9 +361,9 @@ abstract class SimpleVisitor extends AstVisitor<void>
     void visitLabeledStatement(LabeledStatement node)
     => visit(node);
 
-    @override
+    /*@override
     void visitLibraryAugmentationDirective(LibraryAugmentationDirective node)
-    => visit(node);
+    => visit(node);*/
 
     @override
     void visitLibraryDirective(LibraryDirective node)
@@ -445,10 +445,10 @@ abstract class SimpleVisitor extends AstVisitor<void>
     void visitObjectPattern(ObjectPattern node)
     => visit(node);
 
-    @override
+    /*@override
     // ignore: deprecated_member_use
     void visitOnClause(OnClause node)
-    => visit(node);
+    => visit(node);*/
 
     @override
     void visitParenthesizedExpression(ParenthesizedExpression node)

@@ -12,6 +12,7 @@ analyzer:
     missing_required_param: error
     missing_return: error
     must_be_immutable: error
+    omit_obvious_local_variable_types: ignore
   exclude: [
     'lib/App.widgetbook.dart',
     'lib/constants/generated/*.dart',

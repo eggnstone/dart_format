@@ -1,3 +1,4 @@
+/*
 // ignore_for_file: always_put_control_body_on_new_line
 
 import 'package:analyzer/dart/ast/ast.dart';
@@ -35,3 +36,4 @@ class AugmentationImportDirectiveFormatter extends IFormatter
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }
+*/

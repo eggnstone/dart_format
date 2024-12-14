@@ -1,3 +1,4 @@
+/*
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:dart_format/src/Formatters/MixinOnClauseFormatter.dart';
 
@@ -26,3 +27,4 @@ void main()
 
     TestTools.runTestGroupsForFormatter(testGroupConfigs, 'MixinOnClauseFormatter', MixinOnClauseFormatter.new, StackTrace.current);
 }
+*/

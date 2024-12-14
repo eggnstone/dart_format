@@ -126,9 +126,9 @@ class AstCreator
     static NamespaceDirective createNamespaceDirective(String s)
     => createDirective(s) as NamespaceDirective;
 
-    // ignore: deprecated_member_use
+    /*// ignore: deprecated_member_use
     static OnClause createOnClauseInMixinDeclaration(String s)
-    => createMixinDeclaration(s).onClause!;
+    => createMixinDeclaration(s).onClause!;*/
 
     static ReturnStatement createReturnStatementInFunction(String s)
     => createStatementInFunction(s) as ReturnStatement;

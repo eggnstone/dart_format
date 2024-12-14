@@ -5,7 +5,7 @@ import 'FormatState.dart';
 import 'Formatters/ArgumentListFormatter.dart';
 import 'Formatters/AssertInitializerFormatter.dart';
 import 'Formatters/AssertStatementFormatter.dart';
-import 'Formatters/AugmentationImportDirectiveFormatter.dart';
+//import 'Formatters/AugmentationImportDirectiveFormatter.dart';
 import 'Formatters/BinaryExpressionFormatter.dart';
 import 'Formatters/BlockFormatter.dart';
 import 'Formatters/BreakStatementFormatter.dart';
@@ -45,7 +45,7 @@ import 'Formatters/InstanceCreationExpressionFormatter.dart';
 import 'Formatters/InterpolationExpressionFormatter.dart';
 import 'Formatters/InterpolationStringFormatter.dart';
 import 'Formatters/LabelFormatter.dart';
-import 'Formatters/LibraryAugmentationDirectiveFormatter.dart';
+//import 'Formatters/LibraryAugmentationDirectiveFormatter.dart';
 import 'Formatters/LibraryDirectiveFormatter.dart';
 import 'Formatters/LibraryIdentifierFormatter.dart';
 import 'Formatters/ListLiteralFormatter.dart';
@@ -95,7 +95,7 @@ class FormatVisitor extends AstVisitor<void>
     late final AssertInitializerFormatter _assertInitializerFormatter = AssertInitializerFormatter(config, this, _formatState);
     late final AssertStatementFormatter _assertStatementFormatter = AssertStatementFormatter(config, this, _formatState);
     //late final AssignmentExpressionFormatter _assignmentExpressionFormatter = AssignmentExpressionFormatter(config, this, _formatState);
-    late final AugmentationImportDirectiveFormatter _augmentationImportDirectiveFormatter = AugmentationImportDirectiveFormatter(config, this, _formatState);
+    //late final AugmentationImportDirectiveFormatter _augmentationImportDirectiveFormatter = AugmentationImportDirectiveFormatter(config, this, _formatState);
     late final BinaryExpressionFormatter _binaryExpressionFormatter = BinaryExpressionFormatter(config, this, _formatState);
     late final BlockFormatter _blockFormatter = BlockFormatter(config, this, _formatState);
     late final BreakStatementFormatter _breakStatementFormatter = BreakStatementFormatter(config, this, _formatState);
@@ -136,7 +136,7 @@ class FormatVisitor extends AstVisitor<void>
     late final InterpolationExpressionFormatter _interpolationExpressionFormatter = InterpolationExpressionFormatter(config, this, _formatState);
     late final InterpolationStringFormatter _interpolationStringFormatter = InterpolationStringFormatter(config, this, _formatState);
     late final LabelFormatter _labelFormatter = LabelFormatter(config, this, _formatState);
-    late final LibraryAugmentationDirectiveFormatter _libraryAugmentationDirectiveFormatter = LibraryAugmentationDirectiveFormatter(config, this, _formatState);
+    //late final LibraryAugmentationDirectiveFormatter _libraryAugmentationDirectiveFormatter = LibraryAugmentationDirectiveFormatter(config, this, _formatState);
     late final LibraryDirectiveFormatter _libraryDirectiveFormatter = LibraryDirectiveFormatter(config, this, _formatState);
     late final LibraryIdentifierFormatter _libraryIdentifierFormatter = LibraryIdentifierFormatter(config, this, _formatState);
     late final ListLiteralFormatter _listLiteralFormatter = ListLiteralFormatter(config, this, _formatState);
@@ -216,9 +216,9 @@ class FormatVisitor extends AstVisitor<void>
     void visitAssignedVariablePattern(AssignedVariablePattern node)
     => _defaultFormatter.format(node);
 
-    @override
+    /*@override
     void visitAugmentationImportDirective(AugmentationImportDirective node)
-    => _augmentationImportDirectiveFormatter.format(node);
+    => _augmentationImportDirectiveFormatter.format(node);*/
 
     @override
     void visitAwaitExpression(AwaitExpression node)
@@ -538,9 +538,9 @@ class FormatVisitor extends AstVisitor<void>
     void visitLabeledStatement(LabeledStatement node)
     => _defaultFormatter.format(node);
 
-    @override
+    /*@override
     void visitLibraryAugmentationDirective(LibraryAugmentationDirective node)
-    => _libraryAugmentationDirectiveFormatter.format(node);
+    => _libraryAugmentationDirectiveFormatter.format(node);*/
 
     @override
     void visitLibraryDirective(LibraryDirective node)
@@ -622,10 +622,10 @@ class FormatVisitor extends AstVisitor<void>
     void visitObjectPattern(ObjectPattern node)
     => _objectPatternFormatter.format(node);
 
-    @override
+    /*@override
     // ignore: deprecated_member_use
     void visitOnClause(OnClause node)
-    => _mixinOnClauseFormatter.format(node);
+    => _mixinOnClauseFormatter.format(node);*/
 
     @override
     void visitParenthesizedExpression(ParenthesizedExpression node)
