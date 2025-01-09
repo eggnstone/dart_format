@@ -15,20 +15,11 @@ _$JsonResponseImpl _$$JsonResponseImplFromJson(Map<String, dynamic> json) =>
       message: json['Message'] as String?,
     );
 
-Map<String, dynamic> _$$JsonResponseImplToJson(_$JsonResponseImpl instance) {
-  final val = <String, dynamic>{
-    'StatusCode': instance.statusCode,
-    'Status': instance.status,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('CurrentVersion', instance.currentVersion);
-  writeNotNull('LatestVersion', instance.latestVersion);
-  writeNotNull('Message', instance.message);
-  return val;
-}
+Map<String, dynamic> _$$JsonResponseImplToJson(_$JsonResponseImpl instance) =>
+    <String, dynamic>{
+      'StatusCode': instance.statusCode,
+      'Status': instance.status,
+      if (instance.currentVersion case final value?) 'CurrentVersion': value,
+      if (instance.latestVersion case final value?) 'LatestVersion': value,
+      if (instance.message case final value?) 'Message': value,
+    };

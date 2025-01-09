@@ -16,22 +16,13 @@ _$DartFormatExceptionImpl _$$DartFormatExceptionImplFromJson(
     );
 
 Map<String, dynamic> _$$DartFormatExceptionImplToJson(
-    _$DartFormatExceptionImpl instance) {
-  final val = <String, dynamic>{
-    'Message': instance.message,
-    'Type': _$FailTypeEnumMap[instance.type]!,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('Line', instance.line);
-  writeNotNull('Column', instance.column);
-  return val;
-}
+        _$DartFormatExceptionImpl instance) =>
+    <String, dynamic>{
+      'Message': instance.message,
+      'Type': _$FailTypeEnumMap[instance.type]!,
+      if (instance.line case final value?) 'Line': value,
+      if (instance.column case final value?) 'Column': value,
+    };
 
 const _$FailTypeEnumMap = {
   FailType.error: 'Error',
