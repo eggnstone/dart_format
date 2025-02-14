@@ -32,7 +32,7 @@ dev_dependencies:
   meta: ^1.16.0
   test: any
 
-dev_dependencies_overrides:
+dev_dependency_overrides:
   #
 
 assets:

@@ -55,6 +55,22 @@ void main()
                 TestVisitor<SimpleIdentifier>(11, 'c'),
                 TestVisitor<ArgumentList>(12, '((){})')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createMethodInvocationInExpressionStatementInFunction,
+            inputLeading: 'void f(){',
+            inputMiddle: 'C  .  c((){})',
+            inputTrailing: ';}',
+            name: 'MethodInvocation / C.c((){} (too much spacing)',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleIdentifier>(9, 'C'),
+                TestVisitor<SimpleIdentifier>(15, 'c'),
+                TestVisitor<ArgumentList>(16, '((){})')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('C.c((){})')
+            ]
         )
     ];
 

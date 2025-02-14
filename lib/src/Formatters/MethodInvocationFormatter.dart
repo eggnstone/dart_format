@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -35,8 +36,9 @@ class MethodInvocationFormatter extends IFormatter
         if (pushLevel)
             formatState.pushLevel('$methodName/node.target/after');
 
-        formatState.copyEntity(node.operator, astVisitor, '$methodName/node.operator');
-        formatState.copyEntity(node.methodName, astVisitor, '$methodName/node.methodName');
+        // TODO: test if operator is null?
+        formatState.copyEntity(node.operator, astVisitor, '$methodName/node.operator', config.space0);
+        formatState.copyEntity(node.methodName, astVisitor, '$methodName/node.methodName', config.space0);
         formatState.copyEntity(node.typeArguments, astVisitor, '$methodName/node.typeArguments');
         formatState.copyEntity(node.argumentList, astVisitor, '$methodName/node.argumentList');
 

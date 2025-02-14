@@ -26,6 +26,21 @@ void main()
                 TestConfig.none(),
                 TestConfig('C\n    .c')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createExpressionInFunction,
+            inputLeading: 'void f(){',
+            inputMiddle: 'C  .  c',
+            inputTrailing: ';}',
+            name: 'PrefixedIdentifier / C.c (too much spacing)',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleIdentifier>(9, 'C'),
+                TestVisitor<SimpleIdentifier>(15, 'c')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('C.c')
+            ]
         )
     ];
 
