@@ -28,7 +28,7 @@ class ExpressionFunctionBodyFormatter extends IFormatter
 
         formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword');
         formatState.copyEntity(node.functionDefinition, astVisitor, '$methodName/node.functionDefinition');
-        formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');
+        formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression', config.space1);
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

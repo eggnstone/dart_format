@@ -10,7 +10,7 @@ class AstCreator
     => createInitializerInTopLevelVariable(s) as BinaryExpression;
 
     static BlockFunctionBody createBlockFunctionBody(String s)
-    => createFunctionExpression(s).body as BlockFunctionBody;
+    => createFunctionBody(s) as BlockFunctionBody;
 
     static Block createBlockInFunction(String s)
     => createBlockFunctionBody(s).block;
@@ -74,6 +74,9 @@ class AstCreator
 
     static ForElement createForElement(String s)
     => createSetOrMapLiteral(s).elements.first as ForElement;
+
+    static FunctionBody createFunctionBody(String s)
+    => createFunctionExpression(s).body;
 
     static FunctionTypeAlias createFunctionTypeAlias(String s)
     => createDeclaration(s) as FunctionTypeAlias;
