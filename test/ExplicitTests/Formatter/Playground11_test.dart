@@ -23,8 +23,6 @@ void main()
                     const String expectedText =
                         'class C extends E\n'
                         '{\n'
-                        //'    C({  super.key  });\n'
-                        //'    const C({  super.key  });\n'
                         '    C({super.key});\n'
                         '    C({required super.key});\n'
                         '    const C({super.key});\n'

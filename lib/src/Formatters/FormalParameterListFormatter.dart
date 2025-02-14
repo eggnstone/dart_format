@@ -29,8 +29,21 @@ class FormalParameterListFormatter extends IFormatter
         if (node is! FormalParameterList)
             throw FormatException('Not a FormalParameterList: ${node.runtimeType}');
 
+        /*
+        formatState.dump(node.parent, 'parent');
+        formatState.dump(node, 'node');
+        formatState.dump(node.leftParenthesis, 'leftParenthesis');
+        formatState.dump(node.leftDelimiter, 'leftDelimiter');
+        formatState.dump(node.rightDelimiter, 'rightDelimiter');
+        formatState.dump(node.rightParenthesis, 'rightParenthesis');
+        */
+
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space0);
         formatState.pushLevel('$methodName/node.leftParenthesis');
+
+        if (node.parameters.isNotEmpty)
+            formatState.consumeSpaces(node.parameters.first, config.space0);
+
         if (node.leftDelimiter != null)
             formatState.consumeSpaces(node.leftDelimiter!, config.space0);
 
@@ -39,6 +52,8 @@ class FormalParameterListFormatter extends IFormatter
         bool wroteLeftDelimiter = false;
         for (final FormalParameter parameter in node.parameters)
         {
+            //formatState.dump(parameter, 'parameter', '- ');
+
             final bool shouldWriteLeftDelimiter =
                 node.leftDelimiter != null
                     && (parameter.isNamed || parameter.isOptional)
@@ -47,9 +62,16 @@ class FormalParameterListFormatter extends IFormatter
             if (lastNode != null)
             {
                 final int end = shouldWriteLeftDelimiter ? node.leftDelimiter!.offset : parameter.offset;
-                final String commaText = formatState.getText(lastNode.end, end);
+                String commaText = formatState.getText(lastNode.end, end);
                 if (!FormatTools.isCommaText(commaText))
                     formatState.logAndThrowErrorWithOffsets('commaText is not a comma', '-', StringTools.toDisplayString(commaText), lastNode.end, end, methodName);
+
+                if (config.fixSpaces)
+                {
+                    final String trimmedCommaText = '${StringTools.trimSpaces(commaText)} ';
+                    if (Constants.DEBUG_I_FORMATTER) log('Trimming commaText: ${StringTools.toDisplayString(commaText)} => ${StringTools.toDisplayString(trimmedCommaText)}', formatState.logIndent - 1);
+                    commaText = trimmedCommaText;
+                }
 
                 formatState.consumeText(lastNode.end, end, commaText, '$methodName/commaText');
             }

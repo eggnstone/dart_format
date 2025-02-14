@@ -30,6 +30,7 @@ class TestVisitor<T extends AstNode> extends SimpleVisitor
         if (node is! T)
             throw Exception('Expected ${T} but got ${node.runtimeType}');
 
+        //logDebug('TestVisitor<${node.runtimeType}>: ${StringTools.toDisplayString(node)} = ${StringTools.toDisplayString(_formatState.getText(node.offset, node.end))}');
         formatState.consumeText(offset, end, text, 'TestVisitor<${node.runtimeType}>');
 
         if (appendText != null)

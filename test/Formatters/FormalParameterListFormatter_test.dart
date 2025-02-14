@@ -31,7 +31,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('(int i,int j)')
+                TestConfig('(int i, int j)')
             ]
         ),
         TestGroupConfig(
@@ -86,6 +86,10 @@ void main()
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<SimpleFormalParameter>(7, 'int i'),
                 TestVisitor<DefaultFormalParameter>(14, 'int j')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('(int i, {int j})')
             ]
         ),
         TestGroupConfig(
@@ -97,6 +101,25 @@ void main()
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<SimpleFormalParameter>(7, 'int i'),
                 TestVisitor<DefaultFormalParameter>(14, 'int j')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('(int i, [int j])')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFormalParameterListInFunction,
+            inputLeading: 'void f',
+            inputMiddle: '(  int  i  ,  int  j  )',
+            inputTrailing: '{}',
+            name: '2 params (too much spacing)',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleFormalParameter>(9, 'int  i'),
+                TestVisitor<SimpleFormalParameter>(20, 'int  j')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('(int  i, int  j)')
             ]
         )
     ];

@@ -1023,4 +1023,16 @@ class FormatState
             logInternal('  lastText: ${StringTools.toDisplayString(lastText)}');
         }
     }
+
+    void dump(SyntacticEntity? entity, String name, [String indent = ''])
+    {
+        if (entity == null)
+            return;
+
+        final String paddedName = '$name:'.padRight(10);
+        logDebug('### $indent$paddedName ${StringTools.toDisplayString(entity)} ${entity.runtimeType}');
+        logDebug('### $indent  text:    ${StringTools.toDisplayString(getText(entity.offset, entity.end))}');
+        logDebug('### $indent  offset:  ${entity.offset}');
+        logDebug('### $indent  end:     ${entity.end}');
+    }
 }

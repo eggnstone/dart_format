@@ -114,6 +114,12 @@ class AstCreator
     static FunctionExpression createFunctionExpression(String s)
     => createFunctionDeclaration(s).functionExpression;
 
+    static FormalParameter createFunctionParameter(String s)
+    => createFunctionParameters(s).parameters[0];
+
+    static FormalParameterList createFunctionParameters(String s)
+    => createFunctionExpression(s).parameters!;
+
     static MethodInvocation createMethodInvocationInExpressionStatementInFunction(String s)
     => createExpressionStatementInFunction(s).childEntities.first as MethodInvocation;
 
