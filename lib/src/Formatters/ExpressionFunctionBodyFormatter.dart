@@ -27,7 +27,7 @@ class ExpressionFunctionBodyFormatter extends IFormatter
             throw FormatException('Not an ExpressionFunctionBody: ${node.runtimeType}');
 
         formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword');
-        formatState.copyEntity(node.functionDefinition, astVisitor, '$methodName/node.functionDefinition');
+        formatState.copyEntity(node.functionDefinition, astVisitor, '$methodName/node.functionDefinition', config.space1);
         formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression', config.space1);
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
 

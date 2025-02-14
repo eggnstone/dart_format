@@ -13,5 +13,5 @@ void f()
 {
     dynamic  widget;
     dynamic  key;
-    return       widget.list.indexOfFirst((T t, X x)        => Key(t.s.toString()) == key);
+    return       widget.list.indexOfFirst((T t, X x) => Key(t.s.toString()) == key);
 }

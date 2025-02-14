@@ -23,7 +23,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('=> null;\n')
+                TestConfig(' => null;\n')
             ]
         )
     ];
