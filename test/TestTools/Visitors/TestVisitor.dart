@@ -1,7 +1,10 @@
 // ignore_for_file: unnecessary_brace_in_string_interps
 
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:dart_format/src/Constants/Constants.dart';
 import 'package:dart_format/src/FormatState.dart';
+import 'package:dart_format/src/Tools/LogTools.dart';
+import 'package:dart_format/src/Tools/StringTools.dart';
 import 'package:meta/meta.dart';
 
 import 'SimpleVisitor.dart';
@@ -30,7 +33,9 @@ class TestVisitor<T extends AstNode> extends SimpleVisitor
         if (node is! T)
             throw Exception('Expected ${T} but got ${node.runtimeType}');
 
-        //logDebug('TestVisitor<${node.runtimeType}>: ${StringTools.toDisplayString(node)} = ${StringTools.toDisplayString(_formatState.getText(node.offset, node.end))}');
+        if (Constants.DEBUG_ALL)
+            logDebug('TestVisitor<${node.runtimeType}>: ${StringTools.toDisplayString(node)} = ${StringTools.toDisplayString(_formatState.getText(node.offset, node.end))}');
+
         formatState.consumeText(offset, end, text, 'TestVisitor<${node.runtimeType}>');
 
         if (appendText != null)

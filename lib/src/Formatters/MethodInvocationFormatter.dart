@@ -6,6 +6,7 @@ import '../Constants/Constants.dart';
 import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
+import '../Tools/LogTools.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -28,6 +29,14 @@ class MethodInvocationFormatter extends IFormatter
         if (node is! MethodInvocation)
             throw FormatException('Not a MethodInvocation: ${node.runtimeType}');
 
+
+        /*formatState.dump(node, 'node');
+        formatState.dump(node.target, 'target');
+        formatState.dump(node.operator, 'operator');
+        formatState.dump(node.methodName, 'methodName');
+        formatState.dump(node.typeArguments, 'typeArguments');
+        formatState.dump(node.argumentList, 'argumentList');*/
+
         final String textWithPossibleLineBreak = formatState.getText(node.offset, node.argumentList.offset);
         final bool pushLevel = textWithPossibleLineBreak.contains('\n');
 
@@ -36,9 +45,21 @@ class MethodInvocationFormatter extends IFormatter
         if (pushLevel)
             formatState.pushLevel('$methodName/node.target/after');
 
-        // TODO: test if operator is null?
-        formatState.copyEntity(node.operator, astVisitor, '$methodName/node.operator', config.space0);
-        formatState.copyEntity(node.methodName, astVisitor, '$methodName/node.methodName', config.space0);
+        final int? spacesForOperator = config.space0;//config.fixSpaces ? (node.offset == node.operator!.offset ? null : 1) : null;
+        if (Constants.DEBUG_I_FORMATTER) logDebug('spacesForOperator: $spacesForOperator');
+        formatState.copyEntity(node.operator, astVisitor, '$methodName/node.operator', spacesForOperator);
+        /*if (node.operator != null)
+        {
+            final int? spacesForOperator = config.fixSpaces ? (node.offset == node.operator!.offset ? null : 1) : null;
+            logDebug('spacesForOperator: $spacesForOperator');
+            formatState.copyEntity(node.operator, astVisitor, '$methodName/node.operator', spacesForOperator);
+        }*/
+        //formatState.copyEntity(node.operator, astVisitor, '$methodName/node.operator');
+
+        final int? spacesForMethodName = config.space0;//config.fixSpaces ? (node.offset == node.methodName.offset ? null : 1) : null;
+        if (Constants.DEBUG_I_FORMATTER) logDebug('spacesForMethodName: $spacesForMethodName');
+        formatState.copyEntity(node.methodName, astVisitor, '$methodName/node.methodName', spacesForMethodName);
+
         formatState.copyEntity(node.typeArguments, astVisitor, '$methodName/node.typeArguments');
         formatState.copyEntity(node.argumentList, astVisitor, '$methodName/node.argumentList');
 

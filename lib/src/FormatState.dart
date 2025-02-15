@@ -324,9 +324,6 @@ class FormatState
         final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE)
         {
-            logInternal('#########################################################');
-            logInternal('#########################################################');
-            logInternal('#########################################################');
             logInternal('# $methodName($offset-$end, isString: $isString, spaces: $spaces, source: $source)');
             logInternal('  s: ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
         }
@@ -473,7 +470,8 @@ class FormatState
             final String resultAfterOptionalLastLineBreak = getResultAfterOptionalLastLineBreak();
             if (StringTools.endsWithNormalChar(resultAfterOptionalLastLineBreak))
             {
-                if (Constants.DEBUG_FORMAT_STATE) logInternal('  Adding 1 space to prevent two normal chars to connect.');
+                //if (Constants.DEBUG_FORMAT_STATE) logInternal('  Adding 1 space to prevent two normal chars to connect.');
+                logError('Adding 1 space to prevent two normal chars to connect (should not be necessary).');
                 write(' ');
             }
             else
@@ -1068,10 +1066,13 @@ class FormatState
 
     void dump(SyntacticEntity? entity, String name, [String indent = ''])
     {
-        if (entity == null)
-            return;
-
         final String paddedName = '$name:'.padRight(10);
+        if (entity == null)
+        {
+            logDebug('### $indent$paddedName <null>');
+            return;
+        }
+
         logDebug('### $indent$paddedName ${StringTools.toDisplayString(entity)} ${entity.runtimeType}');
         logDebug('### $indent  text:    ${StringTools.toDisplayString(getText(entity.offset, entity.end))}');
         logDebug('### $indent  offset:  ${entity.offset}');

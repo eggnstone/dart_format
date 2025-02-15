@@ -28,7 +28,7 @@ class SimpleFormalParameterFormatter extends IFormatter
 
         /*
         logDebug('### SimpleFormalParameterFormatter: ${StringTools.toDisplayString(node)} = ${StringTools.toDisplayString(formatState.getText(node.offset, node.end))}');
-        formatState.dump(node.parent, 'parent');
+        
         formatState.dump(node, 'node');
         formatState.dump(node.type, 'type');
         formatState.dump(node.name, 'name');

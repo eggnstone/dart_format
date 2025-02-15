@@ -6,6 +6,7 @@ import '../Constants/Constants.dart';
 import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
+import '../Tools/LogTools.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -26,6 +27,15 @@ class IfStatementFormatter extends IFormatter
         if (node is! IfStatement)
             throw FormatException('Not an IfStatement: ${node.runtimeType}');
 
+
+        /*formatState.dump(node, 'node');
+        formatState.dump(node.ifKeyword, 'ifKeyword');
+        formatState.dump(node.leftParenthesis, 'leftParenthesis');
+        formatState.dump(node.expression, 'expression');
+        formatState.dump(node.caseClause, 'caseClause');
+        formatState.dump(node.rightParenthesis, 'rightParenthesis');
+        formatState.dump(node.thenStatement, 'thenStatement');*/
+
         formatState.copyEntity(node.ifKeyword, astVisitor, '$methodName/node.ifKeyword');
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space1);
         formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');
@@ -33,7 +43,9 @@ class IfStatementFormatter extends IFormatter
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
 
         formatState.pushLevel('$methodName/node.thenStatement');
-        formatState.copyEntity(node.thenStatement, astVisitor, '$methodName/node.thenStatement');
+        final int? spacesForThenStatement = config.fixSpaces ? (node.thenStatement is EmptyStatement || node.thenStatement is Block? 0 : 1) : null;
+        if (Constants.DEBUG_I_FORMATTER) logDebug('spacesForThenStatement: $spacesForThenStatement');
+        formatState.copyEntity(node.thenStatement, astVisitor, '$methodName/node.thenStatement', spacesForThenStatement);
         formatState.popLevelAndIndent();
 
         if (node.elseKeyword == null)
@@ -46,7 +58,9 @@ class IfStatementFormatter extends IFormatter
         if (indentElse)
             formatState.pushLevel('$methodName/node.elseKeyword');
 
-        formatState.copyEntity(node.elseStatement, astVisitor, '$methodName/node.elseStatement');
+        final int? spacesForElseStatement = config.fixSpaces ? (node.elseStatement is EmptyStatement || node.elseStatement is Block? 0 : 1) : null;
+        if (Constants.DEBUG_I_FORMATTER) logDebug('spacesForElseStatement: $spacesForElseStatement');
+        formatState.copyEntity(node.elseStatement, astVisitor, '$methodName/node.elseStatement', spacesForElseStatement);
 
         if (indentElse)
             formatState.popLevelAndIndent();

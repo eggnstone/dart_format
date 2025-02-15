@@ -20,6 +20,7 @@ abstract class IFormatter
 
         final String finalS = indentText + prefix + s;
         logInternal(finalS);
+        //logInternalInfo(finalS);
     }
 
     void logInfo(String s)

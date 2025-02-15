@@ -180,12 +180,12 @@ void main()
             name: 'if ; else ; (too much spacing)',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<BooleanLiteral>(14, '  true'),
-                TestVisitor<EmptyStatement>(23, '  ;'),
-                TestVisitor<EmptyStatement>(32, '  ;')
+                TestVisitor<EmptyStatement>(25, ';'),
+                TestVisitor<EmptyStatement>(34, ';')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('if (  true)  ; else  ;')
+                TestConfig('if (  true); else;')
             ]
         ),
         TestGroupConfig(

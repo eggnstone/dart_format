@@ -26,6 +26,11 @@ class ExpressionStatementFormatter extends IFormatter
         if (node is! ExpressionStatement)
             throw FormatException('Not an ExpressionStatement: ${node.runtimeType}');
 
+        /*
+        formatState.dump(node, 'node');
+        formatState.dump(node.expression, 'expression');
+        formatState.dump(node.semicolon, 'semicolon');*/
+
         formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
 
