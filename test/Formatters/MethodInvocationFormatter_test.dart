@@ -71,6 +71,53 @@ void main()
                 TestConfig.none(),
                 TestConfig('C.c((){})')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createInitializerInVariableDeclarationInFunction,
+            inputLeading: 'void f(){File file=  ',
+            inputMiddle: 'File  (  )',
+            inputTrailing: '  ;}',
+            name: 'TODO 1',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleIdentifier>(21, 'File'),
+                TestVisitor<ArgumentList>(27, '(  )')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('File  (  )')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createInitializerInVariableDeclarationInFunction,
+            inputLeading: 'void f(){C c  =  ',
+            inputMiddle: 'C  .  c  (  )',
+            inputTrailing: '  ;}',
+            name: 'TODO 2',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleIdentifier>(17, 'C'),
+                TestVisitor<SimpleIdentifier>(23, 'c'),
+                TestVisitor<ArgumentList>(26, '(  )')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('C.c  (  )')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createInitializerInVariableDeclarationInFunction,
+            inputLeading: 'void f(){C c  =  ',
+            inputMiddle: 'C  .  c  (  )',
+            inputTrailing: '  ;}',
+            name: 'TODO 2',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleIdentifier>(17, 'C'),
+                TestVisitor<SimpleIdentifier>(23, 'c'),
+                TestVisitor<ArgumentList>(26, '(  )')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('C.c  (  )')
+            ]
         )
     ];
 

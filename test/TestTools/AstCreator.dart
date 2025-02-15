@@ -160,6 +160,21 @@ class AstCreator
     static Statement createStatementInFunction(String s)
     => createBlockInFunction(s).statements[0];
 
+    static Statement x1(String s)
+    => createBlockInFunction(s).statements[1];
+
+    static ExpressionStatement x2(String s)
+    => x1(s) as ExpressionStatement;
+
+    static Expression x3(String s)
+    => x2(s).expression;
+
+    static AssignmentExpression x4(String s)
+    => x3(s) as AssignmentExpression;
+
+    static Expression x5(String s)
+    => x4(s).rightHandSide;
+
     static Statement createStatementInWhileInFunction(String s)
     => createWhileStatementInFunction(s).body;
 

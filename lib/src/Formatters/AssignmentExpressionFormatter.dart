@@ -1,13 +1,11 @@
-/*
 // ignore_for_file: always_put_control_body_on_new_line
 
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:analyzer/dart/ast/syntactic_entity.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
-import '../Tools/FormatTools.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -28,11 +26,15 @@ class AssignmentExpressionFormatter extends IFormatter
         if (node is! AssignmentExpression)
             throw FormatException('Not an AssignmentExpression: ${node.runtimeType}');
 
+        /*formatState.dump(node, 'node');
+        formatState.dump(node.leftHandSide, 'leftHandSide');
+        formatState.dump(node.operator, 'operator');
+        formatState.dump(node.rightHandSide, 'rightHandSide');*/
+
         formatState.copyEntity(node.leftHandSide, astVisitor, '$methodName/node.leftHandSide');
-        formatState.copyEntity(node.operator, astVisitor, '$methodName/node.operator');
-        formatState.copyEntity(node.rightHandSide, astVisitor, '$methodName/node.rightHandSide');
+        formatState.copyEntity(node.operator, astVisitor, '$methodName/node.operator', config.space1);
+        formatState.copyEntity(node.rightHandSide, astVisitor, '$methodName/node.rightHandSide', config.space1);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }
-*/

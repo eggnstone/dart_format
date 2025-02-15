@@ -55,7 +55,13 @@ class MethodInvocationFormatter extends IFormatter
         }*/
         //formatState.copyEntity(node.operator, astVisitor, '$methodName/node.operator');
 
-        final int? spacesForMethodName = config.space0;//config.fixSpaces ? (node.offset == node.methodName.offset ? null : 1) : null;
+        int? spacesForMethodName;
+        if (config.fixSpaces && node.offset != node.methodName.offset)
+            spacesForMethodName = node.operator == null ? 1 : 0;
+
+        if (spacesForMethodName == 1)
+            logWarning('Needs a test');
+
         if (Constants.DEBUG_I_FORMATTER) logDebug('spacesForMethodName: $spacesForMethodName');
         formatState.copyEntity(node.methodName, astVisitor, '$methodName/node.methodName', spacesForMethodName);
 
