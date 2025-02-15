@@ -20,7 +20,7 @@ void main()
             name: '@a T t (too much spacing)',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<Annotation>(9, '@a'),
-                TestVisitor<NamedType>(13, 'T'),
+                TestVisitor<NamedType>(13, 'T')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

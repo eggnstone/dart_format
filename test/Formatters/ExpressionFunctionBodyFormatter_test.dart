@@ -19,7 +19,7 @@ void main()
             inputTrailing: '',
             name: 'ExpressionFunctionBody',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<NullLiteral>(14, 'null'),
+                TestVisitor<NullLiteral>(14, 'null')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

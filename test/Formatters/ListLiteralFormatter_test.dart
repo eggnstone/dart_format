@@ -19,7 +19,7 @@ void main()
             inputTrailing: ';',
             name: 'ListLiteral',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<TypeArgumentList>(8, '<C>'),
+                TestVisitor<TypeArgumentList>(8, '<C>')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

@@ -20,7 +20,7 @@ void main()
             name: 'AssertStatement',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<SimpleIdentifier>(9, 'a'),
-                TestVisitor<SetOrMapLiteral>(11, '{b}'),
+                TestVisitor<SetOrMapLiteral>(11, '{b}')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -35,7 +35,7 @@ void main()
             name: 'TODO 1',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<SimpleIdentifier>(21, 'file'),
-                TestVisitor<MethodInvocation>(30, 'File  (  )'),
+                TestVisitor<MethodInvocation>(30, 'File  (  )')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -50,7 +50,7 @@ void main()
             name: 'TODO 2',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<SimpleIdentifier>(15, 'c'),
-                TestVisitor<MethodInvocation>(21, 'C  .  c  (  )'),
+                TestVisitor<MethodInvocation>(21, 'C  .  c  (  )')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
