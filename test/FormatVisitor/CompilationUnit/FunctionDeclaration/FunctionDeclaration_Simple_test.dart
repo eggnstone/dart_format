@@ -1,5 +1,7 @@
 import 'package:dart_format/src/Data/Config.dart';
 import 'package:dart_format/src/Formatter.dart';
+import 'package:dart_format/src/Tools/StringTools.dart';
+import 'package:eggnstone_dart/eggnstone_dart.dart';
 import 'package:test/test.dart';
 
 import '../../../TestTools/TestTools.dart';
@@ -19,6 +21,22 @@ void main()
                     const String expectedText = 'void f()\n{}';
 
                     final String actualText = formatterNone.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
+
+
+            test('void f(){return C();} (prevent connection of "return" and "C")', ()
+                {
+                    final Config configExperimental = Config.experimental();
+                    final Formatter formatterExperimental = Formatter(configExperimental);
+
+                    const String inputText = 'void f(){return C();}';
+                    const String expectedText = 'void f()\n{\n    return C();\n}\n';
+
+                    final String actualText = formatterExperimental.format(inputText);
+                    logDebug('actualText: ${StringTools.toDisplayString(actualText)}');
 
                     TestTools.expect(actualText, equals(expectedText));
                 }

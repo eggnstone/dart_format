@@ -4,25 +4,47 @@ import '../Data/IntTuple.dart';
 
 class StringTools
 {
-    static const int Number0 = 48;
-    static const int Number9 = 57;
-    static const int UpperA = 65;
-    static const int UpperZ = 90;
-    static const int LowerA = 97;
-    static const int LowerZ = 122;
+    static const int NUMBER_0 = 48;
+    static const int NUMBER_9 = 57;
+    static const int UPPER_A = 65;
+    static const int UPPER_Z = 90;
+    static const int LOWER_A = 97;
+    static const int LOWER_Z = 122;
 
     static IntTuple findDiff(String s1, String s2)
     {
         int indexInput = 0;
         int indexResult = 0;
+        bool firstIteration = true;
 
         while (true)
         {
-            while (indexInput < s1.length && ' \n\r\t'.contains(s1[indexInput]))
-                indexInput++;
+            bool foundWhitespace1 = false;
+            bool foundWhitespace2 = false;
 
+            // Advance input to first non-whitespace character
+            while (indexInput < s1.length && ' \n\r\t'.contains(s1[indexInput]))
+            {
+                indexInput++;
+                foundWhitespace1 = true;
+            }
+
+            // Advance result to first non-whitespace character
             while (indexResult < s2.length && ' \n\r\t'.contains(s2[indexResult]))
+            {
                 indexResult++;
+                foundWhitespace2 = true;
+            }
+
+            if (firstIteration)
+            {
+                firstIteration = false;
+            }
+            else
+            {
+                if (foundWhitespace1 != foundWhitespace2)
+                    return IntTuple(indexInput, indexResult);
+            }
 
             if (indexInput >= s1.length || indexResult >= s2.length)
                 break;
@@ -157,14 +179,14 @@ class StringTools
         //bool isPreviousWhitespace = false;
         //bool isPreviousSpecial = false;
         String? currentChar = s[0];
-        bool isCurrentNormal = isNormalChar(currentChar);
+        bool isCurrentNormal = startsWithNormalChar(currentChar);
         bool isCurrentWhitespace = isWhitespaceChar(currentChar);
         //bool isCurrentSpecial = !isCurrentNormal && !isCurrentWhitespace;
 
         for (int i = 0; i < s.length; i++)
         {
             final String? nextChar = i + 1 < s.length ? s[i + 1] : null;
-            final bool isNextNormal = nextChar != null && isNormalChar(nextChar);
+            final bool isNextNormal = nextChar != null && startsWithNormalChar(nextChar);
             final bool isNextWhitespace = nextChar != null && isWhitespaceChar(nextChar);
             //final bool isNextSpecial = nextChar == null ? false : !isNextNormal && !isNextWhitespace;
 
@@ -213,12 +235,15 @@ class StringTools
         return sb.toString();//.trim();
     }
 
-    static bool isWhitespaceChar(String currentChar) => currentChar == ' ' || currentChar == '\n' || currentChar == '\r' || currentChar == '\t';
+    static bool isWhitespaceChar(String currentChar)
+    => currentChar == ' ' || currentChar == '\n' || currentChar == '\r' || currentChar == '\t';
 
-    static bool isNormalChar(String currentChar)
-    {
-        final int currentCharCode = currentChar.codeUnitAt(0);
-        //logDebug('isNormalChar: ${toDisplayString(currentChar)}: $currentCharCode');
-        return currentCharCode >= LowerA && currentCharCode <= LowerZ || currentCharCode >= UpperA && currentCharCode <= UpperZ || currentCharCode >= Number0 && currentCharCode <= Number9;
-    }
+    static bool endsWithNormalChar(String s)
+    => s.isNotEmpty && isNormalCharCode(s.codeUnitAt(s.length - 1));
+
+    static bool startsWithNormalChar(String s)
+    => s.isNotEmpty && isNormalCharCode(s.codeUnitAt(0));
+
+    static bool isNormalCharCode(int charCode)
+    => charCode >= LOWER_A && charCode <= LOWER_Z || charCode >= UPPER_A && charCode <= UPPER_Z || charCode >= NUMBER_0 && charCode <= NUMBER_9;
 }

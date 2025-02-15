@@ -29,7 +29,7 @@ class RecordTypeAnnotationFormatter extends IFormatter
 
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space1);
 
-        final Token endTokenForPositionalFields = node.namedFields?.beginToken  ?? node.rightParenthesis;
+        final Token endTokenForPositionalFields = node.namedFields?.beginToken ?? node.rightParenthesis;
         formatState.acceptListWithComma(node.positionalFields, endTokenForPositionalFields, astVisitor, '$methodName/node.positionalFields');
         formatState.copyEntity(node.namedFields, astVisitor, '$methodName/node.namedFields');
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);

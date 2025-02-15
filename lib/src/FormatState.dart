@@ -464,6 +464,17 @@ class FormatState
         if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
         final String fixedS = _removeLeadingWhitespace(s, offset, isString: isString);
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  S w/o leading ws:          ${StringTools.toDisplayString(fixedS)}');
+
+        /*if (fixedS.isNotEmpty && StringTools.startsWithNormalChar(fixedS))
+        {
+            final String resultAfterOptionalLastLineBreak = getResultAfterOptionalLastLineBreak();
+            if (StringTools.endsWithNormalChar(resultAfterOptionalLastLineBreak))
+            {
+                if (Constants.DEBUG_FORMAT_STATE) logInternal('  Adding 1 space to prevent two normal chars to connect.');
+                write(' ');
+            }
+        }*/
+
         write(fixedS);
 
         _setLastConsumedPosition(end, fullSource);
@@ -715,8 +726,13 @@ class FormatState
         }
     }
 
+    StringBufferEx getLastStringBuffer()
+    => _textBuffers.last;
+
+    // TODO: rename to better distinguish from getLastStringBuffer()
+    /// Do you mean getLastStringBuffer?
     String getLastText()
-    => _textBuffers.last.lastText;
+    => getLastStringBuffer().lastText;
 
     CharacterLocation? getLocation(int offset)
     {
@@ -762,12 +778,27 @@ class FormatState
         return sb.toString();
     }
 
-    String getResultAfterLastLineBreak()
+    /// Returns empty string if no line break found
+    String getResultAfterRequiredLastLineBreak()
     {
+        const String METHOD_NAME = 'getResultAfterRequiredLastLineBreak';
         final String lastText = _textBuffers.last.toString();
+        //if (Constants.DEBUG_FORMAT_STATE) logInternal('$METHOD_NAME: lastText: ${StringTools.toDisplayString(lastText)}');
         final int lastPos = lastText.lastIndexOf('\n');
         final String r = lastPos == -1 ? '' : lastText.substring(lastPos + 1);
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('getResultAfterLastLineBreak: ${StringTools.toDisplayString(r)}');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('$METHOD_NAME: ${StringTools.toDisplayString(r)}');
+        return r;
+    }
+
+    /// Returns complete string if no line break found
+    String getResultAfterOptionalLastLineBreak()
+    {
+        const String METHOD_NAME = 'getResultAfterOptionalLastLineBreak';
+        final String lastText = _textBuffers.last.toString();
+        //if (Constants.DEBUG_FORMAT_STATE) logInternal('$METHOD_NAME: lastText: ${StringTools.toDisplayString(lastText)}');
+        final int lastPos = lastText.lastIndexOf('\n');
+        final String r = lastPos == -1 ? lastText : lastText.substring(lastPos + 1);
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('$METHOD_NAME: ${StringTools.toDisplayString(r)}');
         return r;
     }
 
@@ -934,7 +965,7 @@ class FormatState
             if (offset == 0)
                 return LeadingWhitespaceRemover.removeFrom(s, removeLeadingSpaces: true);
 
-            final String resultAfterLastLineBreak = getResultAfterLastLineBreak();
+            final String resultAfterLastLineBreak = getResultAfterRequiredLastLineBreak();
             final String currentLineSoFar = _getCurrentLineSoFar(offset);
             return LeadingWhitespaceRemover.removeFrom(
                 s,
