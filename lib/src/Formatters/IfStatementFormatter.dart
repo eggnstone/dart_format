@@ -42,7 +42,7 @@ class IfStatementFormatter extends IFormatter
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
 
         formatState.pushLevel('$methodName/node.thenStatement');
-        final int? spacesForThenStatement = config.fixSpaces ? (node.thenStatement is EmptyStatement || node.thenStatement is Block? 0 : 1) : null;
+        final int? spacesForThenStatement = config.fixSpaces ? (node.thenStatement is EmptyStatement || node.thenStatement is Block ? 0 : 1) : null;
         if (Constants.DEBUG_I_FORMATTER) logDebug('spacesForThenStatement: $spacesForThenStatement');
         formatState.copyEntity(node.thenStatement, astVisitor, '$methodName/node.thenStatement', spacesForThenStatement);
         formatState.popLevelAndIndent();
@@ -57,7 +57,7 @@ class IfStatementFormatter extends IFormatter
         if (indentElse)
             formatState.pushLevel('$methodName/node.elseKeyword');
 
-        final int? spacesForElseStatement = config.fixSpaces ? (node.elseStatement is EmptyStatement || node.elseStatement is Block? 0 : 1) : null;
+        final int? spacesForElseStatement = config.fixSpaces ? (node.elseStatement is EmptyStatement || node.elseStatement is Block ? 0 : 1) : null;
         if (Constants.DEBUG_I_FORMATTER) logDebug('spacesForElseStatement: $spacesForElseStatement');
         formatState.copyEntity(node.elseStatement, astVisitor, '$methodName/node.elseStatement', spacesForElseStatement);
 

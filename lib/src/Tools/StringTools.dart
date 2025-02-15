@@ -6,12 +6,13 @@ import 'LogTools.dart';
 
 class StringTools
 {
+    static const int LOWER_A = 97;
+    static const int LOWER_Z = 122;
     static const int NUMBER_0 = 48;
     static const int NUMBER_9 = 57;
     static const int UPPER_A = 65;
     static const int UPPER_Z = 90;
-    static const int LOWER_A = 97;
-    static const int LOWER_Z = 122;
+    static const int UNDERSCORE = 95;
 
     static IntTuple findDiff(String s1, String s2)
     {
@@ -283,9 +284,10 @@ class StringTools
     static bool startsWithNormalChar(String s)
     => s.isNotEmpty && isNormalCharCode(s.codeUnitAt(0));
 
+    /// "normal" means a-z, A-Z, 0-9, _
     static bool isNormalCharCode(int charCode)
-    => charCode >= LOWER_A && charCode <= LOWER_Z
+    => charCode >= NUMBER_0 && charCode <= NUMBER_9
+        || charCode >= LOWER_A && charCode <= LOWER_Z
         || charCode >= UPPER_A && charCode <= UPPER_Z
-        || charCode >= NUMBER_0 && charCode <= NUMBER_9
-        || charCode == 95; // _
+        || charCode == UNDERSCORE;
 }
