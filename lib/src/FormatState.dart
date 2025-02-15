@@ -324,7 +324,10 @@ class FormatState
         final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE)
         {
-            logInternal('# $methodName($offset, $end, $source)');
+            logInternal('#########################################################');
+            logInternal('#########################################################');
+            logInternal('#########################################################');
+            logInternal('# $methodName($offset-$end, isString: $isString, spaces: $spaces, source: $source)');
             logInternal('  s: ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
         }
 
@@ -463,7 +466,7 @@ class FormatState
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
         final String fixedS = _removeLeadingWhitespace(s, offset, isString: isString);
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  S w/o leading ws:          ${StringTools.toDisplayString(fixedS)}');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  S w/o leading ws:  ${StringTools.toDisplayString(fixedS)}');
 
         if (fixedS.isNotEmpty && StringTools.startsWithNormalChar(fixedS))
         {
@@ -473,6 +476,14 @@ class FormatState
                 if (Constants.DEBUG_FORMAT_STATE) logInternal('  Adding 1 space to prevent two normal chars to connect.');
                 write(' ');
             }
+            else
+            {
+                if (Constants.DEBUG_FORMAT_STATE) logInternal('  NOT Adding 1 space to prevent two normal chars to connect.');
+            }
+        }
+        else
+        {
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('  NOT (fixedS.isNotEmpty && StringTools.startsWithNormalChar(fixedS))');
         }
 
         write(fixedS);
