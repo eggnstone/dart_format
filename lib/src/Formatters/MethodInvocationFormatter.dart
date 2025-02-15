@@ -29,7 +29,6 @@ class MethodInvocationFormatter extends IFormatter
         if (node is! MethodInvocation)
             throw FormatException('Not a MethodInvocation: ${node.runtimeType}');
 
-
         /*formatState.dump(node, 'node');
         formatState.dump(node.target, 'target');
         formatState.dump(node.operator, 'operator');

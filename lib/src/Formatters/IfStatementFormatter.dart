@@ -27,7 +27,6 @@ class IfStatementFormatter extends IFormatter
         if (node is! IfStatement)
             throw FormatException('Not an IfStatement: ${node.runtimeType}');
 
-
         /*formatState.dump(node, 'node');
         formatState.dump(node.ifKeyword, 'ifKeyword');
         formatState.dump(node.leftParenthesis, 'leftParenthesis');

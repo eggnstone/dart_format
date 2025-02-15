@@ -19,7 +19,8 @@ class StringTools
         int indexResult = 0;
         bool firstIteration = true;
 
-        if (Constants.DEBUG_STRING_TOOLS) {
+        if (Constants.DEBUG_STRING_TOOLS)
+        {
             logDebug('Diff: s1: ${s1.length}, s2: ${s2.length}');
             logDebug('Diff: s1: ${toDisplayString(s1)}');
             logDebug('Diff: s2: ${toDisplayString(s2)}');
@@ -52,30 +53,36 @@ class StringTools
             }
             else
             {
-                if (foundWhitespace1 != foundWhitespace2) {
-                    if (Constants.DEBUG_STRING_TOOLS) {
+                if (foundWhitespace1 != foundWhitespace2)
+                {
+                    if (Constants.DEBUG_STRING_TOOLS)
+                    {
                         logDebug('Diff: lastIndexInput: $lastIndexInput, lastIndexResult: $lastIndexResult');
                         logDebug('Diff: indexInput: $indexInput, indexResult: $indexResult');
                         logDebug('Diff: foundWhitespace1: $foundWhitespace1, foundWhitespace2: $foundWhitespace2');
                     }
-                  return IntTuple(lastIndexInput, lastIndexResult);
+                    return IntTuple(lastIndexInput, lastIndexResult);
                 }
             }
 
-            if (indexInput >= s1.length || indexResult >= s2.length) {
-                if (Constants.DEBUG_STRING_TOOLS) {
+            if (indexInput >= s1.length || indexResult >= s2.length)
+            {
+                if (Constants.DEBUG_STRING_TOOLS)
+                {
                     logDebug('Diff: indexInput: $indexInput, indexResult: $indexResult');
                     logDebug('Diff: s1: ${s1.length}, s2: ${s2.length}');
                 }
-              break;
+                break;
             }
 
-            if (s1[indexInput] != s2[indexResult]) {
-                if (Constants.DEBUG_STRING_TOOLS) {
+            if (s1[indexInput] != s2[indexResult])
+            {
+                if (Constants.DEBUG_STRING_TOOLS)
+                {
                     logDebug('Diff: indexInput: $indexInput, indexResult: $indexResult');
                     logDebug('Diff: s1: ${s1[indexInput]}, s2: ${s2[indexResult]}');
                 }
-              break;
+                break;
             }
 
             indexInput++;
@@ -85,7 +92,8 @@ class StringTools
         if (indexInput == s1.length && indexResult == s2.length)
             return createEmptyIntTuple();
 
-        if (Constants.DEBUG_STRING_TOOLS) {
+        if (Constants.DEBUG_STRING_TOOLS)
+        {
             logDebug('Diff: indexInput: $indexInput, indexResult: $indexResult');
             if (indexInput < s1.length) logDebug('Diff: s1: ${s1[indexInput]}');
             if (indexResult < s2.length) logDebug('Diff: s2: ${s2[indexResult]}');
@@ -276,5 +284,8 @@ class StringTools
     => s.isNotEmpty && isNormalCharCode(s.codeUnitAt(0));
 
     static bool isNormalCharCode(int charCode)
-    => charCode >= LOWER_A && charCode <= LOWER_Z || charCode >= UPPER_A && charCode <= UPPER_Z || charCode >= NUMBER_0 && charCode <= NUMBER_9;
+    => charCode >= LOWER_A && charCode <= LOWER_Z
+        || charCode >= UPPER_A && charCode <= UPPER_Z
+        || charCode >= NUMBER_0 && charCode <= NUMBER_9
+        || charCode == 95; // _
 }
