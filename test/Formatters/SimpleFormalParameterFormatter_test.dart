@@ -25,6 +25,20 @@ void main()
                 TestConfig.none(),
                 TestConfig('T t')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFunctionDefaultFormalParameterParameter,
+            inputLeading: 'void f({  ',
+            inputMiddle: 'required  T  t',
+            inputTrailing: '  }){}',
+            name: 'required T t (too much spacing)',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(20, 'T')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('required T t')
+            ]
         )
     ];
 

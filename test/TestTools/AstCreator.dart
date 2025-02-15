@@ -114,6 +114,12 @@ class AstCreator
     static FunctionDeclaration createFunctionDeclaration(String s)
     => createDeclaration(s) as FunctionDeclaration;
 
+    static DefaultFormalParameter createFunctionDefaultFormalParameter(String s)
+    => createFunctionParameter(s) as DefaultFormalParameter;
+
+    static NormalFormalParameter createFunctionDefaultFormalParameterParameter(String s)
+    => createFunctionDefaultFormalParameter(s).parameter;
+
     static FunctionExpression createFunctionExpression(String s)
     => createFunctionDeclaration(s).functionExpression;
 

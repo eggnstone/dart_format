@@ -465,7 +465,7 @@ class FormatState
         final String fixedS = _removeLeadingWhitespace(s, offset, isString: isString);
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  S w/o leading ws:          ${StringTools.toDisplayString(fixedS)}');
 
-        /*if (fixedS.isNotEmpty && StringTools.startsWithNormalChar(fixedS))
+        if (fixedS.isNotEmpty && StringTools.startsWithNormalChar(fixedS))
         {
             final String resultAfterOptionalLastLineBreak = getResultAfterOptionalLastLineBreak();
             if (StringTools.endsWithNormalChar(resultAfterOptionalLastLineBreak))
@@ -473,7 +473,7 @@ class FormatState
                 if (Constants.DEBUG_FORMAT_STATE) logInternal('  Adding 1 space to prevent two normal chars to connect.');
                 write(' ');
             }
-        }*/
+        }
 
         write(fixedS);
 

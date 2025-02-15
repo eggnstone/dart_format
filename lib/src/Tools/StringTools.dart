@@ -1,6 +1,8 @@
 // ignore_for_file: always_put_control_body_on_new_line
 
+import '../Constants/Constants.dart';
 import '../Data/IntTuple.dart';
+import 'LogTools.dart';
 
 class StringTools
 {
@@ -17,10 +19,18 @@ class StringTools
         int indexResult = 0;
         bool firstIteration = true;
 
+        if (Constants.DEBUG_STRING_TOOLS) {
+            logDebug('Diff: s1: ${s1.length}, s2: ${s2.length}');
+            logDebug('Diff: s1: ${toDisplayString(s1)}');
+            logDebug('Diff: s2: ${toDisplayString(s2)}');
+        }
+
         while (true)
         {
             bool foundWhitespace1 = false;
             bool foundWhitespace2 = false;
+            final int lastIndexInput = indexInput;
+            final int lastIndexResult = indexResult;
 
             // Advance input to first non-whitespace character
             while (indexInput < s1.length && ' \n\r\t'.contains(s1[indexInput]))
@@ -42,15 +52,31 @@ class StringTools
             }
             else
             {
-                if (foundWhitespace1 != foundWhitespace2)
-                    return IntTuple(indexInput, indexResult);
+                if (foundWhitespace1 != foundWhitespace2) {
+                    if (Constants.DEBUG_STRING_TOOLS) {
+                        logDebug('Diff: lastIndexInput: $lastIndexInput, lastIndexResult: $lastIndexResult');
+                        logDebug('Diff: indexInput: $indexInput, indexResult: $indexResult');
+                        logDebug('Diff: foundWhitespace1: $foundWhitespace1, foundWhitespace2: $foundWhitespace2');
+                    }
+                  return IntTuple(lastIndexInput, lastIndexResult);
+                }
             }
 
-            if (indexInput >= s1.length || indexResult >= s2.length)
-                break;
+            if (indexInput >= s1.length || indexResult >= s2.length) {
+                if (Constants.DEBUG_STRING_TOOLS) {
+                    logDebug('Diff: indexInput: $indexInput, indexResult: $indexResult');
+                    logDebug('Diff: s1: ${s1.length}, s2: ${s2.length}');
+                }
+              break;
+            }
 
-            if (s1[indexInput] != s2[indexResult])
-                break;
+            if (s1[indexInput] != s2[indexResult]) {
+                if (Constants.DEBUG_STRING_TOOLS) {
+                    logDebug('Diff: indexInput: $indexInput, indexResult: $indexResult');
+                    logDebug('Diff: s1: ${s1[indexInput]}, s2: ${s2[indexResult]}');
+                }
+              break;
+            }
 
             indexInput++;
             indexResult++;
@@ -59,6 +85,11 @@ class StringTools
         if (indexInput == s1.length && indexResult == s2.length)
             return createEmptyIntTuple();
 
+        if (Constants.DEBUG_STRING_TOOLS) {
+            logDebug('Diff: indexInput: $indexInput, indexResult: $indexResult');
+            if (indexInput < s1.length) logDebug('Diff: s1: ${s1[indexInput]}');
+            if (indexResult < s2.length) logDebug('Diff: s2: ${s2[indexResult]}');
+        }
         return IntTuple(indexInput, indexResult);
     }
 

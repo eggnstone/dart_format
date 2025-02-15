@@ -33,13 +33,15 @@ class SimpleFormalParameterFormatter extends IFormatter
         formatState.dump(node.type, 'type');
         formatState.dump(node.name, 'name');
         formatState.dump(node.keyword, 'keyword');
+        formatState.dump(node.requiredKeyword, 'requiredKeyword');
         */
+
+        formatState.copyEntity(node.requiredKeyword, astVisitor, '$methodName/node.requiredKeyword');
 
         if (node.type != null)
         {
-            //final int? spacesForType = config.fixSpaces ? (node.offset == node.type!.offset ? null : 1) : null;
-            //logDebug('###   spacesForType: ${StringTools.toDisplayString(spacesForType)}');
-            formatState.copyEntity(node.type, astVisitor, '$methodName/node.type');//, spacesForType);
+            final int? spacesForType = config.fixSpaces ? (node.offset == node.type!.offset ? null : 1) : null;
+            formatState.copyEntity(node.type, astVisitor, '$methodName/node.type', spacesForType);
         }
 
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name', config.space1);

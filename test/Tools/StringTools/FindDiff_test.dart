@@ -14,7 +14,7 @@ void main()
                 {
                     const String inputText1 = 'A B';
                     const String inputText2 = 'AB';
-                    const IntTuple expectedResult = IntTuple(2, 1);
+                    const IntTuple expectedResult = IntTuple(1, 1);
 
                     final IntTuple actualResult = StringTools.findDiff(inputText1, inputText2);
 
