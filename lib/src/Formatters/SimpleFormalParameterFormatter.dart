@@ -27,8 +27,6 @@ class SimpleFormalParameterFormatter extends IFormatter
             throw FormatException('Not a SimpleFormalParameter: ${node.runtimeType}');
 
         /*
-        logDebug('### SimpleFormalParameterFormatter: ${StringTools.toDisplayString(node)} = ${StringTools.toDisplayString(formatState.getText(node.offset, node.end))}');
-        
         formatState.dump(node, 'node');
         formatState.dump(node.type, 'type');
         formatState.dump(node.name, 'name');
@@ -36,7 +34,13 @@ class SimpleFormalParameterFormatter extends IFormatter
         formatState.dump(node.requiredKeyword, 'requiredKeyword');
         */
 
-        formatState.copyEntity(node.requiredKeyword, astVisitor, '$methodName/node.requiredKeyword');
+        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
+
+        if (node.requiredKeyword != null)
+        {
+            final int? spacesForRequiredKeyword = config.fixSpaces ? (node.offset == node.requiredKeyword!.offset ? null : 1) : null;
+            formatState.copyEntity(node.requiredKeyword, astVisitor, '$methodName/node.requiredKeyword', spacesForRequiredKeyword);
+        }
 
         if (node.type != null)
         {

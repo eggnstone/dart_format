@@ -15,29 +15,31 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createFunctionParameter,
             inputLeading: 'void f(  ',
-            inputMiddle: 'T  t',
+            inputMiddle: '@a  T  t',
             inputTrailing: '  ){}',
-            name: 'T t (too much spacing)',
+            name: '@a T t (too much spacing)',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<NamedType>(9, 'T')
+                TestVisitor<Annotation>(9, '@a'),
+                TestVisitor<NamedType>(13, 'T'),
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('T t')
+                TestConfig('@a T t')
             ]
         ),
         TestGroupConfig(
             inputNodeCreator: AstCreator.createFunctionDefaultFormalParameterParameter,
             inputLeading: 'void f({  ',
-            inputMiddle: 'required  T  t',
+            inputMiddle: '@a  required  T  t',
             inputTrailing: '  }){}',
-            name: 'required T t (too much spacing)',
+            name: '@a required T t (too much spacing)',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<NamedType>(20, 'T')
+                TestVisitor<Annotation>(10, '@a'),
+                TestVisitor<NamedType>(24, 'T')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('required T t')
+                TestConfig('@a required T t')
             ]
         )
     ];

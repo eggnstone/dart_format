@@ -1,4 +1,4 @@
-void f()
+void f(@a T t)
 {
     if (true) g();
 
