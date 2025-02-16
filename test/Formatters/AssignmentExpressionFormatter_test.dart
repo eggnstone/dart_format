@@ -17,7 +17,7 @@ void main()
             inputLeading: 'void f(){',
             inputMiddle: 'a={b}',
             inputTrailing: ';}',
-            name: 'AssertStatement',
+            name: 'AssertStatement with map literal',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<SimpleIdentifier>(9, 'a'),
                 TestVisitor<SetOrMapLiteral>(11, '{b}')
@@ -28,14 +28,14 @@ void main()
             ]
         ),
         TestGroupConfig(
-            inputNodeCreator: AstCreator.x4,
-            inputLeading: 'void f(){File file;  ',
+            inputNodeCreator: AstCreator.createAssignmentExpressionInFunction,
+            inputLeading: 'void f(File file){  ',
             inputMiddle: 'file  =  File  (  )',
             inputTrailing: '  ;}',
-            name: 'TODO 1',
+            name: 'AssertStatement without target',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<SimpleIdentifier>(21, 'file'),
-                TestVisitor<MethodInvocation>(30, 'File  (  )')
+                TestVisitor<SimpleIdentifier>(20, 'file'),
+                TestVisitor<MethodInvocation>(29, 'File  (  )')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -43,14 +43,14 @@ void main()
             ]
         ),
         TestGroupConfig(
-            inputNodeCreator: AstCreator.x4,
-            inputLeading: 'void f(){C c;  ',
+            inputNodeCreator: AstCreator.createAssignmentExpressionInFunction,
+            inputLeading: 'void f(C c){  ',
             inputMiddle: 'c  =  C  .  c  (  )',
             inputTrailing: ';}',
-            name: 'TODO 2',
+            name: 'AssertStatement with MethodInvocation with target',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<SimpleIdentifier>(15, 'c'),
-                TestVisitor<MethodInvocation>(21, 'C  .  c  (  )')
+                TestVisitor<SimpleIdentifier>(14, 'c'),
+                TestVisitor<MethodInvocation>(20, 'C  .  c  (  )')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

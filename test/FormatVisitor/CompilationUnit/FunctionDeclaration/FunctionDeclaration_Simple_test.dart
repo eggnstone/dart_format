@@ -70,36 +70,6 @@ void main()
                     TestTools.expect(actualText, equals(expectedText));
                 }
             );
-
-            test('void f(){File f;f=  File();}', ()
-                {
-                    final Config configExperimental = Config.experimental();
-                    final Formatter formatterExperimental = Formatter(configExperimental);
-
-                    const String inputText = 'void f(){File f;f=  File();}';
-                    const String expectedText = 'void f()\n{\n    File f;\n    f = File();\n}\n';
-
-                    final String actualText = formatterExperimental.format(inputText);
-                    logDebug('actualText: ${StringTools.toDisplayString(actualText)}');
-
-                    TestTools.expect(actualText, equals(expectedText));
-                }
-            );
-
-            test('void f(){C c;c=  C.c();}', ()
-                {
-                    final Config configExperimental = Config.experimental();
-                    final Formatter formatterExperimental = Formatter(configExperimental);
-
-                    const String inputText = 'void f(){C c;c=  C.c();}';
-                    const String expectedText = 'void f()\n{\n    C c;\n    c = C.c();\n}\n';
-
-                    final String actualText = formatterExperimental.format(inputText);
-                    logDebug('actualText: ${StringTools.toDisplayString(actualText)}');
-
-                    TestTools.expect(actualText, equals(expectedText));
-                }
-            );
         }
     );
 }
