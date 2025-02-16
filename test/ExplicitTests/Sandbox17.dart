@@ -1,5 +1,5 @@
-final  TextTheme  textTheme = theme.textTheme;
+final TextTheme textTheme = theme.textTheme;
 
-final  x = Column(
+final x = Column(
     children: <  Widget  >  [Expanded(child: child)   ]
 );

@@ -1,6 +1,6 @@
 void f()
 {
-    File  f;
+    File f;
     f = File();
 }
 
