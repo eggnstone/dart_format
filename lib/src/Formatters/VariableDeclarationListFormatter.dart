@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -59,7 +60,8 @@ class VariableDeclarationListFormatter extends IFormatter
 
         if (node.type != null)
         {
-            formatState.copyEntity(node.type, astVisitor, '$methodName/node.type');
+            final int? spacesForType = config.fixSpaces ? (node.offset == node.type!.offset ? null : 1) : null;
+            formatState.copyEntity(node.type, astVisitor, '$methodName/node.type', spacesForType);
             if (pushLevel && !alreadyPushed)
             {
                 alreadyPushed = true;
@@ -67,7 +69,7 @@ class VariableDeclarationListFormatter extends IFormatter
             }
         }
 
-        formatState.acceptListWithComma(node.variables, null, astVisitor, '$methodName/node.variables');
+        formatState.acceptListWithComma(node.variables, null, astVisitor, '$methodName/node.variables', config.space1);
 
         if (alreadyPushed)
             formatState.popLevelAndIndent();

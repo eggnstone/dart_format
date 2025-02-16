@@ -8,17 +8,28 @@ void main()
 {
     TestTools.init();
 
-    final Config configNone = Config.none();
-    final Formatter formatterNone = Formatter(configNone);
+    final Config config = Config.experimental();
+    final Formatter formatter = Formatter(config);
 
     group('TopLevelVariableDeclaration', ()
         {
             test('Simple', ()
                 {
-                    const String inputText = 'int i = 0;\n';
-                    const String expectedText = inputText;
+                    const String inputText = 'int  i  =  0  ;\n';
+                    const String expectedText = 'int i = 0;\n';
 
-                    final String actualText = formatterNone.format(inputText);
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
+
+            test('TODO', ()
+                {
+                    const String inputText = 'int  f  (  )  {  return  0;  }';
+                    const String expectedText = 'int f()\n{\n    return 0;\n}\n';
+
+                    final String actualText = formatter.format(inputText);
 
                     TestTools.expect(actualText, equals(expectedText));
                 }

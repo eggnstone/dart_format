@@ -62,6 +62,10 @@ void main()
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<NamedType>(8, 'int'),
                 TestVisitor<VariableDeclaration>(12, 'i=\n0')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('int i=\n0')
             ]
         )
     ];

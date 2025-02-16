@@ -15,15 +15,15 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createVariableDeclarationInTopLevelVariableDeclaration,
             inputLeading: 'int ',
-            inputMiddle: 'i=f.a.b',
+            inputMiddle: 'i  =  f  .  a  .  b',
             inputTrailing: ';',
-            name: 'VariableDeclaration i=f.a.b',
+            name: 'VariableDeclaration i = f.a.b',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<PropertyAccess>(6, 'f.a.b')
+                TestVisitor<PropertyAccess>(10, 'f  .  a  .  b')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('i = f.a.b')
+                TestConfig('i = f  .  a  .  b')
             ]
         ),
         TestGroupConfig(

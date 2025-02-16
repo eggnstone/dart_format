@@ -27,7 +27,7 @@ class ReturnStatementFormatter extends IFormatter
             throw FormatException('Not a ReturnStatement: ${node.runtimeType}');
 
         formatState.copyEntity(node.returnKeyword, astVisitor, '$methodName/node.returnKeyword');
-        formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');
+        formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression', config.space1);
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
