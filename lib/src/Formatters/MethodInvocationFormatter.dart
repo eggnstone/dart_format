@@ -44,6 +44,7 @@ class MethodInvocationFormatter extends IFormatter
         if (pushLevel)
             formatState.pushLevel('$methodName/node.target/after');
 
+        // TODO: test and adjust
         final int? spacesForOperator = config.space0;//config.fixSpaces ? (node.offset == node.operator!.offset ? null : 1) : null;
         if (Constants.DEBUG_I_FORMATTER) logDebug('spacesForOperator: $spacesForOperator');
         formatState.copyEntity(node.operator, astVisitor, '$methodName/node.operator', spacesForOperator);
