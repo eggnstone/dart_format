@@ -6,11 +6,11 @@
 
 ## 1.3.0
 
-- Update analyzer to 7.0.0.
+- Updated analyzer to 7.0.0.
 
 ## 1.2.1
 
-- Update analyzer to 6.9.0.
+- Updated analyzer to 6.9.0.
 
 ## 1.2.0
 
