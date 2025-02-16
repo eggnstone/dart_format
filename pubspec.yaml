@@ -22,9 +22,6 @@ dependencies:
   json_annotation: ^4.9.0
   mime: ^2.0.0
 
-dependency_overrides:
-  #
-
 dev_dependencies:
   build_runner: ^2.4.15
   freezed: ^2.5.8
@@ -32,7 +29,7 @@ dev_dependencies:
   meta: ^1.16.0
   test: any
 
-dev_dependency_overrides:
+dependency_overrides:
   #
 
 assets:
