@@ -15,8 +15,8 @@ void main()
         {
             test('Empty const constructor', ()
                 {
-                    const String inputText =  'class C\n{\nconst C();\n}';
-                    const String expectedText =   'class C\n{\n    const C();\n}';
+                    const String inputText = 'class C\n{\nconst C();\n}';
+                    const String expectedText = 'class C\n{\n    const C();\n}';
 
                     final String actualText = formatterNone.format(inputText);
 

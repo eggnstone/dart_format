@@ -15,8 +15,8 @@ void main()
         {
             test('Simple method', ()
                 {
-                    const String inputText =  'class C\n{\nvoid m()\n{\n}\n}';
-                    const String expectedText =   'class C\n{\n    void m()\n    {\n    }\n}';
+                    const String inputText = 'class C\n{\nvoid m()\n{\n}\n}';
+                    const String expectedText = 'class C\n{\n    void m()\n    {\n    }\n}';
 
                     final String actualText = formatterNone.format(inputText);
 

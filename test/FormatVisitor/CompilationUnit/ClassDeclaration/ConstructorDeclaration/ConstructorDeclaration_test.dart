@@ -50,7 +50,7 @@ void main()
 
                                     test('Empty const constructor', ()
                                         {
-                                            final String expectedText =  'class C$beforeOpeningText{${afterOpeningText}const C();$afterSemicolonBeforeClosingText}$afterClosingText';
+                                            final String expectedText = 'class C$beforeOpeningText{${afterOpeningText}const C();$afterSemicolonBeforeClosingText}$afterClosingText';
                                             final String inputText = alreadyFormatted ? expectedText : 'class C{const C();}';
 
                                             final String actualText = formatter.format(inputText);

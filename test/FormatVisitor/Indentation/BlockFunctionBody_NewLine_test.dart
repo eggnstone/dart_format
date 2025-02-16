@@ -7,7 +7,7 @@ void main()
 {
     TestTools.init();
 
-    final TestGroupConfig testGroupConfig =  TestGroupConfig(
+    final TestGroupConfig testGroupConfig = TestGroupConfig(
         inputNodeCreator: AstCreator.createFunctionBodyInFunction,
         inputLeading: 'void f()',
         inputMiddle: '{\n}',
