@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1
+
+- Improved fixing of spaces.
+
 ## 1.3.0
 
 - Update analyzer to 7.0.0.
