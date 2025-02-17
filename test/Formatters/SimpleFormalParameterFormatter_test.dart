@@ -15,6 +15,17 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createFunctionParameter,
             inputLeading: 'void f(  ',
+            inputMiddle: 't',
+            inputTrailing: '  ){}',
+            name: '1 param without type (too much spacing)',
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('t')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFunctionParameter,
+            inputLeading: 'void f(  ',
             inputMiddle: '@a  T  t',
             inputTrailing: '  ){}',
             name: '@a T t (too much spacing)',

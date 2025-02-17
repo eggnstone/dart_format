@@ -4,7 +4,6 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
-import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -36,19 +35,25 @@ class SimpleFormalParameterFormatter extends IFormatter
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
 
+        // TODO: check: spaces: 0 or null?
+
         if (node.requiredKeyword != null)
         {
-            final int? spacesForRequiredKeyword = config.fixSpaces ? (node.offset == node.requiredKeyword!.offset ? null : 1) : null;
+            final int? spacesForRequiredKeyword = config.fixSpaces ? (node.offset == node.requiredKeyword!.offset ? 0 : 1) : null;
             formatState.copyEntity(node.requiredKeyword, astVisitor, '$methodName/node.requiredKeyword', spacesForRequiredKeyword);
         }
 
         if (node.type != null)
         {
-            final int? spacesForType = config.fixSpaces ? (node.offset == node.type!.offset ? null : 1) : null;
+            final int? spacesForType = config.fixSpaces ? (node.offset == node.type!.offset ? 0 : 1) : null;
             formatState.copyEntity(node.type, astVisitor, '$methodName/node.type', spacesForType);
         }
 
-        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name', config.space1);
+        if (node.name != null)
+        {
+            final int? spacesForName = config.fixSpaces ? (node.offset == node.name!.offset ? 0 : 1) : null;
+            formatState.copyEntity(node.name, astVisitor, '$methodName/node.name', spacesForName);
+        }
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
