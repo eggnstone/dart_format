@@ -24,7 +24,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                //TODO: TestConfig('(1, b:2)')
+                TestConfig('(1, b:2)')
             ]
         ),
         TestGroupConfig(
@@ -39,7 +39,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                //TODO: TestConfig('(1, b:  2)')
+                TestConfig('(1, b  :  2)')
             ]
         )
     ];

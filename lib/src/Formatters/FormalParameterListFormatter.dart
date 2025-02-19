@@ -9,6 +9,7 @@ import '../Data/ConfigExtension.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../FormatState.dart';
 import '../Tools/FormatTools.dart';
+import '../Tools/LogTools.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -62,6 +63,7 @@ class FormalParameterListFormatter extends IFormatter
             if (lastNode != null)
             {
                 final int end = shouldWriteLeftDelimiter ? node.leftDelimiter!.offset : parameter.offset;
+
                 String commaText = formatState.getText(lastNode.end, end);
                 if (!FormatTools.isCommaText(commaText))
                     formatState.logAndThrowErrorWithOffsets('commaText is not a comma', '-', StringTools.toDisplayString(commaText), lastNode.end, end, methodName);
@@ -69,7 +71,7 @@ class FormalParameterListFormatter extends IFormatter
                 if (config.fixSpaces)
                 {
                     final String trimmedCommaText = '${StringTools.trimSpaces(commaText)} ';
-                    if (Constants.DEBUG_I_FORMATTER) log('Trimming commaText: ${StringTools.toDisplayString(commaText)} => ${StringTools.toDisplayString(trimmedCommaText)}', formatState.logIndent - 1);
+                    if (Constants.DEBUG_I_FORMATTER) logDebug('Trimming commaText: ${StringTools.toDisplayString(commaText)} => ${StringTools.toDisplayString(trimmedCommaText)}');
                     commaText = trimmedCommaText;
                 }
 

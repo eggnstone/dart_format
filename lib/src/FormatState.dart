@@ -122,7 +122,7 @@ class FormatState
         nodes.forEach((AstNode node) => node.accept(astVisitor));
     }
 
-    void acceptListWithComma(NodeList<AstNode> nodes, Token? endToken, AstVisitor<void> astVisitor, String source, {int? leadingSpaces/*, int? commaSpaces*/})
+    void acceptListWithComma(NodeList<AstNode> nodes, Token? endToken, AstVisitor<void> astVisitor, String source, {int? leadingSpaces, bool trimCommaText = false})
     {
         const String methodName = 'acceptListWithComma';
 
@@ -145,9 +145,16 @@ class FormatState
                     end = lastConsumedPosition;
                 }
 
-                final String commaText = getText(end, node.offset);
+                String commaText = getText(end, node.offset);
                 if (!FormatTools.isCommaText(commaText))
                     logAndThrowErrorWithOffsets('commaText is not a comma', '-', StringTools.toDisplayString(commaText), end, node.offset, source);
+
+                if (trimCommaText)
+                {
+                    final String trimmedCommaText = '${StringTools.trimSpaces(commaText)} ';
+                    if (Constants.DEBUG_I_FORMATTER) logDebug('Trimming commaText: ${StringTools.toDisplayString(commaText)} => ${StringTools.toDisplayString(trimmedCommaText)}');
+                    commaText = trimmedCommaText;
+                }
 
                 consumeText(end, node.offset, commaText, '$source/Comma');
             }
