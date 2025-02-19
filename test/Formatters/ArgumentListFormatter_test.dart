@@ -20,7 +20,7 @@ void main()
             name: '(1,b:2) (too little spacing)',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<IntegerLiteral>(11, '1'),
-                TestVisitor<NamedExpression>(13, 'b:2'),
+                TestVisitor<NamedExpression>(13, 'b:2')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -35,7 +35,7 @@ void main()
             name: '(1,b:2) (too much spacing)',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<IntegerLiteral>(13, '1'),
-                TestVisitor<NamedExpression>(19, 'b  :  2'),
+                TestVisitor<NamedExpression>(19, 'b  :  2')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

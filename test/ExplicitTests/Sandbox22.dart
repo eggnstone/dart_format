@@ -5,7 +5,7 @@ void f(@a T t)
     if (true);
     else;
 
-    if (user == null) 
+    if (user == null)
     {
         return;
     }

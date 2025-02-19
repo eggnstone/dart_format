@@ -34,7 +34,7 @@ class ConditionalExpressionFormatter extends IFormatter
         formatState.popLevelAndIndent();
 
         formatState.pushLevel('$methodName/node.colon+elseExpression');
-        formatState.copyEntity(node.colon, astVisitor,  '$methodName/node.colon', config.space1);
+        formatState.copyEntity(node.colon, astVisitor, '$methodName/node.colon', config.space1);
         formatState.copyEntity(node.elseExpression, astVisitor, '$methodName/node.elseExpression', config.space1);
         formatState.popLevelAndIndent();
 
