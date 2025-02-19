@@ -37,7 +37,7 @@ class IfStatementFormatter extends IFormatter
 
         formatState.copyEntity(node.ifKeyword, astVisitor, '$methodName/node.ifKeyword');
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space1);
-        formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');
+        formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression', config.space0);
         formatState.copyEntity(node.caseClause, astVisitor, '$methodName/node.caseClause', config.space1);
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
 
