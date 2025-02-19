@@ -11,7 +11,7 @@ void main()
     TestTools.init();
 
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
-        /*TestGroupConfig(
+        TestGroupConfig(
             inputNodeCreator: AstCreator.createInitializerInVariableDeclarationInClass,
             inputLeading: 'class C{int i=',
             inputMiddle: 'a[0]',
@@ -21,7 +21,7 @@ void main()
                 TestVisitor<SimpleIdentifier>(14, 'a'),
                 TestVisitor<IntegerLiteral>(16, '0')
             ]
-        ),*/
+        ),
         TestGroupConfig(
             inputNodeCreator: AstCreator.createCascadeSectionInVariableDeclarationInClass,
             inputLeading: 'class C{int i=a',
