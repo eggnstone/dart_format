@@ -196,7 +196,7 @@ void main()
             inputLeading: 'void f(){',
             inputMiddle: 'if  (  true  )  ;  else  ;',
             inputTrailing: '}',
-            name: 'if ; else ; (too much spacing)',
+            name: 'if ; else ; (too much spacing)', // TODO: too little spacing
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<BooleanLiteral>(16, 'true'),
                 TestVisitor<EmptyStatement>(25, ';'),

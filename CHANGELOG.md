@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.0
+
+- Added "Fix spaces" to official config.
+
 ## 1.3.3
 
 - Improved fixing of spaces.

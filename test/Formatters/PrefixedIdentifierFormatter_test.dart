@@ -32,7 +32,7 @@ void main()
             inputLeading: 'void f(){',
             inputMiddle: 'C  .  c',
             inputTrailing: ';}',
-            name: 'PrefixedIdentifier / C.c (too much spacing)',
+            name: 'PrefixedIdentifier / C.c (too much spacing)', // TODO: too little spacing
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<SimpleIdentifier>(9, 'C'),
                 TestVisitor<SimpleIdentifier>(15, 'c')

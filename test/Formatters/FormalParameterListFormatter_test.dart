@@ -112,7 +112,7 @@ void main()
             inputLeading: 'void f',
             inputMiddle: '(  int  i  ,  int  j  )',
             inputTrailing: '{}',
-            name: '2 params (too much spacing)',
+            name: '2 params (too much spacing)', // TODO: too little spacing
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<SimpleFormalParameter>(9, 'int  i'),
                 TestVisitor<SimpleFormalParameter>(20, 'int  j')

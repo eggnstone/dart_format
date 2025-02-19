@@ -17,7 +17,7 @@ void main()
             inputLeading: 'void f(  ',
             inputMiddle: 't',
             inputTrailing: '  ){}',
-            name: '1 param without type (too much spacing)',
+            name: '1 param without type (too much spacing)', // TODO: too little spacing
             testConfigs: <TestConfig>[
                 TestConfig.none(),
                 TestConfig('t')
@@ -28,7 +28,7 @@ void main()
             inputLeading: 'void f(  ',
             inputMiddle: '@a  T  t',
             inputTrailing: '  ){}',
-            name: '@a T t (too much spacing)',
+            name: '@a T t (too much spacing)', // TODO: too little spacing
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<Annotation>(9, '@a'),
                 TestVisitor<NamedType>(13, 'T')
@@ -43,7 +43,7 @@ void main()
             inputLeading: 'void f({  ',
             inputMiddle: '@a  required  T  t',
             inputTrailing: '  }){}',
-            name: '@a required T t (too much spacing)',
+            name: '@a required T t (too much spacing)', // TODO: too little spacing
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<Annotation>(10, '@a'),
                 TestVisitor<NamedType>(24, 'T')

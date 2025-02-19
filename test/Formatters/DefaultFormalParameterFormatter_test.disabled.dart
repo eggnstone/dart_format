@@ -18,7 +18,7 @@ void main()
             inputLeading: 'void f(',
             inputMiddle: '  {  required  T  t  }  ',
             inputTrailing: '){}',
-            name: '{required T t} (too much spacing)',
+            name: '{required T t} (too much spacing)', // TODO: too little spacing
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<NamedType>(18, 'T')
             ],

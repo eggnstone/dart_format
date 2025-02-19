@@ -79,7 +79,7 @@ void main()
             inputLeading: 'class C{C():',
             inputMiddle: "assert  (  true  ,  'message'  ,  )",
             inputTrailing: ';}',
-            name: "AssertInitializer assert(true, 'message',) (too much spacing)",
+            name: "AssertInitializer assert(true, 'message',) (too much spacing)", // TODO: too little spacing
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<BooleanLiteral>(21, '  true'),
                 TestVisitor<SimpleStringLiteral>(30, "  'message'")

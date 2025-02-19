@@ -61,7 +61,7 @@ void main()
             inputLeading: 'void f(){for(',
             inputMiddle: 'int  i  =  0  ;  i  <  10  ;  i++',
             inputTrailing: ');}',
-            name: 'ForPartsWithDeclarations: int i = 0; i < 10; i++ (too much spacing)',
+            name: 'ForPartsWithDeclarations: int i = 0; i < 10; i++ (too much spacing)', // TODO: too little spacing
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<VariableDeclarationList>(13, 'int  i  =  0'),
                 TestVisitor<BinaryExpression>(30, 'i  <  10'),

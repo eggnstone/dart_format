@@ -47,6 +47,7 @@ class Config with _$Config
     static const bool BREAK_SET_OR_MAP_LITERALS_NONE = false;
 
     /// Default value when all options are turned on: Whether to fix spaces.
+    //static const bool FIX_SPACES_DEFAULT = true;
     static const bool FIX_SPACES_DEFAULT = false; //true; experimental!
     /// Default value when all options are turned off: Whether to fix spaces.
     static const bool FIX_SPACES_NONE = false;
@@ -84,18 +85,19 @@ class Config with _$Config
         required bool addNewLineBeforeClosingBrace,
         /// Whether to add a new line before an opening brace.
         required bool addNewLineBeforeOpeningBrace,
+        /// Whether to fix spaces.
+        required bool fixSpaces,
         /// The number of spaces to use for indentation. -1 = do not change indentation.
         required int indentationSpacesPerLevel,
         /// The maximum number of empty lines to allow. -1 = do not change empty lines.
         required int maxEmptyLines,
         /// Whether to remove trailing commas.
-        required bool removeTrailingCommas,
-        /// Whether to fix spaces.
-        @Default(false) bool fixSpaces
+        required bool removeTrailingCommas
     }) = _Config;
 
     /// Create a new instance of [Config] with all options turned on, including experimental options.
     static Config experimental() => Config.all(fixSpaces: true);
+    //static Config experimental() => Config.all();
 
     /// Create a new instance of [Config] with all options turned on.
     // ignore: prefer_constructors_over_static_methods
