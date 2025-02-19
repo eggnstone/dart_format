@@ -47,8 +47,7 @@ class Config with _$Config
     static const bool BREAK_SET_OR_MAP_LITERALS_NONE = false;
 
     /// Default value when all options are turned on: Whether to fix spaces.
-    //static const bool FIX_SPACES_DEFAULT = true;
-    static const bool FIX_SPACES_DEFAULT = false; //true; experimental!
+    static const bool FIX_SPACES_DEFAULT = true;
     /// Default value when all options are turned off: Whether to fix spaces.
     static const bool FIX_SPACES_NONE = false;
 
@@ -96,8 +95,7 @@ class Config with _$Config
     }) = _Config;
 
     /// Create a new instance of [Config] with all options turned on, including experimental options.
-    static Config experimental() => Config.all(fixSpaces: true);
-    //static Config experimental() => Config.all();
+    static Config experimental() => Config.all();
 
     /// Create a new instance of [Config] with all options turned on.
     // ignore: prefer_constructors_over_static_methods

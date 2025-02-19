@@ -14,7 +14,7 @@ void main()
     test('VariableDeclarationList and MethodInvocation', ()
         {
             const String inputText = 'int i=a(()\n    {\n    }\n);\n';
-            const String expectedText = inputText;
+            const String expectedText = 'int i = a(()\n    {\n    }\n);\n';
 
             final String actualText = formatterAll.format(inputText);
 

@@ -47,7 +47,7 @@ void main()
                     final Formatter formatterAll = Formatter(configAll);
 
                     const String inputText = 'void f(){if (true)  g();}';
-                    const String expectedText = 'void f()\n{\n    if (true)  g();\n}\n';
+                    const String expectedText = 'void f()\n{\n    if (true) g();\n}\n';
 
                     final String actualText = formatterAll.format(inputText);
                     logDebug('actualText: ${StringTools.toDisplayString(actualText)}');

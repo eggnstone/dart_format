@@ -110,7 +110,10 @@ void main()
                                 'int i=0; /*START\n'
                                 '        TEXT\n'
                                 '    END*/\n';
-                            const String expectedText = inputText;
+                            const String expectedText =
+                                'int i = 0; /*START\n'
+                                '        TEXT\n'
+                                '    END*/\n';
 
                             final String actualText = formatterAll.format(inputText);
 
@@ -129,7 +132,7 @@ void main()
                                         '        TEXT\n'
                                         '    END*/\n';
                                     const String expectedText =
-                                        'int i=0;\n'
+                                        'int i = 0;\n'
                                         '    /*START\n'
                                         '        TEXT\n'
                                         '    END*/\n';
@@ -150,7 +153,7 @@ void main()
                                         '    END*/\n'
                                         '    var a;\n';
                                     const String expectedText =
-                                        'int i=0;\n'
+                                        'int i = 0;\n'
                                         '    /*START\n'
                                         '        TEXT\n'
                                         '    END*/\n'
@@ -170,7 +173,7 @@ void main()
                                         '        TEXT\n'
                                         '    END*/';
                                     const String expectedText =
-                                        'int i=0;     /*START\n'
+                                        'int i = 0;   /*START\n'
                                         '        TEXT\n'
                                         '    END*/\n';
 
@@ -188,7 +191,7 @@ void main()
                                         '        TEXT\n'
                                         '    END*/\n';
                                     const String expectedText =
-                                        'int i=0;     /*START\n'
+                                        'int i = 0;   /*START\n'
                                         '        TEXT\n'
                                         '    END*/\n';
 
@@ -207,7 +210,7 @@ void main()
                                         '    END*/\n'
                                         '    var a;\n';
                                     const String expectedText =
-                                        'int i=0;     /*START\n'
+                                        'int i = 0;   /*START\n'
                                         '        TEXT\n'
                                         '    END*/\n'
                                         'var a;\n';
@@ -228,7 +231,7 @@ void main()
                                 '    TEXT\n'
                                 'END*/\n';
                             const String expectedText =
-                                'int i=0;     /*START\n'
+                                'int i = 0;   /*START\n'
                                 '    TEXT\n'
                                 'END*/\n';
 
@@ -247,7 +250,7 @@ void main()
                                 'END*/\n'
                                 'var a;\n';
                             const String expectedText =
-                                'int i=0;     /*START\n'
+                                'int i = 0;   /*START\n'
                                 '    TEXT\n'
                                 'END*/\n'
                                 'var a;\n';

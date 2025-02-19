@@ -16,7 +16,7 @@ void main()
             test('Without spaces', ()
                 {
                     const String inputText = "var s='a\$b\$c';\n";
-                    const String expectedText = inputText;
+                    const String expectedText = "var s = 'a\$b\$c';\n";
 
                     final String actualText = formatterAll.format(inputText);
 
@@ -27,7 +27,7 @@ void main()
             test('With spaces', ()
                 {
                     const String inputText = "var s='a \$b \$c';\n";
-                    const String expectedText = inputText;
+                    const String expectedText = "var s = 'a \$b \$c';\n";
 
                     final String actualText = formatterAll.format(inputText);
 
