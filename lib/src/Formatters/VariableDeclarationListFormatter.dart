@@ -69,7 +69,7 @@ class VariableDeclarationListFormatter extends IFormatter
             }
         }
 
-        formatState.acceptListWithComma(node.variables, null, astVisitor, '$methodName/node.variables', config.space1);
+        formatState.acceptListWithComma(node.variables, null, astVisitor, '$methodName/node.variables', leadingSpaces: config.space1);
 
         if (alreadyPushed)
             formatState.popLevelAndIndent();
