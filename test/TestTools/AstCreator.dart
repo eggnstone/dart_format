@@ -3,6 +3,9 @@ import 'package:analyzer/src/dart/ast/ast.dart';
 
 class AstCreator
 {
+    static ArgumentList createArgumentListInFunction(String s)
+    => createMethodInvocationInExpressionStatementInFunction(s).argumentList;
+
     static AssignmentExpression createAssignmentExpressionInFunction(String s)
     => createExpressionInFunction(s) as AssignmentExpression;
 

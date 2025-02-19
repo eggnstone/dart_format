@@ -122,7 +122,7 @@ class FormatState
         nodes.forEach((AstNode node) => node.accept(astVisitor));
     }
 
-    void acceptListWithComma(NodeList<AstNode> nodes, Token? endToken, AstVisitor<void> astVisitor, String source, {int? leadingSpaces, int? commaSpaces})
+    void acceptListWithComma(NodeList<AstNode> nodes, Token? endToken, AstVisitor<void> astVisitor, String source, {int? leadingSpaces/*, int? commaSpaces*/})
     {
         const String methodName = 'acceptListWithComma';
 
