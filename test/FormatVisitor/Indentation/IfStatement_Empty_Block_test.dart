@@ -15,7 +15,7 @@ void main()
         name: 'IfStatement / empty Block',
         testConfigs: <TestConfig>[
             TestConfig.none(null, ''),
-            TestConfig('if (true)\n{\n}\n', '')
+            TestConfig('if (true) \n{\n}\n', '')
         ]
     );
 

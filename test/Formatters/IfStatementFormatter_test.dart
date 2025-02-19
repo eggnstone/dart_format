@@ -47,6 +47,25 @@ void main()
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<BooleanLiteral>(13, 'true'),
                 TestVisitor<Block>(18, '{}')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('if (true) {}')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createStatementInFunction,
+            inputLeading: 'void f(){',
+            inputMiddle: 'if (true)\n{}',
+            inputTrailing: '}',
+            name: 'if {}',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BooleanLiteral>(13, 'true'),
+                TestVisitor<Block>(19, '{}')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('if (true)\n{}')
             ]
         ),
         TestGroupConfig(
