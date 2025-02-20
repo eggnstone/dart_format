@@ -35,7 +35,7 @@ void main()
             name: 'PropertyAccess / f.a.b (too much spacing)',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<PrefixedIdentifier>(6, 'f  .  a'),
-                TestVisitor<SimpleIdentifier>(18, 'b'),
+                TestVisitor<SimpleIdentifier>(18, 'b')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

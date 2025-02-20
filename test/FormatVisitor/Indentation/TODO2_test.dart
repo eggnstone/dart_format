@@ -7,15 +7,13 @@ void main()
 {
     TestTools.init();
 
-    const String text = 'class C{void m()=>a;/*Comment*/void d(){}}';
     final TestGroupConfig testGroupConfig = TestGroupConfig(
         inputNodeCreator: AstCreator.createDeclaration,
-        inputMiddle: text,
+        inputMiddle: 'class C{void m()=>a;/*Comment*/void d(){}}',
         name: 'TODO2',
         testConfigs: <TestConfig>[
             TestConfig.none(),
             TestConfig('class C\n{\n    void m() => a;\n    /*Comment*/void d() \n    {\n    }\n}\n')
-            //TODO: TestConfig('class C\n{\n    void m() => a;\n    /*Comment*/void d()\n    {\n    }\n}\n')
         ]
     );
 

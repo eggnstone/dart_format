@@ -20,13 +20,13 @@ void main()
             inputTrailing: '',
             name: 'ExpressionFunctionBody / => null;',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<NullLiteral>(14, 'null'),
+                TestVisitor<NullLiteral>(14, 'null')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
                 TestConfig('=> null;\n')
             ]
-        ),
+        )
         /*TODO
         // new
         TestGroupConfig(
