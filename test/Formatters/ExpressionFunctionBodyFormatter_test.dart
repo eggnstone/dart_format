@@ -12,10 +12,41 @@ void main()
     TestTools.init();
 
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
+        // old
         TestGroupConfig(
             inputNodeCreator: AstCreator.createFunctionBody,
             inputLeading: 'void f()  ',
             inputMiddle: '=>  null  ;',
+            inputTrailing: '',
+            name: 'ExpressionFunctionBody / => null;',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NullLiteral>(14, 'null'),
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('=> null;\n')
+            ]
+        ),
+        /*
+        // new
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFunctionBody,
+            inputLeading: 'void f()  ',
+            inputMiddle: '/*x*/  =>  null  ;',
+            inputTrailing: '',
+            name: 'ExpressionFunctionBody / /*x*/ => null;',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NullLiteral>(14, 'null'),
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('=> null;\n')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFunctionBody,
+            inputLeading: 'void f()  ',
+            inputMiddle: '/**/  =>  null  ;',
             inputTrailing: '',
             name: 'ExpressionFunctionBody',
             astVisitors: <TestVisitor<void>>[
@@ -26,6 +57,7 @@ void main()
                 TestConfig('=> null;\n')
             ]
         )
+        */
     ];
 
     TestTools.runTestGroupsForFormatter(testGroupConfigs, 'ExpressionFunctionBodyFormatter', ExpressionFunctionBodyFormatter.new, StackTrace.current);

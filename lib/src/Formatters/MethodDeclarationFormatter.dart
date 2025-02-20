@@ -6,6 +6,7 @@ import '../Constants/Constants.dart';
 import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
+import '../Tools/LogTools.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -28,13 +29,16 @@ class MethodDeclarationFormatter extends IFormatter
         if (node is! MethodDeclaration)
             throw FormatException('Not a MethodDeclaration: ${node.runtimeType}');
 
+        logError('MethodDeclaration');
+
         /*
         formatState.dump(node, 'node');
-        //formatState.dump(node.sortedCommentAndAnnotations, 'sortedCommentAndAnnotations');
+        formatState.dumpList(node.sortedCommentAndAnnotations, 'sortedCommentAndAnnotations');
         formatState.dump(node.modifierKeyword, 'modifierKeyword');
         formatState.dump(node.returnType, 'returnType');
-        //formatState.dump(node.typeParameters, 'typeParameters');
+        formatState.dump(node.propertyKeyword, 'propertyKeyword');
         formatState.dump(node.name, 'name');
+        formatState.dump(node.typeParameters, 'typeParameters');
         formatState.dump(node.parameters, 'parameters');
         formatState.dump(node.body, 'body');
         */
@@ -53,11 +57,21 @@ class MethodDeclarationFormatter extends IFormatter
             formatState.copyEntity(node.returnType, astVisitor, '$methodName/node.returnType', spacesForReturnType);
         }
 
+        if (node.propertyKeyword != null)
+        {
+            final int? spacesForPropertyKeyword = config.fixSpaces ? (node.offset == node.propertyKeyword!.offset ? 0 : 1) : null;
+            formatState.copyEntity(node.propertyKeyword, astVisitor, '$methodName/node.propertyKeyword', spacesForPropertyKeyword);
+        }
+
         final int? spacesForName = config.fixSpaces ? (node.offset == node.name.offset ? 0 : 1) : null;
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name', spacesForName);
 
+        formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters', config.space0);
         formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters', config.space0);
+
+        //formatState.consumeSpacesBeforeFunctionBody(node.body, config);
         formatState.copyEntity(node.body, astVisitor, '$methodName/node.body', config.space1);
+        //formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

@@ -17,7 +17,7 @@ void main()
             inputLeading: '',
             inputMiddle: 'void f(){}',
             inputTrailing: '',
-            name: 'FunctionDeclarationFormatter void f(){}',
+            name: 'FunctionDeclaration void f(){}',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<NamedType>(0, 'void'),
                 TestVisitor<FunctionExpression>(6, '(){}')
@@ -32,7 +32,7 @@ void main()
             inputLeading: '',
             inputMiddle: 'void  f  (  )  {  }',
             inputTrailing: '',
-            name: 'FunctionDeclarationFormatter void f(){} (too much spacing)', // TODO: too little spacing
+            name: 'FunctionDeclaration void f(){} (too much spacing)', // TODO: too little spacing
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<NamedType>(0, 'void'),
                 TestVisitor<FunctionExpression>(7, '  (  )  {  }')

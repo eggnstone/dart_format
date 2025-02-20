@@ -1041,6 +1041,34 @@ class FormatState
         return result;
     }
 
+    void consumeSpacesBeforeFunctionBody(FunctionBody body, Config config)
+    {
+        logError('fixSpaces:                    ${config.fixSpaces}');
+        logError('addNewLineBeforeOpeningBrace: ${config.addNewLineBeforeOpeningBrace}');
+        logError('node.body:                    ${body.runtimeType}');
+
+        int? spacesForBody;
+        if (config.fixSpaces)
+        {
+            if (body is BlockFunctionBody)
+            {
+                /*if (!config.addNewLineBeforeOpeningBrace)
+                    spacesForBody = 1;
+                else
+                    spacesForBody = 0;*/
+            }
+            else if (body is ExpressionFunctionBody)
+                spacesForBody = 1;
+        }
+
+        logError('spacesForBody:                $spacesForBody');
+
+        if (spacesForBody != 1)
+            return;
+
+        consumeText(lastConsumedPosition, body.offset, ' ', 'consumeSpacesBeforeFunctionBody');
+    }
+
     void consumeSpaces(SyntacticEntity entity, int? spaces)
     {
         if (spaces == null)
@@ -1071,6 +1099,28 @@ class FormatState
         }
     }
 
+    void dump2(SyntacticEntity? entity, SyntacticEntity? previousEntity, String name, [String indent = ''])
+    {
+        dump(entity, name, indent);
+
+        if (entity == null || previousEntity == null)
+            return;
+
+        logWarning('### dump2:         ${StringTools.toDisplayString(getText(previousEntity.end, entity.offset))}');
+    }
+
+    void dumpList(List<SyntacticEntity>? list, String name, [String indent = ''])
+    {
+        final String paddedName = '$name:'.padRight(10);
+        if (list == null)
+        {
+            logDebug('### $indent$paddedName <null>');
+            return;
+        }
+
+        logError('### $indent$paddedName ${StringTools.toDisplayString(list)} ${list.runtimeType}');
+    }
+
     void dump(SyntacticEntity? entity, String name, [String indent = ''])
     {
         final String paddedName = '$name:'.padRight(10);
@@ -1080,9 +1130,13 @@ class FormatState
             return;
         }
 
-        logDebug('### $indent$paddedName ${StringTools.toDisplayString(entity)} ${entity.runtimeType}');
-        logDebug('### $indent  text:    ${StringTools.toDisplayString(getText(entity.offset, entity.end))}');
-        logDebug('### $indent  offset:  ${entity.offset}');
-        logDebug('### $indent  end:     ${entity.end}');
+        logError('### $indent$paddedName ${StringTools.toDisplayString(entity)} ${entity.runtimeType}');
+        logWarning('### $indent  text:    ${StringTools.toDisplayString(getText(entity.offset, entity.end))}');
+        logWarning('### $indent  offset:  ${entity.offset}');
+        logWarning('### $indent  end:     ${entity.end}');
+
+        logWarning('### last => start: ${StringTools.toDisplayString(getText(lastConsumedPosition, entity.offset))}');
+        //logWarning('### last => start: ${StringTools.toDisplayString(getText(entity.beginToken, entity.offset))}');
+        logWarning('### entity text:   ${StringTools.toDisplayString(getText(entity.offset, entity.end))}');
     }
 }

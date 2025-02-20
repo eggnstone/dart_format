@@ -15,6 +15,7 @@ void main()
         testConfigs: <TestConfig>[
             TestConfig.none(),
             TestConfig('class C\n{\n    void m() => a;\n    /*Comment*/void d() \n    {\n    }\n}\n')
+            //TODO: TestConfig('class C\n{\n    void m() => a;\n    /*Comment*/void d()\n    {\n    }\n}\n')
         ]
     );
 

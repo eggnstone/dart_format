@@ -28,10 +28,11 @@ class ExpressionFunctionBodyFormatter extends IFormatter
 
         /*
         formatState.dump(node, 'node');
-        formatState.dump(node.keyword, 'keyword');
-        formatState.dump(node.functionDefinition, 'functionDefinition');
-        formatState.dump(node.expression, 'expression');
-        formatState.dump(node.semicolon, 'semicolon');
+        //formatState.dumpList(node.sortedCommentAndAnnotations, 'sortedCommentAndAnnotations');
+        formatState.dump2(node.keyword, node, 'keyword');
+        formatState.dump2(node.functionDefinition, node.keyword, 'functionDefinition');
+        formatState.dump2(node.expression, node.functionDefinition, 'expression');
+        formatState.dump2(node.semicolon, node.expression, 'semicolon');
         */
 
         formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword');

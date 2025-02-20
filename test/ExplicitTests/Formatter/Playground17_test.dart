@@ -17,6 +17,7 @@ void main()
                 {
                     const String inputText = 'class  C  {  @a  void  c  (  )  {  }  }';
                     const String expectedText =
+                        // TODO: 'class C\n'
                         'class C\n'
                         '{\n'
                         '    @a void c() \n'
@@ -30,7 +31,7 @@ void main()
                 }
             );
 
-            test('format: VariableDeclarationListFormatter', ()
+            test('format: VariableDeclarationList', ()
                 {
                     const String inputText = 'class  C  {  final  bool  b  ;  }';
                     const String expectedText =
@@ -44,6 +45,17 @@ void main()
                     TestTools.expect(actualText, equals(expectedText));
                 }
             );
+
+            /*TODO: test('format: FunctionExpression', ()
+                {
+                    const String inputText = 'bool f() => false;';
+                    const String expectedText = 'bool f() => false;\n';
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );*/
         }
     );
 }
