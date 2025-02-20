@@ -12,7 +12,8 @@ void main()
     TestTools.init();
 
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
-        /*TestGroupConfig(
+        /*TODO
+        TestGroupConfig(
             inputNodeCreator: AstCreator.createFunctionExpression,
             inputLeading: 'void f',
             inputMiddle: '(){}',
@@ -86,8 +87,8 @@ void main()
                 TestConfig.none(),
                 TestConfig('() =>false;')
             ]
-        ),*/
-        /*TestGroupConfig(
+        ),
+        TestGroupConfig(
             inputNodeCreator: AstCreator.createFunctionExpression,
             inputLeading: 'bool  f  ',
             inputMiddle: '(  )  /*''*/  =>  false  ;',
@@ -102,8 +103,8 @@ void main()
                 TestConfig.none(),
                 TestConfig('(  ) =>  false  ;')
             ]
-        ),*/
-        /*TestGroupConfig(
+        ),
+        TestGroupConfig(
             inputNodeCreator: AstCreator.createFunctionExpression,
             inputLeading: 'bool  f  ',
             inputMiddle: '(  )  /*x*/  =>  false  ;',

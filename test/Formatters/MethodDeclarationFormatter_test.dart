@@ -12,58 +12,7 @@ void main()
     TestTools.init();
 
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
-        // old
         TestGroupConfig(
-            inputNodeCreator: AstCreator.createClassMember,
-            inputLeading: 'class  C  {  ',
-            inputMiddle: 'c  (  )  {  }',
-            inputTrailing: '  }',
-            name: 'MethodDeclaration / c() {}',
-            astVisitors: <TestVisitor<void>>[
-                TestVisitor<FormalParameterList>(16, '(  )'),
-                TestVisitor<BlockFunctionBody>(22, '{  }')
-            ],
-            testConfigs: <TestConfig>[
-                TestConfig.none(),
-                TestConfig('c(  ) {  }')
-            ]
-        ),
-        TestGroupConfig(
-            inputNodeCreator: AstCreator.createClassMember,
-            inputLeading: 'class  C  {  ',
-            inputMiddle: '@a  static  void  c  (  )  {  }',
-            inputTrailing: '  }',
-            name: 'MethodDeclaration / @a static void c() {}',
-            astVisitors: <TestVisitor<void>>[
-                TestVisitor<Annotation>(13, '@a'),
-                TestVisitor<NamedType>(25, 'void'),
-                TestVisitor<FormalParameterList>(34, '(  )'),
-                TestVisitor<BlockFunctionBody>(40, '{  }')
-            ],
-            testConfigs: <TestConfig>[
-                TestConfig.none(),
-                TestConfig('@a static void c(  ) {  }')
-            ]
-        ),
-        TestGroupConfig(
-            inputNodeCreator: AstCreator.createClassMember,
-            inputLeading: 'class  C  {  ',
-            inputMiddle: 'void  c  (  )  =>  c  (  )  ;',
-            inputTrailing: '  }',
-            name: 'MethodDeclaration / void c() => c();',
-            astVisitors: <TestVisitor<void>>[
-                TestVisitor<NamedType>(13, 'void'),
-                TestVisitor<FormalParameterList>(22, '(  )'),
-                TestVisitor<ExpressionFunctionBody>(28, '=>  c  (  )  ;')
-            ],
-            testConfigs: <TestConfig>[
-                TestConfig.none(),
-                TestConfig('void c(  ) =>  c  (  )  ;')
-            ]
-        )
-
-        // new
-        /*TestGroupConfig(
             inputNodeCreator: AstCreator.createClassMember,
             inputLeading: 'class  C  {  ',
             inputMiddle: 'c  (  )  {  }',
@@ -83,7 +32,7 @@ void main()
             inputLeading: 'class  C  {  ',
             inputMiddle: '@a  static  T  c  <  T  >  (  )  {  }',
             inputTrailing: '  }',
-            name: 'MethodDeclaration / @a static void c() {}',
+            name: 'MethodDeclaration / @a static T c<T>() {}',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<Annotation>(13, '@a'),
                 TestVisitor<NamedType>(25, 'T'),
@@ -95,14 +44,13 @@ void main()
                 TestConfig.none(),
                 TestConfig('@a static T c<  T  >(  ) {  }')
             ]
-        ),*/
-        /*
+        ),
         TestGroupConfig(
             inputNodeCreator: AstCreator.createClassMember,
             inputLeading: 'class  C  {  ',
-            inputMiddle: 'void  c  (  )  /*x*/  =>  c  (  )  ;',
+            inputMiddle: 'void  c  (  )  =>  c  (  )  ;',
             inputTrailing: '  }',
-            name: '1 MethodDeclaration / void c() => c();',
+            name: 'MethodDeclaration / void c() => c();',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<NamedType>(13, 'void'),
                 TestVisitor<FormalParameterList>(22, '(  )'),
@@ -111,6 +59,22 @@ void main()
             testConfigs: <TestConfig>[
                 TestConfig.none(),
                 TestConfig('void c(  ) =>  c  (  )  ;')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createClassMember,
+            inputLeading: 'class  C  {  ',
+            inputMiddle: 'void  c  (  )  /*x*/  =>  c  (  )  ;',
+            inputTrailing: '  }',
+            name: 'MethodDeclaration / void c() /*x*/ => c();',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(13, 'void'),
+                TestVisitor<FormalParameterList>(22, '(  )'),
+                TestVisitor<ExpressionFunctionBody>(35, '=>  c  (  )  ;')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('void c(  )  /*x*/  =>  c  (  )  ;')
             ]
         ),
         TestGroupConfig(
@@ -118,19 +82,18 @@ void main()
             inputLeading: 'class  C  {  ',
             inputMiddle: 'void  c  (  )  /**/  =>  c  (  )  ;',
             inputTrailing: '  }',
-            name: '2 MethodDeclaration / void c() => c();',
+            name: 'MethodDeclaration / void c() /**/ => c();',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<NamedType>(13, 'void'),
                 TestVisitor<FormalParameterList>(22, '(  )'),
-                TestVisitor<ExpressionFunctionBody>(28, '=>  c  (  )  ;')
+                TestVisitor<ExpressionFunctionBody>(34, '=>  c  (  )  ;')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('void c(  ) =>  c  (  )  ;')
+                TestConfig('void c(  )  /**/  =>  c  (  )  ;')
             ]
         ),
-        */
-        /*TestGroupConfig(
+        TestGroupConfig(
             inputNodeCreator: AstCreator.createClassMember,
             inputLeading: 'class  C  {  ',
             inputMiddle: 'bool  get  b  =>  false  ;',
@@ -144,7 +107,37 @@ void main()
                 TestConfig.none(),
                 TestConfig('bool get b =>  false  ;')
             ]
-        )*/
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createClassMember,
+            inputLeading: 'class  C  {  ',
+            inputMiddle: 'bool  get  b  /*x*/  =>  false  ;',
+            inputTrailing: '  }',
+            name: 'MethodDeclaration / bool get b /*x*/ => false;',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(13, 'bool'),
+                TestVisitor<ExpressionFunctionBody>(34, '=>  false  ;')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('bool get b  /*x*/  =>  false  ;')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createClassMember,
+            inputLeading: 'class  C  {  ',
+            inputMiddle: 'bool  get  b  /**/  =>  false  ;',
+            inputTrailing: '  }',
+            name: 'MethodDeclaration / bool get b /**/ => false;',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(13, 'bool'),
+                TestVisitor<ExpressionFunctionBody>(33, '=>  false  ;')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('bool get b  /**/  =>  false  ;')
+            ]
+        )
     ];
 
     TestTools.runTestGroupsForFormatter(testGroupConfigs, 'MethodDeclarationFormatter', MethodDeclarationFormatter.new, StackTrace.current);
