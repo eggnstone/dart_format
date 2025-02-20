@@ -26,6 +26,36 @@ void main()
                 TestConfig.none(),
                 TestConfig('f\n.a\n    .b')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createInitializerInTopLevelVariable,
+            inputLeading: 'int i=',
+            inputMiddle: 'f  .  a  .  b',
+            inputTrailing: ';',
+            name: 'PropertyAccess / f.a.b (too much spacing)',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<PrefixedIdentifier>(6, 'f  .  a'),
+                TestVisitor<SimpleIdentifier>(18, 'b'),
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('f  .  a.b')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createInitializerInTopLevelVariable,
+            inputLeading: 'int i=',
+            inputMiddle: 'f  .  a  .  b  .  c',
+            inputTrailing: ';',
+            name: 'PropertyAccess / f.a.b.c (too much spacing)',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<PropertyAccess>(6, 'f  .  a  .  b'),
+                TestVisitor<SimpleIdentifier>(24, 'c')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('f  .  a  .  b.c')
+            ]
         )
     ];
 
