@@ -1052,9 +1052,9 @@ class FormatState
         {
             if (body is BlockFunctionBody)
             {
-                /*if (!config.addNewLineBeforeOpeningBrace)
+                if (!config.addNewLineBeforeOpeningBrace)
                     spacesForBody = 1;
-                else
+                /*else
                     spacesForBody = 0;*/
             }
             else if (body is ExpressionFunctionBody)
