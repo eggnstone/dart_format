@@ -14,7 +14,7 @@ void main()
         name: 'TODO2',
         testConfigs: <TestConfig>[
             TestConfig.none(),
-            TestConfig('class C\n{\n    void m() => a;\n    /*Comment*/void d()\n    {\n    }\n}\n')
+            TestConfig('class C\n{\n    void m() => a;\n    /*Comment*/void d() \n    {\n    }\n}\n')
         ]
     );
 

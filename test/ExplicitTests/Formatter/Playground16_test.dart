@@ -13,7 +13,7 @@ void main()
 
     group('Playground 16', ()
         {
-            test('format: super', ()
+            test('format: TODO', ()
                 {
                     const String inputText = 'void f(){a . b . c();}';
                     const String expectedText =
