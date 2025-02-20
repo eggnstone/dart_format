@@ -13,7 +13,7 @@ void main()
 
     group('Playground 17', ()
         {
-            test('format: MethodDeclaration', ()
+            test('format: ClassDeclaration / class C {@a void c() {}}', ()
                 {
                     const String inputText = 'class  C  {  @a  void  c  (  )  {  }  }';
                     const String expectedText =
@@ -31,7 +31,7 @@ void main()
                 }
             );
 
-            test('format: VariableDeclarationList', ()
+            test('format: ClassDeclaration / class C {final bool b;}', ()
                 {
                     const String inputText = 'class  C  {  final  bool  b  ;  }';
                     const String expectedText =
@@ -46,7 +46,7 @@ void main()
                 }
             );
 
-            /*TODO: test('format: FunctionExpression', ()
+            test('format: FunctionDeclaration / bool f() => false;', ()
                 {
                     const String inputText = 'bool f() => false;';
                     const String expectedText = 'bool f() => false;\n';
@@ -55,7 +55,18 @@ void main()
 
                     TestTools.expect(actualText, equals(expectedText));
                 }
-            );*/
+            );
+
+            test('format: ClassDeclaration / class C {void f();}', ()
+                {
+                    const String inputText = 'class C{void f();}';
+                    const String expectedText = 'class C\n{\n    void f();\n}\n';
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
         }
     );
 }

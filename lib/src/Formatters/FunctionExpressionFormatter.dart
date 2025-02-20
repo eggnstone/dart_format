@@ -25,11 +25,11 @@ class FunctionExpressionFormatter extends IFormatter
         if (node is! FunctionExpression)
             throw FormatException('Not a FunctionExpression: ${node.runtimeType}');
 
+        /*
         formatState.dump(node, 'node');
         formatState.dump(node.typeParameters, 'typeParameters');
         formatState.dump(node.parameters, 'parameters');
         formatState.dump(node.body, 'body');
-        /*
         */
 
         //formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');

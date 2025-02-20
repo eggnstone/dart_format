@@ -6,7 +6,6 @@ import '../Constants/Constants.dart';
 import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
-import '../Tools/LogTools.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 
@@ -29,9 +28,8 @@ class MethodDeclarationFormatter extends IFormatter
         if (node is! MethodDeclaration)
             throw FormatException('Not a MethodDeclaration: ${node.runtimeType}');
 
-        logError('MethodDeclaration');
-
         /*
+        logError('MethodDeclaration');
         formatState.dump(node, 'node');
         formatState.dumpList(node.sortedCommentAndAnnotations, 'sortedCommentAndAnnotations');
         formatState.dump(node.modifierKeyword, 'modifierKeyword');
@@ -70,7 +68,8 @@ class MethodDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters', config.space0);
 
         //formatState.consumeSpacesBeforeFunctionBody(node.body, config);
-        formatState.copyEntity(node.body, astVisitor, '$methodName/node.body', config.space1);
+        final int? spacesForBody = config.fixSpaces ? (node.body is EmptyFunctionBody ? 0 : 1) : null;
+        formatState.copyEntity(node.body, astVisitor, '$methodName/node.body', spacesForBody);
         //formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);

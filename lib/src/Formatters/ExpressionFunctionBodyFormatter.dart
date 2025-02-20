@@ -37,8 +37,9 @@ class ExpressionFunctionBodyFormatter extends IFormatter
 
         formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword');
 
-        final int? spacesForFunctionDefinition = config.fixSpaces ? (node.offset == node.functionDefinition.offset ? 0 : 1) : null;
-        formatState.copyEntity(node.functionDefinition, astVisitor, '$methodName/node.functionDefinition', spacesForFunctionDefinition);
+        formatState.copyEntity(node.functionDefinition, astVisitor, '$methodName/node.functionDefinition');
+        //final int? spacesForFunctionDefinition = config.fixSpaces ? (node.offset == node.functionDefinition.offset ? 0 : 1) : null;
+        //formatState.copyEntity(node.functionDefinition, astVisitor, '$methodName/node.functionDefinition', spacesForFunctionDefinition);
 
         formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression', config.space1);
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
