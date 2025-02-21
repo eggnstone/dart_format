@@ -66,6 +66,7 @@ import 'Formatters/ObjectPatternFormatter.dart';
 import 'Formatters/PartDirectiveFormatter.dart';
 import 'Formatters/PartOfDirectiveFormatter.dart';
 import 'Formatters/PatternVariableDeclarationStatementFormatter.dart';
+import 'Formatters/PostfixExpressionFormatter.dart';
 import 'Formatters/PrefixedIdentifierFormatter.dart';
 import 'Formatters/PropertyAccessFormatter.dart';
 import 'Formatters/RecordLiteralFormatter.dart';
@@ -163,6 +164,7 @@ class FormatVisitor extends AstVisitor<void>
     late final PartDirectiveFormatter _partDirectiveFormatter = PartDirectiveFormatter(config, this, _formatState);
     late final PartOfDirectiveFormatter _partOfDirectiveFormatter = PartOfDirectiveFormatter(config, this, _formatState);
     late final PatternVariableDeclarationStatementFormatter _patternVariableDeclarationStatementFormatter = PatternVariableDeclarationStatementFormatter(config, this, _formatState);
+    late final PostfixExpressionFormatter _postfixExpressionFormatter = PostfixExpressionFormatter(config, this, _formatState);
     late final PrefixedIdentifierFormatter _prefixedIdentifierFormatter = PrefixedIdentifierFormatter(config, this, _formatState);
     late final PropertyAccessFormatter _propertyAccessFormatter = PropertyAccessFormatter(config, this, _formatState);
     late final RecordLiteralFormatter _recordLiteralFormatter = RecordLiteralFormatter(config, this, _formatState);
@@ -677,7 +679,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitPostfixExpression(PostfixExpression node)
-    => _defaultFormatter.format(node);
+    => _postfixExpressionFormatter.format(node);
 
     @override
     void visitPrefixExpression(PrefixExpression node)

@@ -167,10 +167,21 @@ void main()
                 }
             );
 
-            test('format: TODO 3', ()
+            test('format: TODO 4', ()
                 {
                     const String inputText = 'var  x  =  <  A  ,  B  >  [  a  ,  b  ]  ;';
                     const String expectedText = 'var x = <A, B>[a, b];\n';
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
+
+            test('format: TODO 5', ()
+                {
+                    const String inputText = 'var  x  =  y  ++  ;';
+                    const String expectedText = 'var x = y++;\n';
 
                     final String actualText = formatter.format(inputText);
 
