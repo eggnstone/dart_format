@@ -132,6 +132,9 @@ class AstCreator
     static FormalParameterList createFunctionParameters(String s)
     => createFunctionExpression(s).parameters!;
 
+    static IfStatement createIfStatementInFunction(String s)
+    => createStatementInFunction(s) as IfStatement;
+
     static MethodDeclaration createMethodDeclaration(String s)
     => createClassMember(s) as MethodDeclaration;
 
