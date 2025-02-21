@@ -29,10 +29,10 @@ class MyHomePage extends StatefulWidget
     final String title;
 
     @override
-    State    <    MyHomePage    > createState() => _MyHomePageState();
+    State<MyHomePage> createState() => _MyHomePageState();
 }    
 
-class _MyHomePageState extends State    <    MyHomePage    >
+class _MyHomePageState extends State<MyHomePage>
 {    
     int _counter = 0;
 
@@ -55,7 +55,7 @@ class _MyHomePageState extends State    <    MyHomePage    >
             body: Center(    
                 child: Column(    
                     mainAxisAlignment: MainAxisAlignment.center,    
-                    children: <    Widget    >    [
+                    children: <Widget>    [
                         const Text(    
                             'You have pushed the button this many times:'
                         )    ,    

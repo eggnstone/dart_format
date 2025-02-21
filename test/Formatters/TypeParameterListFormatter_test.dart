@@ -20,7 +20,7 @@ void main()
             name: 'TypeParameterList <A, B>',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<TypeParameter>(9, 'A'),
-                TestVisitor<TypeParameter>(15, 'B'),
+                TestVisitor<TypeParameter>(15, 'B')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

@@ -19,7 +19,7 @@ void main()
             inputTrailing: 'c() => d();}',
             name: 'NamedType / E<A, B>',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<TypeArgumentList>(11, '<  A  ,  B  >'),
+                TestVisitor<TypeArgumentList>(11, '<  A  ,  B  >')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -34,7 +34,7 @@ void main()
             name: 'NamedType / D.E<A, B>',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<ImportPrefixReference>(8, 'D  .'),
-                TestVisitor<TypeArgumentList>(17, '<  A  ,  B  >'),
+                TestVisitor<TypeArgumentList>(17, '<  A  ,  B  >')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
