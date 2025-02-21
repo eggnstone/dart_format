@@ -221,6 +221,17 @@ void main()
                     TestTools.expect(actualText, equals(expectedText));
                 }
             );
+
+            test('format: TODO 9', ()
+                {
+                    const String inputText = 'class C{external static void c(var namespace);}\n';
+                    const String expectedText = 'class C\n{\n    external static void c(var namespace);\n}\n';
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
         }
     );
 }

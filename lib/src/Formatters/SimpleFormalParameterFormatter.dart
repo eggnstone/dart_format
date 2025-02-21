@@ -27,13 +27,20 @@ class SimpleFormalParameterFormatter extends IFormatter
 
         /*
         formatState.dump(node, 'node');
-        formatState.dump(node.type, 'type');
-        formatState.dump(node.name, 'name');
         formatState.dump(node.keyword, 'keyword');
         formatState.dump(node.requiredKeyword, 'requiredKeyword');
+        formatState.dump(node.covariantKeyword, 'covariantKeyword');
+        formatState.dump(node.type, 'type');
+        formatState.dump(node.name, 'name');
         */
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
+
+        if (node.keyword != null)
+        {
+            final int? spacesForKeyword = config.fixSpaces ? (node.offset == node.keyword!.offset ? null : 1) : null;
+            formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword', spacesForKeyword);
+        }
 
         if (node.requiredKeyword != null)
         {

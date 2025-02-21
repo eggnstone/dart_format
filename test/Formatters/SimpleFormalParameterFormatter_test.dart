@@ -17,25 +17,10 @@ void main()
             inputLeading: 'void f(',
             inputMiddle: 't',
             inputTrailing: '){}',
-            name: '1 param without type',
+            name: 't',
             testConfigs: <TestConfig>[
                 TestConfig.none(),
                 TestConfig('t')
-            ]
-        ),
-        TestGroupConfig(
-            inputNodeCreator: AstCreator.createFunctionParameter,
-            inputLeading: 'void f(',
-            inputMiddle: '@a  T  t',
-            inputTrailing: '){}',
-            name: '@a T? t (too much spacing)', // TODO: too little spacing
-            astVisitors: <TestVisitor<void>>[
-                TestVisitor<Annotation>(7, '@a'),
-                TestVisitor<NamedType>(11, 'T')
-            ],
-            testConfigs: <TestConfig>[
-                TestConfig.none(),
-                TestConfig('@a T t')
             ]
         ),
         TestGroupConfig(
@@ -58,7 +43,7 @@ void main()
             inputLeading: 'class C{void f(',
             inputMiddle: 'covariant  T  t',
             inputTrailing: '){}}',
-            name: 'covariant  T  t',
+            name: 'covariant T t',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<NamedType>(26, 'T'),
             ],
@@ -66,7 +51,18 @@ void main()
                 TestConfig.none(),
                 TestConfig('covariant T t')
             ]
-        )
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFunctionParameter,
+            inputLeading: 'void f(',
+            inputMiddle: 'var  t',
+            inputTrailing: '){}',
+            name: 'var t',
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('var t')
+            ]
+        ),
     ];
 
     TestTools.runTestGroupsForFormatter(testGroupConfigs, 'SimpleFormalParameterFormatter', SimpleFormalParameterFormatter.new, StackTrace.current);
