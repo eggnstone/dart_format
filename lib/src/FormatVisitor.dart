@@ -16,6 +16,7 @@ import 'Formatters/CompilationUnitFormatter.dart';
 import 'Formatters/ConditionalExpressionFormatter.dart';
 import 'Formatters/ConstructorDeclarationFormatter.dart';
 import 'Formatters/ContinueStatementFormatter.dart';
+import 'Formatters/DefaultFormalParameterFormatter.dart';
 import 'Formatters/DefaultFormatter.dart';
 import 'Formatters/DoStatementFormatter.dart';
 import 'Formatters/DottedNameFormatter.dart';
@@ -28,6 +29,7 @@ import 'Formatters/ExpressionStatementFormatter.dart';
 import 'Formatters/ExtendsClauseFormatter.dart';
 import 'Formatters/ExtensionDeclarationFormatter.dart';
 import 'Formatters/FieldDeclarationFormatter.dart';
+import 'Formatters/FieldFormalParameterFormatter.dart';
 import 'Formatters/ForElementFormatter.dart';
 import 'Formatters/ForPartsWithDeclarationsFormatter.dart';
 import 'Formatters/ForPartsWithExpressionFormatter.dart';
@@ -110,6 +112,7 @@ class FormatVisitor extends AstVisitor<void>
     late final ConditionalExpressionFormatter _conditionalExpressionFormatter = ConditionalExpressionFormatter(config, this, _formatState);
     late final ConstructorDeclarationFormatter _constructorDeclarationFormatter = ConstructorDeclarationFormatter(config, this, _formatState);
     late final ContinueStatementFormatter _continueStatementFormatter = ContinueStatementFormatter(config, this, _formatState);
+    late final DefaultFormalParameterFormatter _defaultFormalParameterFormatter = DefaultFormalParameterFormatter(config, this, _formatState);
     late final DoStatementFormatter _doStatementFormatter = DoStatementFormatter(config, this, _formatState);
     late final DottedNameFormatter _dottedNameFormatter = DottedNameFormatter(config, this, _formatState);
     late final EmptyFunctionBodyFormatter _emptyFunctionBodyFormatter = EmptyFunctionBodyFormatter(config, this, _formatState);
@@ -121,6 +124,7 @@ class FormatVisitor extends AstVisitor<void>
     late final ExpressionFunctionBodyFormatter _expressionFunctionBodyFormatter = ExpressionFunctionBodyFormatter(config, this, _formatState);
     late final ExpressionStatementFormatter _expressionStatementFormatter = ExpressionStatementFormatter(config, this, _formatState);
     late final FieldDeclarationFormatter _fieldDeclarationFormatter = FieldDeclarationFormatter(config, this, _formatState);
+    late final FieldFormalParameterFormatter _fieldFormalParameterFormatter = FieldFormalParameterFormatter(config, this, _formatState);
     //late final ForEachPartsWithDeclarationFormatter _forEachPartsWithDeclarationFormatter = ForEachPartsWithDeclarationFormatter(config, this, _formatState);
     late final ForElementFormatter _forElementFormatter = ForElementFormatter(config, this, _formatState);
     late final FormalParameterListFormatter _formalParameterListFormatter = FormalParameterListFormatter(config, this, _formatState);
@@ -337,7 +341,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitDefaultFormalParameter(DefaultFormalParameter node)
-    => _defaultFormatter.format(node);
+    => _defaultFormalParameterFormatter.format(node);
 
     @override
     void visitDoStatement(DoStatement node)
@@ -405,7 +409,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitFieldFormalParameter(FieldFormalParameter node)
-    => _defaultFormatter.format(node);
+    => _fieldFormalParameterFormatter.format(node);
 
     @override
     void visitForEachPartsWithDeclaration(ForEachPartsWithDeclaration node)

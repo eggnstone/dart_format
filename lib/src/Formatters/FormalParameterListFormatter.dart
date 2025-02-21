@@ -31,7 +31,6 @@ class FormalParameterListFormatter extends IFormatter
             throw FormatException('Not a FormalParameterList: ${node.runtimeType}');
 
         /*
-        
         formatState.dump(node, 'node');
         formatState.dump(node.leftParenthesis, 'leftParenthesis');
         formatState.dump(node.leftDelimiter, 'leftDelimiter');
