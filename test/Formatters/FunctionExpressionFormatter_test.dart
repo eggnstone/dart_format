@@ -16,33 +16,18 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createFunctionExpression,
             inputLeading: 'void f',
-            inputMiddle: '(){}',
+            inputMiddle: '<  T  >  (  )  {  }',
             inputTrailing: '',
-            name: 'FunctionExpression / void f() {} (too little spacing)',
+            name: 'FunctionExpression / void f<T>() {}',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<FormalParameterList>(6, '()'),
-                TestVisitor<BlockFunctionBody>(8, '{}')
+                TestVisitor<TypeParameterList>(6, '<  T  >'),
+                TestVisitor<FormalParameterList>(15, '(  )'),
+                TestVisitor<BlockFunctionBody>(21, '{  }')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('(){}'),
-                TestConfig.custom('No new line before {', Config.all(addNewLineBeforeOpeningBrace: false), '() {}')
-            ]
-        ),
-        TestGroupConfig(
-            inputNodeCreator: AstCreator.createFunctionExpression,
-            inputLeading: 'void f',
-            inputMiddle: '(  )  {  }',
-            inputTrailing: '',
-            name: 'FunctionExpression / void f() {} (too much spacing)',
-            astVisitors: <TestVisitor<void>>[
-                TestVisitor<FormalParameterList>(6, '(  )'),
-                TestVisitor<BlockFunctionBody>(12, '{  }')
-            ],
-            testConfigs: <TestConfig>[
-                TestConfig.none(),
-                TestConfig('(  )  {  }'),
-                TestConfig.custom('No new line before {', Config.all(addNewLineBeforeOpeningBrace: false), '(  ) {  }')
+                TestConfig('<  T  >  (  )  {  }'),
+                TestConfig.custom('No new line before {', Config.all(addNewLineBeforeOpeningBrace: false), '<  T  >  (  ) {  }')
             ]
         ),
         TestGroupConfig(

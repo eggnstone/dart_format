@@ -42,6 +42,7 @@ class FunctionExpressionFormatter extends IFormatter
             formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters', config.space0);
         }*/
 
+        formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
         formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters');
 
         formatState.consumeSpacesBeforeFunctionBody(node.body, config);
