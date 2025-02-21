@@ -26,14 +26,13 @@ class ConstructorDeclarationFormatter extends IFormatter
         if (node is! ConstructorDeclaration)
             throw FormatException('Not a ConstructorDeclaration: ${node.runtimeType}');
 
+        final int? spacesForReturnType = config.fixSpaces ? (node.offset == node.returnType.offset ? null : 1) : null;
+
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.externalKeyword, astVisitor, '$methodName/node.externalKeyword');
         formatState.copyEntity(node.constKeyword, astVisitor, '$methodName/node.constKeyword');
         formatState.copyEntity(node.factoryKeyword, astVisitor, '$methodName/node.factoryKeyword');
-
-        final int? spacesForReturnType = config.fixSpaces ? (node.offset == node.returnType.offset ? null : 1) : null;
         formatState.copyEntity(node.returnType, astVisitor, '$methodName/node.returnType', spacesForReturnType);
-
         formatState.copyEntity(node.period, astVisitor, '$methodName/node.period');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters');

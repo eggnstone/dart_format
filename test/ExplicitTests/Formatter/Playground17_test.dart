@@ -166,6 +166,17 @@ void main()
                     TestTools.expect(actualText, equals(expectedText));
                 }
             );
+
+            test('format: TODO 3', ()
+                {
+                    const String inputText = 'var  x  =  <  A  ,  B  >  [  a  ,  b  ]  ;';
+                    const String expectedText = 'var x = <A, B>[a, b];\n';
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
         }
     );
 }

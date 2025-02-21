@@ -37,13 +37,12 @@ class IfStatementFormatter extends IFormatter
         formatState.dump(node.thenStatement, 'thenStatement');
         */
 
-        if (Constants.DEBUG_I_FORMATTER) logDebug('node.thenStatement: ${StringTools.toDisplayString(node.thenStatement)}');
-
         final int? spacesForThenStatement = config.fixSpaces ? (node.thenStatement is EmptyStatement ? 0 : 1) : null;
-        if (Constants.DEBUG_I_FORMATTER) logDebug('spacesForThenStatement: $spacesForThenStatement');
-
         final int? spacesForElseStatement = config.fixSpaces ? (node.elseStatement is EmptyStatement ? 0 : 1) : null;
-        if (Constants.DEBUG_I_FORMATTER) logDebug('spacesForElseStatement: $spacesForElseStatement');
+
+        //if (Constants.DEBUG_I_FORMATTER) logDebug('node.thenStatement: ${StringTools.toDisplayString(node.thenStatement)}');
+        //if (Constants.DEBUG_I_FORMATTER) logDebug('spacesForThenStatement: $spacesForThenStatement');
+        //if (Constants.DEBUG_I_FORMATTER) logDebug('spacesForElseStatement: $spacesForElseStatement');
 
         formatState.copyEntity(node.ifKeyword, astVisitor, '$methodName/node.ifKeyword');
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space1);
