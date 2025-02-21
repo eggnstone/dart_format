@@ -210,6 +210,17 @@ void main()
                     TestTools.expect(actualText, equals(expectedText));
                 }
             );
+
+            test('format: TODO 8', ()
+                {
+                    const String inputText = 'class C{bool c(covariant T t);}\n';
+                    const String expectedText = 'class C\n{\n    bool c(covariant T t);\n}\n';
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
         }
     );
 }

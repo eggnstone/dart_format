@@ -40,17 +40,31 @@ void main()
         ),
         TestGroupConfig(
             inputNodeCreator: AstCreator.createFunctionDefaultFormalParameterParameter,
-            inputLeading: 'void f({  ',
+            inputLeading: 'void f({',
             inputMiddle: '@a  required  T  t',
-            inputTrailing: '  }){}',
-            name: '@a required T t (too much spacing)', // TODO: too little spacing
+            inputTrailing: '}){}',
+            name: '@a required T t',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<Annotation>(10, '@a'),
-                TestVisitor<NamedType>(24, 'T')
+                TestVisitor<Annotation>(8, '@a'),
+                TestVisitor<NamedType>(22, 'T')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
                 TestConfig('@a required T t')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createMethodDeclarationParametersParameter,
+            inputLeading: 'class C{void f(',
+            inputMiddle: 'covariant  T  t',
+            inputTrailing: '){}}',
+            name: 'covariant  T  t',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(26, 'T'),
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('covariant T t')
             ]
         )
     ];

@@ -135,6 +135,15 @@ class AstCreator
     static MethodDeclaration createMethodDeclaration(String s)
     => createClassMember(s) as MethodDeclaration;
 
+    static FormalParameterList createMethodDeclarationParameters(String s)
+    => createMethodDeclaration(s).parameters!;
+
+    static FormalParameter createMethodDeclarationParametersParameter(String s)
+    => createMethodDeclarationParametersParameters(s)[0];
+
+    static NodeList<FormalParameter> createMethodDeclarationParametersParameters(String s)
+    => createMethodDeclarationParameters(s).parameters;
+
     static MethodInvocation createMethodInvocationInExpressionStatementInFunction(String s)
     => createExpressionStatementInFunction(s).childEntities.first as MethodInvocation;
 
