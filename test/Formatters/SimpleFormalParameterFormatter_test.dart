@@ -24,32 +24,18 @@ void main()
             ]
         ),
         TestGroupConfig(
-            inputNodeCreator: AstCreator.createFunctionParameter,
-            inputLeading: 'void f(',
-            inputMiddle: 'final  T  t',
-            inputTrailing: '){}',
-            name: 'final  T  t',
-            astVisitors: <TestVisitor<void>>[
-                TestVisitor<NamedType>(14, 'T')
-            ],
-            testConfigs: <TestConfig>[
-                TestConfig.none(),
-                TestConfig('final T t')
-            ]
-        ),
-        TestGroupConfig(
             inputNodeCreator: AstCreator.createFunctionDefaultFormalParameterParameter,
             inputLeading: 'void f({',
-            inputMiddle: '@a  required  T  t',
+            inputMiddle: '@a  required  final  T  t',
             inputTrailing: '}){}',
-            name: '@a required T t',
+            name: '@a required final T t',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<Annotation>(8, '@a'),
-                TestVisitor<NamedType>(22, 'T')
+                TestVisitor<NamedType>(29, 'T')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('@a required T t')
+                TestConfig('@a required final T t')
             ]
         ),
         TestGroupConfig(

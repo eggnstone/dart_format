@@ -27,8 +27,8 @@ class SimpleFormalParameterFormatter extends IFormatter
 
         /*
         formatState.dump(node, 'node');
-        formatState.dump(node.keyword, 'keyword');
         formatState.dump(node.requiredKeyword, 'requiredKeyword');
+        formatState.dump(node.keyword, 'keyword');
         formatState.dump(node.covariantKeyword, 'covariantKeyword');
         formatState.dump(node.type, 'type');
         formatState.dump(node.name, 'name');
@@ -36,16 +36,16 @@ class SimpleFormalParameterFormatter extends IFormatter
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
 
-        if (node.keyword != null)
-        {
-            final int? spacesForKeyword = config.fixSpaces ? (node.offset == node.keyword!.offset ? null : 1) : null;
-            formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword', spacesForKeyword);
-        }
-
         if (node.requiredKeyword != null)
         {
             final int? spacesForRequiredKeyword = config.fixSpaces ? (node.offset == node.requiredKeyword!.offset ? null : 1) : null;
             formatState.copyEntity(node.requiredKeyword, astVisitor, '$methodName/node.requiredKeyword', spacesForRequiredKeyword);
+        }
+
+        if (node.keyword != null)
+        {
+            final int? spacesForKeyword = config.fixSpaces ? (node.offset == node.keyword!.offset ? null : 1) : null;
+            formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword', spacesForKeyword);
         }
 
         if (node.covariantKeyword != null)
