@@ -111,6 +111,17 @@ void main()
                     TestTools.expect(actualText, equals(expectedText));
                 }
             );
+
+            test('format: MethodDeclaration / D<C> c()', ()
+                {
+                    const String inputText = 'void f(bool? b){}';
+                    const String expectedText = 'void f(bool? b)\n{\n}\n';
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
         }
     );
 }

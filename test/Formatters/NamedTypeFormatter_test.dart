@@ -15,7 +15,7 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createMethodReturnType,
             inputLeading: 'class C{',
-            inputMiddle: 'D  <  A  ,  B  >',
+            inputMiddle: 'D  <  A  ,  B  >  ?',
             inputTrailing: 'c() => d();}',
             name: 'NamedType / <A, B>',
             astVisitors: <TestVisitor<void>>[
@@ -23,7 +23,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('D<  A  ,  B  >')
+                TestConfig('D<  A  ,  B  >?')
             ]
         )
     ];

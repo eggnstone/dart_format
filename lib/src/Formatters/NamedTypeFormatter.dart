@@ -26,12 +26,16 @@ class NamedTypeFormatter extends IFormatter
         if (node is! NamedType)
             throw FormatException('Not a NamedType: ${node.runtimeType}');
 
-        /*formatState.dump(node, 'node');
+        /*
+        formatState.dump(node, 'node');
         formatState.dump(node.name2, 'name');
-        formatState.dump(node.typeArguments, 'typeArguments');*/
+        formatState.dump(node.typeArguments, 'typeArguments');
+        formatState.dump(node.question, 'question');
+        */
 
         formatState.copyEntity(node.name2, astVisitor, '$methodName/node.name2');
         formatState.copyEntity(node.typeArguments, astVisitor, '$methodName/node.typeArguments', config.space0);
+        formatState.copyEntity(node.question, astVisitor, '$methodName/node.question', config.space0);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

@@ -35,8 +35,6 @@ class SimpleFormalParameterFormatter extends IFormatter
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
 
-        // TODO: check: spaces: 0 or null?
-
         if (node.requiredKeyword != null)
         {
             final int? spacesForRequiredKeyword = config.fixSpaces ? (node.offset == node.requiredKeyword!.offset ? 0 : 1) : null;

@@ -14,10 +14,10 @@ void main()
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
         TestGroupConfig(
             inputNodeCreator: AstCreator.createFunctionParameter,
-            inputLeading: 'void f(  ',
+            inputLeading: 'void f(',
             inputMiddle: 't',
-            inputTrailing: '  ){}',
-            name: '1 param without type (too much spacing)', // TODO: too little spacing
+            inputTrailing: '){}',
+            name: '1 param without type',
             testConfigs: <TestConfig>[
                 TestConfig.none(),
                 TestConfig('t')
@@ -25,13 +25,13 @@ void main()
         ),
         TestGroupConfig(
             inputNodeCreator: AstCreator.createFunctionParameter,
-            inputLeading: 'void f(  ',
+            inputLeading: 'void f(',
             inputMiddle: '@a  T  t',
-            inputTrailing: '  ){}',
-            name: '@a T t (too much spacing)', // TODO: too little spacing
+            inputTrailing: '){}',
+            name: '@a T? t (too much spacing)', // TODO: too little spacing
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<Annotation>(9, '@a'),
-                TestVisitor<NamedType>(13, 'T')
+                TestVisitor<Annotation>(7, '@a'),
+                TestVisitor<NamedType>(11, 'T')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
