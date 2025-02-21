@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:dart_format/src/Formatters/FieldFormalParameterFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
@@ -14,14 +15,15 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createFunctionDefaultFormalParameterParameter,
             inputLeading: 'void f({',
-            inputMiddle: 'required  this  .  x',
+            inputMiddle: 'required  C  this  .  x',
             inputTrailing: '}){}',
-            name: 'required this.x (too much spacing)', // TODO: too little spacing
+            name: 'required C this.x',
             astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(18, 'C')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('required this.x')
+                TestConfig('required C this.x')
             ]
         )
     ];

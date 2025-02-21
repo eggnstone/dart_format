@@ -199,6 +199,17 @@ void main()
                     TestTools.expect(actualText, equals(expectedText));
                 }
             );
+
+            test('format: TODO 7', ()
+                {
+                    const String inputText = 'class C{C(A this.a){}}\n';
+                    const String expectedText = 'class C\n{\n    C(A this.a)\n    {\n    }\n}\n';
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
         }
     );
 }
