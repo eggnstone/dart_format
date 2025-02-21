@@ -14,17 +14,17 @@ void main()
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
         TestGroupConfig(
             inputNodeCreator: AstCreator.createForElement,
-            inputLeading: 'void f(){x={\n',
-            inputMiddle: 'for (a in b)\nc',
+            inputLeading: 'void f() async { x = {\n',
+            inputMiddle: 'await  for  (  a  in  b  )\nc',
             inputTrailing: '};}',
             name: 'ForElement',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<ForEachPartsWithIdentifier>(18, 'a in b'),
-                TestVisitor<SimpleIdentifier>(26, 'c')
+                TestVisitor<ForEachPartsWithIdentifier>(38, 'a  in  b'),
+                TestVisitor<SimpleIdentifier>(50, 'c')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('for (a in b)\n    c')
+                TestConfig('await for (a  in  b)\n    c')
             ]
         )
     ];
