@@ -100,6 +100,17 @@ void main()
                     TestTools.expect(actualText, equals(expectedText));
                 }
             );
+
+            test('format: MethodDeclaration / D<C> c()', ()
+                {
+                    const String inputText = 'class C{D< C > c() => d();}';
+                    const String expectedText = 'class C\n{\n    D<C> c() => d();\n}\n';
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
         }
     );
 }

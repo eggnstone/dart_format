@@ -132,11 +132,20 @@ class AstCreator
     static FormalParameterList createFunctionParameters(String s)
     => createFunctionExpression(s).parameters!;
 
+    static MethodDeclaration createMethodDeclaration(String s)
+    => createClassMember(s) as MethodDeclaration;
+
     static MethodInvocation createMethodInvocationInExpressionStatementInFunction(String s)
     => createExpressionStatementInFunction(s).childEntities.first as MethodInvocation;
 
+    static TypeAnnotation createMethodReturnType(String s)
+    => createMethodDeclaration(s).returnType!;
+
     static MixinDeclaration createMixinDeclaration(String s)
     => createDeclaration(s) as MixinDeclaration;
+
+    static NamedType createNamedTypeInMethodReturnType(String s)
+    => createMethodReturnType(s) as NamedType;
 
     static TypeAnnotation createNamedTypeOfTopLevelVariable(String s)
     => createTopLevelVariableList(s).type!;
@@ -189,6 +198,12 @@ class AstCreator
 
     static TypeAnnotation createTypeAnnotationInFunctionParameter(String s)
     => createSimpleFormalParameterInFunction(s).type!;
+
+    static TypeArgumentList createTypeArgumentListInMethodReturnType(String s)
+    => createNamedTypeInMethodReturnType(s).typeArguments!;
+
+    static TypeParameterList createTypeParameterListInFunction(String s)
+    => createFunctionExpression(s).typeParameters!;
 
     static VariableDeclaration createVariableDeclarationInFunction(String s)
     => createVariableDeclarationListInFunction(s).variables[0];

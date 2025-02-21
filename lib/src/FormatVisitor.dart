@@ -60,6 +60,7 @@ import 'Formatters/MethodInvocationFormatter.dart';
 import 'Formatters/MixinDeclarationFormatter.dart';
 import 'Formatters/MixinOnClauseFormatter.dart';
 import 'Formatters/NamedExpressionFormatter.dart';
+import 'Formatters/NamedTypeFormatter.dart';
 import 'Formatters/NativeFunctionBodyFormatter.dart';
 import 'Formatters/ObjectPatternFormatter.dart';
 import 'Formatters/PartDirectiveFormatter.dart';
@@ -156,6 +157,7 @@ class FormatVisitor extends AstVisitor<void>
     late final MixinDeclarationFormatter _mixinDeclarationFormatter = MixinDeclarationFormatter(config, this, _formatState);
     late final MixinOnClauseFormatter _mixinOnClauseFormatter = MixinOnClauseFormatter(config, this, _formatState);
     late final NamedExpressionFormatter _namedExpressionFormatter = NamedExpressionFormatter(config, this, _formatState);
+    late final NamedTypeFormatter _namedTypeFormatter = NamedTypeFormatter(config, this, _formatState);
     late final NativeFunctionBodyFormatter _nativeFunctionBodyFormatter = NativeFunctionBodyFormatter(config, this, _formatState);
     late final ObjectPatternFormatter _objectPatternFormatter = ObjectPatternFormatter(config, this, _formatState);
     late final PartDirectiveFormatter _partDirectiveFormatter = PartDirectiveFormatter(config, this, _formatState);
@@ -606,7 +608,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitNamedType(NamedType node)
-    => _defaultFormatter.format(node);
+    => _namedTypeFormatter.format(node);
 
     @override
     void visitNativeClause(NativeClause node)

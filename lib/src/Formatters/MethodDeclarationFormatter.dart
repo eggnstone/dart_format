@@ -29,7 +29,6 @@ class MethodDeclarationFormatter extends IFormatter
             throw FormatException('Not a MethodDeclaration: ${node.runtimeType}');
 
         /*
-        logError('MethodDeclaration');
         formatState.dump(node, 'node');
         formatState.dumpList(node.sortedCommentAndAnnotations, 'sortedCommentAndAnnotations');
         formatState.dump(node.modifierKeyword, 'modifierKeyword');

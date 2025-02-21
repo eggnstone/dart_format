@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
+import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
@@ -26,10 +27,8 @@ class TypeArgumentListFormatter extends IFormatter
             throw FormatException('Not a TypeArgumentList: ${node.runtimeType}');
 
         formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
-        //formatState.pushLevel('$methodName/node.leftBracket');
-        formatState.acceptListWithComma(node.arguments, node.rightBracket, astVisitor, '$methodName/node.arguments');
-        //formatState.popLevelAndIndent();
-        formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
+        formatState.acceptListWithComma(node.arguments, node.rightBracket, astVisitor, '$methodName/node.arguments', leadingSpaces: config.space0, trimCommaText: config.fixSpaces);
+        formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket', config.space0);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
