@@ -18,7 +18,7 @@ void main()
             name: 'GenericTypeAlias with Type',
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('typedef X=Y;\n')
+                TestConfig('typedef X = Y;\n')
             ],
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<NamedType>(10, 'Y')
@@ -30,7 +30,7 @@ void main()
             name: 'GenericTypeAlias with GenericFunctionType',
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('typedef F=void Function();\n')
+                TestConfig('typedef F = void Function();\n')
             ],
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<GenericFunctionType>(10, 'void Function()')

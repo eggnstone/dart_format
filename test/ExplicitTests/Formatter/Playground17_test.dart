@@ -133,6 +133,39 @@ void main()
                     TestTools.expect(actualText, equals(expectedText));
                 }
             );
+
+            test('format: TODO 1', ()
+                {
+                    const String inputText = 'typedef IntTuple = Tuple<int, int>;\n';
+                    const String expectedText = inputText;
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
+
+            test('format: TODO 2', ()
+                {
+                    const String inputText = 'void f()\n{\n    if (a is B);\n}\n';
+                    const String expectedText = inputText;
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
+
+            test('format: TODO 3', ()
+                {
+                    const String inputText = 'void f()\n{\n    if (a is! B);\n}\n';
+                    const String expectedText = inputText;
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
         }
     );
 }

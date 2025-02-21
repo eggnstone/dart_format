@@ -387,6 +387,8 @@ class FormatState
             if (filler.replaceAll(' ', '').isEmpty && _textBuffers.length == 1 && _textBuffers.last.toString().isEmpty)
             {
                 if (Constants.DEBUG_FORMAT_STATE) logInternal('  Skipping space-only filler');
+                if (spaces != null)
+                    logWarning('Skipping space-only filler: spaces (${StringTools.toDisplayString(spaces)}) != null');
                 /*
                 Why did we have this exception?
                 if (spaces != null)
