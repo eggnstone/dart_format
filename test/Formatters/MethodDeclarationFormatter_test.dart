@@ -137,6 +137,21 @@ void main()
                 TestConfig.none(),
                 TestConfig('bool get b  /**/  =>  false  ;')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createClassMember,
+            inputLeading: 'class C{',
+            inputMiddle: 'external  bool get  b  ;',
+            inputTrailing: '}',
+            name: 'MethodDeclaration / external bool get b;',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(18, 'bool'),
+                TestVisitor<EmptyFunctionBody>(31, ';')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('external bool get b;')
+            ]
         )
     ];
 

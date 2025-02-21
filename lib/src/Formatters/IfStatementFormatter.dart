@@ -6,7 +6,6 @@ import '../Constants/Constants.dart';
 import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
-import '../Tools/LogTools.dart';
 import '../Tools/StringTools.dart';
 import 'IFormatter.dart';
 

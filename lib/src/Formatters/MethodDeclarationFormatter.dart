@@ -42,6 +42,12 @@ class MethodDeclarationFormatter extends IFormatter
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
 
+        if (node.externalKeyword != null)
+        {
+            final int? spacesForExternalKeyword = config.fixSpaces ? (node.offset == node.externalKeyword!.offset ? 0 : 1) : null;
+            formatState.copyEntity(node.externalKeyword, astVisitor, '$methodName/node.externalKeyword', spacesForExternalKeyword);
+        }
+
         if (node.modifierKeyword != null)
         {
             final int? spacesForModifierKeyword = config.fixSpaces ? (node.offset == node.modifierKeyword!.offset ? 0 : 1) : null;
@@ -66,10 +72,8 @@ class MethodDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters', config.space0);
         formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters', config.space0);
 
-        //formatState.consumeSpacesBeforeFunctionBody(node.body, config);
         final int? spacesForBody = config.fixSpaces ? (node.body is EmptyFunctionBody ? 0 : 1) : null;
         formatState.copyEntity(node.body, astVisitor, '$methodName/node.body', spacesForBody);
-        //formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
