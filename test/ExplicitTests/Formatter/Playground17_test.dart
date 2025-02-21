@@ -122,6 +122,17 @@ void main()
                     TestTools.expect(actualText, equals(expectedText));
                 }
             );
+
+            test('format: MethodDeclaration / D<C> c()', ()
+                {
+                    const String inputText = 'final A.B r = x();';
+                    const String expectedText = 'final A.B r = x();\n';
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
         }
     );
 }

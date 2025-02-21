@@ -15,15 +15,30 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createMethodReturnType,
             inputLeading: 'class C{',
-            inputMiddle: 'D  <  A  ,  B  >  ?',
+            inputMiddle: 'E  <  A  ,  B  >  ?',
             inputTrailing: 'c() => d();}',
-            name: 'NamedType / <A, B>',
+            name: 'NamedType / E<A, B>',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<TypeArgumentList>(11, '<  A  ,  B  >')
+                TestVisitor<TypeArgumentList>(11, '<  A  ,  B  >'),
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('D<  A  ,  B  >?')
+                TestConfig('E<  A  ,  B  >?')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createMethodReturnType,
+            inputLeading: 'class C{',
+            inputMiddle: 'D  .  E  <  A  ,  B  >  ?',
+            inputTrailing: 'c() => d();}',
+            name: 'NamedType / D.E<A, B>',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<ImportPrefixReference>(8, 'D  .'),
+                TestVisitor<TypeArgumentList>(17, '<  A  ,  B  >'),
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('D  .E<  A  ,  B  >?')
             ]
         )
     ];

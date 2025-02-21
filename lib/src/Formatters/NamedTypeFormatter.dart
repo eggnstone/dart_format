@@ -28,12 +28,14 @@ class NamedTypeFormatter extends IFormatter
 
         /*
         formatState.dump(node, 'node');
-        formatState.dump(node.name2, 'name');
+        formatState.dump(node.importPrefix, 'importPrefix');
+        formatState.dump(node.name2, 'name2');
         formatState.dump(node.typeArguments, 'typeArguments');
         formatState.dump(node.question, 'question');
         */
 
-        formatState.copyEntity(node.name2, astVisitor, '$methodName/node.name2');
+        formatState.copyEntity(node.importPrefix, astVisitor, '$methodName/node.importPrefix');
+        formatState.copyEntity(node.name2, astVisitor, '$methodName/node.name2', config.space0);
         formatState.copyEntity(node.typeArguments, astVisitor, '$methodName/node.typeArguments', config.space0);
         formatState.copyEntity(node.question, astVisitor, '$methodName/node.question', config.space0);
 
