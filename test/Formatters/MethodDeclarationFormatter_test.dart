@@ -152,6 +152,22 @@ void main()
                 TestConfig.none(),
                 TestConfig('external bool get b;')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createClassMember,
+            inputLeading: 'class C{',
+            inputMiddle: 'bool  operator  []  (  int  i  )  ;',
+            inputTrailing: '}',
+            name: 'MethodDeclaration / TODO',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(8, 'bool'),
+                TestVisitor<FormalParameterList>(28, '(  int  i  )'),
+                TestVisitor<EmptyFunctionBody>(42, ';'),
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('bool operator[](  int  i  );')
+            ]
         )
     ];
 

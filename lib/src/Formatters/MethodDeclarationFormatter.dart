@@ -34,6 +34,7 @@ class MethodDeclarationFormatter extends IFormatter
         formatState.dump(node.modifierKeyword, 'modifierKeyword');
         formatState.dump(node.returnType, 'returnType');
         formatState.dump(node.propertyKeyword, 'propertyKeyword');
+        formatState.dump(node.operatorKeyword, 'operatorKeyword');
         formatState.dump(node.name, 'name');
         formatState.dump(node.typeParameters, 'typeParameters');
         formatState.dump(node.parameters, 'parameters');
@@ -66,7 +67,13 @@ class MethodDeclarationFormatter extends IFormatter
             formatState.copyEntity(node.propertyKeyword, astVisitor, '$methodName/node.propertyKeyword', spacesForPropertyKeyword);
         }
 
-        final int? spacesForName = config.fixSpaces ? (node.offset == node.name.offset ? 0 : 1) : null;
+        if (node.operatorKeyword != null)
+        {
+            final int? spacesForOperatorKeyword = config.fixSpaces ? (node.offset == node.operatorKeyword!.offset ? null : 1) : null;
+            formatState.copyEntity(node.operatorKeyword, astVisitor, '$methodName/node.operatorKeyword', spacesForOperatorKeyword);
+        }
+
+        final int? spacesForName = config.fixSpaces ? (node.offset == node.name.offset ? 0 : node.operatorKeyword == null ? 1 : 0) : null;
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name', spacesForName);
 
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters', config.space0);

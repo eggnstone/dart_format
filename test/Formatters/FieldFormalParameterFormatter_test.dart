@@ -15,15 +15,16 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createFunctionDefaultFormalParameterParameter,
             inputLeading: 'void f({',
-            inputMiddle: 'required  C  this  .  x',
+            inputMiddle: '@a  required  C  this  .  x',
             inputTrailing: '}){}',
             name: 'required C this.x',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<NamedType>(18, 'C')
+                TestVisitor<Annotation>(8, '@a'),
+                TestVisitor<NamedType>(22, 'C')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('required C this.x')
+                TestConfig('@a required C this.x')
             ]
         )
     ];

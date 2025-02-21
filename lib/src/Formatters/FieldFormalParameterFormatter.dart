@@ -31,10 +31,12 @@ class FieldFormalParameterFormatter extends IFormatter
         formatState.dump(node.type, 'node.type');
         */
 
+        final int? spacesForRequiredKeyword = node.requiredKeyword == null ? null : config.fixSpaces ? (node.offset == node.requiredKeyword!.offset ? null : 1) : null;
         final int? spacesForType = node.type == null ? null : config.fixSpaces ? (node.offset == node.type!.offset ? null : 1) : null;
         final int? spacesForThisKeyword = config.fixSpaces ? (node.offset == node.thisKeyword.offset ? null : 1) : null;
 
-        formatState.copyEntity(node.requiredKeyword, astVisitor, '$methodName/node.requiredKeyword');
+        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
+        formatState.copyEntity(node.requiredKeyword, astVisitor, '$methodName/node.requiredKeyword', spacesForRequiredKeyword);
         formatState.copyEntity(node.type, astVisitor, '$methodName/node.type', spacesForType);
         formatState.copyEntity(node.thisKeyword, astVisitor, '$methodName/node.thisKeyword', spacesForThisKeyword);
         formatState.copyEntity(node.period, astVisitor, '$methodName/node.period', config.space0);
