@@ -1043,9 +1043,10 @@ class FormatState
 
     void consumeSpacesBeforeFunctionBody(FunctionBody body, Config config)
     {
-        logError('fixSpaces:                    ${config.fixSpaces}');
-        logError('addNewLineBeforeOpeningBrace: ${config.addNewLineBeforeOpeningBrace}');
-        logError('node.body:                    ${body.runtimeType}');
+        if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('consumeSpacesBeforeFunctionBody()');
+        if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('  body:                         ${body.runtimeType}');
+        if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('  fixSpaces:                    ${config.fixSpaces}');
+        if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('  addNewLineBeforeOpeningBrace: ${config.addNewLineBeforeOpeningBrace}');
 
         int? spacesForBody;
         if (config.fixSpaces)
@@ -1054,15 +1055,17 @@ class FormatState
             {
                 if (!config.addNewLineBeforeOpeningBrace)
                     spacesForBody = 1;
-                /*else
-                    spacesForBody = 0;*/
             }
             else if (body is ExpressionFunctionBody)
-                spacesForBody = 1;
+            {
+                final String textToConsume = getText(lastConsumedPosition, body.offset);
+                if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('  textToConsume:                ${StringTools.toDisplayString(textToConsume)}');
+                if (!textToConsume.contains('\n'))
+                    spacesForBody = 1;
+            }
         }
 
-        logError('spacesForBody:                $spacesForBody');
-
+        if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('  spacesForBody:                $spacesForBody');
         if (spacesForBody != 1)
             return;
 
