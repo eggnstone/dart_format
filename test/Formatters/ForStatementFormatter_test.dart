@@ -15,46 +15,46 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createStatementInFunction,
             inputLeading: 'void f(){',
-            inputMiddle: 'for(;;);',
+            inputMiddle: 'for  (  ;  ;  )  ;',
             inputTrailing: '}',
             name: 'ForStatement for(;;);',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<ForPartsWithExpression>(13, ';;'),
-                TestVisitor<EmptyStatement>(16, ';')
+                TestVisitor<ForPartsWithExpression>(17, ';  ;'),
+                TestVisitor<EmptyStatement>(26, ';')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('for (;;);')
+                TestConfig('for (;  ;)  ;')
             ]
         ),
         TestGroupConfig(
             inputNodeCreator: AstCreator.createStatementInFunction,
             inputLeading: 'void f(){',
-            inputMiddle: 'for(;;)\n;',
+            inputMiddle: 'for  (  ;  ;  )  \n  ;',
             inputTrailing: '}',
             name: r'ForStatement for(;;)\n;',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<ForPartsWithExpression>(13, ';;'),
-                TestVisitor<EmptyStatement>(17, ';')
+                TestVisitor<ForPartsWithExpression>(17, ';  ;'),
+                TestVisitor<EmptyStatement>(29, ';')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('for (;;)\n    ;')
+                TestConfig('for (;  ;)  \n    ;')
             ]
         ),
         TestGroupConfig(
             inputNodeCreator: AstCreator.createStatementInFunction,
             inputLeading: 'void f()async{',
-            inputMiddle: 'await for(a in b);',
+            inputMiddle: 'await  for  (  a  in  b  )  ;',
             inputTrailing: '}',
             name: 'ForStatement await for(a in b);',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<ForEachPartsWithIdentifier>(24, 'a in b'),
-                TestVisitor<EmptyStatement>(31, ';')
+                TestVisitor<ForEachPartsWithIdentifier>(29, 'a  in  b'),
+                TestVisitor<EmptyStatement>(42, ';')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('await for (a in b);')
+                TestConfig('await for (a  in  b)  ;')
             ]
         )
     ];

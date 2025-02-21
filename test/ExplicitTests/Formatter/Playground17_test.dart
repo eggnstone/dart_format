@@ -188,6 +188,17 @@ void main()
                     TestTools.expect(actualText, equals(expectedText));
                 }
             );
+
+            test('format: TODO 6', ()
+                {
+                    const String inputText = 'void  f  (  )  {  for  (  int  i  =  0  ;  i  >=  0  ;  i  --  )  ;}';
+                    const String expectedText = 'void f()\n{\n    for (int i = 0; i >= 0; i--);\n}\n';
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
         }
     );
 }
