@@ -184,7 +184,6 @@ class CommentTools
             return s;
         }
 
-
         final String result = resultBuffer.toString();
         if (Constants.DEBUG_COMMENT_TOOLS) logInternal('< $METHOD_NAME(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}) < ${StringTools.toDisplayString(result, Constants.MAX_DEBUG_LENGTH)}');
 

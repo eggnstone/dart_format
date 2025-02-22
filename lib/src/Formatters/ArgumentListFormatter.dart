@@ -31,11 +31,11 @@ class ArgumentListFormatter extends IFormatter
 
         final Copier copier = Copier(astVisitor, config, formatState, node);
 
-        copier.copyEntity(node.leftParenthesis,  '$CLASS_NAME/node.leftParenthesis', Spacing.zero);
+        copier.copyEntity(node.leftParenthesis, '$CLASS_NAME/node.leftParenthesis', Spacing.zero);
         formatState.pushLevel('$CLASS_NAME/node.leftParenthesis');
         copier.acceptListWithComma(node.arguments, node.rightParenthesis, '$CLASS_NAME/node.arguments', leadingSpaces: config.space0, trimCommaText: config.fixSpaces);
         formatState.popLevelAndIndent();
-        copier.copyEntity(node.rightParenthesis,  '$CLASS_NAME/node.rightParenthesis', Spacing.zero);
+        copier.copyEntity(node.rightParenthesis, '$CLASS_NAME/node.rightParenthesis', Spacing.zero);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $CLASS_NAME(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
