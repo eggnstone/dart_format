@@ -3,10 +3,11 @@ class Constants
     static const bool DEBUG = false;
     static const bool DEBUG_ALL = false;
 
+    static const bool DEBUG_COMMENT_TOOLS = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_DART_FORMAT_HANDLERS = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_FORMAT_STATE = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_FORMAT_STATE_SPACING = (DEBUG && false) || DEBUG_ALL;
-    static const bool DEBUG_FORMAT_TOOLS = DEBUG && false; // || DEBUG_ALL;
+    static const bool DEBUG_FORMAT_TOOLS = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_FORMATTER = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_FORMATTER_DEFAULT = (DEBUG && false) || DEBUG_ALL;
     static const bool DEBUG_I_FORMATTER = (DEBUG && false) || DEBUG_ALL;
