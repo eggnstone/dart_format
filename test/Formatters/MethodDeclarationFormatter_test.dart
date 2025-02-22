@@ -162,7 +162,7 @@ void main()
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<NamedType>(8, 'bool'),
                 TestVisitor<FormalParameterList>(28, '(  int  i  )'),
-                TestVisitor<EmptyFunctionBody>(42, ';'),
+                TestVisitor<EmptyFunctionBody>(42, ';')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

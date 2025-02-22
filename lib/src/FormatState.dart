@@ -88,7 +88,7 @@ class FormatState
                 if (!FormatTools.isPeriodText(periodText))
                     throw DartFormatException.error('periodText is not a period: ${StringTools.toDisplayString(periodText)}');
 
-                consumeText(lastNode.end, node.offset, periodText, '$source/Period');
+                consumeText(lastNode.end, node.offset, periodText, source);
             }
 
             node.accept(astVisitor);
@@ -107,7 +107,7 @@ class FormatState
                 if (!FormatTools.isPeriodText(periodText))
                     throw DartFormatException.error('periodText is not a period: ${StringTools.toDisplayString(periodText)}');
 
-                consumeText(lastToken.end, token.offset, periodText, '$source/Period');
+                consumeText(lastToken.end, token.offset, periodText, source);
             }
 
             copyToken(token, source, addNewLineBefore: false, addNewLineAfter: false);
@@ -156,7 +156,7 @@ class FormatState
                     commaText = trimmedCommaText;
                 }
 
-                consumeText(end, node.offset, commaText, '$source/Comma');
+                consumeText(end, node.offset, commaText, source);
             }
 
             node.accept(astVisitor);
@@ -194,7 +194,7 @@ class FormatState
 
                     // TODO: test
                     if (adjustedLastNodeEnd < endToken.offset)
-                        consumeText(adjustedLastNodeEnd, endToken.offset, commaText, '$source/TrailingComma');
+                        consumeText(adjustedLastNodeEnd, endToken.offset, commaText, source);
                     else
                         logWarning('Trailing comma text not consumed: adjustedLastNodeEnd < endToken.offset');
                 }
@@ -205,7 +205,6 @@ class FormatState
     void addNewLineAfterToken(Token? token, String source, {required bool add})
     {
         const String methodName = 'addNewLineAfterToken';
-        final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(add=$add, ${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
         //if (Constants.DEBUG_FORMAT_STATE) logInternal('  sb: ${StringTools.toDisplayStringCutAtEnd(getResult(), Constants.MAX_DEBUG_LENGTH)}');
 
@@ -255,19 +254,18 @@ class FormatState
         {
             // EOF
             if (Constants.DEBUG_FORMAT_STATE) logInternal('  EOF');
-            consumeText(token.end, nextToken.offset, filler, fullSource);
-            _addNewLineBeforeToken(nextToken, add: add, beforeComments: false, fullSource);
+            consumeText(token.end, nextToken.offset, filler, source);
+            _addNewLineBeforeToken(nextToken, add: add, beforeComments: false, source);
             return;
         }
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  Not EOF');
-        _addNewLineBeforeToken(nextToken, add: add, beforeComments: true, fullSource);
+        _addNewLineBeforeToken(nextToken, add: add, beforeComments: true, source);
     }
 
     void _addNewLineBeforeToken(Token? token, String source, {required bool add, required bool beforeComments})
     {
         const String methodName = 'addNewLineBeforeToken';
-        final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(add=$add, beforeComments=$beforeComments, ${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
         if (token == null || !add)
@@ -285,7 +283,7 @@ class FormatState
         if (lastConsumedPosition == token.offset)
         {
             if (Constants.DEBUG_FORMAT_STATE) logInternal('  Adding line break because no upcoming filler / not already in SB.');
-            addText('\n', fullSource);
+            addText('\n', source);
             return;
         }
 
@@ -312,23 +310,21 @@ class FormatState
             logAndThrowErrorWithOffset('Internal error: Upcoming trimmed filler is not empty/whitespace-only:', StringTools.toDisplayString(filler), lastConsumedPosition);
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  Replacing empty or whitespace-only filler with line break because upcoming filler does not contain line break.');
-        consumeText(lastConsumedPosition, end, '', fullSource);
-        addText('\n', fullSource);
+        consumeText(lastConsumedPosition, end, '', source);
+        addText('\n', source);
     }
 
     void addText(String s, String source)
     {
         const String methodName = 'addText';
-        final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
-        consumeText(lastConsumedPosition, lastConsumedPosition, s, fullSource);
+        consumeText(lastConsumedPosition, lastConsumedPosition, s, source);
     }
 
     void consumeText(int offset, int end, String s, String source, {bool isString = false, int? spaces})
     {
         const String methodName = 'consumeText';
-        final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE)
         {
             logInternal('# $methodName($offset-$end, isString: $isString, spaces: $spaces, source: $source)');
@@ -401,7 +397,7 @@ class FormatState
                 if (Constants.DEBUG_FORMAT_STATE)
                 {
                     logInternal('  fixedFiller/4a:   ${StringTools.toDisplayString(fixedFiller)}');
-                    logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
+                    logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($source)');
                 }
 
                 if (spaces != null)
@@ -473,7 +469,7 @@ class FormatState
             }
         }
 
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('+ ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)} ($source)');
         final String fixedS = _removeLeadingWhitespace(s, offset, isString: isString);
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  S w/o leading ws:  ${StringTools.toDisplayString(fixedS)}');
 
@@ -498,13 +494,12 @@ class FormatState
 
         write(fixedS);
 
-        _setLastConsumedPosition(end, fullSource);
+        _setLastConsumedPosition(end, source);
     }
 
     void consumeTill(int end, String source)
     {
         const String methodName = 'consumeTill';
-        final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($end, $source)');
 
         if (lastConsumedPosition >= end)
@@ -539,12 +534,12 @@ class FormatState
         if (Constants.DEBUG_FORMAT_STATE)
         {
             logInternal('  fixedFiller:               ${StringTools.toDisplayString(fixedFiller)}');
-            logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($fullSource)');
+            logInternal('+ ${StringTools.toDisplayString(fixedFiller, Constants.MAX_DEBUG_LENGTH)} ($source)');
         }
 
         write(fixedFiller);
 
-        _setLastConsumedPosition(end, fullSource);
+        _setLastConsumedPosition(end, source);
     }
 
     void consumeTillTheEnd(String source)
@@ -572,12 +567,11 @@ class FormatState
     void copyEntity(SyntacticEntity? entity, AstVisitor<void> astVisitor, String source, [int? spaces])
     {
         const String methodName = 'copyEntity';
-        final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(entity, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
         if (entity == null)
         {
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <null> ($fullSource)');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <null> ($source)');
             return;
         }
 
@@ -587,7 +581,7 @@ class FormatState
             entity.accept(astVisitor);
         }
         else
-            copyText(entity.offset, entity.end, fullSource, spaces);
+            copyText(entity.offset, entity.end, source, spaces);
     }
 
     void copyOpeningBraceAndPushLevel(Token token, Config config, String source)
@@ -600,17 +594,15 @@ class FormatState
     void copyText(int offset, int end, String source, [int? spaces])
     {
         const String methodName = 'copyText';
-        final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName($offset, $end, $source)');
 
         final String s = getText(offset, end);
-        consumeText(offset, end, s, fullSource, spaces: spaces);
+        consumeText(offset, end, s, source, spaces: spaces);
     }
 
     void copyString(int offset, int end, String source)
     {
         const String methodName = 'copyString';
-        final String fullSource = '$source/$methodName';
         final String s = getText(offset, end);
         if (Constants.DEBUG_FORMAT_STATE)
         {
@@ -618,7 +610,7 @@ class FormatState
             logInternal('  ${StringTools.toDisplayString(s)}');
         }
 
-        consumeText(offset, end, s, fullSource, isString: true);
+        consumeText(offset, end, s, source, isString: true);
     }
 
     void copyToken(Token token, String source, {
@@ -630,31 +622,29 @@ class FormatState
         })
     {
         const String methodName = 'copyToken';
-        final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, addNewLineBefore=$addNewLineBefore, addNewLineAfter=$addNewLineAfter, pushLevel: $pushLevel, popLevel: $popLevel, $source)');
 
-        _copyTokenCommentsOnly(token, fullSource);
-        _addNewLineBeforeToken(token, add: addNewLineBefore, beforeComments: false, fullSource);
+        _copyTokenCommentsOnly(token, source);
+        _addNewLineBeforeToken(token, add: addNewLineBefore, beforeComments: false, source);
 
         if (popLevel)
             popLevelAndIndent();
 
-        _copyTokenWithoutComments(token, fullSource, spaces);
-        addNewLineAfterToken(token, add: addNewLineAfter, fullSource);
+        _copyTokenWithoutComments(token, source, spaces);
+        addNewLineAfterToken(token, add: addNewLineAfter, source);
 
         if (pushLevel)
-            this.pushLevel(fullSource);
+            this.pushLevel(source);
     }
 
     void _copyTokenCommentsOnly(Token? token, String source /*, [int? spaces]*/)
     {
         const String methodName = 'copyTokenCommentsOnly';
-        final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
         if (token == null)
         {
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <null> ($fullSource)');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <null> ($source)');
             return;
         }
 
@@ -669,7 +659,7 @@ class FormatState
 
         if (commentsOffset == null || commentsEnd == null)
         {
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <no comments> ($fullSource)');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <no comments> ($source)');
             return;
         }
 
@@ -689,7 +679,7 @@ class FormatState
         // TODO: test
         if (adjustedCommentsOffset < commentsEnd)
         {
-            copyText(adjustedCommentsOffset, commentsEnd, fullSource /*, spaces*/);
+            copyText(adjustedCommentsOffset, commentsEnd, source /*, spaces*/);
         }
         else
         {
@@ -700,12 +690,11 @@ class FormatState
     void _copyTokenWithoutComments(Token? token, String source, [int? spaces])
     {
         const String methodName = 'copyTokenWithoutComments';
-        final String fullSource = '$source/$methodName';
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# $methodName(${StringTools.toDisplayString(token, Constants.MAX_DEBUG_LENGTH)}, $source)');
 
         if (token == null)
         {
-            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <null> ($fullSource)');
+            if (Constants.DEBUG_FORMAT_STATE) logInternal('+ <null> ($source)');
             return;
         }
 
@@ -719,7 +708,7 @@ class FormatState
 
         if (commentTokenEnd == null)
         {
-            copyText(token.offset, token.end, fullSource, spaces);
+            copyText(token.offset, token.end, source, spaces);
             return;
         }
 
@@ -739,7 +728,7 @@ class FormatState
         // TODO: test
         if (adjustedCommentTokenEnd < token.end)
         {
-            copyText(adjustedCommentTokenEnd, token.end, fullSource, spaces);
+            copyText(adjustedCommentTokenEnd, token.end, source, spaces);
         }
         else
         {

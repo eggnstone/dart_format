@@ -45,7 +45,7 @@ void main()
             inputTrailing: '){}}',
             name: 'covariant T t',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<NamedType>(26, 'T'),
+                TestVisitor<NamedType>(26, 'T')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -62,7 +62,7 @@ void main()
                 TestConfig.none(),
                 TestConfig('var t')
             ]
-        ),
+        )
     ];
 
     TestTools.runTestGroupsForFormatter(testGroupConfigs, 'SimpleFormalParameterFormatter', SimpleFormalParameterFormatter.new, StackTrace.current);
