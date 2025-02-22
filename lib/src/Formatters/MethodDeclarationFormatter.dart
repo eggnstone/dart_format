@@ -3,10 +3,11 @@
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
+import '../Copier.dart';
 import '../Data/Config.dart';
-import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
+import '../Types/Spacing.dart';
 import 'IFormatter.dart';
 
 class MethodDeclarationFormatter extends IFormatter
@@ -41,46 +42,21 @@ class MethodDeclarationFormatter extends IFormatter
         formatState.dump(node.body, 'body');
         */
 
-        formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
+        final Copier copier = Copier(astVisitor, config, formatState, node);
 
-        if (node.externalKeyword != null)
-        {
-            final int? spacesForExternalKeyword = config.fixSpaces ? (node.offset == node.externalKeyword!.offset ? 0 : 1) : null;
-            formatState.copyEntity(node.externalKeyword, astVisitor, '$methodName/node.externalKeyword', spacesForExternalKeyword);
-        }
-
-        if (node.modifierKeyword != null)
-        {
-            final int? spacesForModifierKeyword = config.fixSpaces ? (node.offset == node.modifierKeyword!.offset ? 0 : 1) : null;
-            formatState.copyEntity(node.modifierKeyword, astVisitor, '$methodName/node.modifierKeyword', spacesForModifierKeyword);
-        }
-
-        if (node.returnType != null)
-        {
-            final int? spacesForReturnType = config.fixSpaces ? (node.offset == node.returnType!.offset ? 0 : 1) : null;
-            formatState.copyEntity(node.returnType, astVisitor, '$methodName/node.returnType', spacesForReturnType);
-        }
-
-        if (node.propertyKeyword != null)
-        {
-            final int? spacesForPropertyKeyword = config.fixSpaces ? (node.offset == node.propertyKeyword!.offset ? 0 : 1) : null;
-            formatState.copyEntity(node.propertyKeyword, astVisitor, '$methodName/node.propertyKeyword', spacesForPropertyKeyword);
-        }
-
-        if (node.operatorKeyword != null)
-        {
-            final int? spacesForOperatorKeyword = config.fixSpaces ? (node.offset == node.operatorKeyword!.offset ? null : 1) : null;
-            formatState.copyEntity(node.operatorKeyword, astVisitor, '$methodName/node.operatorKeyword', spacesForOperatorKeyword);
-        }
+        copier.acceptList(node.sortedCommentAndAnnotations, '$methodName/node.sortedCommentAndAnnotations');
+        copier.copyEntity(node.externalKeyword, '$methodName/node.externalKeyword', Spacing.zeroOne);
+        copier.copyEntity(node.modifierKeyword, '$methodName/node.modifierKeyword', Spacing.zeroOne);
+        copier.copyEntity(node.returnType, '$methodName/node.returnType', Spacing.zeroOne);
+        copier.copyEntity(node.propertyKeyword, '$methodName/node.propertyKeyword', Spacing.zeroOne);
+        copier.copyEntity(node.operatorKeyword, '$methodName/node.operatorKeyword', Spacing.zeroOne);
 
         final int? spacesForName = config.fixSpaces ? (node.offset == node.name.offset ? 0 : node.operatorKeyword == null ? 1 : 0) : null;
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name', spacesForName);
 
-        formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters', config.space0);
-        formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters', config.space0);
-
-        final int? spacesForBody = config.fixSpaces ? (node.body is EmptyFunctionBody ? 0 : 1) : null;
-        formatState.copyEntity(node.body, astVisitor, '$methodName/node.body', spacesForBody);
+        copier.copyEntity(node.typeParameters, '$methodName/node.typeParameters', Spacing.zero);
+        copier.copyEntity(node.parameters, '$methodName/node.parameters', Spacing.zero);
+        copier.copyEntity(node.body, '$methodName/node.body', Spacing.emptyFunctionBodyZeroOne);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

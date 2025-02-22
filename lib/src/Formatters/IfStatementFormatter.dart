@@ -3,10 +3,11 @@
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
+import '../Copier.dart';
 import '../Data/Config.dart';
-import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
+import '../Types/Spacing.dart';
 import 'IFormatter.dart';
 
 class IfStatementFormatter extends IFormatter
@@ -36,21 +37,16 @@ class IfStatementFormatter extends IFormatter
         formatState.dump(node.thenStatement, 'thenStatement');
         */
 
-        final int? spacesForThenStatement = config.fixSpaces ? (node.thenStatement is EmptyStatement ? 0 : 1) : null;
-        final int? spacesForElseStatement = config.fixSpaces ? (node.elseStatement is EmptyStatement ? 0 : 1) : null;
+        final Copier copier = Copier(astVisitor, config, formatState, node);
 
-        //if (Constants.DEBUG_I_FORMATTER) logDebug('node.thenStatement: ${StringTools.toDisplayString(node.thenStatement)}');
-        //if (Constants.DEBUG_I_FORMATTER) logDebug('spacesForThenStatement: $spacesForThenStatement');
-        //if (Constants.DEBUG_I_FORMATTER) logDebug('spacesForElseStatement: $spacesForElseStatement');
-
-        formatState.copyEntity(node.ifKeyword, astVisitor, '$methodName/node.ifKeyword');
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space1);
-        formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression', config.space0);
-        formatState.copyEntity(node.caseClause, astVisitor, '$methodName/node.caseClause', config.space1);
-        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
+        copier.copyEntity(node.ifKeyword,  '$methodName/node.ifKeyword', Spacing.zeroOne);
+        copier.copyEntity(node.leftParenthesis,  '$methodName/node.leftParenthesis', Spacing.one);
+        copier.copyEntity(node.expression,  '$methodName/node.expression', Spacing.zero);
+        copier.copyEntity(node.caseClause,  '$methodName/node.caseClause', Spacing.one);
+        copier.copyEntity(node.rightParenthesis,  '$methodName/node.rightParenthesis', Spacing.zero);
 
         formatState.pushLevel('$methodName/node.thenStatement');
-        formatState.copyEntity(node.thenStatement, astVisitor, '$methodName/node.thenStatement', spacesForThenStatement);
+        copier.copyEntity(node.thenStatement,  '$methodName/node.thenStatement', Spacing.emptyStatementZeroOne);
         formatState.popLevelAndIndent();
 
         if (node.elseKeyword == null)
@@ -58,12 +54,12 @@ class IfStatementFormatter extends IFormatter
 
         final bool indentElse = node.elseStatement is! IfStatement;
 
-        formatState.copyEntity(node.elseKeyword, astVisitor, '$methodName/node.elseKeyword', config.space1);
+        copier.copyEntity(node.elseKeyword,  '$methodName/node.elseKeyword', Spacing.one);
 
         if (indentElse)
             formatState.pushLevel('$methodName/node.elseKeyword');
 
-        formatState.copyEntity(node.elseStatement, astVisitor, '$methodName/node.elseStatement', spacesForElseStatement);
+        copier.copyEntity(node.elseStatement,  '$methodName/node.elseStatement', Spacing.emptyStatementZeroOne);
 
         if (indentElse)
             formatState.popLevelAndIndent();
