@@ -8,42 +8,33 @@ import 'StringTools.dart';
 
 class FormatTools
 {
+    static const String CLASS_NAME = 'FormatTools';
+
     static bool isPeriodText(String s)
     => s == '.';
 
     static bool isCommaText(String s)
     {
-        const String methodName = 'FormatTools.isCommaText';
-        if (Constants.DEBUG_FORMAT_TOOLS) logInternal('# $methodName(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)})');
+        const String METHOD_NAME = '$CLASS_NAME.isCommaText';
+        if (Constants.DEBUG_FORMAT_TOOLS) logInternal('> $METHOD_NAME(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)})');
 
-        if (s.trim() == ',')
+        final String cleanedText = CommentTools.removeComments(s);
+
+        if (cleanedText.trim() == ',')
         {
-            if (Constants.DEBUG_FORMAT_TOOLS) logInternal('  Simple comma found: ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
+            if (Constants.DEBUG_FORMAT_TOOLS) logInternal('< $METHOD_NAME(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}) < Simple comma found.');
             return true;
         }
 
-        final int commaPos = s.indexOf(',');
+        final int commaPos = cleanedText.indexOf(',');
+        if (Constants.DEBUG_FORMAT_TOOLS) logInternal('  commaPos: $commaPos');
         if (commaPos == -1)
         {
-            if (Constants.DEBUG_FORMAT_TOOLS) logInternal('  No comma found: ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
+            if (Constants.DEBUG_FORMAT_TOOLS) logInternal('< $METHOD_NAME(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}) < No comma found.');
             return false;
         }
 
-        final String beforeComma = s.substring(0, commaPos);
-        if (!CommentTools.isEmptyOrComments(beforeComma))
-        {
-            if (Constants.DEBUG_FORMAT_TOOLS) logInternal('  beforeComma is not empty or comments: ${StringTools.toDisplayString(beforeComma, Constants.MAX_DEBUG_LENGTH)}');
-            return false;
-        }
-
-        final String afterComma = s.substring(commaPos + 1);
-        if (!CommentTools.isEmptyOrComments(afterComma))
-        {
-            if (Constants.DEBUG_FORMAT_TOOLS) logInternal('  afterComma is not empty or comments: ${StringTools.toDisplayString(afterComma, Constants.MAX_DEBUG_LENGTH)}');
-            return false;
-        }
-
-        if (Constants.DEBUG_FORMAT_TOOLS) logInternal('  Comma surrounded by comments found: ${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}');
+        if (Constants.DEBUG_FORMAT_TOOLS) logInternal('< $METHOD_NAME(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}) < Comma found.');
         return true;
     }
 

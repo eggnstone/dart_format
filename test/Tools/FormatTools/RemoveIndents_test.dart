@@ -2,7 +2,7 @@ import 'package:dart_format/src/Constants/Constants.dart';
 import 'package:dart_format/src/Tools/FormatTools.dart';
 import 'package:test/test.dart';
 
-import '../../../TestTools/TestTools.dart';
+import '../../TestTools/TestTools.dart';
 
 void main()
 {

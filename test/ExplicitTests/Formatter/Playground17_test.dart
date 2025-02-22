@@ -70,7 +70,7 @@ void main()
 
             test('format: FunctionDeclaration / void f()=>g();', ()
                 {
-                    const String inputText = 'void f()=>g();\n';
+                    const String inputText = 'void f()=>g();';
                     const String expectedText = 'void f() => g();\n';
 
                     final String actualText = formatter.format(inputText);
@@ -92,7 +92,7 @@ void main()
 
             test(r'format: FunctionDeclaration / void f()\n=>g();', ()
                 {
-                    const String inputText = 'void f()\n=>g();\n';
+                    const String inputText = 'void f()\n=>g();';
                     const String expectedText = 'void f()\n=> g();\n';
 
                     final String actualText = formatter.format(inputText);
@@ -202,7 +202,7 @@ void main()
 
             test('format: TODO 7', ()
                 {
-                    const String inputText = 'class C{C(A this.a){}}\n';
+                    const String inputText = 'class C{C(A this.a){}}';
                     const String expectedText = 'class C\n{\n    C(A this.a)\n    {\n    }\n}\n';
 
                     final String actualText = formatter.format(inputText);
@@ -213,7 +213,7 @@ void main()
 
             test('format: TODO 8', ()
                 {
-                    const String inputText = 'class C{bool c(covariant T t);}\n';
+                    const String inputText = 'class C{bool c(covariant T t);}';
                     const String expectedText = 'class C\n{\n    bool c(covariant T t);\n}\n';
 
                     final String actualText = formatter.format(inputText);
@@ -226,6 +226,17 @@ void main()
                 {
                     const String inputText = 'class C{external static void c(var namespace);}\n';
                     const String expectedText = 'class C\n{\n    external static void c(var namespace);\n}\n';
+
+                    final String actualText = formatter.format(inputText);
+
+                    TestTools.expect(actualText, equals(expectedText));
+                }
+            );
+
+            test('format: TODO 10', ()
+                {
+                    const String inputText = 'void f(){g(a/*,*/,b);}';
+                    const String expectedText = 'void f()\n{\n    g(a/*,*/, b);\n}\n';
 
                     final String actualText = formatter.format(inputText);
 

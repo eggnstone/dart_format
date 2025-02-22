@@ -11,6 +11,8 @@ import 'IFormatter.dart';
 
 class TypeArgumentListFormatter extends IFormatter
 {
+    static const String CLASS_NAME = 'TypeArgumentListFormatter';
+
     final AstVisitor<void> astVisitor;
     final Config config;
     final FormatState formatState;
@@ -20,16 +22,15 @@ class TypeArgumentListFormatter extends IFormatter
     @override
     void format(AstNode node)
     {
-        const String methodName = 'TypeArgumentListFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $CLASS_NAME(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! TypeArgumentList)
             throw FormatException('Not a TypeArgumentList: ${node.runtimeType}');
 
-        formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
-        formatState.acceptListWithComma(node.arguments, node.rightBracket, astVisitor, '$methodName/node.arguments', leadingSpaces: config.space0, trimCommaText: config.fixSpaces);
-        formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket', config.space0);
+        formatState.copyEntity(node.leftBracket, astVisitor, '$CLASS_NAME/node.leftBracket');
+        formatState.acceptListWithComma(node.arguments, node.rightBracket, astVisitor, '$CLASS_NAME/node.arguments', leadingSpaces: config.space0, trimCommaText: config.fixSpaces);
+        formatState.copyEntity(node.rightBracket, astVisitor, '$CLASS_NAME/node.rightBracket', config.space0);
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $CLASS_NAME(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

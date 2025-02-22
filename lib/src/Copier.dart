@@ -51,6 +51,6 @@ class Copier
     void acceptList(List<AstNode> nodes, String source) 
     => formatState.acceptList(nodes, astVisitor, source);
 
-    void acceptListWithComma(NodeList<AstNode> nodes, SyntacticEntity? endToken, String source, {int? leadingSpaces, bool trimCommaText = false})
+    void acceptListWithComma(NodeList<AstNode> nodes, SyntacticEntity? endToken, String source, {required int? leadingSpaces, required bool trimCommaText})
     => formatState.acceptListWithComma(nodes, endToken, astVisitor, source, leadingSpaces: leadingSpaces, trimCommaText: trimCommaText);
 }

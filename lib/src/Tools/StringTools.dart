@@ -10,9 +10,100 @@ class StringTools
     static const int LOWER_Z = 122;
     static const int NUMBER_0 = 48;
     static const int NUMBER_9 = 57;
+    static const int UNDERSCORE = 95;
     static const int UPPER_A = 65;
     static const int UPPER_Z = 90;
-    static const int UNDERSCORE = 95;
+
+    static String condense(String s)
+    {
+        if (s.isEmpty)
+            return s;
+
+        final StringBuffer sb = StringBuffer();
+
+        //String? previousChar;
+        bool isPreviousNormal = false;
+        //bool isPreviousWhitespace = false;
+        //bool isPreviousSpecial = false;
+        String? currentChar = s[0];
+        bool isCurrentNormal = startsWithNormalChar(currentChar);
+        bool isCurrentWhitespace = isWhitespaceChar(currentChar);
+        //bool isCurrentSpecial = !isCurrentNormal && !isCurrentWhitespace;
+
+        for (int i = 0; i < s.length; i++)
+        {
+            final String? nextChar = i + 1 < s.length ? s[i + 1] : null;
+            final bool isNextNormal = nextChar != null && startsWithNormalChar(nextChar);
+            final bool isNextWhitespace = nextChar != null && isWhitespaceChar(nextChar);
+            //final bool isNextSpecial = nextChar == null ? false : !isNextNormal && !isNextWhitespace;
+
+            /*logDebug('current:  ${toDisplayString(currentChar)}${isCurrentNormal ? ' Normal' : ''}${isCurrentWhitespace ? ' Whitespace' : ''}${isCurrentSpecial ? ' Special' : ''}');
+            logDebug('  prev:   ${toDisplayString(previousChar)}${isPreviousNormal ? ' Normal' : ''}${isPreviousWhitespace ? ' Whitespace' : ''}${isPreviousSpecial ? ' Special' : ''}');
+            logDebug('  next:   ${toDisplayString(nextChar)}${isNextNormal ? ' Normal' : ''}${isNextWhitespace ? ' Whitespace' : ''}${isNextSpecial ? ' Special' : ''}');*/
+
+            if (isCurrentNormal)
+            {
+                sb.write(currentChar);
+            }
+            else if (isCurrentWhitespace)
+            {
+                if (isNextWhitespace)
+                {
+                    currentChar = nextChar;
+                    isCurrentNormal = isNextNormal;
+                    isCurrentWhitespace = isNextWhitespace;
+                    //isCurrentSpecial = isNextSpecial;
+                    continue;
+                }
+
+                if (isPreviousNormal && isNextNormal)
+                {
+                    //logDebug('  Adding space.');
+                    sb.write(' ');
+                }
+            }
+            else
+            {
+                // not normal + not whitespace => special
+                sb.write(currentChar);
+            }
+
+            //previousChar = currentChar;
+            isPreviousNormal = isCurrentNormal;
+            //isPreviousWhitespace = isCurrentWhitespace;
+            //isPreviousSpecial = isCurrentSpecial;
+
+            currentChar = nextChar;
+            isCurrentNormal = isNextNormal;
+            isCurrentWhitespace = isNextWhitespace;
+            //isCurrentSpecial = isNextSpecial;
+        }
+
+        return sb.toString();//.trim();
+    }
+
+    static int countSpacesLeft(String s)
+    {
+        int count = 0;
+
+        while (count < s.length && s[count] == ' ')
+            count++;
+
+        return count;
+    }
+
+    static int countSpacesRight(String s)
+    {
+        int count = 0;
+
+        while (count < s.length && s[s.length - count - 1] == ' ')
+            count++;
+
+        return count;
+    }
+
+    static bool endsWithNormalChar(String s)
+    => s.isNotEmpty && isNormalCharCode(s.codeUnitAt(s.length - 1));
 
     static IntTuple findDiff(String s1, String s2)
     {
@@ -111,9 +202,21 @@ class StringTools
         return index < 0 ? null : index;
     }
 
-    static String padIntLeft(int i, int length) => i.toString().padLeft(length);
+    /// "normal" means a-z, A-Z, 0-9, _
+    static bool isNormalCharCode(int charCode)
+    => charCode >= NUMBER_0 && charCode <= NUMBER_9
+        || charCode >= LOWER_A && charCode <= LOWER_Z
+        || charCode >= UPPER_A && charCode <= UPPER_Z
+        || charCode == UNDERSCORE;
 
-    static String padIntLeft0(int i, int length) => i.toString().padLeft(length, '0');
+    static bool isWhitespaceChar(String currentChar)
+    => currentChar == ' ' || currentChar == '\n' || currentChar == '\r' || currentChar == '\t';
+
+    static String padIntLeft(int i, int length)
+    => i.toString().padLeft(length);
+
+    static String padIntLeft0(int i, int length)
+    => i.toString().padLeft(length, '0');
 
     static String removeTrailingSpaces(String s)
     {
@@ -127,11 +230,14 @@ class StringTools
         return s.substring(0, pos);
     }
 
+    static String shorten(String s, int maxLength)
+    => s.length <= maxLength ? s : s.substring(0, maxLength);
+
     static String shorten50(String s)
     => shorten(s, 50);
 
-    static String shorten(String s, int maxLength)
-    => s.length <= maxLength ? s : s.substring(0, maxLength);
+    static bool startsWithNormalChar(String s)
+    => s.isNotEmpty && isNormalCharCode(s.codeUnitAt(0));
 
     static String toDisplayString(Object? o, [int maxLength = -1])
     => '"${toSafeString(o, maxLength)}"';
@@ -174,26 +280,6 @@ class StringTools
         return r;
     }
 
-    static int countSpacesLeft(String s)
-    {
-        int count = 0;
-
-        while (count < s.length && s[count] == ' ')
-            count++;
-
-        return count;
-    }
-
-    static int countSpacesRight(String s)
-    {
-        int count = 0;
-
-        while (count < s.length && s[s.length - count - 1] == ' ')
-            count++;
-
-        return count;
-    }
-
     static String trimSpaces(String s)
     {
         int start = 0;
@@ -206,88 +292,4 @@ class StringTools
 
         return s.substring(start, end);
     }
-
-    static String condense(String s)
-    {
-        if (s.isEmpty)
-            return s;
-
-        final StringBuffer sb = StringBuffer();
-
-        //String? previousChar;
-        bool isPreviousNormal = false;
-        //bool isPreviousWhitespace = false;
-        //bool isPreviousSpecial = false;
-        String? currentChar = s[0];
-        bool isCurrentNormal = startsWithNormalChar(currentChar);
-        bool isCurrentWhitespace = isWhitespaceChar(currentChar);
-        //bool isCurrentSpecial = !isCurrentNormal && !isCurrentWhitespace;
-
-        for (int i = 0; i < s.length; i++)
-        {
-            final String? nextChar = i + 1 < s.length ? s[i + 1] : null;
-            final bool isNextNormal = nextChar != null && startsWithNormalChar(nextChar);
-            final bool isNextWhitespace = nextChar != null && isWhitespaceChar(nextChar);
-            //final bool isNextSpecial = nextChar == null ? false : !isNextNormal && !isNextWhitespace;
-
-            /*logDebug('current:  ${toDisplayString(currentChar)}${isCurrentNormal ? ' Normal' : ''}${isCurrentWhitespace ? ' Whitespace' : ''}${isCurrentSpecial ? ' Special' : ''}');
-            logDebug('  prev:   ${toDisplayString(previousChar)}${isPreviousNormal ? ' Normal' : ''}${isPreviousWhitespace ? ' Whitespace' : ''}${isPreviousSpecial ? ' Special' : ''}');
-            logDebug('  next:   ${toDisplayString(nextChar)}${isNextNormal ? ' Normal' : ''}${isNextWhitespace ? ' Whitespace' : ''}${isNextSpecial ? ' Special' : ''}');*/
-
-            if (isCurrentNormal)
-            {
-                sb.write(currentChar);
-            }
-            else if (isCurrentWhitespace)
-            {
-                if (isNextWhitespace)
-                {
-                    currentChar = nextChar;
-                    isCurrentNormal = isNextNormal;
-                    isCurrentWhitespace = isNextWhitespace;
-                    //isCurrentSpecial = isNextSpecial;
-                    continue;
-                }
-
-                if (isPreviousNormal && isNextNormal)
-                {
-                    //logDebug('  Adding space.');
-                    sb.write(' ');
-                }
-            }
-            else
-            {
-                // not normal + not whitespace => special
-                sb.write(currentChar);
-            }
-
-            //previousChar = currentChar;
-            isPreviousNormal = isCurrentNormal;
-            //isPreviousWhitespace = isCurrentWhitespace;
-            //isPreviousSpecial = isCurrentSpecial;
-
-            currentChar = nextChar;
-            isCurrentNormal = isNextNormal;
-            isCurrentWhitespace = isNextWhitespace;
-            //isCurrentSpecial = isNextSpecial;
-        }
-
-        return sb.toString();//.trim();
-    }
-
-    static bool isWhitespaceChar(String currentChar)
-    => currentChar == ' ' || currentChar == '\n' || currentChar == '\r' || currentChar == '\t';
-
-    static bool endsWithNormalChar(String s)
-    => s.isNotEmpty && isNormalCharCode(s.codeUnitAt(s.length - 1));
-
-    static bool startsWithNormalChar(String s)
-    => s.isNotEmpty && isNormalCharCode(s.codeUnitAt(0));
-
-    /// "normal" means a-z, A-Z, 0-9, _
-    static bool isNormalCharCode(int charCode)
-    => charCode >= NUMBER_0 && charCode <= NUMBER_9
-        || charCode >= LOWER_A && charCode <= LOWER_Z
-        || charCode >= UPPER_A && charCode <= UPPER_Z
-        || charCode == UNDERSCORE;
 }

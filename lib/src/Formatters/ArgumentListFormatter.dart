@@ -13,6 +13,8 @@ import 'IFormatter.dart';
 
 class ArgumentListFormatter extends IFormatter
 {
+    static const String CLASS_NAME = 'ArgumentListFormatter';
+
     final AstVisitor<void> astVisitor;
     final Config config;
     final FormatState formatState;
@@ -22,20 +24,19 @@ class ArgumentListFormatter extends IFormatter
     @override
     void format(AstNode node)
     {
-        const String methodName = 'ArgumentListFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
+        if (Constants.DEBUG_I_FORMATTER) log('START $CLASS_NAME(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
 
         if (node is! ArgumentList)
             throw FormatException('Not an ArgumentList: ${node.runtimeType}');
 
         final Copier copier = Copier(astVisitor, config, formatState, node);
 
-        copier.copyEntity(node.leftParenthesis,  '$methodName/node.leftParenthesis', Spacing.zero);
-        formatState.pushLevel('$methodName/node.leftParenthesis');
-        copier.acceptListWithComma(node.arguments, node.rightParenthesis, '$methodName/node.arguments', leadingSpaces: config.space0, trimCommaText: config.fixSpaces);
+        copier.copyEntity(node.leftParenthesis,  '$CLASS_NAME/node.leftParenthesis', Spacing.zero);
+        formatState.pushLevel('$CLASS_NAME/node.leftParenthesis');
+        copier.acceptListWithComma(node.arguments, node.rightParenthesis, '$CLASS_NAME/node.arguments', leadingSpaces: config.space0, trimCommaText: config.fixSpaces);
         formatState.popLevelAndIndent();
-        copier.copyEntity(node.rightParenthesis,  '$methodName/node.rightParenthesis', Spacing.zero);
+        copier.copyEntity(node.rightParenthesis,  '$CLASS_NAME/node.rightParenthesis', Spacing.zero);
 
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
+        if (Constants.DEBUG_I_FORMATTER) log('END   $CLASS_NAME(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }
