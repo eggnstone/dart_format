@@ -30,7 +30,7 @@ class ClassDeclarationFormatter extends IFormatter
         //final bool pushLevel = true;//textWithPossibleLineBreak.contains('\n');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.sealedKeyword, astVisitor, '$methodName/node.abstractKeyword');
+        formatState.copyEntity(node.sealedKeyword, astVisitor, '$methodName/node.sealedKeyword');
         formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword');
         formatState.copyEntity(node.baseKeyword, astVisitor, '$methodName/node.baseKeyword');
         formatState.copyEntity(node.mixinKeyword, astVisitor, '$methodName/node.mixinKeyword');

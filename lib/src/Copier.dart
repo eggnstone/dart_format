@@ -17,24 +17,40 @@ class Copier
 
     Copier(this.astVisitor, this.config, this.formatState, this.node);
 
-    void copyEntity(SyntacticEntity? child, String source, Spacing spacing)
+    void copyNullableEntity(SyntacticEntity? child, String source, Spacing spacing)
     {
         if (child == null)
             return;
 
-        final int? spaces = switch (spacing)
-        {
-            Spacing.emptyFunctionBodyZeroOne => config.getSpacesEmptyFunctionBodyZeroOne(child),
-            Spacing.emptyStatementZeroOne => config.getSpacesEmptyStatementZeroOne(child),
-            //Spacing.nullOne => config.getSpacesNullOne(node, child),
-            Spacing.one => config.space1,
-            Spacing.zero => config.space0,
-            Spacing.zeroOne => config.getSpacesZeroOne(node, child)
-        };
+        _copyEntity(child, source, spacing);
+    }
+
+    void copyEntity(SyntacticEntity child, String source, Spacing spacing)
+    {
+        // TODO: check spacing?
+        _copyEntity(child, source, spacing);
+    }
+
+    void _copyEntity(SyntacticEntity child, String source, Spacing spacing)
+    {
+        int? spaces;
+
+        if (config.fixSpaces)
+            spaces = switch (spacing)
+            {
+                Spacing.emptyFunctionBodyZeroOne => config.getSpacesEmptyFunctionBodyZeroOne(child),
+                Spacing.emptyStatementZeroOne => config.getSpacesEmptyStatementZeroOne(child),
+                Spacing.one => config.space1,
+                Spacing.zero => config.space0,
+                Spacing.zeroOne => config.getSpacesZeroOne(node, child)
+            };
 
         formatState.copyEntity(child, astVisitor, source, spaces);
     }
 
     void acceptList(List<AstNode> nodes, String source) 
     => formatState.acceptList(nodes, astVisitor, source);
+
+    void acceptListWithComma(NodeList<AstNode> nodes, SyntacticEntity? endToken, String source, {int? leadingSpaces, bool trimCommaText = false})
+    => formatState.acceptListWithComma(nodes, endToken, astVisitor, source, leadingSpaces: leadingSpaces, trimCommaText: trimCommaText);
 }

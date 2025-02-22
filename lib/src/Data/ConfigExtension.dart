@@ -8,35 +8,15 @@ extension ConfigExtension on Config
     int? get space0 => fixSpaces ? 0 : null;
     int? get space1 => fixSpaces ? 1 : null;
 
-    int? getSpacesEmptyStatementZeroOne(SyntacticEntity? child)
-    {
-        if (!fixSpaces || child == null)
-            return null;
+    int? getSpacesEmptyStatementZeroOne(SyntacticEntity child)
+    => child is EmptyStatement ? 0 : 1;
 
-        return child is EmptyStatement ? 0 : 1;
-    }
+    int? getSpacesEmptyFunctionBodyZeroOne(SyntacticEntity child)
+    => child is EmptyFunctionBody ? 0 : 1;
 
-    int? getSpacesEmptyFunctionBodyZeroOne(SyntacticEntity? child)
-    {
-        if (!fixSpaces || child == null)
-            return null;
+    int? getSpacesNullOne(AstNode node, SyntacticEntity child)
+    => node.offset == child.offset ? null : 1;
 
-        return child is EmptyFunctionBody ? 0 : 1;
-    }
-
-    int? getSpacesNullOne(AstNode node, SyntacticEntity? child)
-    {
-        if (!fixSpaces || child == null)
-            return null;
-
-        return node.offset == child.offset ? null : 1;
-    }
-
-    int? getSpacesZeroOne(AstNode node, SyntacticEntity? child)
-    {
-        if (!fixSpaces || child == null)
-            return null;
-
-        return node.offset == child.offset ? 0 : 1;
-    }
+    int? getSpacesZeroOne(AstNode node, SyntacticEntity child)
+    => node.offset == child.offset ? 0 : 1;
 }

@@ -42,7 +42,7 @@ class IfStatementFormatter extends IFormatter
         copier.copyEntity(node.ifKeyword,  '$methodName/node.ifKeyword', Spacing.zeroOne);
         copier.copyEntity(node.leftParenthesis,  '$methodName/node.leftParenthesis', Spacing.one);
         copier.copyEntity(node.expression,  '$methodName/node.expression', Spacing.zero);
-        copier.copyEntity(node.caseClause,  '$methodName/node.caseClause', Spacing.one);
+        copier.copyNullableEntity(node.caseClause,  '$methodName/node.caseClause', Spacing.one);
         copier.copyEntity(node.rightParenthesis,  '$methodName/node.rightParenthesis', Spacing.zero);
 
         formatState.pushLevel('$methodName/node.thenStatement');
@@ -54,12 +54,12 @@ class IfStatementFormatter extends IFormatter
 
         final bool indentElse = node.elseStatement is! IfStatement;
 
-        copier.copyEntity(node.elseKeyword,  '$methodName/node.elseKeyword', Spacing.one);
+        copier.copyNullableEntity(node.elseKeyword,  '$methodName/node.elseKeyword', Spacing.one);
 
         if (indentElse)
             formatState.pushLevel('$methodName/node.elseKeyword');
 
-        copier.copyEntity(node.elseStatement,  '$methodName/node.elseStatement', Spacing.emptyStatementZeroOne);
+        copier.copyNullableEntity(node.elseStatement,  '$methodName/node.elseStatement', Spacing.emptyStatementZeroOne);
 
         if (indentElse)
             formatState.popLevelAndIndent();
