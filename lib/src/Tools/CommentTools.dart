@@ -2,6 +2,7 @@
 
 import '../Constants/Constants.dart';
 import '../Data/CommentInfo.dart';
+import '../Exceptions/DartFormatException.dart';
 import 'LogTools.dart';
 import 'StringTools.dart';
 
@@ -147,11 +148,7 @@ class CommentTools
                 blockCommentDepth--;
                 if (Constants.DEBUG_COMMENT_TOOLS) logInternal('  Now blockCommentDepth--: $blockCommentDepth');
                 if (blockCommentDepth < 0)
-                {
-                    const String errorMessage = 'Block comment ended but blockCommentDepth < 0';
-                    if (Constants.DEBUG_COMMENT_TOOLS) logInternal('< $METHOD_NAME(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}) < has error: $errorMessage');
-                    return s;
-                }
+                    throw DartFormatException.error('Block comment ended but blockCommentDepth < 0');
 
                 i++;
                 continue;
@@ -178,11 +175,7 @@ class CommentTools
         }
 
         if (blockCommentDepth > 0)
-        {
-            const String errorMessage = 'Text ended but blockCommentDepth > 0';
-            if (Constants.DEBUG_COMMENT_TOOLS) logInternal('< $METHOD_NAME(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}) < has error: $errorMessage');
-            return s;
-        }
+            throw DartFormatException.error('Text ended but blockCommentDepth > 0');
 
         final String result = resultBuffer.toString();
         if (Constants.DEBUG_COMMENT_TOOLS) logInternal('< $METHOD_NAME(${StringTools.toDisplayString(s, Constants.MAX_DEBUG_LENGTH)}) < ${StringTools.toDisplayString(result, Constants.MAX_DEBUG_LENGTH)}');

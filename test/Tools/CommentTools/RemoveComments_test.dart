@@ -137,55 +137,39 @@ void main()
                             test('Unfinished block comment: /*', ()
                                 {
                                     const String inputText = '/*';
-                                    const String expectedResult = inputText;
 
-                                    final String actualResult = CommentTools.removeComments(inputText);
-
-                                    expect(actualResult, equals(expectedResult));
+                                    expect(() => CommentTools.removeComments(inputText), throwsA(isA<Exception>()));
                                 }
                             );
 
                             test('Unfinished block comment: /**', ()
                                 {
                                     const String inputText = '/**';
-                                    const String expectedResult = inputText;
 
-                                    final String actualResult = CommentTools.removeComments(inputText);
-
-                                    expect(actualResult, equals(expectedResult));
+                                    expect(() => CommentTools.removeComments(inputText), throwsA(isA<Exception>()));
                                 }
                             );
 
                             test('Unfinished block comment: /*a', ()
                                 {
                                     const String inputText = '/*a';
-                                    const String expectedResult = inputText;
 
-                                    final String actualResult = CommentTools.removeComments(inputText);
-
-                                    expect(actualResult, equals(expectedResult));
-                                }
+                                    expect(() => CommentTools.removeComments(inputText), throwsA(isA<Exception>()));                                }
                             );
 
                             test('Unfinished block comment: /*a*', ()
                                 {
                                     const String inputText = '/*a*';
-                                    const String expectedResult = inputText;
 
-                                    final String actualResult = CommentTools.removeComments(inputText);
-
-                                    expect(actualResult, equals(expectedResult));
+                                    expect(() => CommentTools.removeComments(inputText), throwsA(isA<Exception>()));
                                 }
                             );
 
                             test('More closed than opened block comments', ()
                                 {
                                     const String inputText = '/*Comment*/*/';
-                                    const String expectedResult = inputText;
 
-                                    final String actualResult = CommentTools.removeComments(inputText);
-
-                                    expect(actualResult, equals(expectedResult));
+                                    expect(() => CommentTools.removeComments(inputText), throwsA(isA<Exception>()));
                                 }
                             );
                         }
