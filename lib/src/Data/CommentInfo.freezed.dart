@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,95 +10,63 @@ part of 'CommentInfo.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$CommentInfo {
-  String? get errorMessage => throw _privateConstructorUsedError;
-  bool get hasError => throw _privateConstructorUsedError;
-  bool get isComment => throw _privateConstructorUsedError;
-  bool get isEmpty => throw _privateConstructorUsedError;
+  String? get errorMessage;
+  bool get hasError;
+  bool get isComment;
+  bool get isEmpty;
 
   /// Create a copy of CommentInfo
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CommentInfoCopyWith<CommentInfo> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $CommentInfoCopyWith<$Res> {
-  factory $CommentInfoCopyWith(
-          CommentInfo value, $Res Function(CommentInfo) then) =
-      _$CommentInfoCopyWithImpl<$Res, CommentInfo>;
-  @useResult
-  $Res call(
-      {String? errorMessage, bool hasError, bool isComment, bool isEmpty});
-}
-
-/// @nodoc
-class _$CommentInfoCopyWithImpl<$Res, $Val extends CommentInfo>
-    implements $CommentInfoCopyWith<$Res> {
-  _$CommentInfoCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CommentInfo
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $CommentInfoCopyWith<CommentInfo> get copyWith =>
+      _$CommentInfoCopyWithImpl<CommentInfo>(this as CommentInfo, _$identity);
+
   @override
-  $Res call({
-    Object? errorMessage = freezed,
-    Object? hasError = null,
-    Object? isComment = null,
-    Object? isEmpty = null,
-  }) {
-    return _then(_value.copyWith(
-      errorMessage: freezed == errorMessage
-          ? _value.errorMessage
-          : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      hasError: null == hasError
-          ? _value.hasError
-          : hasError // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isComment: null == isComment
-          ? _value.isComment
-          : isComment // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isEmpty: null == isEmpty
-          ? _value.isEmpty
-          : isEmpty // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is CommentInfo &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
+            (identical(other.hasError, hasError) ||
+                other.hasError == hasError) &&
+            (identical(other.isComment, isComment) ||
+                other.isComment == isComment) &&
+            (identical(other.isEmpty, isEmpty) || other.isEmpty == isEmpty));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, errorMessage, hasError, isComment, isEmpty);
+
+  @override
+  String toString() {
+    return 'CommentInfo(errorMessage: $errorMessage, hasError: $hasError, isComment: $isComment, isEmpty: $isEmpty)';
   }
 }
 
 /// @nodoc
-abstract class _$$CommentInfoImplCopyWith<$Res>
-    implements $CommentInfoCopyWith<$Res> {
-  factory _$$CommentInfoImplCopyWith(
-          _$CommentInfoImpl value, $Res Function(_$CommentInfoImpl) then) =
-      __$$CommentInfoImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $CommentInfoCopyWith<$Res> {
+  factory $CommentInfoCopyWith(
+          CommentInfo value, $Res Function(CommentInfo) _then) =
+      _$CommentInfoCopyWithImpl;
   @useResult
   $Res call(
       {String? errorMessage, bool hasError, bool isComment, bool isEmpty});
 }
 
 /// @nodoc
-class __$$CommentInfoImplCopyWithImpl<$Res>
-    extends _$CommentInfoCopyWithImpl<$Res, _$CommentInfoImpl>
-    implements _$$CommentInfoImplCopyWith<$Res> {
-  __$$CommentInfoImplCopyWithImpl(
-      _$CommentInfoImpl _value, $Res Function(_$CommentInfoImpl) _then)
-      : super(_value, _then);
+class _$CommentInfoCopyWithImpl<$Res> implements $CommentInfoCopyWith<$Res> {
+  _$CommentInfoCopyWithImpl(this._self, this._then);
+
+  final CommentInfo _self;
+  final $Res Function(CommentInfo) _then;
 
   /// Create a copy of CommentInfo
   /// with the given fields replaced by the non-null parameter values.
@@ -109,21 +78,21 @@ class __$$CommentInfoImplCopyWithImpl<$Res>
     Object? isComment = null,
     Object? isEmpty = null,
   }) {
-    return _then(_$CommentInfoImpl(
+    return _then(_self.copyWith(
       errorMessage: freezed == errorMessage
-          ? _value.errorMessage
+          ? _self.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
       hasError: null == hasError
-          ? _value.hasError
+          ? _self.hasError
           : hasError // ignore: cast_nullable_to_non_nullable
               as bool,
       isComment: null == isComment
-          ? _value.isComment
+          ? _self.isComment
           : isComment // ignore: cast_nullable_to_non_nullable
               as bool,
       isEmpty: null == isEmpty
-          ? _value.isEmpty
+          ? _self.isEmpty
           : isEmpty // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
@@ -132,8 +101,8 @@ class __$$CommentInfoImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CommentInfoImpl extends _CommentInfo {
-  const _$CommentInfoImpl(
+class _CommentInfo extends CommentInfo {
+  const _CommentInfo(
       {this.errorMessage,
       this.hasError = false,
       this.isComment = false,
@@ -152,16 +121,19 @@ class _$CommentInfoImpl extends _CommentInfo {
   @JsonKey()
   final bool isEmpty;
 
+  /// Create a copy of CommentInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'CommentInfo(errorMessage: $errorMessage, hasError: $hasError, isComment: $isComment, isEmpty: $isEmpty)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$CommentInfoCopyWith<_CommentInfo> get copyWith =>
+      __$CommentInfoCopyWithImpl<_CommentInfo>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CommentInfoImpl &&
+            other is _CommentInfo &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.hasError, hasError) ||
@@ -175,36 +147,60 @@ class _$CommentInfoImpl extends _CommentInfo {
   int get hashCode =>
       Object.hash(runtimeType, errorMessage, hasError, isComment, isEmpty);
 
+  @override
+  String toString() {
+    return 'CommentInfo(errorMessage: $errorMessage, hasError: $hasError, isComment: $isComment, isEmpty: $isEmpty)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$CommentInfoCopyWith<$Res>
+    implements $CommentInfoCopyWith<$Res> {
+  factory _$CommentInfoCopyWith(
+          _CommentInfo value, $Res Function(_CommentInfo) _then) =
+      __$CommentInfoCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String? errorMessage, bool hasError, bool isComment, bool isEmpty});
+}
+
+/// @nodoc
+class __$CommentInfoCopyWithImpl<$Res> implements _$CommentInfoCopyWith<$Res> {
+  __$CommentInfoCopyWithImpl(this._self, this._then);
+
+  final _CommentInfo _self;
+  final $Res Function(_CommentInfo) _then;
+
   /// Create a copy of CommentInfo
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CommentInfoImplCopyWith<_$CommentInfoImpl> get copyWith =>
-      __$$CommentInfoImplCopyWithImpl<_$CommentInfoImpl>(this, _$identity);
+  $Res call({
+    Object? errorMessage = freezed,
+    Object? hasError = null,
+    Object? isComment = null,
+    Object? isEmpty = null,
+  }) {
+    return _then(_CommentInfo(
+      errorMessage: freezed == errorMessage
+          ? _self.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      hasError: null == hasError
+          ? _self.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isComment: null == isComment
+          ? _self.isComment
+          : isComment // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isEmpty: null == isEmpty
+          ? _self.isEmpty
+          : isEmpty // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
-abstract class _CommentInfo extends CommentInfo {
-  const factory _CommentInfo(
-      {final String? errorMessage,
-      final bool hasError,
-      final bool isComment,
-      final bool isEmpty}) = _$CommentInfoImpl;
-  const _CommentInfo._() : super._();
-
-  @override
-  String? get errorMessage;
-  @override
-  bool get hasError;
-  @override
-  bool get isComment;
-  @override
-  bool get isEmpty;
-
-  /// Create a copy of CommentInfo
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CommentInfoImplCopyWith<_$CommentInfoImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'Triple.freezed.dart';
 
 @freezed
-class Triple<T1, T2, T3> with _$Triple<T1, T2, T3>
+abstract class Triple<T1, T2, T3> with _$Triple<T1, T2, T3>
 {
     const factory Triple(
         T1 item1,

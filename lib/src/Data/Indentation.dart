@@ -5,7 +5,7 @@ import '../Types/IndentationType.dart';
 part 'Indentation.freezed.dart';
 
 @freezed
-class Indentation with _$Indentation
+abstract class Indentation with _$Indentation
 {
     const factory Indentation({
         required String name,

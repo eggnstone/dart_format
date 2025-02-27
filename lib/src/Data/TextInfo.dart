@@ -5,7 +5,7 @@ import '../Types/TextType.dart';
 part 'TextInfo.freezed.dart';
 
 @freezed
-class TextInfo with _$TextInfo
+abstract class TextInfo with _$TextInfo
 {
     const factory TextInfo({
         required TextType type,

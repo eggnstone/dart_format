@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,107 +10,64 @@ part of 'JsonResponse.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-JsonResponse _$JsonResponseFromJson(Map<String, dynamic> json) {
-  return _JsonResponse.fromJson(json);
-}
 
 /// @nodoc
 mixin _$JsonResponse {
   @JsonKey(name: 'StatusCode')
-  int get statusCode => throw _privateConstructorUsedError;
+  int get statusCode;
   @JsonKey(name: 'Status')
-  String get status => throw _privateConstructorUsedError;
+  String get status;
   @JsonKey(includeIfNull: false, name: 'CurrentVersion')
-  String? get currentVersion => throw _privateConstructorUsedError;
+  String? get currentVersion;
   @JsonKey(includeIfNull: false, name: 'LatestVersion')
-  String? get latestVersion => throw _privateConstructorUsedError;
+  String? get latestVersion;
   @JsonKey(includeIfNull: false, name: 'Message')
-  String? get message => throw _privateConstructorUsedError;
-
-  /// Serializes this JsonResponse to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String? get message;
 
   /// Create a copy of JsonResponse
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $JsonResponseCopyWith<JsonResponse> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $JsonResponseCopyWith<$Res> {
-  factory $JsonResponseCopyWith(
-          JsonResponse value, $Res Function(JsonResponse) then) =
-      _$JsonResponseCopyWithImpl<$Res, JsonResponse>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'StatusCode') int statusCode,
-      @JsonKey(name: 'Status') String status,
-      @JsonKey(includeIfNull: false, name: 'CurrentVersion')
-      String? currentVersion,
-      @JsonKey(includeIfNull: false, name: 'LatestVersion')
-      String? latestVersion,
-      @JsonKey(includeIfNull: false, name: 'Message') String? message});
-}
-
-/// @nodoc
-class _$JsonResponseCopyWithImpl<$Res, $Val extends JsonResponse>
-    implements $JsonResponseCopyWith<$Res> {
-  _$JsonResponseCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of JsonResponse
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $JsonResponseCopyWith<JsonResponse> get copyWith =>
+      _$JsonResponseCopyWithImpl<JsonResponse>(
+          this as JsonResponse, _$identity);
+
+  /// Serializes this JsonResponse to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? statusCode = null,
-    Object? status = null,
-    Object? currentVersion = freezed,
-    Object? latestVersion = freezed,
-    Object? message = freezed,
-  }) {
-    return _then(_value.copyWith(
-      statusCode: null == statusCode
-          ? _value.statusCode
-          : statusCode // ignore: cast_nullable_to_non_nullable
-              as int,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      currentVersion: freezed == currentVersion
-          ? _value.currentVersion
-          : currentVersion // ignore: cast_nullable_to_non_nullable
-              as String?,
-      latestVersion: freezed == latestVersion
-          ? _value.latestVersion
-          : latestVersion // ignore: cast_nullable_to_non_nullable
-              as String?,
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is JsonResponse &&
+            (identical(other.statusCode, statusCode) ||
+                other.statusCode == statusCode) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.currentVersion, currentVersion) ||
+                other.currentVersion == currentVersion) &&
+            (identical(other.latestVersion, latestVersion) ||
+                other.latestVersion == latestVersion) &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, statusCode, status, currentVersion, latestVersion, message);
+
+  @override
+  String toString() {
+    return 'JsonResponse(statusCode: $statusCode, status: $status, currentVersion: $currentVersion, latestVersion: $latestVersion, message: $message)';
   }
 }
 
 /// @nodoc
-abstract class _$$JsonResponseImplCopyWith<$Res>
-    implements $JsonResponseCopyWith<$Res> {
-  factory _$$JsonResponseImplCopyWith(
-          _$JsonResponseImpl value, $Res Function(_$JsonResponseImpl) then) =
-      __$$JsonResponseImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $JsonResponseCopyWith<$Res> {
+  factory $JsonResponseCopyWith(
+          JsonResponse value, $Res Function(JsonResponse) _then) =
+      _$JsonResponseCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'StatusCode') int statusCode,
@@ -122,12 +80,11 @@ abstract class _$$JsonResponseImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$JsonResponseImplCopyWithImpl<$Res>
-    extends _$JsonResponseCopyWithImpl<$Res, _$JsonResponseImpl>
-    implements _$$JsonResponseImplCopyWith<$Res> {
-  __$$JsonResponseImplCopyWithImpl(
-      _$JsonResponseImpl _value, $Res Function(_$JsonResponseImpl) _then)
-      : super(_value, _then);
+class _$JsonResponseCopyWithImpl<$Res> implements $JsonResponseCopyWith<$Res> {
+  _$JsonResponseCopyWithImpl(this._self, this._then);
+
+  final JsonResponse _self;
+  final $Res Function(JsonResponse) _then;
 
   /// Create a copy of JsonResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -140,25 +97,25 @@ class __$$JsonResponseImplCopyWithImpl<$Res>
     Object? latestVersion = freezed,
     Object? message = freezed,
   }) {
-    return _then(_$JsonResponseImpl(
+    return _then(_self.copyWith(
       statusCode: null == statusCode
-          ? _value.statusCode
+          ? _self.statusCode
           : statusCode // ignore: cast_nullable_to_non_nullable
               as int,
       status: null == status
-          ? _value.status
+          ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
       currentVersion: freezed == currentVersion
-          ? _value.currentVersion
+          ? _self.currentVersion
           : currentVersion // ignore: cast_nullable_to_non_nullable
               as String?,
       latestVersion: freezed == latestVersion
-          ? _value.latestVersion
+          ? _self.latestVersion
           : latestVersion // ignore: cast_nullable_to_non_nullable
               as String?,
       message: freezed == message
-          ? _value.message
+          ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
@@ -167,17 +124,16 @@ class __$$JsonResponseImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$JsonResponseImpl implements _JsonResponse {
-  const _$JsonResponseImpl(
+class _JsonResponse implements JsonResponse {
+  const _JsonResponse(
       {@JsonKey(name: 'StatusCode') required this.statusCode,
       @JsonKey(name: 'Status') required this.status,
       @JsonKey(includeIfNull: false, name: 'CurrentVersion')
       this.currentVersion,
       @JsonKey(includeIfNull: false, name: 'LatestVersion') this.latestVersion,
       @JsonKey(includeIfNull: false, name: 'Message') this.message});
-
-  factory _$JsonResponseImpl.fromJson(Map<String, dynamic> json) =>
-      _$$JsonResponseImplFromJson(json);
+  factory _JsonResponse.fromJson(Map<String, dynamic> json) =>
+      _$JsonResponseFromJson(json);
 
   @override
   @JsonKey(name: 'StatusCode')
@@ -195,16 +151,26 @@ class _$JsonResponseImpl implements _JsonResponse {
   @JsonKey(includeIfNull: false, name: 'Message')
   final String? message;
 
+  /// Create a copy of JsonResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'JsonResponse(statusCode: $statusCode, status: $status, currentVersion: $currentVersion, latestVersion: $latestVersion, message: $message)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$JsonResponseCopyWith<_JsonResponse> get copyWith =>
+      __$JsonResponseCopyWithImpl<_JsonResponse>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$JsonResponseToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$JsonResponseImpl &&
+            other is _JsonResponse &&
             (identical(other.statusCode, statusCode) ||
                 other.statusCode == statusCode) &&
             (identical(other.status, status) || other.status == status) &&
@@ -220,56 +186,72 @@ class _$JsonResponseImpl implements _JsonResponse {
   int get hashCode => Object.hash(
       runtimeType, statusCode, status, currentVersion, latestVersion, message);
 
-  /// Create a copy of JsonResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$JsonResponseImplCopyWith<_$JsonResponseImpl> get copyWith =>
-      __$$JsonResponseImplCopyWithImpl<_$JsonResponseImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$JsonResponseImplToJson(
-      this,
-    );
+  String toString() {
+    return 'JsonResponse(statusCode: $statusCode, status: $status, currentVersion: $currentVersion, latestVersion: $latestVersion, message: $message)';
   }
 }
 
-abstract class _JsonResponse implements JsonResponse {
-  const factory _JsonResponse(
-      {@JsonKey(name: 'StatusCode') required final int statusCode,
-      @JsonKey(name: 'Status') required final String status,
+/// @nodoc
+abstract mixin class _$JsonResponseCopyWith<$Res>
+    implements $JsonResponseCopyWith<$Res> {
+  factory _$JsonResponseCopyWith(
+          _JsonResponse value, $Res Function(_JsonResponse) _then) =
+      __$JsonResponseCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'StatusCode') int statusCode,
+      @JsonKey(name: 'Status') String status,
       @JsonKey(includeIfNull: false, name: 'CurrentVersion')
-      final String? currentVersion,
+      String? currentVersion,
       @JsonKey(includeIfNull: false, name: 'LatestVersion')
-      final String? latestVersion,
-      @JsonKey(includeIfNull: false, name: 'Message')
-      final String? message}) = _$JsonResponseImpl;
+      String? latestVersion,
+      @JsonKey(includeIfNull: false, name: 'Message') String? message});
+}
 
-  factory _JsonResponse.fromJson(Map<String, dynamic> json) =
-      _$JsonResponseImpl.fromJson;
+/// @nodoc
+class __$JsonResponseCopyWithImpl<$Res>
+    implements _$JsonResponseCopyWith<$Res> {
+  __$JsonResponseCopyWithImpl(this._self, this._then);
 
-  @override
-  @JsonKey(name: 'StatusCode')
-  int get statusCode;
-  @override
-  @JsonKey(name: 'Status')
-  String get status;
-  @override
-  @JsonKey(includeIfNull: false, name: 'CurrentVersion')
-  String? get currentVersion;
-  @override
-  @JsonKey(includeIfNull: false, name: 'LatestVersion')
-  String? get latestVersion;
-  @override
-  @JsonKey(includeIfNull: false, name: 'Message')
-  String? get message;
+  final _JsonResponse _self;
+  final $Res Function(_JsonResponse) _then;
 
   /// Create a copy of JsonResponse
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$JsonResponseImplCopyWith<_$JsonResponseImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? statusCode = null,
+    Object? status = null,
+    Object? currentVersion = freezed,
+    Object? latestVersion = freezed,
+    Object? message = freezed,
+  }) {
+    return _then(_JsonResponse(
+      statusCode: null == statusCode
+          ? _self.statusCode
+          : statusCode // ignore: cast_nullable_to_non_nullable
+              as int,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      currentVersion: freezed == currentVersion
+          ? _self.currentVersion
+          : currentVersion // ignore: cast_nullable_to_non_nullable
+              as String?,
+      latestVersion: freezed == latestVersion
+          ? _self.latestVersion
+          : latestVersion // ignore: cast_nullable_to_non_nullable
+              as String?,
+      message: freezed == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
+
+// dart format on

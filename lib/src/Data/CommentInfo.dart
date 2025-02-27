@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'CommentInfo.freezed.dart';
 
 @freezed
-class CommentInfo with _$CommentInfo
+abstract class CommentInfo with _$CommentInfo
 {
     const factory CommentInfo({
         String? errorMessage,

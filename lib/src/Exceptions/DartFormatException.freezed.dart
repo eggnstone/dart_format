@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,104 +10,64 @@ part of 'DartFormatException.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-DartFormatException _$DartFormatExceptionFromJson(Map<String, dynamic> json) {
-  return _DartFormatException.fromJson(json);
-}
 
 /// @nodoc
 mixin _$DartFormatException {
   /// The message of the exception.
   @JsonKey(name: 'Message')
-  String get message => throw _privateConstructorUsedError;
+  String get message;
 
   /// The type of the exception.
   @JsonKey(name: 'Type')
-  FailType get type => throw _privateConstructorUsedError;
+  FailType get type;
 
   /// The line number where the exception occurred.
   @JsonKey(includeIfNull: false, name: 'Line')
-  int? get line => throw _privateConstructorUsedError;
+  int? get line;
 
   /// The column number where the exception occurred.
   @JsonKey(includeIfNull: false, name: 'Column')
-  int? get column => throw _privateConstructorUsedError;
-
-  /// Serializes this DartFormatException to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  int? get column;
 
   /// Create a copy of DartFormatException
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $DartFormatExceptionCopyWith<DartFormatException> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $DartFormatExceptionCopyWith<$Res> {
-  factory $DartFormatExceptionCopyWith(
-          DartFormatException value, $Res Function(DartFormatException) then) =
-      _$DartFormatExceptionCopyWithImpl<$Res, DartFormatException>;
-  @useResult
-  $Res call(
-      {@JsonKey(name: 'Message') String message,
-      @JsonKey(name: 'Type') FailType type,
-      @JsonKey(includeIfNull: false, name: 'Line') int? line,
-      @JsonKey(includeIfNull: false, name: 'Column') int? column});
-}
-
-/// @nodoc
-class _$DartFormatExceptionCopyWithImpl<$Res, $Val extends DartFormatException>
-    implements $DartFormatExceptionCopyWith<$Res> {
-  _$DartFormatExceptionCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of DartFormatException
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $DartFormatExceptionCopyWith<DartFormatException> get copyWith =>
+      _$DartFormatExceptionCopyWithImpl<DartFormatException>(
+          this as DartFormatException, _$identity);
+
+  /// Serializes this DartFormatException to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? message = null,
-    Object? type = null,
-    Object? line = freezed,
-    Object? column = freezed,
-  }) {
-    return _then(_value.copyWith(
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as FailType,
-      line: freezed == line
-          ? _value.line
-          : line // ignore: cast_nullable_to_non_nullable
-              as int?,
-      column: freezed == column
-          ? _value.column
-          : column // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is DartFormatException &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.line, line) || other.line == line) &&
+            (identical(other.column, column) || other.column == column));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, message, type, line, column);
+
+  @override
+  String toString() {
+    return 'DartFormatException(message: $message, type: $type, line: $line, column: $column)';
   }
 }
 
 /// @nodoc
-abstract class _$$DartFormatExceptionImplCopyWith<$Res>
-    implements $DartFormatExceptionCopyWith<$Res> {
-  factory _$$DartFormatExceptionImplCopyWith(_$DartFormatExceptionImpl value,
-          $Res Function(_$DartFormatExceptionImpl) then) =
-      __$$DartFormatExceptionImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $DartFormatExceptionCopyWith<$Res> {
+  factory $DartFormatExceptionCopyWith(
+          DartFormatException value, $Res Function(DartFormatException) _then) =
+      _$DartFormatExceptionCopyWithImpl;
   @useResult
   $Res call(
       {@JsonKey(name: 'Message') String message,
@@ -116,12 +77,12 @@ abstract class _$$DartFormatExceptionImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$DartFormatExceptionImplCopyWithImpl<$Res>
-    extends _$DartFormatExceptionCopyWithImpl<$Res, _$DartFormatExceptionImpl>
-    implements _$$DartFormatExceptionImplCopyWith<$Res> {
-  __$$DartFormatExceptionImplCopyWithImpl(_$DartFormatExceptionImpl _value,
-      $Res Function(_$DartFormatExceptionImpl) _then)
-      : super(_value, _then);
+class _$DartFormatExceptionCopyWithImpl<$Res>
+    implements $DartFormatExceptionCopyWith<$Res> {
+  _$DartFormatExceptionCopyWithImpl(this._self, this._then);
+
+  final DartFormatException _self;
+  final $Res Function(DartFormatException) _then;
 
   /// Create a copy of DartFormatException
   /// with the given fields replaced by the non-null parameter values.
@@ -133,21 +94,21 @@ class __$$DartFormatExceptionImplCopyWithImpl<$Res>
     Object? line = freezed,
     Object? column = freezed,
   }) {
-    return _then(_$DartFormatExceptionImpl(
+    return _then(_self.copyWith(
       message: null == message
-          ? _value.message
+          ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
       type: null == type
-          ? _value.type
+          ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
               as FailType,
       line: freezed == line
-          ? _value.line
+          ? _self.line
           : line // ignore: cast_nullable_to_non_nullable
               as int?,
       column: freezed == column
-          ? _value.column
+          ? _self.column
           : column // ignore: cast_nullable_to_non_nullable
               as int?,
     ));
@@ -156,15 +117,14 @@ class __$$DartFormatExceptionImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$DartFormatExceptionImpl implements _DartFormatException {
-  const _$DartFormatExceptionImpl(
+class _DartFormatException implements DartFormatException {
+  const _DartFormatException(
       {@JsonKey(name: 'Message') required this.message,
       @JsonKey(name: 'Type') required this.type,
       @JsonKey(includeIfNull: false, name: 'Line') this.line,
       @JsonKey(includeIfNull: false, name: 'Column') this.column});
-
-  factory _$DartFormatExceptionImpl.fromJson(Map<String, dynamic> json) =>
-      _$$DartFormatExceptionImplFromJson(json);
+  factory _DartFormatException.fromJson(Map<String, dynamic> json) =>
+      _$DartFormatExceptionFromJson(json);
 
   /// The message of the exception.
   @override
@@ -186,16 +146,27 @@ class _$DartFormatExceptionImpl implements _DartFormatException {
   @JsonKey(includeIfNull: false, name: 'Column')
   final int? column;
 
+  /// Create a copy of DartFormatException
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'DartFormatException(message: $message, type: $type, line: $line, column: $column)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$DartFormatExceptionCopyWith<_DartFormatException> get copyWith =>
+      __$DartFormatExceptionCopyWithImpl<_DartFormatException>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$DartFormatExceptionToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DartFormatExceptionImpl &&
+            other is _DartFormatException &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.line, line) || other.line == line) &&
@@ -206,58 +177,64 @@ class _$DartFormatExceptionImpl implements _DartFormatException {
   @override
   int get hashCode => Object.hash(runtimeType, message, type, line, column);
 
-  /// Create a copy of DartFormatException
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$DartFormatExceptionImplCopyWith<_$DartFormatExceptionImpl> get copyWith =>
-      __$$DartFormatExceptionImplCopyWithImpl<_$DartFormatExceptionImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$DartFormatExceptionImplToJson(
-      this,
-    );
+  String toString() {
+    return 'DartFormatException(message: $message, type: $type, line: $line, column: $column)';
   }
 }
 
-abstract class _DartFormatException implements DartFormatException {
-  const factory _DartFormatException(
-          {@JsonKey(name: 'Message') required final String message,
-          @JsonKey(name: 'Type') required final FailType type,
-          @JsonKey(includeIfNull: false, name: 'Line') final int? line,
-          @JsonKey(includeIfNull: false, name: 'Column') final int? column}) =
-      _$DartFormatExceptionImpl;
-
-  factory _DartFormatException.fromJson(Map<String, dynamic> json) =
-      _$DartFormatExceptionImpl.fromJson;
-
-  /// The message of the exception.
+/// @nodoc
+abstract mixin class _$DartFormatExceptionCopyWith<$Res>
+    implements $DartFormatExceptionCopyWith<$Res> {
+  factory _$DartFormatExceptionCopyWith(_DartFormatException value,
+          $Res Function(_DartFormatException) _then) =
+      __$DartFormatExceptionCopyWithImpl;
   @override
-  @JsonKey(name: 'Message')
-  String get message;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'Message') String message,
+      @JsonKey(name: 'Type') FailType type,
+      @JsonKey(includeIfNull: false, name: 'Line') int? line,
+      @JsonKey(includeIfNull: false, name: 'Column') int? column});
+}
 
-  /// The type of the exception.
-  @override
-  @JsonKey(name: 'Type')
-  FailType get type;
+/// @nodoc
+class __$DartFormatExceptionCopyWithImpl<$Res>
+    implements _$DartFormatExceptionCopyWith<$Res> {
+  __$DartFormatExceptionCopyWithImpl(this._self, this._then);
 
-  /// The line number where the exception occurred.
-  @override
-  @JsonKey(includeIfNull: false, name: 'Line')
-  int? get line;
-
-  /// The column number where the exception occurred.
-  @override
-  @JsonKey(includeIfNull: false, name: 'Column')
-  int? get column;
+  final _DartFormatException _self;
+  final $Res Function(_DartFormatException) _then;
 
   /// Create a copy of DartFormatException
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DartFormatExceptionImplCopyWith<_$DartFormatExceptionImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? message = null,
+    Object? type = null,
+    Object? line = freezed,
+    Object? column = freezed,
+  }) {
+    return _then(_DartFormatException(
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as FailType,
+      line: freezed == line
+          ? _self.line
+          : line // ignore: cast_nullable_to_non_nullable
+              as int?,
+      column: freezed == column
+          ? _self.column
+          : column // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
 }
+
+// dart format on

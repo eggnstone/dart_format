@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'Version.freezed.dart';
 
 @freezed
-class Version with _$Version
+abstract class Version with _$Version
 {
     // necessary when you want to create additional methods
     const Version._();

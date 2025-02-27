@@ -10,7 +10,7 @@ part 'DartFormatException.g.dart';
 
 /// The DartFormatException class is used to report errors and warnings.
 @freezed
-class DartFormatException with _$DartFormatException implements Exception
+abstract class DartFormatException with _$DartFormatException implements Exception
 {
     /// Create a new DartFormatException with the given message and type.
     const factory DartFormatException({

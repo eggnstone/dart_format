@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,81 +10,54 @@ part of 'Indentation.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Indentation {
-  String get name => throw _privateConstructorUsedError;
-  IndentationType get type => throw _privateConstructorUsedError;
+  String get name;
+  IndentationType get type;
 
   /// Create a copy of Indentation
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $IndentationCopyWith<Indentation> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $IndentationCopyWith<$Res> {
-  factory $IndentationCopyWith(
-          Indentation value, $Res Function(Indentation) then) =
-      _$IndentationCopyWithImpl<$Res, Indentation>;
-  @useResult
-  $Res call({String name, IndentationType type});
-}
-
-/// @nodoc
-class _$IndentationCopyWithImpl<$Res, $Val extends Indentation>
-    implements $IndentationCopyWith<$Res> {
-  _$IndentationCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Indentation
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $IndentationCopyWith<Indentation> get copyWith =>
+      _$IndentationCopyWithImpl<Indentation>(this as Indentation, _$identity);
+
   @override
-  $Res call({
-    Object? name = null,
-    Object? type = null,
-  }) {
-    return _then(_value.copyWith(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as IndentationType,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Indentation &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.type, type) || other.type == type));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, name, type);
+
+  @override
+  String toString() {
+    return 'Indentation(name: $name, type: $type)';
   }
 }
 
 /// @nodoc
-abstract class _$$IndentationImplCopyWith<$Res>
-    implements $IndentationCopyWith<$Res> {
-  factory _$$IndentationImplCopyWith(
-          _$IndentationImpl value, $Res Function(_$IndentationImpl) then) =
-      __$$IndentationImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $IndentationCopyWith<$Res> {
+  factory $IndentationCopyWith(
+          Indentation value, $Res Function(Indentation) _then) =
+      _$IndentationCopyWithImpl;
   @useResult
   $Res call({String name, IndentationType type});
 }
 
 /// @nodoc
-class __$$IndentationImplCopyWithImpl<$Res>
-    extends _$IndentationCopyWithImpl<$Res, _$IndentationImpl>
-    implements _$$IndentationImplCopyWith<$Res> {
-  __$$IndentationImplCopyWithImpl(
-      _$IndentationImpl _value, $Res Function(_$IndentationImpl) _then)
-      : super(_value, _then);
+class _$IndentationCopyWithImpl<$Res> implements $IndentationCopyWith<$Res> {
+  _$IndentationCopyWithImpl(this._self, this._then);
+
+  final Indentation _self;
+  final $Res Function(Indentation) _then;
 
   /// Create a copy of Indentation
   /// with the given fields replaced by the non-null parameter values.
@@ -93,13 +67,13 @@ class __$$IndentationImplCopyWithImpl<$Res>
     Object? name = null,
     Object? type = null,
   }) {
-    return _then(_$IndentationImpl(
+    return _then(_self.copyWith(
       name: null == name
-          ? _value.name
+          ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       type: null == type
-          ? _value.type
+          ? _self.type
           : type // ignore: cast_nullable_to_non_nullable
               as IndentationType,
     ));
@@ -108,24 +82,27 @@ class __$$IndentationImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$IndentationImpl implements _Indentation {
-  const _$IndentationImpl({required this.name, required this.type});
+class _Indentation implements Indentation {
+  const _Indentation({required this.name, required this.type});
 
   @override
   final String name;
   @override
   final IndentationType type;
 
+  /// Create a copy of Indentation
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'Indentation(name: $name, type: $type)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$IndentationCopyWith<_Indentation> get copyWith =>
+      __$IndentationCopyWithImpl<_Indentation>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$IndentationImpl &&
+            other is _Indentation &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.type, type) || other.type == type));
   }
@@ -133,29 +110,49 @@ class _$IndentationImpl implements _Indentation {
   @override
   int get hashCode => Object.hash(runtimeType, name, type);
 
+  @override
+  String toString() {
+    return 'Indentation(name: $name, type: $type)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$IndentationCopyWith<$Res>
+    implements $IndentationCopyWith<$Res> {
+  factory _$IndentationCopyWith(
+          _Indentation value, $Res Function(_Indentation) _then) =
+      __$IndentationCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String name, IndentationType type});
+}
+
+/// @nodoc
+class __$IndentationCopyWithImpl<$Res> implements _$IndentationCopyWith<$Res> {
+  __$IndentationCopyWithImpl(this._self, this._then);
+
+  final _Indentation _self;
+  final $Res Function(_Indentation) _then;
+
   /// Create a copy of Indentation
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$IndentationImplCopyWith<_$IndentationImpl> get copyWith =>
-      __$$IndentationImplCopyWithImpl<_$IndentationImpl>(this, _$identity);
+  $Res call({
+    Object? name = null,
+    Object? type = null,
+  }) {
+    return _then(_Indentation(
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _self.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as IndentationType,
+    ));
+  }
 }
 
-abstract class _Indentation implements Indentation {
-  const factory _Indentation(
-      {required final String name,
-      required final IndentationType type}) = _$IndentationImpl;
-
-  @override
-  String get name;
-  @override
-  IndentationType get type;
-
-  /// Create a copy of Indentation
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$IndentationImplCopyWith<_$IndentationImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

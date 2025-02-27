@@ -9,7 +9,7 @@ part 'Config.g.dart';
 
 /// Configuration for the formatter.
 @freezed
-class Config with _$Config
+abstract class Config with _$Config
 {
     /// Default value when all options are turned on: Whether to add a new line after a closing brace.
     static const bool ADD_NEW_LINE_AFTER_CLOSING_BRACE_DEFAULT = true;

@@ -6,7 +6,7 @@ part 'JsonResponse.freezed.dart';
 part 'JsonResponse.g.dart';
 
 @freezed
-class JsonResponse with _$JsonResponse implements Exception
+abstract class JsonResponse with _$JsonResponse implements Exception
 {
     const factory JsonResponse({
         @JsonKey(name: 'StatusCode') required int statusCode,
