@@ -30,6 +30,8 @@ TODO
 - Remove empty lines at start and end
 - Spaces: "a . b"
 - Do not remove trailing commas from end-of-line comments
+- Force empty line between methods
+- Option to sort methods
 
 DONE (I think)
 ==============
