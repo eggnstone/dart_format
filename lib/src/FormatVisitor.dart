@@ -230,9 +230,13 @@ class FormatVisitor extends AstVisitor<void>
     void visitAssignedVariablePattern(AssignedVariablePattern node)
     => _defaultFormatter.format(node);
 
-    /*@override
-    void visitAugmentationImportDirective(AugmentationImportDirective node)
-    => _augmentationImportDirectiveFormatter.format(node);*/
+    @override
+    void visitAugmentedExpression(AugmentedExpression node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitAugmentedInvocation(AugmentedInvocation node)
+    => _defaultFormatter.format(node);
 
     @override
     void visitAwaitExpression(AwaitExpression node)
@@ -352,6 +356,14 @@ class FormatVisitor extends AstVisitor<void>
     => _doStatementFormatter.format(node);
 
     @override
+    void visitDotShorthandInvocation(DotShorthandInvocation node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitDotShorthandPropertyAccess(DotShorthandPropertyAccess node)
+    => _defaultFormatter.format(node);
+
+    @override
     void visitDottedName(DottedName node)
     => _dottedNameFormatter.format(node);
 
@@ -398,6 +410,10 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitExtensionDeclaration(ExtensionDeclaration node)
     => _extensionDeclarationFormatter.format(node);
+
+    @override
+    void visitExtensionOnClause(ExtensionOnClause node)
+    => _defaultFormatter.format(node);
 
     @override
     void visitExtensionOverride(ExtensionOverride node)
@@ -552,10 +568,6 @@ class FormatVisitor extends AstVisitor<void>
     void visitLabeledStatement(LabeledStatement node)
     => _defaultFormatter.format(node);
 
-    /*@override
-    void visitLibraryAugmentationDirective(LibraryAugmentationDirective node)
-    => _libraryAugmentationDirectiveFormatter.format(node);*/
-
     @override
     void visitLibraryDirective(LibraryDirective node)
     => _libraryDirectiveFormatter.format(node);
@@ -605,6 +617,10 @@ class FormatVisitor extends AstVisitor<void>
     => _mixinDeclarationFormatter.format(node);
 
     @override
+    void visitMixinOnClause(MixinOnClause node)
+    => _mixinOnClauseFormatter.format(node);
+
+    @override
     void visitNamedExpression(NamedExpression node)
     => _namedExpressionFormatter.format(node);
 
@@ -625,6 +641,10 @@ class FormatVisitor extends AstVisitor<void>
     => _defaultFormatter.format(node);
 
     @override
+    void visitNullAwareElement(NullAwareElement node)
+    => _mixinOnClauseFormatter.format(node);
+
+    @override
     void visitNullCheckPattern(NullCheckPattern node)
     => _defaultFormatter.format(node);
 
@@ -635,11 +655,6 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitObjectPattern(ObjectPattern node)
     => _objectPatternFormatter.format(node);
-
-    /*@override
-    // ignore: deprecated_member_use
-    void visitOnClause(OnClause node)
-    => _mixinOnClauseFormatter.format(node);*/
 
     @override
     void visitParenthesizedExpression(ParenthesizedExpression node)
@@ -882,24 +897,4 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitYieldStatement(YieldStatement node)
     => _yieldStatementFormatter.format(node);
-
-    @override
-    void visitAugmentedExpression(AugmentedExpression node)
-    => _defaultFormatter.format(node);
-
-    @override
-    void visitAugmentedInvocation(AugmentedInvocation node)
-    => _defaultFormatter.format(node);
-
-    @override
-    void visitExtensionOnClause(ExtensionOnClause node)
-    => _defaultFormatter.format(node);
-
-    @override
-    void visitMixinOnClause(MixinOnClause node)
-    => _mixinOnClauseFormatter.format(node);
-
-    @override
-    void visitNullAwareElement(NullAwareElement node)
-    => _mixinOnClauseFormatter.format(node);
 }

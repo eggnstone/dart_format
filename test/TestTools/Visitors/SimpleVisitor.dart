@@ -3,10 +3,6 @@ import 'package:analyzer/dart/ast/ast.dart';
 
 abstract class SimpleVisitor extends AstVisitor<void>
 {
-    /*final void Function(AstNode node) visit;
-
-    SimpleVisitor(this.visit);*/
-
     void visit(AstNode node);
 
     @override
@@ -40,10 +36,6 @@ abstract class SimpleVisitor extends AstVisitor<void>
     @override
     void visitAssignmentExpression(AssignmentExpression node)
     => visit(node);
-
-    /*@override
-    void visitAugmentationImportDirective(AugmentationImportDirective node)
-    => visit(node);*/
 
     @override
     void visitAwaitExpression(AwaitExpression node)
@@ -160,6 +152,14 @@ abstract class SimpleVisitor extends AstVisitor<void>
     @override
     void visitDoStatement(DoStatement node)
     => visit(node);
+
+    @override
+    void visitDotShorthandInvocation(DotShorthandInvocation node)
+    => visit(node);
+
+    @override
+    void visitDotShorthandPropertyAccess(DotShorthandPropertyAccess node)
+    => visit(node); 
 
     @override
     void visitDottedName(DottedName node)
@@ -361,10 +361,6 @@ abstract class SimpleVisitor extends AstVisitor<void>
     void visitLabeledStatement(LabeledStatement node)
     => visit(node);
 
-    /*@override
-    void visitLibraryAugmentationDirective(LibraryAugmentationDirective node)
-    => visit(node);*/
-
     @override
     void visitLibraryDirective(LibraryDirective node)
     => visit(node);
@@ -444,11 +440,6 @@ abstract class SimpleVisitor extends AstVisitor<void>
     @override
     void visitObjectPattern(ObjectPattern node)
     => visit(node);
-
-    /*@override
-    // ignore: deprecated_member_use
-    void visitOnClause(OnClause node)
-    => visit(node);*/
 
     @override
     void visitParenthesizedExpression(ParenthesizedExpression node)

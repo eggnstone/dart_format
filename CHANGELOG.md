@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.1
+
+- Updated analyzer to 7.4.0.
+
 ## 1.4.0
 
 - Added "Fix spaces" to official config.

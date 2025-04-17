@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Build Runner",
+            "request": "launch",
+            "command": "cmd /c K:/Dev/SDKs/Flutter/bin/dart.bat run build_runner watch --delete-conflicting-outputs",
+            "type": "node-terminal"
+        },
+        {
+            "name": "Run all Tests",
+            "type": "dart",
+            "request": "launch",
+            "program": "./test/"
+        }
+    ]
+}
