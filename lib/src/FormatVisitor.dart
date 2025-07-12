@@ -642,7 +642,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitNullAwareElement(NullAwareElement node)
-    => _mixinOnClauseFormatter.format(node);
+    => _defaultFormatter.format(node);
 
     @override
     void visitNullCheckPattern(NullCheckPattern node)
