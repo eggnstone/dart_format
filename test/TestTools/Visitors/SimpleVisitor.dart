@@ -154,6 +154,10 @@ abstract class SimpleVisitor extends AstVisitor<void>
     => visit(node);
 
     @override
+    void visitDotShorthandConstructorInvocation(DotShorthandConstructorInvocation node)
+    => visit(node);
+
+    @override
     void visitDotShorthandInvocation(DotShorthandInvocation node)
     => visit(node);
 
@@ -679,14 +683,6 @@ abstract class SimpleVisitor extends AstVisitor<void>
 
     @override
     void visitYieldStatement(YieldStatement node)
-    => visit(node);
-
-    @override
-    void visitAugmentedExpression(AugmentedExpression node)
-    => visit(node);
-
-    @override
-    void visitAugmentedInvocation(AugmentedInvocation node)
     => visit(node);
 
     @override

@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:analyzer/error/error.dart';
+import 'package:analyzer/diagnostic/diagnostic.dart';
 import 'package:analyzer/source/line_info.dart';
 
 class TestParseStringResult implements ParseStringResult
@@ -16,7 +16,7 @@ class TestParseStringResult implements ParseStringResult
     => _content;
 
     @override
-    List<AnalysisError> get errors
+    List<Diagnostic> get errors
     => throw UnimplementedError();
 
     @override

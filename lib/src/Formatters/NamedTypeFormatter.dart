@@ -34,10 +34,10 @@ class NamedTypeFormatter extends IFormatter
         formatState.dump(node.question, 'question');
         */
 
-        final int? spacesForName2 = config.fixSpaces ? (node.offset == node.name2.offset ? null : 0) : null;
+        final int? spacesForName2 = config.fixSpaces ? (node.offset == node.name.offset ? null : 0) : null;
 
         formatState.copyEntity(node.importPrefix, astVisitor, '$methodName/node.importPrefix');
-        formatState.copyEntity(node.name2, astVisitor, '$methodName/node.name2', spacesForName2);
+        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name', spacesForName2);
         formatState.copyEntity(node.typeArguments, astVisitor, '$methodName/node.typeArguments', config.space0);
         formatState.copyEntity(node.question, astVisitor, '$methodName/node.question', config.space0);
 

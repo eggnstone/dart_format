@@ -2,7 +2,7 @@
 
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/analysis/utilities.dart' as AnalyzerUtilities; // ignore: library_prefixes
-import 'package:analyzer/error/error.dart';
+import 'package:analyzer/diagnostic/diagnostic.dart';
 import 'package:analyzer/source/line_info.dart';
 
 import 'Constants/Constants.dart';
@@ -38,7 +38,7 @@ class Formatter
         final String cleanedS = s.replaceAll('\r', '');
         final ParseStringResult parseResult = AnalyzerUtilities.parseString(content: cleanedS, throwIfDiagnostics: false);
 
-        final List<AnalysisError> errors = parseResult.errors;
+        final List<Diagnostic> errors = parseResult.errors;
         if (errors.isNotEmpty)
             _logAndThrowWarning(errors.first.message, parseResult.lineInfo.getLocation(errors.first.offset));
 

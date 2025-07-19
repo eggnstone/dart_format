@@ -231,14 +231,6 @@ class FormatVisitor extends AstVisitor<void>
     => _defaultFormatter.format(node);
 
     @override
-    void visitAugmentedExpression(AugmentedExpression node)
-    => _defaultFormatter.format(node);
-
-    @override
-    void visitAugmentedInvocation(AugmentedInvocation node)
-    => _defaultFormatter.format(node);
-
-    @override
     void visitAwaitExpression(AwaitExpression node)
     => _defaultFormatter.format(node);
 
@@ -354,6 +346,10 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitDoStatement(DoStatement node)
     => _doStatementFormatter.format(node);
+
+    @override
+    void visitDotShorthandConstructorInvocation(DotShorthandConstructorInvocation node)
+    => _defaultFormatter.format(node);
 
     @override
     void visitDotShorthandInvocation(DotShorthandInvocation node)

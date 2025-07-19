@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.0
+
+- Updated analyzer to 8.0.0.
+
 ## 1.4.2
 
 - Fixed NullAwareElements.

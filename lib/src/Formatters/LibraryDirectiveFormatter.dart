@@ -28,7 +28,7 @@ class LibraryDirectiveFormatter extends IFormatter
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.libraryKeyword, astVisitor, '$methodName/node.libraryKeyword');
-        formatState.copyEntity(node.name2, astVisitor, '$methodName/node.name2');
+        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
