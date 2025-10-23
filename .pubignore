@@ -1,5 +1,6 @@
 *.bat
 *.ps1
+*.sh
 /all_lint_rules.yaml
 /analysis_options.yaml
 /doc/
