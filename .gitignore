@@ -7,5 +7,6 @@
 pubspec.lock
 
 # Manually added
+/.idea/copilot.*
 /.idea/libraries/Dart_Packages.xml
 /doc/

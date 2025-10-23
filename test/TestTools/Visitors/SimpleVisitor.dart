@@ -696,4 +696,28 @@ abstract class SimpleVisitor extends AstVisitor<void>
     @override
     void visitNullAwareElement(NullAwareElement node)
     => visit(node);
+
+    @override
+    void visitBlockClassBody(BlockClassBody node)
+    => visit(node);
+
+    @override
+    void visitEmptyClassBody(EmptyClassBody node)
+    => visit(node);
+
+    @override
+    void visitEnumBody(EnumBody node)
+    => visit(node);
+
+    @override
+    void visitNameWithTypeParameters(NameWithTypeParameters node)
+    => visit(node);
+
+    @override
+    void visitPrimaryConstructorDeclaration(PrimaryConstructorDeclaration node)
+    => visit(node);
+
+    @override
+    void visitPrimaryConstructorName(PrimaryConstructorName node)
+    => visit(node);
 }

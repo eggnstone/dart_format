@@ -893,4 +893,28 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitYieldStatement(YieldStatement node)
     => _yieldStatementFormatter.format(node);
+
+    @override
+    void visitBlockClassBody(BlockClassBody node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitEmptyClassBody(EmptyClassBody node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitEnumBody(EnumBody node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitNameWithTypeParameters(NameWithTypeParameters node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitPrimaryConstructorDeclaration(PrimaryConstructorDeclaration node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitPrimaryConstructorName(PrimaryConstructorName node)
+    => _defaultFormatter.format(node);
 }
