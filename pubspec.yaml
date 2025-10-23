@@ -1,13 +1,13 @@
 name: dart_format
 description: A formatter for Dart. Like dartfmt. But better ;) Because it's configurable.
 homepage: https://github.com/eggnstone/dart_format
-version: 1.6.0
+version: 1.6.1
 topics:
   - code-style
   - formatting
 
 environment:
-  sdk: ^3.9.2
+  sdk: ^3.8.0
 
 executables:
   dart_format:
