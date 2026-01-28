@@ -61,7 +61,7 @@ class AstCreator
     => createCompilationUnit(s).directives[0];
 
     static EnumConstantDeclaration createEnumConstantDeclaration(String s)
-    => createEnumDeclaration(s).constants[0];
+    => createEnumDeclaration(s).body.constants[0];
 
     static EnumDeclaration createEnumDeclaration(String s)
     => createDeclaration(s) as EnumDeclaration;

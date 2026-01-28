@@ -41,8 +41,8 @@ class ClassDeclarationFormatter extends IFormatter
         //if (pushLevel)
         formatState.pushLevel('$methodName/node.classKeyword/after');
 
-        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name', config.space1);
-        formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
+        formatState.copyEntity(node.namePart.typeName, astVisitor, '$methodName/node.namePart.typeName', config.space1);
+        formatState.copyEntity(node.namePart.typeParameters, astVisitor, '$methodName/node.namePart.typeParameters');
         formatState.copyEntity(node.extendsClause, astVisitor, '$methodName/node.extendsClause', config.space1);
         formatState.copyEntity(node.withClause, astVisitor, '$methodName/node.withClause', config.space1);
         formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause', config.space1);

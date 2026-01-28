@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.0
+
+- Updated analyzer to 10.0.0.
+
 ## 1.6.1
 
 - Updated analyzer to 8.4.0.

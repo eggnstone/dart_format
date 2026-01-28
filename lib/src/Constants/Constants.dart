@@ -1,3 +1,5 @@
+// ignore_for_file: no_literal_bool_comparisons
+
 class Constants
 {
     static const bool DEBUG = false;

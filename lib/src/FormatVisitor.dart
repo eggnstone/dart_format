@@ -737,10 +737,12 @@ class FormatVisitor extends AstVisitor<void>
     => _defaultFormatter.format(node);
 
     @override
+    // ignore: deprecated_member_use
     void visitRepresentationConstructorName(RepresentationConstructorName node)
     => _defaultFormatter.format(node);
 
     @override
+    // ignore: deprecated_member_use
     void visitRepresentationDeclaration(RepresentationDeclaration node)
     => _defaultFormatter.format(node);
 
@@ -916,5 +918,9 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitPrimaryConstructorName(PrimaryConstructorName node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitPrimaryConstructorBody(PrimaryConstructorBody node)
     => _defaultFormatter.format(node);
 }

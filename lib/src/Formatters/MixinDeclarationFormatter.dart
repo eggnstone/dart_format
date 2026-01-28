@@ -32,9 +32,9 @@ class MixinDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
         formatState.copyEntity(node.onClause, astVisitor, '$methodName/node.onClause');
         formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause');
-        formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
-        formatState.acceptList(node.members, astVisitor, '$methodName/node.members');
-        formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');
+        formatState.copyOpeningBraceAndPushLevel(node.body.leftBracket, config, '$methodName/node.body.leftBracket');
+        formatState.acceptList(node.body.members, astVisitor, '$methodName/node.body.members');
+        formatState.copyClosingBraceAndPopLevel(node.body.rightBracket, config, '$methodName/node.body.rightBracket');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

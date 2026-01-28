@@ -530,10 +530,12 @@ abstract class SimpleVisitor extends AstVisitor<void>
     => visit(node);
 
     @override
+    // ignore: deprecated_member_use
     void visitRepresentationConstructorName(RepresentationConstructorName node)
     => visit(node);
 
     @override
+    // ignore: deprecated_member_use
     void visitRepresentationDeclaration(RepresentationDeclaration node)
     => visit(node);
 
@@ -719,5 +721,9 @@ abstract class SimpleVisitor extends AstVisitor<void>
 
     @override
     void visitPrimaryConstructorName(PrimaryConstructorName node)
+    => visit(node);
+
+    @override
+    void visitPrimaryConstructorBody(PrimaryConstructorBody node)
     => visit(node);
 }

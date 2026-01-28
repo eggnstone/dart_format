@@ -1,7 +1,7 @@
 name: dart_format
 description: A formatter for Dart. Like dartfmt. But better ;) Because it's configurable.
 homepage: https://github.com/eggnstone/dart_format
-version: 1.6.1
+version: 1.7.0
 topics:
   - code-style
   - formatting
@@ -14,23 +14,23 @@ executables:
   dartformat: dart_format
 
 dependencies:
-  analyzer: ^8.4.0
+  analyzer: ^10.0.1
   freezed_annotation: ^3.1.0
   eggnstone_dart: ^1.4.2
-  http: ^1.5.0
+  http: ^1.6.0
   intl: ^0.20.2
   json_annotation: ^4.9.0
   mime: ^2.0.0
 
 dev_dependencies:
-  build_runner: ^2.10.0
-  freezed: ^3.2.3
-  json_serializable: ^6.11.1
-  meta: ^1.17.0
+  build_runner: ^2.10.5
+  freezed: ^3.2.4
+  json_serializable: ^6.11.4
+  meta: ^1.18.1
   test: any
 
 dependency_overrides:
-  #
+  analyzer: ^10.0.1
 
 assets:
   - assets/favicon.ico
