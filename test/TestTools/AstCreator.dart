@@ -35,6 +35,7 @@ class AstCreator
 
     static ClassMember createClassMember(String s)
     // Cannot "Use body instead" because BlockClassBodyImpl is not exposed via the library.
+    // ignore: deprecated_member_use
     => createClassDeclaration(s).members[0];
 
     static Combinator createCombinatorInNamespaceDirective(String s)

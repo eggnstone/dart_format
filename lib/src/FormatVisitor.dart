@@ -925,14 +925,17 @@ class FormatVisitor extends AstVisitor<void>
     => _defaultFormatter.format(node);
 
     @override
+    // ignore: experimental_member_use
     void visitAnonymousBlockBody(AnonymousBlockBody node)
     => _defaultFormatter.format(node);
 
     @override
+    // ignore: experimental_member_use
     void visitAnonymousExpressionBody(AnonymousExpressionBody node)
     => _defaultFormatter.format(node);
 
     @override
+    // ignore: experimental_member_use
     void visitAnonymousMethodInvocation(AnonymousMethodInvocation node)
     => _defaultFormatter.format(node);
 }

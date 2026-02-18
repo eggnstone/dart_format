@@ -728,14 +728,17 @@ abstract class SimpleVisitor extends AstVisitor<void>
     => visit(node);
 
     @override
+    // ignore: experimental_member_use
     void visitAnonymousBlockBody(AnonymousBlockBody node) 
     => visit(node);
 
     @override
+    // ignore: experimental_member_use
     void visitAnonymousExpressionBody(AnonymousExpressionBody node)
     => visit(node);
 
     @override
+    // ignore: experimental_member_use
     void visitAnonymousMethodInvocation(AnonymousMethodInvocation node)
     => visit(node);
 }
