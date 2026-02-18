@@ -1,5 +1,5 @@
-import 'package:analyzer/dart/analysis/utilities.dart' as AnalyzerUtilities; // ignore: library_prefixes
-import 'package:analyzer/src/dart/ast/ast.dart';
+import 'package:analyzer/dart/analysis/utilities.dart' as analyzer_utilities;
+import 'package:analyzer/dart/ast/ast.dart';
 
 class AstCreator
 {
@@ -34,6 +34,7 @@ class AstCreator
     => createDeclaration(s) as ClassDeclaration;
 
     static ClassMember createClassMember(String s)
+    // Cannot "Use body instead" because BlockClassBodyImpl is not exposed via the library.
     => createClassDeclaration(s).members[0];
 
     static Combinator createCombinatorInNamespaceDirective(String s)
@@ -52,7 +53,7 @@ class AstCreator
     => createConstructorDeclaration(s).initializers[0];
 
     static CompilationUnit createCompilationUnit(String s)
-    => AnalyzerUtilities.parseString(content: s).unit;
+    => analyzer_utilities.parseString(content: s).unit;
 
     static Declaration createDeclaration(String s)
     => createCompilationUnit(s).declarations[0];

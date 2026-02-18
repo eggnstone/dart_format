@@ -50,6 +50,7 @@ class ClassDeclarationFormatter extends IFormatter
         //if (pushLevel)
         formatState.popLevelAndIndent();
 
+        // Cannot "Use body instead" because BlockClassBodyImpl is not exposed via the library.
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
         formatState.acceptList(node.members, astVisitor, '$methodName/node.members');
         formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');
