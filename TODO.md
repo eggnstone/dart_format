@@ -43,3 +43,4 @@ DONE (I think)
 - Indent assignments when multiline
 - Important: Undetected change from "€" to "?". Maybe change of encoding? Is this the cause for the problem undetectable changes, too?
 - Indent triple quoted strings
+- favicon.ico does not work when called from plugin.

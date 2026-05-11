@@ -26,6 +26,20 @@ void main()
                 TestConfig.none(),
                 TestConfig('@a required C this.x')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFieldFormalParameterInConstructor,
+            inputLeading: 'class C{C(',
+            inputMiddle: 'covariant this.x',
+            inputTrailing: ');}',
+            name: 'covariant this.x'
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFieldFormalParameterInConstructor,
+            inputLeading: 'class C{C(',
+            inputMiddle: 'final this.x',
+            inputTrailing: ');}',
+            name: 'final this.x'
         )
     ];
 

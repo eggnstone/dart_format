@@ -100,6 +100,9 @@ class AstCreator
     static FieldDeclaration createFieldDeclarationInClassWithAugmentations(String s)
     => createClassMemberWithAugmentations(s) as FieldDeclaration;
 
+    static FieldFormalParameter createFieldFormalParameterInConstructor(String s)
+    => createConstructorDeclaration(s).parameters.parameters[0] as FieldFormalParameter;
+
     static ForElement createForElement(String s)
     => createSetOrMapLiteral(s).elements.first as ForElement;
 
