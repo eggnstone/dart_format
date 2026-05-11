@@ -8,6 +8,9 @@ import 'package:eggnstone_dart/eggnstone_dart.dart';
 import 'Constants/Constants.dart';
 import 'Tools/StringTools.dart';
 
+/// Dev-only utility for dumping the analyzer AST while debugging. Not part
+/// of the formatter pipeline; all real call sites are commented out.
+/// Excluded from the published package via `.pubignore`.
 class Analyzer
 {
     static void analyze(String s)

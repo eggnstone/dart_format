@@ -15,6 +15,13 @@ $newVersionDartFileContent = $oldVersionDartFileContent `
     -replace "MINOR = \d+;", "MINOR = $minor;" `
     -replace "PATCH = \d+;", "PATCH = $patch;"
 
-Set-Content -Path $versionDartFileName -Value $newVersionDartFileContent -NoNewline
+# Atomic write: bypass Set-Content (which races with IDE/build_runner holding the file open)
+# and swap via Move-Item -Force. UTF-8 without BOM to match the original.
+$versionDartTempFileName = "$versionDartFileName.tmp"
+[System.IO.File]::WriteAllText(
+    (Join-Path (Get-Location) $versionDartTempFileName),
+    $newVersionDartFileContent,
+    (New-Object System.Text.UTF8Encoding $false))
+Move-Item -Path $versionDartTempFileName -Destination $versionDartFileName -Force
 
 dart pub publish

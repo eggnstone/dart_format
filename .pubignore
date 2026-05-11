@@ -1,10 +1,11 @@
 *.bat
 *.ps1
 *.sh
+
 /all_lint_rules.yaml
 /analysis_options.yaml
 /doc/
 /KNOWN_ISSUES.txt
-/lib/src/Analyser.dart
+/lib/src/Analyzer.dart
 /test/
 /TODO.md

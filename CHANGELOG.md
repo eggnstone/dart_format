@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.10.0
+
+- Fixed record-type annotation spacing.
+- Fixed constructor initializer formatting.
+
 ## 1.9.0
 
 - Updated analyzer to 12.1.0.
