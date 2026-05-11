@@ -32,6 +32,13 @@ void main()
                 TestVisitor<Annotation>(8, '@a'),
                 TestVisitor<NamedType>(20, 'int')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createSuperFormalParameterInConstructor,
+            inputLeading: 'class D extends C{D(',
+            inputMiddle: 'covariant super.x',
+            inputTrailing: ');}',
+            name: 'SuperFormalParameter with covariant'
         )
     ];
 

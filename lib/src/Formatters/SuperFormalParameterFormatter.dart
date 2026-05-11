@@ -27,6 +27,7 @@ class SuperFormalParameterFormatter extends IFormatter
             throw FormatException('Not a SuperFormalParameter: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
+        formatState.copyEntity(node.covariantKeyword, astVisitor, '$methodName/node.covariantKeyword');
         formatState.copyEntity(node.requiredKeyword, astVisitor, '$methodName/node.requiredKeyword');
 
         if (node.type != null)

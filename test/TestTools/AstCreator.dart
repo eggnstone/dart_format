@@ -116,6 +116,9 @@ class AstCreator
     static FieldFormalParameter createFieldFormalParameterInConstructor(String s)
     => createConstructorDeclaration(s).parameters.parameters[0] as FieldFormalParameter;
 
+    static SuperFormalParameter createSuperFormalParameterInConstructor(String s)
+    => createConstructorDeclaration(s).parameters.parameters[0] as SuperFormalParameter;
+
     static ForElement createForElement(String s)
     => createSetOrMapLiteral(s).elements.first as ForElement;
 
