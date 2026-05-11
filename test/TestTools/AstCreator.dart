@@ -246,6 +246,9 @@ class AstCreator
     static TopLevelVariableDeclaration createTopLevelVariableDeclaration(String s)
     => createDeclaration(s) as TopLevelVariableDeclaration;
 
+    static TopLevelVariableDeclaration createTopLevelVariableDeclarationWithAugmentations(String s)
+    => createDeclarationWithAugmentations(s) as TopLevelVariableDeclaration;
+
     static VariableDeclarationList createTopLevelVariableList(String s)
     => createTopLevelVariableDeclaration(s).variables;
 

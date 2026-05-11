@@ -25,6 +25,18 @@ void main()
                 TestConfig.none(),
                 TestConfig('external  int  i  =  f  .  a  .  b;\n')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createTopLevelVariableDeclarationWithAugmentations,
+            inputMiddle: 'augment int i=0;',
+            name: 'TopLevelVariableDeclaration with augment',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<VariableDeclarationList>(8, 'int i=0')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('augment int i=0;\n')
+            ]
         )
     ];
 
