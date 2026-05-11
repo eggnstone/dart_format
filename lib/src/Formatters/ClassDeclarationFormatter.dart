@@ -27,6 +27,7 @@ class ClassDeclarationFormatter extends IFormatter
             throw FormatException('Not a ClassDeclaration: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
+        formatState.copyEntity(node.augmentKeyword, astVisitor, '$methodName/node.augmentKeyword');
         formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword');
         formatState.copyEntity(node.sealedKeyword, astVisitor, '$methodName/node.sealedKeyword');
         formatState.copyEntity(node.baseKeyword, astVisitor, '$methodName/node.baseKeyword');

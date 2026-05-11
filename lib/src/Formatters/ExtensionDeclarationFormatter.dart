@@ -26,6 +26,7 @@ class ExtensionDeclarationFormatter extends IFormatter
             throw FormatException('Not an ExtensionDeclaration: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
+        formatState.copyEntity(node.augmentKeyword, astVisitor, '$methodName/node.augmentKeyword');
         formatState.copyEntity(node.extensionKeyword, astVisitor, '$methodName/node.extensionKeyword');
         formatState.copyEntity(node.typeKeyword, astVisitor, '$methodName/node.typeKeyword');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');

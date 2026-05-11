@@ -160,6 +160,18 @@ void main()
                 TestConfig.none(),
                 TestConfig('enum E<T> with M implements F\n{\n    x\n}\n')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createDeclarationWithAugmentations,
+            inputMiddle: 'augment enum E{x}',
+            name: 'EnumDeclaration: augment enum E{x}',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<EnumConstantDeclaration>(15, 'x')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('augment enum E\n{\n    x\n}\n')
+            ]
         )
     ];
 

@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/analysis/features.dart';
 import 'package:analyzer/dart/analysis/utilities.dart' as analyzer_utilities;
 import 'package:analyzer/dart/ast/ast.dart';
 
@@ -54,8 +55,17 @@ class AstCreator
     static CompilationUnit createCompilationUnit(String s)
     => analyzer_utilities.parseString(content: s).unit;
 
+    static CompilationUnit createCompilationUnitWithAugmentations(String s)
+    => analyzer_utilities.parseString(
+        content: s,
+        featureSet: FeatureSet.latestLanguageVersion(flags: <String>['augmentations'])
+    ).unit;
+
     static Declaration createDeclaration(String s)
     => createCompilationUnit(s).declarations[0];
+
+    static Declaration createDeclarationWithAugmentations(String s)
+    => createCompilationUnitWithAugmentations(s).declarations[0];
 
     static Directive createDirective(String s)
     => createCompilationUnit(s).directives[0];

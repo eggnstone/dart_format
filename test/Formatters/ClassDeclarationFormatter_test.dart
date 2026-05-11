@@ -104,6 +104,15 @@ void main()
                 TestConfig.none(),
                 TestConfig("class C implements I native 'N'\n{\n}\n")
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createDeclarationWithAugmentations,
+            inputMiddle: 'augment class C{}',
+            name: 'ClassDeclaration / augment class C{}',
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('augment class C\n{\n}\n')
+            ]
         )
     ];
 

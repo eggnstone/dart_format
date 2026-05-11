@@ -26,6 +26,15 @@ void main()
                 TestConfig.none(),
                 TestConfig('extension E<T1,T2> on C<T1,T2>\n{\n    void m(){}\n}\n')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createDeclarationWithAugmentations,
+            inputMiddle: 'augment extension E{}',
+            name: 'ExtensionDeclaration / augment extension E{}',
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('augment extension E\n{\n}\n')
+            ]
         )
     ];
 

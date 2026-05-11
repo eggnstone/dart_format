@@ -23,6 +23,15 @@ void main()
                 TestConfig.none(),
                 TestConfig('base mixin M on A, B\n{\n}\n')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createDeclarationWithAugmentations,
+            inputMiddle: 'augment mixin M{}',
+            name: 'MixinDeclaration / augment mixin M{}',
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('augment mixin M\n{\n}\n')
+            ]
         )
     ];
 
