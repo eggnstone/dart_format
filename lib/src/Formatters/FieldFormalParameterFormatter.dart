@@ -45,6 +45,9 @@ class FieldFormalParameterFormatter extends IFormatter
         formatState.copyEntity(node.thisKeyword, astVisitor, '$methodName/node.thisKeyword', spacesForThisKeyword);
         formatState.copyEntity(node.period, astVisitor, '$methodName/node.period', config.space0);
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name', config.space0);
+        formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters', config.space0);
+        formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters', config.space0);
+        formatState.copyEntity(node.question, astVisitor, '$methodName/node.question', config.space0);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

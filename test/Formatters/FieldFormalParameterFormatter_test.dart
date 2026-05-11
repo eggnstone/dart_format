@@ -40,6 +40,18 @@ void main()
             inputMiddle: 'final this.x',
             inputTrailing: ');}',
             name: 'final this.x'
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFieldFormalParameterInConstructor,
+            inputLeading: 'class C{C(',
+            inputMiddle: 'int this.x<T>(T s)?',
+            inputTrailing: ');}',
+            name: 'function-typed this.x with typeParameters/parameters/question',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(10, 'int'),
+                TestVisitor<TypeParameterList>(20, '<T>'),
+                TestVisitor<FormalParameterList>(23, '(T s)')
+            ]
         )
     ];
 
