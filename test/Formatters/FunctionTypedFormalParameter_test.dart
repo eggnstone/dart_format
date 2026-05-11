@@ -22,6 +22,28 @@ void main()
                 TestVisitor<NamedType>(10, 'void'),
                 TestVisitor<FormalParameterList>(16, '()')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createMethodDeclarationParametersParameter,
+            inputLeading: 'class C{void m(',
+            inputMiddle: 'covariant void g()',
+            inputTrailing: '){}}',
+            name: 'FunctionTypedFormalParameter with covariant',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(25, 'void'),
+                TestVisitor<FormalParameterList>(31, '()')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFunctionDefaultFormalParameterParameter,
+            inputLeading: 'void f({',
+            inputMiddle: 'required void g()',
+            inputTrailing: '}){}',
+            name: 'FunctionTypedFormalParameter with required',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(17, 'void'),
+                TestVisitor<FormalParameterList>(23, '()')
+            ]
         )
     ];
 
