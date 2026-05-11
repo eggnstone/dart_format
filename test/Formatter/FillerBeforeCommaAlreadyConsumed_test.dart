@@ -21,12 +21,7 @@ void main()
             const String expectedText =
                 'void f(void Function(int a) a, void Function(int b) b)\n'
                 '{\n'
-                '    f((_)\n'
-                '        {\n'
-                '        }, (__)\n'
-                '        {\n'
-                '        }\n'
-                '    );\n'
+                '    f((_) {}, (__) {});\n'
                 '}\n';
 
             final String actualText = formatterAll.format(inputText);

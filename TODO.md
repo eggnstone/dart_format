@@ -18,8 +18,6 @@ TODO
 - No blank line after { and before }
 - Investigate line endings. Keep existing style, but also offer option to convert.
 - No more than maxEmptyLines blank lines at file end.
-- Keep "{}" if it doesn't contain line breaks.
-- Indent "((){});" if contains line breaks.
 - else\nif
 - Indent interpolations?
 - Force line break after if/else/...
@@ -46,3 +44,5 @@ DONE (I think)
 - Important: Undetected change from "€" to "?". Maybe change of encoding? Is this the cause for the problem undetectable changes, too?
 - Indent triple quoted strings
 - favicon.ico does not work when called from plugin.
+- Keep "{}" if it doesn't contain line breaks.
+- Indent "((){});" if contains line breaks.

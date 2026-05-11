@@ -104,8 +104,7 @@ void main()
             test('Function / empty anonymous function as method param', ()
                 {
                     const String inputText = 'void f(){a((){});}';
-                    //const String expectedText = 'void f()\n{\n    a((){});\n}\n';
-                    const String expectedText = 'void f()\n{\n    a(()\n        {\n        }\n    );\n}\n';
+                    const String expectedText = 'void f()\n{\n    a(() {});\n}\n';
 
                     final String actualText = formatter.format(inputText);
 
@@ -116,8 +115,7 @@ void main()
             test('Function / non-empty anonymous function as method param', ()
                 {
                     const String inputText = 'void f(){a((){b;});}';
-                    //const String expectedText = 'void f()\n{\n    a((){b;});\n}\n';
-                    const String expectedText = 'void f()\n{\n    a(()\n        {\n            b;\n        }\n    );\n}\n';
+                    const String expectedText = 'void f()\n{\n    a(() {b;});\n}\n';
 
                     final String actualText = formatter.format(inputText);
 
