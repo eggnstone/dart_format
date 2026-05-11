@@ -1,0 +1,3 @@
+# Auto-detect text files; normalize line endings on commit.
+# Working copies get the platform's native line ending (CRLF on Windows, LF elsewhere).
+* text=auto
