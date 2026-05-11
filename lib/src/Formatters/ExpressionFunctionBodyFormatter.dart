@@ -36,6 +36,7 @@ class ExpressionFunctionBodyFormatter extends IFormatter
         */
 
         formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword');
+        formatState.copyEntity(node.star, astVisitor, '$methodName/node.star');
 
         formatState.copyEntity(node.functionDefinition, astVisitor, '$methodName/node.functionDefinition');
         //final int? spacesForFunctionDefinition = config.fixSpaces ? (node.offset == node.functionDefinition.offset ? 0 : 1) : null;

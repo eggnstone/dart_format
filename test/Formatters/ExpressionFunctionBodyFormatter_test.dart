@@ -26,6 +26,20 @@ void main()
                 TestConfig.none(),
                 TestConfig('=> null;\n')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFunctionBodyTolerant,
+            inputLeading: 'int f() ',
+            inputMiddle: 'async* => 1;',
+            inputTrailing: '',
+            name: 'ExpressionFunctionBody / async* =>',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<IntegerLiteral>(18, '1')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('async* => 1;\n')
+            ]
         )
         /*TODO
         // new

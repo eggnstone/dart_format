@@ -61,6 +61,12 @@ class AstCreator
     static CompilationUnit createCompilationUnit(String s)
     => analyzer_utilities.parseString(content: s).unit;
 
+    static CompilationUnit createCompilationUnitTolerant(String s)
+    => analyzer_utilities.parseString(content: s, throwIfDiagnostics: false).unit;
+
+    static FunctionBody createFunctionBodyTolerant(String s)
+    => (createCompilationUnitTolerant(s).declarations[0] as FunctionDeclaration).functionExpression.body;
+
     static CompilationUnit createCompilationUnitWithAugmentations(String s)
     => analyzer_utilities.parseString(
         content: s,
