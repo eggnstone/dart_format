@@ -121,6 +121,17 @@ void main()
                 TestConfig.none(),
                 TestConfig('(int  i, int  j)')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFormalParameterListInFunction,
+            inputLeading: 'void f',
+            inputMiddle: '(\n    int i,\n    int j\n    // c\n)',
+            inputTrailing: '{}',
+            name: '2 params with trailing line comment',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleFormalParameter>(12, 'int i'),
+                TestVisitor<SimpleFormalParameter>(23, 'int j')
+            ]
         )
     ];
 

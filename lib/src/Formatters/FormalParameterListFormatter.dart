@@ -8,6 +8,7 @@ import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../FormatState.dart';
+import '../Tools/CommentTools.dart';
 import '../Tools/FormatTools.dart';
 import '../Tools/LogTools.dart';
 import '../Tools/StringTools.dart';
@@ -104,6 +105,19 @@ class FormalParameterListFormatter extends IFormatter
                     commaText = commaText.replaceFirst(',', '${Constants.REMOVE_START},${Constants.REMOVE_END}');
 
                 formatState.consumeText(lastNode.end, endToken.offset, commaText, '$methodName/commaText');
+            }
+            else if (commaText.trim().isNotEmpty && CommentTools.isEmptyOrComments(commaText))
+            {
+                // No trailing comma, but trailing comments before endToken: consume them
+                // inside the pushed level so popLevelAndIndent re-indents them. Leave the
+                // final line break (and any trailing whitespace) for the caller so the
+                // closing token sits on its own line at the outer indent level.
+                final int lastNewlinePos = commaText.lastIndexOf('\n');
+                final int trailingEnd = lastNewlinePos >= 0
+                    ? lastNode.end + lastNewlinePos
+                    : endToken.offset;
+                if (lastNode.end < trailingEnd)
+                    formatState.consumeText(lastNode.end, trailingEnd, formatState.getText(lastNode.end, trailingEnd), '$methodName/trailingComments');
             }
         }
 
