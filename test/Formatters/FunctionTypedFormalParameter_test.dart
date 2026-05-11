@@ -44,6 +44,29 @@ void main()
                 TestVisitor<NamedType>(17, 'void'),
                 TestVisitor<FormalParameterList>(23, '()')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFormalParameterInFunction,
+            inputLeading: 'void f(',
+            inputMiddle: 'int g<T>(T s)',
+            inputTrailing: '){}',
+            name: 'FunctionTypedFormalParameter with typeParameters',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(7, 'int'),
+                TestVisitor<TypeParameterList>(12, '<T>'),
+                TestVisitor<FormalParameterList>(15, '(T s)')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFormalParameterInFunctionTolerant,
+            inputLeading: 'void f(',
+            inputMiddle: 'final void g()',
+            inputTrailing: '){}',
+            name: 'FunctionTypedFormalParameter with keyword',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(13, 'void'),
+                TestVisitor<FormalParameterList>(19, '()')
+            ]
         )
     ];
 

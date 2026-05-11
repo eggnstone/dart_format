@@ -28,8 +28,10 @@ class FunctionTypedFormalParameterFormatter extends IFormatter
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.covariantKeyword, astVisitor, '$methodName/node.covariantKeyword');
         formatState.copyEntity(node.requiredKeyword, astVisitor, '$methodName/node.requiredKeyword');
+        formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword');
         formatState.copyEntity(node.returnType, astVisitor, '$methodName/node.returnType');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
+        formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
         formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters');
         // This whole formatter should not be necessary, because it doesn't do anything special.
         // But when FormalParameterListFormatter calls parameter.accept(astVisitor); the question is omitted.

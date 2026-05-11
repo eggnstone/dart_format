@@ -67,6 +67,9 @@ class AstCreator
     static FunctionBody createFunctionBodyTolerant(String s)
     => (createCompilationUnitTolerant(s).declarations[0] as FunctionDeclaration).functionExpression.body;
 
+    static FormalParameter createFormalParameterInFunctionTolerant(String s)
+    => (createCompilationUnitTolerant(s).declarations[0] as FunctionDeclaration).functionExpression.parameters!.parameters[0];
+
     static CompilationUnit createCompilationUnitWithAugmentations(String s)
     => analyzer_utilities.parseString(
         content: s,
