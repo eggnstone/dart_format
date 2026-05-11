@@ -26,9 +26,6 @@ class ClassDeclarationFormatter extends IFormatter
         if (node is! ClassDeclaration)
             throw FormatException('Not a ClassDeclaration: ${node.runtimeType}');
 
-        //final String textWithPossibleLineBreak = formatState.getText(node.classKeyword.offset, node.leftBracket.offset);
-        //final bool pushLevel = true;//textWithPossibleLineBreak.contains('\n');
-
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.sealedKeyword, astVisitor, '$methodName/node.sealedKeyword');
         formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword');
@@ -38,7 +35,6 @@ class ClassDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.finalKeyword, astVisitor, '$methodName/node.finalKeyword');
         formatState.copyEntity(node.classKeyword, astVisitor, '$methodName/node.classKeyword');
 
-        //if (pushLevel)
         formatState.pushLevel('$methodName/node.classKeyword/after');
 
         formatState.copyEntity(node.namePart.typeName, astVisitor, '$methodName/node.namePart.typeName', config.space1);
@@ -47,7 +43,6 @@ class ClassDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.withClause, astVisitor, '$methodName/node.withClause', config.space1);
         formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause', config.space1);
 
-        //if (pushLevel)
         formatState.popLevelAndIndent();
 
         final ClassBody body = node.body;
