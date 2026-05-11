@@ -27,7 +27,7 @@ class RecordTypeAnnotationFormatter extends IFormatter
         if (node is! RecordTypeAnnotation)
             throw FormatException('Not a RecordTypeAnnotation: ${node.runtimeType}');
 
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space1);
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space0);
 
         final Token endTokenForPositionalFields = node.namedFields?.beginToken ?? node.rightParenthesis;
         formatState.acceptListWithComma(node.positionalFields, endTokenForPositionalFields, astVisitor, '$methodName/node.positionalFields');

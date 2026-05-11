@@ -271,6 +271,9 @@ class AstCreator
     static TypeAnnotation createTypeAnnotationInFunctionParameter(String s)
     => createSimpleFormalParameterInFunction(s).type!;
 
+    static TypeAnnotation createFirstTypeArgumentInMethodReturnType(String s)
+    => createTypeArgumentListInMethodReturnType(s).arguments[0];
+
     static TypeArgumentList createTypeArgumentListInMethodReturnType(String s)
     => createNamedTypeInMethodReturnType(s).typeArguments!;
 
