@@ -27,6 +27,7 @@ class FunctionTypeAliasFormatter extends IFormatter
             throw FormatException('Not a FunctionTypeAlias: ${node.runtimeType}');
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
+        formatState.copyEntity(node.augmentKeyword, astVisitor, '$methodName/node.augmentKeyword');
         formatState.copyEntity(node.typedefKeyword, astVisitor, '$methodName/node.typedefKeyword');
         formatState.copyEntity(node.returnType, astVisitor, '$methodName/node.returnType');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');

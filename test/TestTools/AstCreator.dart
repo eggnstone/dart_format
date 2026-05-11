@@ -67,6 +67,16 @@ class AstCreator
         featureSet: FeatureSet.latestLanguageVersion(flags: <String>['augmentations'])
     ).unit;
 
+    static CompilationUnit createCompilationUnitWithAugmentationsTolerant(String s)
+    => analyzer_utilities.parseString(
+        content: s,
+        featureSet: FeatureSet.latestLanguageVersion(flags: <String>['augmentations']),
+        throwIfDiagnostics: false
+    ).unit;
+
+    static FunctionTypeAlias createFunctionTypeAliasWithAugmentations(String s)
+    => createCompilationUnitWithAugmentationsTolerant(s).declarations[0] as FunctionTypeAlias;
+
     static CompilationUnit createCompilationUnitWithPrimaryConstructors(String s)
     => analyzer_utilities.parseString(
         content: s,

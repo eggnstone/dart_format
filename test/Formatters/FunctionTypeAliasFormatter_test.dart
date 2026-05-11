@@ -27,6 +27,19 @@ void main()
                 TestConfig.none(),
                 TestConfig('@a typedef void f();\n')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFunctionTypeAliasWithAugmentations,
+            inputMiddle: 'augment typedef void f();',
+            name: 'FunctionTypeAliasFormatter with augment',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(16, 'void'),
+                TestVisitor<FormalParameterList>(22, '()')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('augment typedef void f();\n')
+            ]
         )
     ];
 
