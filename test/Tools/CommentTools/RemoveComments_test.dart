@@ -154,7 +154,8 @@ void main()
                                 {
                                     const String inputText = '/*a';
 
-                                    expect(() => CommentTools.removeComments(inputText), throwsA(isA<Exception>()));                                }
+                                    expect(() => CommentTools.removeComments(inputText), throwsA(isA<Exception>()));
+                                }
                             );
 
                             test('Unfinished block comment: /*a*', ()

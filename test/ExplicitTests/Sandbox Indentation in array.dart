@@ -2,25 +2,25 @@
 var l = [
     a,
     b()
-//c
+    //c
 ];
 
 var l = [
     a,
     b
-//c
+    //c
 ];
 
 var l = [
     a,
     b()
-/*c*/
+    /*c*/
 ];
 
 var l = [
     a,
     b
-/*c*/
+    /*c*/
 ];
 
 var l = [
@@ -32,5 +32,5 @@ var l = [
 var l = [
     a,
     b
-// This comment should be aligned with the previous lines, but it is actually indented too far left.
+    // This comment should be aligned with the previous lines, but it is actually indented too far left.
 ];

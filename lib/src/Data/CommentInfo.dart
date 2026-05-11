@@ -10,7 +10,7 @@ abstract class CommentInfo with _$CommentInfo
         @Default(false) bool hasError,
         @Default(false) bool isComment,
         @Default(false) bool isEmpty
-    //@Default(false) bool isEndOfLineComment
+        //@Default(false) bool isEndOfLineComment
     }) = _CommentInfo;
 
     // necessary when you want to create additional methods

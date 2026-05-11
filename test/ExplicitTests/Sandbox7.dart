@@ -6,25 +6,25 @@ String s2 = r'\';
 var l = [
     a,
     b()
-//c
+    //c
 ];
 
 var l = [
     a,
     b
-//c
+    //c
 ];
 
 var l = [
     a,
     b()
-/*c*/
+    /*c*/
 ];
 
 var l = [
     a,
     b
-/*c*/
+    /*c*/
 ];
 
 int i; /*
