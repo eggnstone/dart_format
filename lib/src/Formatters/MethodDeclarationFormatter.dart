@@ -45,6 +45,7 @@ class MethodDeclarationFormatter extends IFormatter
         final Copier copier = Copier(astVisitor, config, formatState, node);
 
         copier.acceptList(node.sortedCommentAndAnnotations, '$methodName/node.sortedCommentAndAnnotations');
+        copier.copyNullableEntity(node.augmentKeyword, '$methodName/node.augmentKeyword', Spacing.zeroOne);
         copier.copyNullableEntity(node.externalKeyword, '$methodName/node.externalKeyword', Spacing.zeroOne);
         copier.copyNullableEntity(node.modifierKeyword, '$methodName/node.modifierKeyword', Spacing.zeroOne);
         copier.copyNullableEntity(node.returnType, '$methodName/node.returnType', Spacing.zeroOne);

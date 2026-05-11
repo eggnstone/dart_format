@@ -168,6 +168,22 @@ void main()
                 TestConfig.none(),
                 TestConfig('bool operator[](  int  i  );')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createClassMemberWithAugmentations,
+            inputLeading: 'class C{',
+            inputMiddle: 'augment void m(){}',
+            inputTrailing: '}',
+            name: 'MethodDeclaration with augment',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(16, 'void'),
+                TestVisitor<FormalParameterList>(22, '()'),
+                TestVisitor<BlockFunctionBody>(24, '{}')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('augment void m() {}')
+            ]
         )
     ];
 
