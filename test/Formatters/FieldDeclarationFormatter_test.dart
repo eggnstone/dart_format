@@ -40,6 +40,34 @@ void main()
                 TestConfig.none(),
                 TestConfig('abstract bool b;\n')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFieldDeclarationInClass,
+            inputLeading: 'class C{',
+            inputMiddle: 'covariant int i=0;',
+            inputTrailing: '}',
+            name: 'FieldDeclaration with covariant',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<VariableDeclarationList>(18, 'int i=0')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('covariant int i=0;\n')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFieldDeclarationInClassWithAugmentations,
+            inputLeading: 'class C{',
+            inputMiddle: 'augment int i=0;',
+            inputTrailing: '}',
+            name: 'FieldDeclaration with augment',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<VariableDeclarationList>(16, 'int i=0')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('augment int i=0;\n')
+            ]
         )
     ];
 
