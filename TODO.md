@@ -31,6 +31,8 @@ TODO
 - Do not remove trailing commas from end-of-line comments
 - Force empty line between methods
 - Option to sort methods
+- Multi-line layout not supported (no `pushLevel`) for: `RecordLiteral`, `RecordTypeAnnotation`, `RecordTypeAnnotationNamedFields`, `TypeArgumentList`. Elements and trailing comments end up at column 0 instead of the indent level.
+- `TypeParameterList`: closing `>` is incorrectly indented when the list spans multiple lines.
 
 DONE (I think)
 ==============
