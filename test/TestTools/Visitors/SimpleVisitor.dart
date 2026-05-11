@@ -14,6 +14,21 @@ abstract class SimpleVisitor extends AstVisitor<void>
     => visit(node);
 
     @override
+    // ignore: experimental_member_use
+    void visitAnonymousBlockBody(AnonymousBlockBody node)
+    => visit(node);
+
+    @override
+    // ignore: experimental_member_use
+    void visitAnonymousExpressionBody(AnonymousExpressionBody node)
+    => visit(node);
+
+    @override
+    // ignore: experimental_member_use
+    void visitAnonymousMethodInvocation(AnonymousMethodInvocation node)
+    => visit(node);
+
+    @override
     void visitArgumentList(ArgumentList node)
     => visit(node);
 
@@ -47,6 +62,14 @@ abstract class SimpleVisitor extends AstVisitor<void>
 
     @override
     void visitBlock(Block node)
+    => visit(node);
+
+    @override
+    void visitBlockClassBody(BlockClassBody node)
+    => visit(node);
+
+    @override
+    void visitBlockEnumBody(BlockEnumBody node)
     => visit(node);
 
     @override
@@ -174,6 +197,14 @@ abstract class SimpleVisitor extends AstVisitor<void>
     => visit(node);
 
     @override
+    void visitEmptyClassBody(EmptyClassBody node)
+    => visit(node);
+
+    @override
+    void visitEmptyEnumBody(EmptyEnumBody node)
+    => visit(node);
+
+    @override
     void visitEmptyFunctionBody(EmptyFunctionBody node)
     => visit(node);
 
@@ -211,6 +242,10 @@ abstract class SimpleVisitor extends AstVisitor<void>
 
     @override
     void visitExtensionDeclaration(ExtensionDeclaration node)
+    => visit(node);
+
+    @override
+    void visitExtensionOnClause(ExtensionOnClause node)
     => visit(node);
 
     @override
@@ -410,6 +445,14 @@ abstract class SimpleVisitor extends AstVisitor<void>
     => visit(node);
 
     @override
+    void visitMixinOnClause(MixinOnClause node)
+    => visit(node);
+
+    @override
+    void visitNameWithTypeParameters(NameWithTypeParameters node)
+    => visit(node);
+
+    @override
     void visitNamedExpression(NamedExpression node)
     => visit(node);
 
@@ -427,6 +470,10 @@ abstract class SimpleVisitor extends AstVisitor<void>
 
     @override
     void visitNullAssertPattern(NullAssertPattern node)
+    => visit(node);
+
+    @override
+    void visitNullAwareElement(NullAwareElement node)
     => visit(node);
 
     @override
@@ -487,6 +534,18 @@ abstract class SimpleVisitor extends AstVisitor<void>
 
     @override
     void visitPrefixedIdentifier(PrefixedIdentifier node)
+    => visit(node);
+
+    @override
+    void visitPrimaryConstructorBody(PrimaryConstructorBody node)
+    => visit(node);
+
+    @override
+    void visitPrimaryConstructorDeclaration(PrimaryConstructorDeclaration node)
+    => visit(node);
+
+    @override
+    void visitPrimaryConstructorName(PrimaryConstructorName node)
     => visit(node);
 
     @override
@@ -671,64 +730,5 @@ abstract class SimpleVisitor extends AstVisitor<void>
 
     @override
     void visitYieldStatement(YieldStatement node)
-    => visit(node);
-
-    @override
-    void visitExtensionOnClause(ExtensionOnClause node)
-    => visit(node);
-
-    @override
-    void visitMixinOnClause(MixinOnClause node)
-    => visit(node);
-
-    @override
-    void visitNullAwareElement(NullAwareElement node)
-    => visit(node);
-
-    @override
-    void visitBlockClassBody(BlockClassBody node)
-    => visit(node);
-
-    @override
-    void visitEmptyClassBody(EmptyClassBody node)
-    => visit(node);
-
-    @override
-    void visitNameWithTypeParameters(NameWithTypeParameters node)
-    => visit(node);
-
-    @override
-    void visitPrimaryConstructorDeclaration(PrimaryConstructorDeclaration node)
-    => visit(node);
-
-    @override
-    void visitPrimaryConstructorName(PrimaryConstructorName node)
-    => visit(node);
-
-    @override
-    void visitPrimaryConstructorBody(PrimaryConstructorBody node)
-    => visit(node);
-
-    @override
-    // ignore: experimental_member_use
-    void visitAnonymousBlockBody(AnonymousBlockBody node) 
-    => visit(node);
-
-    @override
-    // ignore: experimental_member_use
-    void visitAnonymousExpressionBody(AnonymousExpressionBody node)
-    => visit(node);
-
-    @override
-    // ignore: experimental_member_use
-    void visitAnonymousMethodInvocation(AnonymousMethodInvocation node)
-    => visit(node);
-
-    @override
-    void visitBlockEnumBody(BlockEnumBody node)
-    => visit(node);
-
-    @override
-    void visitEmptyEnumBody(EmptyEnumBody node)
     => visit(node);
 }

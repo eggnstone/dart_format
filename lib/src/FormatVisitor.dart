@@ -196,12 +196,23 @@ class FormatVisitor extends AstVisitor<void>
     => _defaultFormatter.format(node);
 
     @override
-    void visitArgumentList(ArgumentList node)
-    => _argumentListFormatter.format(node);
+    // ignore: experimental_member_use
+    void visitAnonymousBlockBody(AnonymousBlockBody node)
+    => _defaultFormatter.format(node);
 
     @override
-    void visitAssignmentExpression(AssignmentExpression node)
-    => _assignmentExpressionFormatter.format(node);
+    // ignore: experimental_member_use
+    void visitAnonymousExpressionBody(AnonymousExpressionBody node)
+    => _defaultFormatter.format(node);
+
+    @override
+    // ignore: experimental_member_use
+    void visitAnonymousMethodInvocation(AnonymousMethodInvocation node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitArgumentList(ArgumentList node)
+    => _argumentListFormatter.format(node);
 
     @override
     void visitAsExpression(AsExpression node)
@@ -220,6 +231,10 @@ class FormatVisitor extends AstVisitor<void>
     => _defaultFormatter.format(node);
 
     @override
+    void visitAssignmentExpression(AssignmentExpression node)
+    => _assignmentExpressionFormatter.format(node);
+
+    @override
     void visitAwaitExpression(AwaitExpression node)
     => _defaultFormatter.format(node);
 
@@ -230,6 +245,14 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitBlock(Block node)
     => _blockFormatter.format(node);
+
+    @override
+    void visitBlockClassBody(BlockClassBody node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitBlockEnumBody(BlockEnumBody node)
+    => _defaultFormatter.format(node);
 
     @override
     void visitBlockFunctionBody(BlockFunctionBody node)
@@ -353,6 +376,14 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitDoubleLiteral(DoubleLiteral node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitEmptyClassBody(EmptyClassBody node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitEmptyEnumBody(EmptyEnumBody node)
     => _defaultFormatter.format(node);
 
     @override
@@ -600,6 +631,10 @@ class FormatVisitor extends AstVisitor<void>
     => _mixinOnClauseFormatter.format(node);
 
     @override
+    void visitNameWithTypeParameters(NameWithTypeParameters node)
+    => _defaultFormatter.format(node);
+
+    @override
     void visitNamedExpression(NamedExpression node)
     => _namedExpressionFormatter.format(node);
 
@@ -682,6 +717,18 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitPrefixedIdentifier(PrefixedIdentifier node)
     => _prefixedIdentifierFormatter.format(node);
+
+    @override
+    void visitPrimaryConstructorBody(PrimaryConstructorBody node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitPrimaryConstructorDeclaration(PrimaryConstructorDeclaration node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitPrimaryConstructorName(PrimaryConstructorName node)
+    => _defaultFormatter.format(node);
 
     @override
     void visitPropertyAccess(PropertyAccess node)
@@ -808,12 +855,12 @@ class FormatVisitor extends AstVisitor<void>
     => _defaultFormatter.format(node);
 
     @override
-    void visitTopLevelVariableDeclaration(TopLevelVariableDeclaration node)
-    => _topLevelVariableDeclarationFormatter.format(node);
-
-    @override
     void visitThrowExpression(ThrowExpression node)
     => _defaultFormatter.format(node);
+
+    @override
+    void visitTopLevelVariableDeclaration(TopLevelVariableDeclaration node)
+    => _topLevelVariableDeclarationFormatter.format(node);
 
     @override
     void visitTryStatement(TryStatement node)
@@ -867,50 +914,4 @@ class FormatVisitor extends AstVisitor<void>
     void visitYieldStatement(YieldStatement node)
     => _yieldStatementFormatter.format(node);
 
-    @override
-    void visitBlockClassBody(BlockClassBody node)
-    => _defaultFormatter.format(node);
-
-    @override
-    void visitEmptyClassBody(EmptyClassBody node)
-    => _defaultFormatter.format(node);
-
-    @override
-    void visitNameWithTypeParameters(NameWithTypeParameters node)
-    => _defaultFormatter.format(node);
-
-    @override
-    void visitPrimaryConstructorDeclaration(PrimaryConstructorDeclaration node)
-    => _defaultFormatter.format(node);
-
-    @override
-    void visitPrimaryConstructorName(PrimaryConstructorName node)
-    => _defaultFormatter.format(node);
-
-    @override
-    void visitPrimaryConstructorBody(PrimaryConstructorBody node)
-    => _defaultFormatter.format(node);
-
-    @override
-    // ignore: experimental_member_use
-    void visitAnonymousBlockBody(AnonymousBlockBody node)
-    => _defaultFormatter.format(node);
-
-    @override
-    // ignore: experimental_member_use
-    void visitAnonymousExpressionBody(AnonymousExpressionBody node)
-    => _defaultFormatter.format(node);
-
-    @override
-    // ignore: experimental_member_use
-    void visitAnonymousMethodInvocation(AnonymousMethodInvocation node)
-    => _defaultFormatter.format(node);
-
-    @override
-    void visitBlockEnumBody(BlockEnumBody node)
-    => _defaultFormatter.format(node);
-
-    @override
-    void visitEmptyEnumBody(EmptyEnumBody node)
-    => _defaultFormatter.format(node);
 }

@@ -94,6 +94,19 @@ abstract class Config with _$Config
         required bool removeTrailingCommas
     }) = _Config;
 
+    /// Create a new instance of [Config] from a JSON object.
+    factory Config.fromJson(Map<String, dynamic> json)
+    => _$ConfigFromJson(json);
+
+    /// Create a new instance of [Config] from a JSON string.
+    factory Config.fromJsonText(String? s)
+    {
+        if (s == null)
+            return Config.all();
+
+        return Config.fromJson(Map<String, dynamic>.from(jsonDecode(s)));
+    }
+
     /// Create a new instance of [Config] with all options turned on, including experimental options.
     static Config experimental() => Config.all();
 
@@ -170,17 +183,4 @@ abstract class Config with _$Config
         maxEmptyLines: maxEmptyLines,
         removeTrailingCommas: removeTrailingCommas
     );
-
-    /// Create a new instance of [Config] from a JSON string.
-    factory Config.fromJsonText(String? s)
-    {
-        if (s == null)
-            return Config.all();
-
-        return Config.fromJson(Map<String, dynamic>.from(jsonDecode(s)));
-    }
-
-    /// Create a new instance of [Config] from a JSON object.
-    factory Config.fromJson(Map<String, dynamic> json)
-    => _$ConfigFromJson(json);
 }

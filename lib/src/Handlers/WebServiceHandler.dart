@@ -21,11 +21,12 @@ import '../Tools/VersionTools.dart';
 class WebServiceHandler
 {
     static const String CLASS_NAME = 'WebServiceHandler';
-    static int _requestCount = 0;
-    static double maxMillisecondsPerKiloCharacter = 0;
 
     final bool skipVersionCheck;
     final DateTime _startTime = DateTime.now();
+
+    static int _requestCount = 0;
+    static double _maxMillisecondsPerKiloCharacter = 0;
 
     WebServiceHandler({required this.skipVersionCheck});
 
@@ -139,6 +140,19 @@ class WebServiceHandler
         }
     }
 
+    String _getHtmlEnd()
+    => '</body></html>';
+
+    String _getHtmlStart(String s)
+    => '''
+    <html lang="en">
+    <head>
+    <title>dart_format $s</title>
+    </head>
+    <body>
+    <h1 style="text-align: center; font-family: monospace;"><!--suppress HtmlUnknownTarget --><img style="vertical-align: middle;" alt="Logo" src="/favicon.ico">&nbsp;&nbsp;dart_format $s</h1>
+    ''';
+
     Future<void> _handleGet(HttpRequest request, {Function()? onQuit})
     async
     {
@@ -179,6 +193,18 @@ class WebServiceHandler
         return HttpTools.flushAndClose(request);
     }
 
+    Future<void> _handleGetQuit(HttpRequest request, {Function()? onQuit})
+    async
+    {
+        request.response.statusCode = HttpStatus.ok;
+        request.response.headers.contentType = ContentType.html;
+        request.response.writeln(_getHtmlStart('Quit'));
+        request.response.writeln('<b>dart_format is terminating ...</b>');
+        request.response.writeln(_getHtmlEnd());
+        await HttpTools.flushAndClose(request);
+        onQuit?.call();
+    }
+
     Future<void> _handleGetStatus(HttpRequest request)
     async
     {
@@ -190,18 +216,6 @@ class WebServiceHandler
         request.response.writeln('<p>Uptime: ${DateTime.now().difference(_startTime)}</p>');
         request.response.writeln(_getHtmlEnd());
         return HttpTools.flushAndClose(request);
-    }
-
-    Future<void> _handleGetQuit(HttpRequest request, {Function()? onQuit})
-    async
-    {
-        request.response.statusCode = HttpStatus.ok;
-        request.response.headers.contentType = ContentType.html;
-        request.response.writeln(_getHtmlStart('Quit'));
-        request.response.writeln('<b>dart_format is terminating ...</b>');
-        request.response.writeln(_getHtmlEnd());
-        await HttpTools.flushAndClose(request);
-        onQuit?.call();
     }
 
     Future<void> _handlePost(HttpRequest request)
@@ -402,11 +416,11 @@ class WebServiceHandler
             if (request.method == 'POST')
             {
                 final double millisecondsPerKiloCharacter = seconds * 1000 / (request.contentLength / 1000);
-                if (request.contentLength >= 1000 && millisecondsPerKiloCharacter > maxMillisecondsPerKiloCharacter)
-                    maxMillisecondsPerKiloCharacter = millisecondsPerKiloCharacter;
+                if (request.contentLength >= 1000 && millisecondsPerKiloCharacter > _maxMillisecondsPerKiloCharacter)
+                    _maxMillisecondsPerKiloCharacter = millisecondsPerKiloCharacter;
                 final String kCharsText = '${(request.contentLength / 1000).toStringAsFixed(2)} kChars';
                 final String kCharsPerMillisecondText = '${millisecondsPerKiloCharacter.toStringAsFixed(2)} ms/kChar';
-                final String maxKCharsPerMillisecondText = maxMillisecondsPerKiloCharacter == 0 ? '' : ', max: ${maxMillisecondsPerKiloCharacter.toStringAsFixed(2)} ms/kChar';
+                final String maxKCharsPerMillisecondText = _maxMillisecondsPerKiloCharacter == 0 ? '' : ', max: ${_maxMillisecondsPerKiloCharacter.toStringAsFixed(2)} ms/kChar';
                 logDebug('$METHOD_NAME END   #$requestCount: ${request.method} ${request.uri} took ${seconds}s'
                     ' ($kCharsText, $kCharsPerMillisecondText$maxKCharsPerMillisecondText)');
             }
@@ -443,19 +457,6 @@ class WebServiceHandler
     {
         logErrorObject('$CLASS_NAME.handleServerError', error, stackTrace);
     }
-
-    String _getHtmlStart(String s)
-    => '''
-    <html lang="en">
-    <head>
-    <title>dart_format $s</title>
-    </head>
-    <body>
-    <h1 style="text-align: center; font-family: monospace;"><!--suppress HtmlUnknownTarget --><img style="vertical-align: middle;" alt="Logo" src="/favicon.ico">&nbsp;&nbsp;dart_format $s</h1>
-    ''';
-
-    String _getHtmlEnd()
-    => '</body></html>';
 
     void _logDebug(String s)
     {

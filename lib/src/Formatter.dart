@@ -64,16 +64,16 @@ class Formatter
         return _verifyResult(cleanedS, result, parseResult.lineInfo);
     }
 
-    void _logWarning(String s)
-    {
-        if (Constants.DEBUG_FORMAT_STATE)
-            logInternalWarning(s);
-    }
-
     void _logAndThrowWarning(String message, CharacterLocation location)
     {
         _logWarning(message);
         throw DartFormatException.warning(message, location);
+    }
+
+    void _logWarning(String s)
+    {
+        if (Constants.DEBUG_FORMAT_STATE)
+            logInternalWarning(s);
     }
 
     String _verifyResult(String s, String result, LineInfo lineInfo)
