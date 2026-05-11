@@ -30,6 +30,8 @@ class EnumDeclarationFormatter extends IFormatter
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.enumKeyword, astVisitor, '$methodName/node.enumKeyword');
         formatState.copyEntity(node.namePart.typeName, astVisitor, '$methodName/node.namePart.typeName');
+        formatState.copyEntity(node.namePart.typeParameters, astVisitor, '$methodName/node.namePart.typeParameters');
+        formatState.copyEntity(node.withClause, astVisitor, '$methodName/node.withClause');
         formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause');
 
         final EnumBody body = node.body;

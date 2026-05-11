@@ -119,6 +119,47 @@ void main()
                 TestConfig.none(),
                 TestConfig('enum E\n{\n    x,\n    y,\n    z\n}\n')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createDeclaration,
+            inputMiddle: 'enum E<T>{x}',
+            name: 'EnumDeclaration: enum E<T>{x}',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<TypeParameterList>(6, '<T>'),
+                TestVisitor<EnumConstantDeclaration>(10, 'x')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('enum E<T>\n{\n    x\n}\n')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createDeclaration,
+            inputMiddle: 'enum E with M{x}',
+            name: 'EnumDeclaration: enum E with M{x}',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<WithClause>(7, 'with M'),
+                TestVisitor<EnumConstantDeclaration>(14, 'x')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('enum E with M\n{\n    x\n}\n')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createDeclaration,
+            inputMiddle: 'enum E<T> with M implements F{x}',
+            name: 'EnumDeclaration: enum E<T> with M implements F{x}',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<TypeParameterList>(6, '<T>'),
+                TestVisitor<WithClause>(10, 'with M'),
+                TestVisitor<ImplementsClause>(17, 'implements F'),
+                TestVisitor<EnumConstantDeclaration>(30, 'x')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('enum E<T> with M implements F\n{\n    x\n}\n')
+            ]
         )
     ];
 
