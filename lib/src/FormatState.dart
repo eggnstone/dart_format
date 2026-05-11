@@ -28,6 +28,7 @@ class FormatState
 
     final List<StringBufferEx> _textBuffers = <StringBufferEx>[StringBufferEx()];
     final List<Indentation> _indentations = <Indentation>[];
+    final List<int?> _customIndentSizes = <int?>[];
 
     int _lastConsumedPosition = 0;
     String? _trailingForTests;
@@ -113,7 +114,8 @@ class FormatState
 
                 if (trimCommaText)
                 {
-                    final String trimmedCommaText = '${StringTools.trimSpaces(commaText)} ';
+                    final String trimmed = StringTools.trimSpaces(commaText);
+                    final String trimmedCommaText = trimmed.contains('\n') ? trimmed : '$trimmed ';
                     if (Constants.DEBUG_I_FORMATTER) logDebug('Trimming commaText: ${StringTools.toDisplayString(commaText)} => ${StringTools.toDisplayString(trimmedCommaText)}');
                     commaText = trimmedCommaText;
                 }
@@ -854,7 +856,8 @@ class FormatState
         if (Constants.DEBUG_FORMAT_STATE) logInternal('# FormatState.popLevelAndIndent()');
 
         final Indentation lastLevel = _indentations.removeLast();
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  Popped level: name: "${lastLevel.name}" type: "${lastLevel.type}"');
+        final int? customIndentSize = _customIndentSizes.removeLast();
+        if (Constants.DEBUG_FORMAT_STATE) logInternal('  Popped level: name: "${lastLevel.name}" type: "${lastLevel.type}" customIndentSize: $customIndentSize');
 
         final StringBufferEx poppedStringBuffer = _textBuffers.removeLast();
         if (Constants.DEBUG_FORMAT_STATE)
@@ -874,15 +877,16 @@ class FormatState
         String s = (previousTextEndsWithNewLine ? '\n' : '') + poppedStringBuffer.toString();
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  s: ${StringTools.toDisplayString(s)}');
 
+        final int effectiveIndentSize = customIndentSize ?? _indentationSpacesPerLevel;
         String indent = '';
         if (lastLevel.type == IndentationType.single)
         {
             if (!s.trim().startsWith('{'))
-                indent = ' ' * _indentationSpacesPerLevel;
+                indent = ' ' * effectiveIndentSize;
         }
         else if (lastLevel.type == IndentationType.multiple)
         {
-            indent = ' ' * _indentationSpacesPerLevel;
+            indent = ' ' * effectiveIndentSize;
         }
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  indent:      ${StringTools.toDisplayString(indent)}');
@@ -905,16 +909,17 @@ class FormatState
 
     // TODO: remove usage of pushLevel() until covered by tests.
     // TODO: when is IndentationType.multiple even used?
-    void pushLevel(String name, [IndentationType type = IndentationType.single])
+    void pushLevel(String name, [IndentationType type = IndentationType.single, int? customIndentSize])
     {
         if (Constants.DEBUG_FORMAT_STATE)
         {
-            logInternal('# FormatState.pushLevel(name: "$name", type: "$type")');
+            logInternal('# FormatState.pushLevel(name: "$name", type: "$type", customIndentSize: $customIndentSize)');
             //logInternal('  lastText: ${StringTools.toDisplayString(_textBuffers.last.lastText)}');
             //logInternal('  allText:  ${StringTools.toDisplayString(_textBuffers.last)}');
         }
 
         _indentations.add(Indentation(name: name, type: type));
+        _customIndentSizes.add(customIndentSize);
         _textBuffers.add(StringBufferEx(lastText: _textBuffers.last.lastText));
     }
 

@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:dart_format/src/Data/Config.dart';
 import 'package:dart_format/src/Formatters/ConstructorDeclarationFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
@@ -139,7 +140,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('const C() : a=0,b=0;')
+                TestConfig('const C() : a=0, b=0;')
             ]
         ),
         TestGroupConfig(
@@ -157,7 +158,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('const C()\n    : a=0,b=0;')
+                TestConfig('const C()\n  : a=0, b=0;')
             ]
         ),
         TestGroupConfig(
@@ -175,7 +176,16 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('const C()\n    : a=0,\n    b=0;')
+                TestConfig('const C()\n  : a=0,\n    b=0;'),
+                TestConfig.custom('indent=-1', Config.all(indentationSpacesPerLevel: -1), 'const C()\n: a=0,\nb=0;'),
+                TestConfig.custom('indent=0',  Config.all(indentationSpacesPerLevel:  0), 'const C()\n: a=0,\nb=0;'),
+                TestConfig.custom('indent=1',  Config.all(indentationSpacesPerLevel:  1), 'const C()\n: a=0,\n b=0;'),
+                TestConfig.custom('indent=2',  Config.all(indentationSpacesPerLevel:  2), 'const C()\n: a=0,\n  b=0;'),
+                TestConfig.custom('indent=3',  Config.all(indentationSpacesPerLevel:  3), 'const C()\n : a=0,\n   b=0;'),
+                TestConfig.custom('indent=5',  Config.all(indentationSpacesPerLevel:  5), 'const C()\n   : a=0,\n     b=0;'),
+                TestConfig.custom('indent=6',  Config.all(indentationSpacesPerLevel:  6), 'const C()\n    : a=0,\n      b=0;'),
+                TestConfig.custom('indent=7',  Config.all(indentationSpacesPerLevel:  7), 'const C()\n     : a=0,\n       b=0;'),
+                TestConfig.custom('indent=8',  Config.all(indentationSpacesPerLevel:  8), 'const C()\n      : a=0,\n        b=0;')
             ]
         ),
         TestGroupConfig(

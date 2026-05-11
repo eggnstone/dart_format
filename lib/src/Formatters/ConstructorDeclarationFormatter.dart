@@ -7,6 +7,7 @@ import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
+import '../Types/IndentationType.dart';
 import 'IFormatter.dart';
 
 class ConstructorDeclarationFormatter extends IFormatter
@@ -43,10 +44,14 @@ class ConstructorDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.period, astVisitor, '$methodName/node.period');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters');
-        formatState.pushLevel('$methodName/node.statements');
+        final int separatorIndentSize = config.indentationSpacesPerLevel < 2 ? 0 : config.indentationSpacesPerLevel - 2;
+        formatState.pushLevel('$methodName/node.separator', IndentationType.single, separatorIndentSize);
         formatState.copyEntity(node.separator, astVisitor, '$methodName/node.separator', config.space1);
+        formatState.popLevelAndIndent();
+
+        formatState.pushLevel('$methodName/node.initializers');
         formatState.copyEntity(node.redirectedConstructor, astVisitor, '$methodName/node.redirectedConstructor');
-        formatState.acceptListWithComma(node.initializers, null, astVisitor, '$methodName/node.initializers', leadingSpaces: config.space1);
+        formatState.acceptListWithComma(node.initializers, null, astVisitor, '$methodName/node.initializers', leadingSpaces: config.space1, trimCommaText: config.fixSpaces);
         formatState.popLevelAndIndent();
         formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
 
