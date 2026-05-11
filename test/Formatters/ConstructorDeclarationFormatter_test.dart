@@ -104,7 +104,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('C() :super(){}')
+                TestConfig('C() : super(){}')
             ]
         ),
         TestGroupConfig(
@@ -121,7 +121,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('const C() :super();')
+                TestConfig('const C() : super();')
             ]
         ),
         TestGroupConfig(
@@ -139,7 +139,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('const C() :a=0,b=0;')
+                TestConfig('const C() : a=0,b=0;')
             ]
         ),
         TestGroupConfig(
@@ -157,7 +157,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('const C()\n    :a=0,b=0;')
+                TestConfig('const C()\n    : a=0,b=0;')
             ]
         ),
         TestGroupConfig(
@@ -175,7 +175,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('const C()\n    :a=0,\n    b=0;')
+                TestConfig('const C()\n    : a=0,\n    b=0;')
             ]
         ),
         TestGroupConfig(

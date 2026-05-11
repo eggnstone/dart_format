@@ -14,6 +14,7 @@ import 'Formatters/ClassTypeAliasFormatter.dart';
 import 'Formatters/CompilationUnitFormatter.dart';
 import 'Formatters/ConditionalExpressionFormatter.dart';
 import 'Formatters/ConstructorDeclarationFormatter.dart';
+import 'Formatters/ConstructorFieldInitializerFormatter.dart';
 import 'Formatters/ContinueStatementFormatter.dart';
 import 'Formatters/DefaultFormalParameterFormatter.dart';
 import 'Formatters/DefaultFormatter.dart';
@@ -107,6 +108,7 @@ class FormatVisitor extends AstVisitor<void>
     late final CompilationUnitFormatter _compilationUnitFormatter = CompilationUnitFormatter(config, this, _formatState);
     late final ConditionalExpressionFormatter _conditionalExpressionFormatter = ConditionalExpressionFormatter(config, this, _formatState);
     late final ConstructorDeclarationFormatter _constructorDeclarationFormatter = ConstructorDeclarationFormatter(config, this, _formatState);
+    late final ConstructorFieldInitializerFormatter _constructorFieldInitializerFormatter = ConstructorFieldInitializerFormatter(config, this, _formatState);
     late final ContinueStatementFormatter _continueStatementFormatter = ContinueStatementFormatter(config, this, _formatState);
     late final DefaultFormalParameterFormatter _defaultFormalParameterFormatter = DefaultFormalParameterFormatter(config, this, _formatState);
     late final DoStatementFormatter _doStatementFormatter = DoStatementFormatter(config, this, _formatState);
@@ -324,7 +326,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitConstructorFieldInitializer(ConstructorFieldInitializer node)
-    => _defaultFormatter.format(node);
+    => _constructorFieldInitializerFormatter.format(node);
 
     @override
     void visitConstructorName(ConstructorName node)

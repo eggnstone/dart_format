@@ -46,7 +46,7 @@ class ConstructorDeclarationFormatter extends IFormatter
         formatState.pushLevel('$methodName/node.statements');
         formatState.copyEntity(node.separator, astVisitor, '$methodName/node.separator', config.space1);
         formatState.copyEntity(node.redirectedConstructor, astVisitor, '$methodName/node.redirectedConstructor');
-        formatState.acceptListWithComma(node.initializers, null, astVisitor, '$methodName/node.initializers');
+        formatState.acceptListWithComma(node.initializers, null, astVisitor, '$methodName/node.initializers', leadingSpaces: config.space1);
         formatState.popLevelAndIndent();
         formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
 
