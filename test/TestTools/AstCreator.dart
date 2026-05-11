@@ -61,6 +61,10 @@ class AstCreator
     static CompilationUnit createCompilationUnit(String s)
     => analyzer_utilities.parseString(content: s).unit;
 
+    // Production rejects any input with parse diagnostics (Formatter.dart:42-43).
+    // Only use this helper to construct AST shapes the production guard would
+    // reject (e.g. `async*` on an expression body) for defensive-coverage tests.
+    // Do not introduce new uses without a reason — prefer valid Dart fixtures.
     static CompilationUnit createCompilationUnitTolerant(String s)
     => analyzer_utilities.parseString(content: s, throwIfDiagnostics: false).unit;
 
