@@ -9,12 +9,12 @@ $major = $matches[1]
 $minor = $matches[2]
 $patch = $matches[3]
 
-$oldVersionDartFileContent = (Get-Content -Path $versionDartFileName)
+$oldVersionDartFileContent = Get-Content -Path $versionDartFileName -Raw
 $newVersionDartFileContent = $oldVersionDartFileContent `
     -replace "MAJOR = \d+;", "MAJOR = $major;" `
     -replace "MINOR = \d+;", "MINOR = $minor;" `
     -replace "PATCH = \d+;", "PATCH = $patch;"
 
-Set-Content -Path $versionDartFileName -Value $newVersionDartFileContent
+Set-Content -Path $versionDartFileName -Value $newVersionDartFileContent -NoNewline
 
 dart pub publish
