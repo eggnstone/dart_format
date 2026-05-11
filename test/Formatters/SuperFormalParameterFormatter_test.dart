@@ -39,6 +39,25 @@ void main()
             inputMiddle: 'covariant super.x',
             inputTrailing: ');}',
             name: 'SuperFormalParameter with covariant'
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createSuperFormalParameterInConstructor,
+            inputLeading: 'class D extends C{D(',
+            inputMiddle: 'final super.x',
+            inputTrailing: ');}',
+            name: 'SuperFormalParameter with keyword'
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createSuperFormalParameterInConstructor,
+            inputLeading: 'class D extends C{D(',
+            inputMiddle: 'int super.x<T>(T s)?',
+            inputTrailing: ');}',
+            name: 'SuperFormalParameter function-typed with typeParameters/parameters/question',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(20, 'int'),
+                TestVisitor<TypeParameterList>(31, '<T>'),
+                TestVisitor<FormalParameterList>(34, '(T s)')
+            ]
         )
     ];
 

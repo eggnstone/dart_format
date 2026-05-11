@@ -30,6 +30,12 @@ class SuperFormalParameterFormatter extends IFormatter
         formatState.copyEntity(node.covariantKeyword, astVisitor, '$methodName/node.covariantKeyword');
         formatState.copyEntity(node.requiredKeyword, astVisitor, '$methodName/node.requiredKeyword');
 
+        if (node.keyword != null)
+        {
+            final int? spacesForKeyword = config.fixSpaces ? (node.offset == node.keyword!.offset ? null : 1) : null;
+            formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword', spacesForKeyword);
+        }
+
         if (node.type != null)
         {
             final int? spacesForType = config.fixSpaces ? (node.offset == node.type!.offset ? null : 1) : null;
@@ -41,6 +47,9 @@ class SuperFormalParameterFormatter extends IFormatter
 
         formatState.copyEntity(node.period, astVisitor, '$methodName/node.period', config.space0);
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name', config.space0);
+        formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters', config.space0);
+        formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters', config.space0);
+        formatState.copyEntity(node.question, astVisitor, '$methodName/node.question', config.space0);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
