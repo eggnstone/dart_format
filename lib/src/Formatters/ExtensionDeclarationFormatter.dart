@@ -27,6 +27,7 @@ class ExtensionDeclarationFormatter extends IFormatter
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.extensionKeyword, astVisitor, '$methodName/node.extensionKeyword');
+        formatState.copyEntity(node.typeKeyword, astVisitor, '$methodName/node.typeKeyword');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
         formatState.copyEntity(node.onClause, astVisitor, '$methodName/node.onClause');
