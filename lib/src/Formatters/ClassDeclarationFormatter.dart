@@ -50,13 +50,13 @@ class ClassDeclarationFormatter extends IFormatter
         //if (pushLevel)
         formatState.popLevelAndIndent();
 
-        // Cannot "Use body instead" because BlockClassBodyImpl is not exposed via the library.
-        // ignore: deprecated_member_use
-        formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
-        // ignore: deprecated_member_use
-        formatState.acceptList(node.members, astVisitor, '$methodName/node.members');
-        // ignore: deprecated_member_use
-        formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');
+        final ClassBody body = node.body;
+        if (body is! BlockClassBody)
+            throw FormatException('Unsupported ClassBody: ${body.runtimeType}');
+
+        formatState.copyOpeningBraceAndPushLevel(body.leftBracket, config, '$methodName/node.body.leftBracket');
+        formatState.acceptList(body.members, astVisitor, '$methodName/node.body.members');
+        formatState.copyClosingBraceAndPopLevel(body.rightBracket, config, '$methodName/node.body.rightBracket');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

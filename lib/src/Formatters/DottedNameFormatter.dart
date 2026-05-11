@@ -1,6 +1,7 @@
 // ignore_for_file: always_put_control_body_on_new_line
 
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/ast/token.dart';
 
 import '../Constants/Constants.dart';
 import '../Data/Config.dart';
@@ -25,9 +26,9 @@ class DottedNameFormatter extends IFormatter
         if (node is! DottedName)
             throw FormatException('Not a DottedName: ${node.runtimeType}');
 
-        // Why does this not work with the default formatter?
-        // The dots were missing then!
-        formatState.acceptListWithPeriod(node.components, astVisitor, '$methodName/node.components');
+        // node.tokens already contains the period tokens interleaved with the identifier tokens.
+        for (final Token token in node.tokens)
+            formatState.copyEntity(token, astVisitor, '$methodName/node.tokens');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

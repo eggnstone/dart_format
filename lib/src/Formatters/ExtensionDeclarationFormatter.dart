@@ -37,9 +37,13 @@ class ExtensionDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.extendedType, astVisitor, '$methodName/node.extendedType');
         */
 
-        formatState.copyOpeningBraceAndPushLevel(node.body.leftBracket, config, '$methodName/node.body.leftBracket');
-        formatState.acceptList(node.body.members, astVisitor, '$methodName/node.body.members');
-        formatState.copyClosingBraceAndPopLevel(node.body.rightBracket, config, '$methodName/node.body.rightBracket');
+        final ClassBody body = node.body;
+        if (body is! BlockClassBody)
+            throw FormatException('Unsupported ClassBody: ${body.runtimeType}');
+
+        formatState.copyOpeningBraceAndPushLevel(body.leftBracket, config, '$methodName/node.body.leftBracket');
+        formatState.acceptList(body.members, astVisitor, '$methodName/node.body.members');
+        formatState.copyClosingBraceAndPopLevel(body.rightBracket, config, '$methodName/node.body.rightBracket');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

@@ -31,13 +31,18 @@ class EnumDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.enumKeyword, astVisitor, '$methodName/node.enumKeyword');
         formatState.copyEntity(node.namePart.typeName, astVisitor, '$methodName/node.namePart.typeName');
         formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause');
-        formatState.copyOpeningBraceAndPushLevel(node.body.leftBracket, config, '$methodName/node.body.leftBracket');
+
+        final EnumBody body = node.body;
+        if (body is! BlockEnumBody)
+            throw FormatException('Unsupported EnumBody: ${body.runtimeType}');
+
+        formatState.copyOpeningBraceAndPushLevel(body.leftBracket, config, '$methodName/node.body.leftBracket');
         // TODO: precedingComments: on semicolon, too. Check other formatters, too.
-        final Token endTokenForConstants = node.body.semicolon ?? node.body.rightBracket.precedingComments ?? node.body.rightBracket;
-        formatState.acceptListWithComma(node.body.constants, endTokenForConstants, astVisitor, '$methodName/node.body.constants');
-        formatState.copySemicolon(node.body.semicolon, config, '$methodName/node.body.semicolon', config.space0);
-        formatState.acceptList(node.body.members, astVisitor, '$methodName/node.body.members');
-        formatState.copyClosingBraceAndPopLevel(node.body.rightBracket, config, '$methodName/node.body.rightBracket');
+        final Token endTokenForConstants = body.semicolon ?? body.rightBracket.precedingComments ?? body.rightBracket;
+        formatState.acceptListWithComma(body.constants, endTokenForConstants, astVisitor, '$methodName/node.body.constants');
+        formatState.copySemicolon(body.semicolon, config, '$methodName/node.body.semicolon', config.space0);
+        formatState.acceptList(body.members, astVisitor, '$methodName/node.body.members');
+        formatState.copyClosingBraceAndPopLevel(body.rightBracket, config, '$methodName/node.body.rightBracket');
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

@@ -18,7 +18,7 @@ void main()
             inputMiddle: 'library l;',
             name: 'End of text',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<LibraryIdentifier>(8, 'l')
+                TestVisitor<DottedName>(8, 'l')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -31,7 +31,7 @@ void main()
             inputTrailing: '//Comment\n',
             name: 'End of text with comment',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<LibraryIdentifier>(8, 'l')
+                TestVisitor<DottedName>(8, 'l')
             ]
         ),
         TestGroupConfig(
@@ -44,7 +44,7 @@ void main()
                 TestConfig('library l;//Comment\n', '')
             ],
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<LibraryIdentifier>(8, 'l')
+                TestVisitor<DottedName>(8, 'l')
             ]
         )
     ];

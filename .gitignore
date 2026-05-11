@@ -7,6 +7,7 @@
 pubspec.lock
 
 # Manually added
+/.claude/settings.local.json
 /.idea/copilot.*
 /.idea/libraries/Dart_Packages.xml
 /doc/

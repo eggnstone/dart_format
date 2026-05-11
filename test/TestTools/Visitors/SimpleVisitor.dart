@@ -370,10 +370,6 @@ abstract class SimpleVisitor extends AstVisitor<void>
     => visit(node);
 
     @override
-    void visitLibraryIdentifier(LibraryIdentifier node)
-    => visit(node);
-
-    @override
     void visitListLiteral(ListLiteral node)
     => visit(node);
 
@@ -527,16 +523,6 @@ abstract class SimpleVisitor extends AstVisitor<void>
 
     @override
     void visitRelationalPattern(RelationalPattern node)
-    => visit(node);
-
-    @override
-    // ignore: deprecated_member_use
-    void visitRepresentationConstructorName(RepresentationConstructorName node)
-    => visit(node);
-
-    @override
-    // ignore: deprecated_member_use
-    void visitRepresentationDeclaration(RepresentationDeclaration node)
     => visit(node);
 
     @override
@@ -708,10 +694,6 @@ abstract class SimpleVisitor extends AstVisitor<void>
     => visit(node);
 
     @override
-    void visitEnumBody(EnumBody node)
-    => visit(node);
-
-    @override
     void visitNameWithTypeParameters(NameWithTypeParameters node)
     => visit(node);
 
@@ -740,5 +722,13 @@ abstract class SimpleVisitor extends AstVisitor<void>
     @override
     // ignore: experimental_member_use
     void visitAnonymousMethodInvocation(AnonymousMethodInvocation node)
+    => visit(node);
+
+    @override
+    void visitBlockEnumBody(BlockEnumBody node)
+    => visit(node);
+
+    @override
+    void visitEmptyEnumBody(EmptyEnumBody node)
     => visit(node);
 }

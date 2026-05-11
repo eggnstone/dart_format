@@ -5,7 +5,6 @@ import 'FormatState.dart';
 import 'Formatters/ArgumentListFormatter.dart';
 import 'Formatters/AssertInitializerFormatter.dart';
 import 'Formatters/AssertStatementFormatter.dart';
-//import 'Formatters/AugmentationImportDirectiveFormatter.dart';
 import 'Formatters/AssignmentExpressionFormatter.dart';
 import 'Formatters/BinaryExpressionFormatter.dart';
 import 'Formatters/BlockFormatter.dart';
@@ -49,9 +48,7 @@ import 'Formatters/InstanceCreationExpressionFormatter.dart';
 import 'Formatters/InterpolationExpressionFormatter.dart';
 import 'Formatters/InterpolationStringFormatter.dart';
 import 'Formatters/LabelFormatter.dart';
-//import 'Formatters/LibraryAugmentationDirectiveFormatter.dart';
 import 'Formatters/LibraryDirectiveFormatter.dart';
-import 'Formatters/LibraryIdentifierFormatter.dart';
 import 'Formatters/ListLiteralFormatter.dart';
 import 'Formatters/ListPatternFormatter.dart';
 import 'Formatters/MapPatternFormatter.dart';
@@ -98,16 +95,13 @@ class FormatVisitor extends AstVisitor<void>
     final Config config;
     final FormatState _formatState;
 
-    //late final AdjacentStringsFormatter _adjacentStringsFormatter = AdjacentStringsFormatter(config, this, _formatState);
     late final ArgumentListFormatter _argumentListFormatter = ArgumentListFormatter(config, this, _formatState);
     late final AssertInitializerFormatter _assertInitializerFormatter = AssertInitializerFormatter(config, this, _formatState);
     late final AssertStatementFormatter _assertStatementFormatter = AssertStatementFormatter(config, this, _formatState);
     late final AssignmentExpressionFormatter _assignmentExpressionFormatter = AssignmentExpressionFormatter(config, this, _formatState);
-    //late final AugmentationImportDirectiveFormatter _augmentationImportDirectiveFormatter = AugmentationImportDirectiveFormatter(config, this, _formatState);
     late final BinaryExpressionFormatter _binaryExpressionFormatter = BinaryExpressionFormatter(config, this, _formatState);
     late final BlockFormatter _blockFormatter = BlockFormatter(config, this, _formatState);
     late final BreakStatementFormatter _breakStatementFormatter = BreakStatementFormatter(config, this, _formatState);
-    //late final CascadeExpressionFormatter _cascadeExpressionFormatter = CascadeExpressionFormatter(config, this, _formatState);
     late final ClassDeclarationFormatter _classDeclarationFormatter = ClassDeclarationFormatter(config, this, _formatState);
     late final ClassTypeAliasFormatter _classTypeAliasFormatter = ClassTypeAliasFormatter(config, this, _formatState);
     late final CompilationUnitFormatter _compilationUnitFormatter = CompilationUnitFormatter(config, this, _formatState);
@@ -127,7 +121,6 @@ class FormatVisitor extends AstVisitor<void>
     late final ExpressionStatementFormatter _expressionStatementFormatter = ExpressionStatementFormatter(config, this, _formatState);
     late final FieldDeclarationFormatter _fieldDeclarationFormatter = FieldDeclarationFormatter(config, this, _formatState);
     late final FieldFormalParameterFormatter _fieldFormalParameterFormatter = FieldFormalParameterFormatter(config, this, _formatState);
-    //late final ForEachPartsWithDeclarationFormatter _forEachPartsWithDeclarationFormatter = ForEachPartsWithDeclarationFormatter(config, this, _formatState);
     late final ForElementFormatter _forElementFormatter = ForElementFormatter(config, this, _formatState);
     late final FormalParameterListFormatter _formalParameterListFormatter = FormalParameterListFormatter(config, this, _formatState);
     late final ForPartsWithDeclarationsFormatter _forPartsWithDeclarationsFormatter = ForPartsWithDeclarationsFormatter(config, this, _formatState);
@@ -147,9 +140,7 @@ class FormatVisitor extends AstVisitor<void>
     late final InterpolationExpressionFormatter _interpolationExpressionFormatter = InterpolationExpressionFormatter(config, this, _formatState);
     late final InterpolationStringFormatter _interpolationStringFormatter = InterpolationStringFormatter(config, this, _formatState);
     late final LabelFormatter _labelFormatter = LabelFormatter(config, this, _formatState);
-    //late final LibraryAugmentationDirectiveFormatter _libraryAugmentationDirectiveFormatter = LibraryAugmentationDirectiveFormatter(config, this, _formatState);
     late final LibraryDirectiveFormatter _libraryDirectiveFormatter = LibraryDirectiveFormatter(config, this, _formatState);
-    late final LibraryIdentifierFormatter _libraryIdentifierFormatter = LibraryIdentifierFormatter(config, this, _formatState);
     late final ListLiteralFormatter _listLiteralFormatter = ListLiteralFormatter(config, this, _formatState);
     late final ListPatternFormatter _listPatternFormatter = ListPatternFormatter(config, this, _formatState);
     late final MapPatternFormatter _mapPatternFormatter = MapPatternFormatter(config, this, _formatState);
@@ -176,7 +167,6 @@ class FormatVisitor extends AstVisitor<void>
     late final ShowCombinatorFormatter _showCombinatorFormatter = ShowCombinatorFormatter(config, this, _formatState);
     late final SimpleFormalParameterFormatter _simpleFormalParameterFormatter = SimpleFormalParameterFormatter(config, this, _formatState);
     late final SimpleStringLiteralFormatter _simpleStringLiteralFormatter = SimpleStringLiteralFormatter(config, this, _formatState);
-    //late final StringInterpolationFormatter _stringInterpolationFormatter = StringInterpolationFormatter(config, this, _formatState);
     late final SuperFormalParameterFormatter _superFormalParameterFormatter = SuperFormalParameterFormatter(config, this, _formatState);
     late final SwitchExpressionFormatter _switchExpressionFormatter = SwitchExpressionFormatter(config, this, _formatState);
     late final SwitchStatementFormatter _switchStatementFormatter = SwitchStatementFormatter(config, this, _formatState);
@@ -200,7 +190,6 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitAdjacentStrings(AdjacentStrings node)
     => _defaultFormatter.format(node);
-    //=> _adjacentStringsFormatter.format(node);
 
     @override
     void visitAnnotation(Annotation node)
@@ -257,7 +246,6 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitCascadeExpression(CascadeExpression node)
     => _defaultFormatter.format(node);
-    //=> _cascadeExpressionFormatter.format(node);
 
     @override
     void visitCaseClause(CaseClause node)
@@ -430,7 +418,6 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitForEachPartsWithDeclaration(ForEachPartsWithDeclaration node)
     => _defaultFormatter.format(node);
-    //=> _forEachPartsWithDeclarationFormatter.format(node);
 
     @override
     void visitForEachPartsWithIdentifier(ForEachPartsWithIdentifier node)
@@ -567,10 +554,6 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitLibraryDirective(LibraryDirective node)
     => _libraryDirectiveFormatter.format(node);
-
-    @override
-    void visitLibraryIdentifier(LibraryIdentifier node)
-    => _libraryIdentifierFormatter.format(node);
 
     @override
     void visitListLiteral(ListLiteral node)
@@ -737,16 +720,6 @@ class FormatVisitor extends AstVisitor<void>
     => _defaultFormatter.format(node);
 
     @override
-    // ignore: deprecated_member_use
-    void visitRepresentationConstructorName(RepresentationConstructorName node)
-    => _defaultFormatter.format(node);
-
-    @override
-    // ignore: deprecated_member_use
-    void visitRepresentationDeclaration(RepresentationDeclaration node)
-    => _defaultFormatter.format(node);
-
-    @override
     void visitRestPatternElement(RestPatternElement node)
     => _defaultFormatter.format(node);
 
@@ -781,7 +754,6 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitSimpleStringLiteral(SimpleStringLiteral node)
     => _simpleStringLiteralFormatter.format(node);
-    //=> _defaultFormatter.format(node);
 
     @override
     void visitSpreadElement(SpreadElement node)
@@ -790,7 +762,6 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitStringInterpolation(StringInterpolation node)
     => _defaultFormatter.format(node);
-    //=> _stringInterpolationFormatter.format(node);
 
     @override
     void visitSuperConstructorInvocation(SuperConstructorInvocation node)
@@ -905,10 +876,6 @@ class FormatVisitor extends AstVisitor<void>
     => _defaultFormatter.format(node);
 
     @override
-    void visitEnumBody(EnumBody node)
-    => _defaultFormatter.format(node);
-
-    @override
     void visitNameWithTypeParameters(NameWithTypeParameters node)
     => _defaultFormatter.format(node);
 
@@ -937,5 +904,13 @@ class FormatVisitor extends AstVisitor<void>
     @override
     // ignore: experimental_member_use
     void visitAnonymousMethodInvocation(AnonymousMethodInvocation node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitBlockEnumBody(BlockEnumBody node)
+    => _defaultFormatter.format(node);
+
+    @override
+    void visitEmptyEnumBody(EmptyEnumBody node)
     => _defaultFormatter.format(node);
 }
