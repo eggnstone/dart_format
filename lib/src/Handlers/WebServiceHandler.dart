@@ -6,6 +6,7 @@ import 'package:mime/mime.dart';
 
 import '../Constants/Constants.dart';
 import '../Constants/ExitCodes.dart';
+import '../Constants/FavIconConstants.dart';
 import '../Constants/Generated/VersionConstants.dart';
 import '../Data/Config.dart';
 import '../Data/JsonResponse.dart';
@@ -179,8 +180,8 @@ class WebServiceHandler
     async
     {
         request.response.statusCode = HttpStatus.ok;
-        request.response.headers.contentType = ContentType.binary;
-        await request.response.addStream(File('assets/favicon.ico').openRead());
+        request.response.headers.contentType = ContentType('image', 'x-icon');
+        request.response.add(FavIconConstants.BYTES);
         return HttpTools.flushAndClose(request);
     }
 
