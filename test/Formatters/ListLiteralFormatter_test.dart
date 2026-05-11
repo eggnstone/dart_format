@@ -56,6 +56,17 @@ void main()
                 TestConfig.none(),
                 TestConfig('<  A  ,  B  >[a, b]')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createInitializerInTopLevelVariable,
+            inputLeading: 'var x = ',
+            inputMiddle: '[\n    a,\n    b\n    // c\n]',
+            inputTrailing: ';',
+            name: 'ListLiteral with trailing line comment',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleIdentifier>(14, 'a'),
+                TestVisitor<SimpleIdentifier>(21, 'b')
+            ]
         )
     ];
 

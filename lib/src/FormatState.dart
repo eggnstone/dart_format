@@ -160,6 +160,21 @@ class FormatState
                     else
                         logWarning('Trailing comma text not consumed: adjustedLastNodeEnd < endToken.offset');
                 }
+                else if (commaText.trim().isNotEmpty && CommentTools.isEmptyOrComments(commaText))
+                {
+                    // No trailing comma, but trailing comments before endToken: consume them
+                    // inside the current (pushed) level so popLevelAndIndent re-indents them.
+                    // Otherwise the comments end up in the outer buffer as filler before endToken
+                    // and lose their indentation. Leave the final line break (and any trailing
+                    // whitespace after it) unconsumed so the closing token still sits on its own
+                    // line at the outer indent level.
+                    final int lastNewlinePos = commaText.lastIndexOf('\n');
+                    final int trailingEnd = lastNewlinePos >= 0
+                        ? lastNode.end + lastNewlinePos
+                        : endToken.offset;
+                    if (lastNode.end < trailingEnd)
+                        consumeText(lastNode.end, trailingEnd, getText(lastNode.end, trailingEnd), source);
+                }
             }
         }
     }
