@@ -38,7 +38,7 @@ class PipeHandler
         {
             final Config config = Config.fromJsonText(configText);
             final Formatter formatter = Formatter(config);
-            final String inputText = _readInput();
+            final String inputText = await _readInput();
             final String formattedText = formatter.format(inputText);
             writeToStdOut(formattedText, preventLoggingToTempFile: true);
 
@@ -69,14 +69,20 @@ class PipeHandler
             logDebug(s);
     }
 
-    String _readInput()
+    Future<String> _readInput()
+    async
     {
-        final StringBuffer sb = StringBuffer();
-        String? inputLine;
+        final List<int> bytes = <int>[];
+        await for (final List<int> chunk in stdin)
+            bytes.addAll(chunk);
 
-        while ((inputLine = stdin.readLineSync(encoding: utf8, retainNewlines: true)) != null)
-            sb.write(inputLine);
-
-        return sb.toString();
+        try
+        {
+            return utf8.decode(bytes);
+        }
+        on FormatException catch (e)
+        {
+            throw DartFormatException.error('Input on stdin is not valid UTF-8. dart_format only accepts UTF-8 encoded input. (${e.message})');
+        }
     }
 }

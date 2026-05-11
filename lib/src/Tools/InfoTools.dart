@@ -18,9 +18,7 @@ class InfoTools
         // Mandatory for the beta phase. Optional afterwards.
         //writelnToStdOut('    --log-to-temp-file               Logs to a temp file ("dart_format_<date>_<time>_<pid>.log" in the system temp directory)', preventLoggingToTempFile: true);
 
-        // Pipe mode does not work with special characters like "ä".
-        //writelnToStdOut('    --pipe                           Formats stdin and writes to stdout', preventLoggingToTempFile: true);
-
+        writelnToStdOut('    --pipe                           Formats stdin (UTF-8) and writes to stdout', preventLoggingToTempFile: true);
         writelnToStdOut('    --skip-version-check             Skips version check on start-up', preventLoggingToTempFile: true);
         writelnToStdOut('    --web[service]                   Starts in web service mode', preventLoggingToTempFile: true);
     }
