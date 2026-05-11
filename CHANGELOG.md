@@ -3,6 +3,10 @@
 ## 1.9.0
 
 - Updated analyzer to 12.1.0.
+- Fixed pipe-mode for non-ASCII input.
+- Fixed trailing-comment indentation in parameter lists.
+- Kept single-line closure bodies on one line.
+- Fixed crashes on code using `augment`, `covariant`, native clauses, and various keywords/type parameters.
 
 ## 1.8.0
 
