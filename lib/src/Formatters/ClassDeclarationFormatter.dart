@@ -42,6 +42,7 @@ class ClassDeclarationFormatter extends IFormatter
         formatState.copyEntity(node.extendsClause, astVisitor, '$methodName/node.extendsClause', config.space1);
         formatState.copyEntity(node.withClause, astVisitor, '$methodName/node.withClause', config.space1);
         formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause', config.space1);
+        formatState.copyEntity(node.nativeClause, astVisitor, '$methodName/node.nativeClause', config.space1);
 
         formatState.popLevelAndIndent();
 

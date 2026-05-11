@@ -79,6 +79,31 @@ void main()
                 TestConfig.none(),
                 TestConfig('class C\n    with M\n{\n}\n')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createDeclaration,
+            inputMiddle: "class C native 'N'{}",
+            name: "ClassDeclaration / class C native 'N'{}",
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NativeClause>(8, "native 'N'")
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig("class C native 'N'\n{\n}\n")
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createDeclaration,
+            inputMiddle: "class C implements I native 'N'{}",
+            name: "ClassDeclaration / class C implements I native 'N'{}",
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<ImplementsClause>(8, 'implements I'),
+                TestVisitor<NativeClause>(21, "native 'N'")
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig("class C implements I native 'N'\n{\n}\n")
+            ]
         )
     ];
 
