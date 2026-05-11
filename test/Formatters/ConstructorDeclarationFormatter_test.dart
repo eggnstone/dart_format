@@ -177,6 +177,29 @@ void main()
                 TestConfig.none(),
                 TestConfig('const C()\n    :a=0,\n    b=0;')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createClassMemberWithAugmentations,
+            inputLeading: 'class C{',
+            inputMiddle: 'augment C();',
+            inputTrailing: '}',
+            name: 'With augment',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleIdentifier>(16, 'C'),
+                TestVisitor<FormalParameterList>(17, '()'),
+                TestVisitor<EmptyFunctionBody>(19, ';')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createClassMemberWithPrimaryConstructors,
+            inputLeading: 'class C{',
+            inputMiddle: 'new();',
+            inputTrailing: '}',
+            name: 'With new keyword',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<FormalParameterList>(11, '()'),
+                TestVisitor<EmptyFunctionBody>(13, ';')
+            ]
         )
     ];
 

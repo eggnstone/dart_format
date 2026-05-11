@@ -2,8 +2,8 @@ TODO
 ====
 - Add tests from other machine (format the complete Flutter checkout)
 - Error "Missed some text" does not fully carry over to the plugin when the text contains "<" or ">"
--- e.g. <DartFormatException>.
--- e.g. offset < lastConsumedPosition
+  - e.g. <DartFormatException>.
+  - e.g. offset < lastConsumedPosition
 - Integration tests for indentation=-1
 - Integration tests for maxEmptyLines
 - maxEmptyLines can only work when removeLeadingWhitespace does not already remove all empty lines.

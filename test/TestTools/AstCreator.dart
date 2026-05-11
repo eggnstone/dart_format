@@ -37,6 +37,12 @@ class AstCreator
     static ClassMember createClassMember(String s)
     => (createClassDeclaration(s).body as BlockClassBody).members[0];
 
+    static ClassMember createClassMemberWithAugmentations(String s)
+    => ((createDeclarationWithAugmentations(s) as ClassDeclaration).body as BlockClassBody).members[0];
+
+    static ClassMember createClassMemberWithPrimaryConstructors(String s)
+    => ((createCompilationUnitWithPrimaryConstructors(s).declarations[0] as ClassDeclaration).body as BlockClassBody).members[0];
+
     static Combinator createCombinatorInNamespaceDirective(String s)
     => createNamespaceDirective(s).combinators[0];
 
@@ -59,6 +65,12 @@ class AstCreator
     => analyzer_utilities.parseString(
         content: s,
         featureSet: FeatureSet.latestLanguageVersion(flags: <String>['augmentations'])
+    ).unit;
+
+    static CompilationUnit createCompilationUnitWithPrimaryConstructors(String s)
+    => analyzer_utilities.parseString(
+        content: s,
+        featureSet: FeatureSet.latestLanguageVersion(flags: <String>['primary-constructors'])
     ).unit;
 
     static Declaration createDeclaration(String s)
