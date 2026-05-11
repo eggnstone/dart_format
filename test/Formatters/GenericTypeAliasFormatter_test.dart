@@ -35,6 +35,18 @@ void main()
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<GenericFunctionType>(10, 'void Function()')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createGenericTypeAliasWithAugmentations,
+            inputMiddle: 'augment typedef T=Y;',
+            name: 'GenericTypeAlias with augment',
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('augment typedef T = Y;\n')
+            ],
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(18, 'Y')
+            ]
         )
     ];
 

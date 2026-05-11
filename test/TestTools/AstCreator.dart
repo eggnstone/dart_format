@@ -77,6 +77,9 @@ class AstCreator
     static FunctionTypeAlias createFunctionTypeAliasWithAugmentations(String s)
     => createCompilationUnitWithAugmentationsTolerant(s).declarations[0] as FunctionTypeAlias;
 
+    static GenericTypeAlias createGenericTypeAliasWithAugmentations(String s)
+    => createCompilationUnitWithAugmentationsTolerant(s).declarations[0] as GenericTypeAlias;
+
     static CompilationUnit createCompilationUnitWithPrimaryConstructors(String s)
     => analyzer_utilities.parseString(
         content: s,
