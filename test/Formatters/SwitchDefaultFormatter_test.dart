@@ -15,7 +15,10 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createSwitchStatementMemberInFunction,
             inputLeading: 'void f(){switch(i){',
-            inputMiddle: 'default:\n;\n;',
+            inputMiddle:
+                'default:\n'
+                ';\n'
+                ';',
             inputTrailing: '}}',
             name: 'SwitchDefault',
             astVisitors: <TestVisitor<void>>[
@@ -24,7 +27,11 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('default:\n    ;\n    ;')
+                TestConfig(
+                    'default:\n'
+                    '    ;\n'
+                    '    ;'
+                )
             ]
         )
     ];
