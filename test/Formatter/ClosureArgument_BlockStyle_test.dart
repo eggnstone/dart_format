@@ -34,7 +34,7 @@ void main()
         }
     );
 
-    test('Empty closure body keeps the call at the outer indent', ()
+    test('Empty closure body keeps the call at the outer indent (and its inner blank line is stripped by the brace-adjacent rule)', ()
         {
             const String inputText =
                 'void f(){\n'
@@ -45,7 +45,6 @@ void main()
             const String expectedText =
                 'void f() {\n'
                 '    g(() {\n'
-                '\n'
                 '    });\n'
                 '}\n';
 

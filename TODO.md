@@ -13,15 +13,12 @@ TODO
 - Ensure DEBUG is off when publishing
 - Safety: don't accept result if length is 0 or very short, e.g. when throwing UnimplementedError in StringTools.
 - No blank lines between {{ and }}
-- No blank lines after { and before }
 - Investigate line endings. Keep existing style, but also offer option to convert.
-- No more than maxEmptyLines blank lines at the file end. actually do not allow any blank lines at the end of the file, just the newline.
 - else\nif
 - Indent interpolations?
 - Force line break after if/else/...
 - Add/remove spaces
 - Fix too big block indentation after "if () // comment\n"
-- Remove empty lines at start and end of file
 - Spaces: "a . b"
 - Do not remove trailing commas from end-of-line comments
 - Force empty line between methods
@@ -30,6 +27,9 @@ TODO
 
 DONE
 ====
+- No blank lines after `{` and before `}` (TextTools.tidyBlankLines, gated on maxEmptyLines >= 0).
+- No blank lines at the start of the file (TextTools.tidyBlankLines).
+- No blank lines at the end of the file, just the trailing newline (TextTools.tidyBlankLines).
 - Tests for FormalParameterListFormatter and ArgumentListFormatter covering preservation/removal of trailing comma (single-line and multi-line, both `removeTrailingCommas=true` and `false`).
 - Multi-line layout not supported (no `pushLevel`) for: `RecordLiteral`, `RecordTypeAnnotation`, `RecordTypeAnnotationNamedFields`, `TypeArgumentList` (and `RecordPattern`, part of issue #11). Elements no longer end up at column 0; closing bracket sits at outer level.
 - `TypeParameterList`: closing `>` is incorrectly indented when the list spans multiple lines.

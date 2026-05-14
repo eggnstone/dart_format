@@ -16,8 +16,6 @@ class TextTools
 
     String removeEmptyLines(String s)
     {
-        //logDebug('removeEmptyLines: config.maxEmptyLines: ${config.maxEmptyLines}');
-
         if (config.maxEmptyLines < 0)
             return s;
 
@@ -56,4 +54,46 @@ class TextTools
 
         return result;
     }
+
+    /// Runs the full blank-line pipeline on [s]: collapses long runs of empty
+    /// lines per [Config.maxEmptyLines], strips blank lines at the file edges and
+    /// adjacent to any `{` or `}`, and ensures the file ends with a single newline
+    /// (per [Config.addNewLineAtEndOfText]). The user opts out of the
+    /// [Config.maxEmptyLines]-gated parts by setting `maxEmptyLines: -1`.
+    String tidyBlankLines(String s)
+    {
+        String result = removeEmptyLines(s);
+
+        if (config.maxEmptyLines >= 0)
+        {
+            result = _removeBlankLinesAtStartOfFile(result);
+            result = _removeBlankLinesAdjacentToBraces(result);
+            result = _removeBlankLinesAtEndOfFile(result);
+        }
+
+        return addNewLineAtEndOfText(result);
+    }
+
+    /// Drops blank lines after every `{` and before every `}`. The indentation
+    /// preceding the closing `}` is preserved.
+    String _removeBlankLinesAdjacentToBraces(String s)
+    {
+        // Remove blank lines after every `{`.
+        final String result = s.replaceAll(RegExp(r'\{\n(?:[ \t]*\n)+'), '{\n');
+
+        // Remove blank lines before every `}`.
+        return result.replaceAllMapped(
+            RegExp(r'\n(?:[ \t]*\n)+([ \t]*\})'),
+            (Match m) => '\n${m.group(1)}'
+        );
+    }
+
+    /// Drops all blank lines that sit at the end of the file, keeping just the
+    /// final newline (if one is present).
+    String _removeBlankLinesAtEndOfFile(String s)
+    => s.replaceFirst(RegExp(r'\n(?:[ \t]*\n)+$'), '\n');
+
+    /// Drops every blank line at the start of the file.
+    String _removeBlankLinesAtStartOfFile(String s)
+    => s.replaceFirst(RegExp(r'^(?:[ \t]*\n)+'), '');
 }

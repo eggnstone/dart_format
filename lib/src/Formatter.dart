@@ -56,10 +56,7 @@ class Formatter
         formatState.compilationUnit.accept(visitor);
         String result = formatState.getResult();
 
-        final TextTools textTools = TextTools(_config);
-        result = textTools.removeEmptyLines(result);
-        //result = FormatTools.resolveRelativeIndentations(result);
-        result = textTools.addNewLineAtEndOfText(result);
+        result = TextTools(_config).tidyBlankLines(result);
 
         return _verifyResult(cleanedS, result, parseResult.lineInfo);
     }
