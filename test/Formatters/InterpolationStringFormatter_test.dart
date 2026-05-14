@@ -12,7 +12,7 @@ void main()
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
         TestGroupConfig(
             inputNodeCreator: AstCreator.createInterpolationStringInVariable,
-            inputLeading: r"void f(int n){var s = ",
+            inputLeading: 'void f(int n){var s = ',
             inputMiddle: "'a",
             inputTrailing: r"${n}b';}",
             name: 'InterpolationString leading',

@@ -14,7 +14,7 @@ void main()
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
         TestGroupConfig(
             inputNodeCreator: AstCreator.createInterpolationExpressionInVariable,
-            inputLeading: r"void f(int n){var s = 'a",
+            inputLeading: "void f(int n){var s = 'a",
             inputMiddle: r'${n}',
             inputTrailing: "b';}",
             name: 'InterpolationExpression with braces',

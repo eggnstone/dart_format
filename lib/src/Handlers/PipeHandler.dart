@@ -73,8 +73,7 @@ class PipeHandler
     async
     {
         final List<int> bytes = <int>[];
-        await for (final List<int> chunk in stdin)
-            bytes.addAll(chunk);
+        await stdin.forEach(bytes.addAll);
 
         try
         {
