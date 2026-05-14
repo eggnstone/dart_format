@@ -18,6 +18,7 @@ class AssertStatementFormatter extends TypedFormatter<AssertStatement>
     {
         formatState.copyEntity(node.assertKeyword, astVisitor, '$methodName/node.assertKeyword');
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space0);
+        formatState.pushLevel('$methodName/node.leftParenthesis');
         formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
         formatState.copyEntity(node.comma, astVisitor, '$methodName/node.comma', config.space0);
         formatState.copyEntity(node.message, astVisitor, '$methodName/node.message');
@@ -48,6 +49,7 @@ class AssertStatementFormatter extends TypedFormatter<AssertStatement>
             formatState.consumeText(start, end, commaText, '$methodName/TrailingComma', spaces: config.space0);
         }
 
+        formatState.popLevelAndIndent();
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
     }

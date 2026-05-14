@@ -91,6 +91,41 @@ void main()
                 TestConfig.custom('Custom2', Config.all(fixSpaces: true, removeTrailingCommas: false), "assert(    true,    'message',);\n"),
                 TestConfig("assert(    true,    'message');\n")
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createStatementInFunction,
+            inputLeading: 'void f(){',
+            inputMiddle: "assert(true == true,'message',);",
+            inputTrailing: '}',
+            name: 'AssertStatement with BinaryExpression condition and trailing comma',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<BinaryExpression>(16, 'true == true'),
+                TestVisitor<SimpleStringLiteral>(29, "'message'")
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig("assert(true == true,'message');\n")
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createStatementInFunction,
+            inputLeading: 'void f(){',
+            inputMiddle: "assert(c,\n    'a'\n    'b'\n    );",
+            inputTrailing: '}',
+            name: 'AssertStatement with multi-line adjacent-string message indents the message past assert(',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleIdentifier>(16, 'c'),
+                TestVisitor<AdjacentStrings>(23, "'a'\n    'b'")
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig(
+                    'assert(c,\n'
+                    "    'a'\n"
+                    "    'b'\n"
+                    ');\n'
+                )
+            ]
         )
     ];
 

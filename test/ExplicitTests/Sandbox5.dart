@@ -1,5 +1,3 @@
-int a;
-
 void f()
 {
     if (true)
@@ -9,4 +7,16 @@ void f()
         ;
 }
 
-int a;
+/*
+should be 
+
+void f()
+{
+    if (true)
+        ;
+    else
+        if (true)
+            ;
+}
+
+ */

@@ -26,6 +26,21 @@ void main()
                 TestConfig.none(),
                 TestConfig('a as B')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createAsExpressionInVariable,
+            inputLeading: 'void f(){var x = ',
+            inputMiddle: 'a as(int, int)',
+            inputTrailing: ';}',
+            name: 'AsExpression before a record type keeps the space between `as` and `(`',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleIdentifier>(17, 'a'),
+                TestVisitor<RecordTypeAnnotation>(21, '(int, int)')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('a as (int, int)')
+            ]
         )
     ];
 

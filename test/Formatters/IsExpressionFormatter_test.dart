@@ -41,6 +41,36 @@ void main()
                 TestConfig.none(),
                 TestConfig('a is! B')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createIsExpressionInVariable,
+            inputLeading: 'void f(){var x = ',
+            inputMiddle: 'a is({int A, int B})',
+            inputTrailing: ';}',
+            name: 'IsExpression before a record type keeps the space between `is` and `(`',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleIdentifier>(17, 'a'),
+                TestVisitor<RecordTypeAnnotation>(21, '({int A, int B})')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('a is ({int A, int B})')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createIsExpressionInVariable,
+            inputLeading: 'void f(){var x = ',
+            inputMiddle: 'a is!({int A, int B})',
+            inputTrailing: ';}',
+            name: 'IsExpression negated before a record type keeps the space between `is!` and `(`',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleIdentifier>(17, 'a'),
+                TestVisitor<RecordTypeAnnotation>(22, '({int A, int B})')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('a is! ({int A, int B})')
+            ]
         )
     ];
 
