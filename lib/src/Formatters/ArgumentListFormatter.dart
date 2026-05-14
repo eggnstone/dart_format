@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/ast/syntactic_entity.dart';
 import 'package:analyzer/source/line_info.dart';
 
 import '../Data/ConfigExtension.dart';
@@ -11,51 +12,65 @@ class ArgumentListFormatter extends TypedFormatter<ArgumentList>
     @override
     void formatNode(ArgumentList node)
     {
-        final bool isBlockPattern = _isBlockPattern(node);
+        final bool shouldIndentBody = _shouldIndentBody(node);
 
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space0);
-        if (!isBlockPattern)
+        if (shouldIndentBody)
             formatState.pushLevel('$methodName/node.leftParenthesis');
 
         formatState.acceptListWithComma(node.arguments, node.rightParenthesis, astVisitor, '$methodName/node.arguments', leadingSpaces: config.space0, trimCommaText: config.fixSpaces);
-        if (!isBlockPattern)
+        if (shouldIndentBody)
             formatState.popLevelAndIndent();
 
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
     }
 
-    ArgumentList? _getCalleeArgumentList(Expression arg)
+    /// Returns the inner opening/closing brackets of [arg] when [arg] is something
+    /// whose own brackets could collapse with the surrounding ArgumentList's parens:
+    /// another call's `(`/`)`, or a closure body's `{`/`}`. Returns null otherwise.
+    ({SyntacticEntity left, SyntacticEntity right})? _getInnerBrackets(Expression arg)
     {
         Expression target = arg;
         if (target is NamedExpression)
             target = target.expression;
 
         if (target is MethodInvocation)
-            return target.argumentList;
+            return (left: target.argumentList.leftParenthesis, right: target.argumentList.rightParenthesis);
         if (target is InstanceCreationExpression)
-            return target.argumentList;
+            return (left: target.argumentList.leftParenthesis, right: target.argumentList.rightParenthesis);
         if (target is FunctionExpressionInvocation)
-            return target.argumentList;
+            return (left: target.argumentList.leftParenthesis, right: target.argumentList.rightParenthesis);
+        if (target is FunctionExpression && target.body is BlockFunctionBody)
+        {
+            final Block block = (target.body as BlockFunctionBody).block;
+            return (left: block.leftBracket, right: block.rightBracket);
+        }
 
         return null;
     }
 
-    bool _isBlockPattern(ArgumentList node)
+    /// Returns true when this ArgumentList's body should be indented one level (the
+    /// normal case). Returns false only when the last argument's own brackets share
+    /// source lines with the outer parens — either another call's `(`/`)` or a
+    /// closure body's `{`/`}` — so the outer indent would be redundant.
+    bool _shouldIndentBody(ArgumentList node)
     {
         if (node.arguments.isEmpty)
-            return false;
+            return true;
 
-        final ArgumentList? inner = _getCalleeArgumentList(node.arguments.last);
-        if (inner == null)
-            return false;
+        final ({SyntacticEntity left, SyntacticEntity right})? innerBrackets = _getInnerBrackets(node.arguments.last);
+        if (innerBrackets == null)
+            return true;
 
         final CharacterLocation? outerLeft = formatState.getLocation(node.leftParenthesis.offset);
-        final CharacterLocation? innerLeft = formatState.getLocation(inner.leftParenthesis.offset);
+        final CharacterLocation? innerLeft = formatState.getLocation(innerBrackets.left.offset);
         final CharacterLocation? outerRight = formatState.getLocation(node.rightParenthesis.offset);
-        final CharacterLocation? innerRight = formatState.getLocation(inner.rightParenthesis.offset);
+        final CharacterLocation? innerRight = formatState.getLocation(innerBrackets.right.offset);
         if (outerLeft == null || innerLeft == null || outerRight == null || innerRight == null)
-            return false;
+            return true;
 
-        return outerLeft.lineNumber == innerLeft.lineNumber && outerRight.lineNumber == innerRight.lineNumber;
+        final bool openingsOnDifferentLines = outerLeft.lineNumber != innerLeft.lineNumber;
+        final bool closingsOnDifferentLines = outerRight.lineNumber != innerRight.lineNumber;
+        return openingsOnDifferentLines || closingsOnDifferentLines;
     }
 }

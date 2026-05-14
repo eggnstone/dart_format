@@ -126,8 +126,10 @@ void main()
             test('Function / non-empty anonymous function as method param / line breaks', ()
                 {
                     const String inputText = 'void f(){a((){\nb;\n});}';
-                    //const String expectedText = 'void f()\n{\n    a((){\n        b;\n    });\n}\n';
-                    const String expectedText = 'void f()\n{\n    a(()\n        {\n            b;\n        }\n    );\n}\n';
+                    // Closure body's { and } sit on the outer ArgumentList's ( and ) lines in
+                    // the source, so ArgumentListFormatter recognises the block pattern and skips
+                    // its own pushLevel — the closure body indents once relative to a((), not twice.
+                    const String expectedText = 'void f()\n{\n    a(()\n    {\n        b;\n    }\n    );\n}\n';
 
                     final String actualText = formatter.format(inputText);
 
