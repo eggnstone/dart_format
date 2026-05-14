@@ -6,7 +6,6 @@ TODO
 - Integration tests for indentation=-1
 - Integration tests for maxEmptyLines
 - maxEmptyLines can only work when removeLeadingWhitespace does not already remove all empty lines.
-- Tests for FormalParameterListFormatter, ... (test preservation/removal of trailing comma)
 - Block comments: keep indentation
 - Own lint rule: don't return Futures in a try-catch block.
 - Own lint rule: don't call unawaited stuff in a try-catch block.
@@ -22,15 +21,16 @@ TODO
 - Force line break after if/else/...
 - Add/remove spaces
 - Fix too big block indentation after "if () // comment\n"
-- Sort imports
 - Remove empty lines at start and end of file
 - Spaces: "a . b"
 - Do not remove trailing commas from end-of-line comments
 - Force empty line between methods
+- Option to sort imports
 - Option to sort methods
 
 DONE
 ====
+- Tests for FormalParameterListFormatter and ArgumentListFormatter covering preservation/removal of trailing comma (single-line and multi-line, both `removeTrailingCommas=true` and `false`).
 - Multi-line layout not supported (no `pushLevel`) for: `RecordLiteral`, `RecordTypeAnnotation`, `RecordTypeAnnotationNamedFields`, `TypeArgumentList` (and `RecordPattern`, part of issue #11). Elements no longer end up at column 0; closing bracket sits at outer level.
 - `TypeParameterList`: closing `>` is incorrectly indented when the list spans multiple lines.
 - Add space after `=` in factory redirect: `factory C() =_C;` → `factory C() = _C;` (analog of the `=` fix in `ConstructorFieldInitializer`).

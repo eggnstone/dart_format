@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:dart_format/src/Data/Config.dart';
 import 'package:dart_format/src/Formatters/FormalParameterListFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
@@ -31,7 +32,52 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('(int i, int j)')
+                TestConfig('(int i, int j)'),
+                TestConfig.custom('removeTrailingCommas=false', Config.all(removeTrailingCommas: false), '(int i, int j,)')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFormalParameterListInFunction,
+            inputLeading: 'void f',
+            inputMiddle: '(int i,int j)',
+            inputTrailing: '{}',
+            name: '2 params, no trailing comma, formatter does not add one',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleFormalParameter>(7, 'int i'),
+                TestVisitor<SimpleFormalParameter>(13, 'int j')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('(int i, int j)'),
+                TestConfig.custom('removeTrailingCommas=false', Config.all(removeTrailingCommas: false), '(int i, int j)')
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFormalParameterListInFunction,
+            inputLeading: 'void f',
+            inputMiddle: '(\nint i,\nint j,\n)',
+            inputTrailing: '{}',
+            name: '2 params, multi-line, trailing comma removed under default',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<SimpleFormalParameter>(8, 'int i'),
+                TestVisitor<SimpleFormalParameter>(15, 'int j')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig(
+                    '(\n'
+                    '    int i,\n'
+                    '    int j\n'
+                    ')'
+                ),
+                TestConfig.custom(
+                    'removeTrailingCommas=false',
+                    Config.all(removeTrailingCommas: false),
+                    '(\n'
+                    '    int i,\n'
+                    '    int j,\n'
+                    ')'
+                )
             ]
         ),
         TestGroupConfig(
