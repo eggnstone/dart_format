@@ -36,16 +36,18 @@ class ConditionalExpressionFormatter extends TypedFormatter<ConditionalExpressio
     }
 
     /// Returns true when [offset1] and [offset2] resolve to different source lines.
-    /// When line info isn't available (e.g. in test harnesses that use a fake
-    /// ParseStringResult) this conservatively returns true so the formatter keeps
-    /// its previous "always push" behaviour.
+    /// When line info isn't available (test harness with a fake ParseStringResult)
+    /// falls back to scanning the source between the two offsets for a newline.
     bool _isOnDifferentLine(int offset1, int offset2)
     {
         final CharacterLocation? location1 = formatState.getLocation(offset1);
         final CharacterLocation? location2 = formatState.getLocation(offset2);
-        if (location1 == null || location2 == null)
-            return true;
+        if (location1 != null && location2 != null)
+            return location1.lineNumber != location2.lineNumber;
 
-        return location1.lineNumber != location2.lineNumber;
+        if (offset1 > offset2)
+            return false;
+
+        return formatState.getText(offset1, offset2).contains('\n');
     }
 }
