@@ -11,7 +11,9 @@ class TypeParameterListFormatter extends TypedFormatter<TypeParameterList>
     void formatNode(TypeParameterList node)
     {
         formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
+        formatState.pushLevel('$methodName/node.leftBracket');
         formatState.acceptListWithComma(node.typeParameters, node.rightBracket, astVisitor, '$methodName/node.typeParameters', leadingSpaces: config.space0, trimCommaText: config.fixSpaces);
+        formatState.popLevelAndIndent();
         formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket', config.space0);
     }
 }

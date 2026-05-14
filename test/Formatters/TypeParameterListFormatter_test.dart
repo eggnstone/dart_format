@@ -26,6 +26,45 @@ void main()
                 TestConfig.none(),
                 TestConfig('<A, B>')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createTypeParameterListInFunction,
+            inputLeading: 'void f',
+            inputMiddle: '<\nA,\nB\n>',
+            inputTrailing: '(){}',
+            name: 'TypeParameterList multi-line closing > stays at outer level',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<TypeParameter>(8, 'A'),
+                TestVisitor<TypeParameter>(11, 'B')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig(
+                    '<\n'
+                    '    A,\n'
+                    '    B\n'
+                    '>'
+                )
+            ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createTypeParameterListInFunction,
+            inputLeading: 'void f',
+            inputMiddle: '<\n    A,\n    B\n    >',
+            inputTrailing: '(){}',
+            name: 'TypeParameterList multi-line normalizes mis-indented closing >',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<TypeParameter>(12, 'A'),
+                TestVisitor<TypeParameter>(19, 'B')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig(
+                    '<\n'
+                    '    A,\n'
+                    '    B\n'
+                    '>'
+                )
+            ]
         )
     ];
 
