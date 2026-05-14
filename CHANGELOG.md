@@ -2,16 +2,16 @@
 
 ## 1.10.0
 
-- Fixed record-type annotation spacing.
-- Fixed constructor initializer formatting.
+- Many indentation fixes for multi-line code (#11, #12).
+- Many spacing fixes.
+- No blank lines at file edges or adjacent to `{` / `}`.
+- More AST coverage (patterns, native bodies, `is` / `as`).
 
 ## 1.9.0
 
 - Updated analyzer to 12.1.0.
 - Fixed pipe-mode for non-ASCII input.
-- Fixed trailing-comment indentation in parameter lists.
-- Kept single-line closure bodies on one line.
-- Fixed crashes on code using `augment`, `covariant`, native clauses, and various keywords/type parameters.
+- Indent / spacing / crash fixes across `augment`, `covariant`, native clauses, type parameters, trailing comments, single-line closures.
 
 ## 1.8.0
 
