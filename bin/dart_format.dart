@@ -2,13 +2,13 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dart_format/src/Constants/ExitCodes.dart';
+import 'package:dart_format/src/Enums/FailType.dart';
 import 'package:dart_format/src/Exceptions/DartFormatException.dart';
 import 'package:dart_format/src/Handlers/DefaultHandler.dart';
 import 'package:dart_format/src/Handlers/PipeHandler.dart';
 import 'package:dart_format/src/Handlers/WebServiceHandler.dart';
 import 'package:dart_format/src/Tools/InfoTools.dart';
 import 'package:dart_format/src/Tools/LogTools.dart';
-import 'package:dart_format/src/Types/FailType.dart';
 
 Future<void> main(List<String> args)
 async

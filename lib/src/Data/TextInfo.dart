@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../Types/TextType.dart';
+import '../Enums/TextType.dart';
 
 part 'TextInfo.freezed.dart';
 

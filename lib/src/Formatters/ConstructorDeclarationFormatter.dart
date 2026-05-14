@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Data/ConfigExtension.dart';
-import '../Types/IndentationType.dart';
+import '../Enums/IndentationType.dart';
 import 'TypedFormatter.dart';
 
 class ConstructorDeclarationFormatter extends TypedFormatter<ConstructorDeclaration>

@@ -3,7 +3,7 @@
 import 'package:analyzer/source/line_info.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../Types/FailType.dart';
+import '../Enums/FailType.dart';
 
 part 'DartFormatException.freezed.dart';
 part 'DartFormatException.g.dart';

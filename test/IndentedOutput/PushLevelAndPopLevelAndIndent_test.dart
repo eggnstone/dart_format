@@ -1,5 +1,5 @@
+import 'package:dart_format/src/Enums/IndentationType.dart';
 import 'package:dart_format/src/IndentedOutput.dart';
-import 'package:dart_format/src/Types/IndentationType.dart';
 import 'package:test/test.dart';
 
 import '../TestTools/TestTools.dart';

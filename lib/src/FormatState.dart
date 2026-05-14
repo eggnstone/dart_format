@@ -9,16 +9,16 @@ import 'package:analyzer/source/line_info.dart';
 import 'Constants/Constants.dart';
 import 'Data/Config.dart';
 import 'DebugDumper.dart';
+import 'Enums/IndentationType.dart';
 import 'Exceptions/DartFormatException.dart';
 import 'FormatErrorReporter.dart';
 import 'IndentedOutput.dart';
-import 'LeadingWhitespaceRemover.dart';
 import 'StringBufferEx.dart';
+import 'Text/LeadingWhitespaceRemover.dart';
 import 'Tools/CommentTools.dart';
 import 'Tools/FormatTools.dart';
 import 'Tools/LogTools.dart';
 import 'Tools/StringTools.dart';
-import 'Types/IndentationType.dart';
 
 class FormatState
 {

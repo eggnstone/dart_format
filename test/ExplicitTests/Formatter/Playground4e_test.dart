@@ -1,7 +1,7 @@
 import 'package:dart_format/src/Constants/Constants.dart';
 import 'package:dart_format/src/Data/Config.dart';
 import 'package:dart_format/src/Formatter.dart';
-import 'package:dart_format/src/LeadingWhitespaceRemover.dart';
+import 'package:dart_format/src/Text/LeadingWhitespaceRemover.dart';
 import 'package:dart_format/src/Tools/FormatTools.dart';
 import 'package:test/test.dart';
 

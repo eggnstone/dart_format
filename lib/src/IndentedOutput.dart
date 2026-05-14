@@ -2,10 +2,10 @@
 
 import 'Constants/Constants.dart';
 import 'Data/Indentation.dart';
+import 'Enums/IndentationType.dart';
 import 'StringBufferEx.dart';
 import 'Tools/LogTools.dart';
 import 'Tools/StringTools.dart';
-import 'Types/IndentationType.dart';
 
 class IndentedOutput
 {
