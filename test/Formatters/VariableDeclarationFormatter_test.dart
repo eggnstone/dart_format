@@ -89,7 +89,11 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig("s =\n    'a'\n    'b'")
+                TestConfig(
+                    "s =\n"
+                    "    'a'\n"
+                    "    'b'"
+                )
             ]
         )
     ];

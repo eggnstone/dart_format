@@ -30,10 +30,11 @@ TODO
 - Option to sort methods
 - Multi-line layout not supported (no `pushLevel`) for: `RecordLiteral`, `RecordTypeAnnotation`, `RecordTypeAnnotationNamedFields`, `TypeArgumentList`. Elements and trailing comments end up at column 0 instead of the indent level.
 - `TypeParameterList`: closing `>` is incorrectly indented when the list spans multiple lines.
-- Add space after `=` in factory redirect: `factory C() =_C;` → `factory C() = _C;` (analog of the `=` fix in `ConstructorFieldInitializer`).
 
 DONE (I think)
 ==============
+- Add space after `=` in factory redirect: `factory C() =_C;` → `factory C() = _C;` (analog of the `=` fix in `ConstructorFieldInitializer`).
+- Add space after `,` in `VariableDeclarationList` (e.g. `var a=0,b=1` → `var a=0, b=1`).
 - Method params: indent when multiline with "(" and "({"
 - WebService: Shut down if calling process dies.
 - Quit doesn't work anymore

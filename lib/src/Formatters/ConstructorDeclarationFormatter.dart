@@ -34,7 +34,7 @@ class ConstructorDeclarationFormatter extends TypedFormatter<ConstructorDeclarat
         formatState.popLevelAndIndent();
 
         formatState.pushLevel('$methodName/node.initializers');
-        formatState.copyEntity(node.redirectedConstructor, astVisitor, '$methodName/node.redirectedConstructor');
+        formatState.copyEntity(node.redirectedConstructor, astVisitor, '$methodName/node.redirectedConstructor', config.space1);
         formatState.acceptListWithComma(node.initializers, null, astVisitor, '$methodName/node.initializers', leadingSpaces: config.space1, trimCommaText: config.fixSpaces);
         formatState.popLevelAndIndent();
         formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');

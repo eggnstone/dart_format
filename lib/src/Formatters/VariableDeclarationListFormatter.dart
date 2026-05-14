@@ -51,7 +51,7 @@ class VariableDeclarationListFormatter extends TypedFormatter<VariableDeclaratio
             }
         }
 
-        formatState.acceptListWithComma(node.variables, null, astVisitor, '$methodName/node.variables', leadingSpaces: config.space1);
+        formatState.acceptListWithComma(node.variables, null, astVisitor, '$methodName/node.variables', leadingSpaces: config.space1, trimCommaText: config.fixSpaces);
 
         if (alreadyPushed)
             formatState.popLevelAndIndent();

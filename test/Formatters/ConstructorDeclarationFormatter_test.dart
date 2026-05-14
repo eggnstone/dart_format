@@ -88,7 +88,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('const factory C() =_C;')
+                TestConfig('const factory C() = _C;')
             ]
         ),
         TestGroupConfig(
