@@ -27,8 +27,8 @@ class DoStatementFormatter extends IFormatter
             throw FormatException('Not a DoStatement: ${node.runtimeType}');
 
         formatState.copyEntity(node.doKeyword, astVisitor, '$methodName/node.doKeyword');
-        formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
-        formatState.copyEntity(node.whileKeyword, astVisitor, '$methodName/node.whileKeyword');
+        formatState.copyEntity(node.body, astVisitor, '$methodName/node.body', config.space1);
+        formatState.copyEntity(node.whileKeyword, astVisitor, '$methodName/node.whileKeyword', config.space1);
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space1);
         formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);

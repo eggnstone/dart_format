@@ -24,7 +24,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('implements A,B')
+                TestConfig('implements A, B')
             ]
         )
     ];

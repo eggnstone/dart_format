@@ -24,7 +24,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig(' (a,b)')
+                TestConfig(' (a, b)')
             ]
         )
     ];

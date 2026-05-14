@@ -26,7 +26,7 @@ class WithClauseFormatter extends IFormatter
             throw FormatException('Not a WithClause: ${node.runtimeType}');
 
         formatState.copyEntity(node.withKeyword, astVisitor, '$methodName/node.withKeyword');
-        formatState.acceptListWithComma(node.mixinTypes, null, astVisitor, '$methodName/node.mixinTypes');
+        formatState.acceptListWithComma(node.mixinTypes, null, astVisitor, '$methodName/node.mixinTypes', trimCommaText: config.fixSpaces);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

@@ -24,7 +24,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('do{a;}while (true);\n')
+                TestConfig('do {a;} while (true);\n')
             ]
         )
     ];

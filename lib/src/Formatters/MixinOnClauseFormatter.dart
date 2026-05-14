@@ -26,7 +26,7 @@ class MixinOnClauseFormatter extends IFormatter
             throw FormatException('Not a MixinOnClause: ${node.runtimeType}');
 
         formatState.copyEntity(node.onKeyword, astVisitor, '$methodName/node.onKeyword');
-        formatState.acceptListWithComma(node.superclassConstraints, null, astVisitor, '$methodName/node.superclassConstraints');
+        formatState.acceptListWithComma(node.superclassConstraints, null, astVisitor, '$methodName/node.superclassConstraints', trimCommaText: config.fixSpaces);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }

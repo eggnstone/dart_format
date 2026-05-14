@@ -26,7 +26,7 @@ class ImplementsClauseFormatter extends IFormatter
             throw FormatException('Not an ImplementsClause: ${node.runtimeType}');
 
         formatState.copyEntity(node.implementsKeyword, astVisitor, '$methodName/node.implementsKeyword');
-        formatState.acceptListWithComma(node.interfaces, null, astVisitor, '$methodName/node.interfaces');
+        formatState.acceptListWithComma(node.interfaces, null, astVisitor, '$methodName/node.interfaces', trimCommaText: config.fixSpaces);
 
         if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
