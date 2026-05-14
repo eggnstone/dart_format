@@ -8,8 +8,10 @@ import 'package:analyzer/source/line_info.dart';
 
 import 'Constants/Constants.dart';
 import 'Data/Config.dart';
-import 'Data/Indentation.dart';
+import 'DebugDumper.dart';
 import 'Exceptions/DartFormatException.dart';
+import 'FormatErrorReporter.dart';
+import 'IndentedOutput.dart';
 import 'LeadingWhitespaceRemover.dart';
 import 'StringBufferEx.dart';
 import 'Tools/CommentTools.dart';
@@ -25,10 +27,9 @@ class FormatState
     final ParseStringResult _parseResult;
     final bool _removeTrailingCommas;
     final DateTime _startDateTime;
-
-    final List<StringBufferEx> _textBuffers = <StringBufferEx>[StringBufferEx()];
-    final List<Indentation> _indentations = <Indentation>[];
-    final List<int?> _customIndentSizes = <int?>[];
+    final IndentedOutput _output;
+    final FormatErrorReporter _errorReporter;
+    final DebugDumper _dumper;
 
     int _lastConsumedPosition = 0;
     String? _trailingForTests;
@@ -47,7 +48,10 @@ class FormatState
         _maxDateTime = maxDateTime,
         _removeTrailingCommas = removeTrailingCommas,
         _parseResult = parseResult,
-        _startDateTime = startDateTime;
+        _startDateTime = startDateTime,
+        _output = IndentedOutput(indentationSpacesPerLevel),
+        _errorReporter = FormatErrorReporter(parseResult),
+        _dumper = DebugDumper(parseResult.content);
 
     factory FormatState.test(ParseStringResult parseResult, {
             required int indentationSpacesPerLevel,
@@ -302,7 +306,7 @@ class FormatState
 
         if (Constants.DEBUG_FORMAT_STATE_SPACING)
         {
-            final String lastText = _textBuffers.last.toString();
+            final String lastText = _output.lastStringBuffer.toString();
             logInternal('consumeSpaces($spaces):');
             logInternal('  entity:   ${StringTools.toDisplayString(getText(entity.offset, entity.end))}');
             logInternal('  lastText: ${StringTools.toDisplayString(lastText)}');
@@ -313,7 +317,7 @@ class FormatState
 
         if (Constants.DEBUG_FORMAT_STATE_SPACING)
         {
-            final String lastText = _textBuffers.last.toString();
+            final String lastText = _output.lastStringBuffer.toString();
             logInternal('  lastText: ${StringTools.toDisplayString(lastText)}');
         }
     }
@@ -367,7 +371,7 @@ class FormatState
 
             if (spaces != null)
             {
-                final String lastText = _textBuffers.last.toString();
+                final String lastText = _output.lastStringBuffer.toString();
 
                 if (Constants.DEBUG_FORMAT_STATE_SPACING)
                 {
@@ -404,10 +408,10 @@ class FormatState
             if (Constants.DEBUG_FORMAT_STATE)
             {
                 logInternal('  filler/4b:            ${StringTools.toDisplayString(filler)}');
-                logInternal('  _textBuffers.last:    ${StringTools.toDisplayString(_textBuffers.last)}');
+                logInternal('  _output.lastStringBuffer: ${StringTools.toDisplayString(_output.lastStringBuffer)}');
             }
 
-            if (filler.replaceAll(' ', '').isEmpty && _textBuffers.length == 1 && _textBuffers.last.toString().isEmpty)
+            if (filler.replaceAll(' ', '').isEmpty && _output.levelCount == 0 && _output.lastStringBuffer.toString().isEmpty)
             {
                 if (Constants.DEBUG_FORMAT_STATE) logInternal('  Skipping space-only filler');
                 if (spaces != null)
@@ -433,7 +437,7 @@ class FormatState
                     if (Constants.DEBUG_FORMAT_STATE_SPACING)
                     {
                         logInternal('  spaces/2:         $spaces');
-                        logInternal('    lastText:       ${StringTools.toDisplayString(_textBuffers.last.toString())}');
+                        logInternal('    lastText:       ${StringTools.toDisplayString(_output.lastStringBuffer.toString())}');
                         logInternal('    fixedFiller/4b: ${StringTools.toDisplayString(fixedFiller)}');
                         logInternal('    spacesLeft:     $existingSpacesLeft');
                     }
@@ -458,7 +462,7 @@ class FormatState
                             }
                             else
                             {
-                                final String lastText = _textBuffers.last.toString();
+                                final String lastText = _output.lastStringBuffer.toString();
                                 if (lastText.endsWith('\n'))
                                 {
                                     fixedFiller = fixedFillerTrimmedLeft;
@@ -547,7 +551,7 @@ class FormatState
             logAndThrowErrorWithOffsets('Internal error: Missed some text:', '-', StringTools.toDisplayString(filler, 100), lastConsumedPosition, end, source);
         }
 
-        String lastText = _textBuffers.last.toString();
+        String lastText = _output.lastStringBuffer.toString();
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  lastText1:                 ${StringTools.toDisplayString(lastText)}');
 
         final int lastLineBreakPos = lastText.lastIndexOf('\n');
@@ -665,144 +669,41 @@ class FormatState
     }
 
     void dump(SyntacticEntity? entity, String name, [String indent = ''])
-    {
-        final String paddedName = '$name:'.padRight(10);
-        if (entity == null)
-        {
-            logDebug('### $indent$paddedName <null>');
-            return;
-        }
-
-        logError('### $indent$paddedName ${StringTools.toDisplayString(entity)} ${entity.runtimeType}');
-        logWarning('### $indent  text:    ${StringTools.toDisplayString(getText(entity.offset, entity.end))}');
-        logWarning('### $indent  offset:  ${entity.offset}');
-        logWarning('### $indent  end:     ${entity.end}');
-
-        logWarning('### last => start: ${StringTools.toDisplayString(getText(lastConsumedPosition, entity.offset))}');
-        //logWarning('### last => start: ${StringTools.toDisplayString(getText(entity.beginToken, entity.offset))}');
-        logWarning('### entity text:   ${StringTools.toDisplayString(getText(entity.offset, entity.end))}');
-    }
+    => _dumper.dump(entity, name, indent, lastConsumedPosition);
 
     void dump2(SyntacticEntity? entity, SyntacticEntity? previousEntity, String name, [String indent = ''])
-    {
-        dump(entity, name, indent);
-
-        if (entity == null || previousEntity == null)
-            return;
-
-        logWarning('### dump2:         ${StringTools.toDisplayString(getText(previousEntity.end, entity.offset))}');
-    }
+    => _dumper.dump2(entity, previousEntity, name, indent, lastConsumedPosition);
 
     void dumpList(List<SyntacticEntity>? list, String name, [String indent = ''])
-    {
-        final String paddedName = '$name:'.padRight(10);
-        if (list == null)
-        {
-            logDebug('### $indent$paddedName <null>');
-            return;
-        }
-
-        logError('### $indent$paddedName ${StringTools.toDisplayString(list)} ${list.runtimeType}');
-    }
+    => _dumper.dumpList(list, name, indent);
 
     StringBufferEx getLastStringBuffer()
-    => _textBuffers.last;
+    => _output.lastStringBuffer;
 
     // TODO: rename to better distinguish from getLastStringBuffer()
     /// Do you mean getLastStringBuffer?
     String getLastText()
-    => getLastStringBuffer().lastText;
+    => _output.lastText;
 
     CharacterLocation? getLocation(int offset)
-    {
-        try
-        {
-            return _parseResult.lineInfo.getLocation(offset);
-        }
-        // ignore: avoid_catching_errors
-        on UnimplementedError catch (_)
-        {
-            // TestParseStringResult will throw an UnimplementedError.
-            //logInfo('Offset $offset');
-            return null;
-        }
-    }
+    => _errorReporter.getLocation(offset);
 
     String getPositionInfo(int offset)
-    {
-        try
-        {
-            final CharacterLocation location = _parseResult.lineInfo.getLocation(offset);
-            final int line = location.lineNumber;
-            final int column = location.columnNumber;
-            return 'Line $line, column $column';
-        }
-        // ignore: avoid_catching_errors
-        on UnimplementedError catch (_)
-        {
-            // TestParseStringResult will throw an UnimplementedError.
-            return 'Offset $offset';
-        }
-    }
+    => _errorReporter.getPositionInfo(offset);
 
     String getResult()
-    {
-        if (_textBuffers.length == 1)
-            return _textBuffers.last.toString();
-
-        final StringBuffer sb = StringBuffer();
-        for (final StringBufferEx textBuffer in _textBuffers)
-            sb.write(textBuffer.toString());
-
-        return sb.toString();
-    }
+    => _output.getResult();
 
     String getResultAfterLast(String searchText)
-    {
-        for (int i = _textBuffers.length - 1; i >= 0; i--)
-        {
-            final String text = _textBuffers[i].toString();
-            final int lastPos = text.lastIndexOf(searchText);
-            if (lastPos == -1)
-                continue;
-
-            final StringBuffer sb = StringBuffer();
-            sb.write(text.substring(lastPos + searchText.length));
-            for (int j = i + 1; j < _textBuffers.length; j++)
-            {
-                sb.write('<New-Level/>');
-                sb.write(_textBuffers[j].toString());
-            }
-
-            return sb.toString();
-        }
-
-        return '';
-    }
+    => _output.getResultAfterLast(searchText);
 
     /// Returns complete string if no line break found
     String getResultAfterOptionalLastLineBreak()
-    {
-        const String METHOD_NAME = 'getResultAfterOptionalLastLineBreak';
-        final String lastText = _textBuffers.last.toString();
-        //if (Constants.DEBUG_FORMAT_STATE) logInternal('$METHOD_NAME: lastText: ${StringTools.toDisplayString(lastText)}');
-        final int lastPos = lastText.lastIndexOf('\n');
-        final String r = lastPos == -1 ? lastText : lastText.substring(lastPos + 1);
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('$METHOD_NAME: ${StringTools.toDisplayString(r)}');
-        return r;
-    }
+    => _output.getResultAfterOptionalLastLineBreak();
 
     /// Returns empty string if no line break found
     String getResultAfterRequiredLastLineBreak()
-    {
-        const String METHOD_NAME = 'getResultAfterRequiredLastLineBreak';
-        final String lastText = _textBuffers.last.toString();
-        //if (Constants.DEBUG_FORMAT_STATE) logInternal('$METHOD_NAME: lastText: ${StringTools.toDisplayString(lastText)}');
-        final int lastPos = lastText.lastIndexOf('\n');
-        final String r = lastPos == -1 ? '' : lastText.substring(lastPos + 1);
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('$METHOD_NAME: ${StringTools.toDisplayString(r)}');
-        return r;
-    }
+    => _output.getResultAfterRequiredLastLineBreak();
 
     String getText(int offset, int end)
     {
@@ -822,112 +723,25 @@ class FormatState
     }
 
     void logAndThrowError(String message, [CharacterLocation? location])
-    {
-        logInternalError(message);
-        throw DartFormatException.error(message, location);
-    }
+    => _errorReporter.logAndThrowError(message, location);
 
     void logAndThrowErrorWithOffset(String message, String? additionalText, int offset)
-    {
-        final String positionInfo = Constants.DEBUG_FORMAT_STATE ? '$offset, ${getPositionInfo(offset)}' : getPositionInfo(offset);
-
-        String finalMessage = '$message ($positionInfo)';
-        if (additionalText != null)
-            finalMessage += ' $additionalText';
-
-        logAndThrowError(finalMessage, getLocation(offset));
-    }
+    => _errorReporter.logAndThrowErrorWithOffset(message, additionalText, offset);
 
     void logAndThrowErrorWithOffsets(String message, String delimiter, String? additionalText, int offset1, int offset2, String source)
-    {
-        final String positionInfo1 = Constants.DEBUG_FORMAT_STATE ? '$offset1, ${getPositionInfo(offset1)}' : getPositionInfo(offset1);
-        final String positionInfo2 = Constants.DEBUG_FORMAT_STATE ? '$offset2, ${getPositionInfo(offset2)}' : getPositionInfo(offset2);
-
-        String finalMessage = '$message ($positionInfo1) $delimiter ($positionInfo2)';
-        if (additionalText != null)
-            finalMessage += ' $additionalText';
-
-        finalMessage += ' ($source)';
-        logAndThrowError(finalMessage, getLocation(offset1));
-    }
+    => _errorReporter.logAndThrowErrorWithOffsets(message, delimiter, additionalText, offset1, offset2, source);
 
     void popLevelAndIndent()
-    {
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('# FormatState.popLevelAndIndent()');
+    => _output.popLevelAndIndent();
 
-        final Indentation lastLevel = _indentations.removeLast();
-        final int? customIndentSize = _customIndentSizes.removeLast();
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  Popped level: name: "${lastLevel.name}" type: "${lastLevel.type}" customIndentSize: $customIndentSize');
-
-        final StringBufferEx poppedStringBuffer = _textBuffers.removeLast();
-        if (Constants.DEBUG_FORMAT_STATE)
-        {
-            logInternal('  Popped StringBuffer: lastText: ${StringTools.toDisplayString(poppedStringBuffer.lastText)}');
-            logInternal('  Popped StringBuffer: allText:  ${StringTools.toDisplayString(poppedStringBuffer.toString())}');
-        }
-
-        if (_indentationSpacesPerLevel < 0)
-        {
-            _textBuffers.last.write(poppedStringBuffer);
-            return;
-        }
-
-        final bool previousTextEndsWithNewLine = _textBuffers.last.lastText.endsWith('\n');
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  previousTextEndsWithNewLine: $previousTextEndsWithNewLine');
-        String s = (previousTextEndsWithNewLine ? '\n' : '') + poppedStringBuffer.toString();
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  s: ${StringTools.toDisplayString(s)}');
-
-        final int effectiveIndentSize = customIndentSize ?? _indentationSpacesPerLevel;
-        String indent = '';
-        if (lastLevel.type == IndentationType.single)
-        {
-            if (!s.trim().startsWith('{'))
-                indent = ' ' * effectiveIndentSize;
-        }
-        else if (lastLevel.type == IndentationType.multiple)
-        {
-            indent = ' ' * effectiveIndentSize;
-        }
-
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  indent:      ${StringTools.toDisplayString(indent)}');
-        final bool endsWithNewLine = s.endsWith('\n');
-        if (endsWithNewLine)
-            s = s.substring(0, s.length - 1);
-
-        s = s.replaceAll('\n', '\n$indent');
-        s = s.replaceAll(RegExp('\n\\s+\n'), '\n\n');
-
-        if (endsWithNewLine)
-            s += '\n';
-
-        if (previousTextEndsWithNewLine)
-            s = s.substring(1);
-
-        if (Constants.DEBUG_FORMAT_STATE) logInternal('  indentedText: ${StringTools.toDisplayString(s)}');
-        _textBuffers.last.write(s);
-    }
-
-    // TODO: remove usage of pushLevel() until covered by tests.
-    // TODO: when is IndentationType.multiple even used?
     void pushLevel(String name, [IndentationType type = IndentationType.single, int? customIndentSize])
-    {
-        if (Constants.DEBUG_FORMAT_STATE)
-        {
-            logInternal('# FormatState.pushLevel(name: "$name", type: "$type", customIndentSize: $customIndentSize)');
-            //logInternal('  lastText: ${StringTools.toDisplayString(_textBuffers.last.lastText)}');
-            //logInternal('  allText:  ${StringTools.toDisplayString(_textBuffers.last)}');
-        }
-
-        _indentations.add(Indentation(name: name, type: type));
-        _customIndentSizes.add(customIndentSize);
-        _textBuffers.add(StringBufferEx(lastText: _textBuffers.last.lastText));
-    }
+    => _output.pushLevel(name, type, customIndentSize);
 
     void write(String s)
     {
-        _textBuffers.last.write(s);
+        _output.write(s);
         if (Constants.DEBUG_FORMAT_STATE) logInternal('= ${StringTools.toDisplayString(getResult())}');
-    } 
+    }
 
     void _addNewLineBeforeToken(Token? token, String source, {required bool add, required bool beforeComments})
     {
