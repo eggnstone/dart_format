@@ -7,6 +7,9 @@ class AstCreator
     static ArgumentList createArgumentListInFunction(String s)
     => createMethodInvocationInExpressionStatementInFunction(s).argumentList;
 
+    static AsExpression createAsExpressionInVariable(String s)
+    => createInitializerInVariableDeclarationInFunction(s) as AsExpression;
+
     static AssignmentExpression createAssignmentExpressionInFunction(String s)
     => createExpressionInFunction(s) as AssignmentExpression;
 
@@ -51,6 +54,78 @@ class AstCreator
 
     static ConditionalExpression createConditionalExpression(String s)
     => createInitializerInVariableDeclarationInFunction(s) as ConditionalExpression;
+
+    static Configuration createConfigurationInImportDirective(String s)
+    => (createDirective(s) as ImportDirective).configurations[0];
+
+    static DottedName createDottedNameInImportConfiguration(String s)
+    => createConfigurationInImportDirective(s).name;
+
+    static DoStatement createDoStatementInFunction(String s)
+    => createStatementInFunction(s) as DoStatement;
+
+    static EmptyFunctionBody createEmptyFunctionBodyInMethodInClass(String s)
+    => createMethodDeclaration(s).body as EmptyFunctionBody;
+
+    static ExtendsClause createExtendsClauseInClassDeclaration(String s)
+    => createClassDeclaration(s).extendsClause!;
+
+    static FunctionTypedFormalParameter createFunctionTypedFormalParameterInFunction(String s)
+    => createFormalParameterInFunction(s) as FunctionTypedFormalParameter;
+
+    static ImplementsClause createImplementsClauseInClassDeclaration(String s)
+    => createClassDeclaration(s).implementsClause!;
+
+    static InstanceCreationExpression createInstanceCreationExpressionInVariable(String s)
+    => createInitializerInVariableDeclarationInFunction(s) as InstanceCreationExpression;
+
+    static InterpolationExpression createInterpolationExpressionInVariable(String s)
+    => (createInitializerInVariableDeclarationInFunction(s) as StringInterpolation).elements.whereType<InterpolationExpression>().first;
+
+    static InterpolationString createInterpolationStringInVariable(String s)
+    => (createInitializerInVariableDeclarationInFunction(s) as StringInterpolation).elements.whereType<InterpolationString>().first;
+
+    static Label createLabelInLabeledStatement(String s)
+    => (createStatementInFunction(s) as LabeledStatement).labels[0];
+
+    static MixinOnClause createMixinOnClauseInMixinDeclaration(String s)
+    => createMixinDeclaration(s).onClause!;
+
+    static NamedExpression createNamedExpressionInArgumentList(String s)
+    => createArgumentListInFunction(s).arguments[0] as NamedExpression;
+
+    static NativeFunctionBody createNativeFunctionBodyInClass(String s)
+    => createMethodDeclaration(s).body as NativeFunctionBody;
+
+    static PartOfDirective createPartOfDirective(String s)
+    => createDirective(s) as PartOfDirective;
+
+    static PatternVariableDeclarationStatement createPatternVariableDeclarationStatementInFunction(String s)
+    => createStatementInFunction(s) as PatternVariableDeclarationStatement;
+
+    static MapPattern createMapPatternInPatternVariableDeclaration(String s)
+    => createPatternVariableDeclarationStatementInFunction(s).declaration.pattern as MapPattern;
+
+    static ObjectPattern createObjectPatternInPatternVariableDeclaration(String s)
+    => createPatternVariableDeclarationStatementInFunction(s).declaration.pattern as ObjectPattern;
+
+    static RecordPattern createRecordPatternInPatternVariableDeclaration(String s)
+    => createPatternVariableDeclarationStatementInFunction(s).declaration.pattern as RecordPattern;
+
+    static RecordTypeAnnotationNamedFields createRecordTypeAnnotationNamedFieldsInVariable(String s)
+    => (createVariableDeclarationStatementInFunction(s).variables.type! as RecordTypeAnnotation).namedFields!;
+
+    static StringInterpolation createStringInterpolationInVariable(String s)
+    => createInitializerInVariableDeclarationInFunction(s) as StringInterpolation;
+
+    static SymbolLiteral createSymbolLiteralInVariable(String s)
+    => createInitializerInVariableDeclarationInFunction(s) as SymbolLiteral;
+
+    static WithClause createWithClauseInClassDeclaration(String s)
+    => createClassDeclaration(s).withClause!;
+
+    static YieldStatement createYieldStatementInFunction(String s)
+    => createStatementInFunction(s) as YieldStatement;
 
     static ConstructorDeclaration createConstructorDeclaration(String s)
     => createClassMember(s) as ConstructorDeclaration;
@@ -191,6 +266,9 @@ class AstCreator
 
     static IfStatement createIfStatementInFunction(String s)
     => createStatementInFunction(s) as IfStatement;
+
+    static IsExpression createIsExpressionInVariable(String s)
+    => createInitializerInVariableDeclarationInFunction(s) as IsExpression;
 
     static MethodDeclaration createMethodDeclaration(String s)
     => createClassMember(s) as MethodDeclaration;
