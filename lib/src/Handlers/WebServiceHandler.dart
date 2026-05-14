@@ -155,7 +155,6 @@ class WebServiceHandler
     ''';
 
     Future<void> _handleGet(HttpRequest request, {Function()? onQuit})
-    async
     {
         if (request.uri.path == '/')
             return _handleRoot(request);
@@ -177,7 +176,6 @@ class WebServiceHandler
     }
 
     Future<void> _handleGetFavIcon(HttpRequest request)
-    async
     {
         request.response.statusCode = HttpStatus.ok;
         request.response.headers.contentType = ContentType('image', 'x-icon');
@@ -186,7 +184,6 @@ class WebServiceHandler
     }
 
     Future<void> _handleGetFormat(HttpRequest request)
-    async
     {
         request.response.statusCode = HttpStatus.ok;
         request.response.headers.contentType = ContentType.text;
@@ -207,7 +204,6 @@ class WebServiceHandler
     }
 
     Future<void> _handleGetStatus(HttpRequest request)
-    async
     {
         request.response.statusCode = HttpStatus.ok;
         request.response.headers.contentType = ContentType.html;
@@ -220,7 +216,6 @@ class WebServiceHandler
     }
 
     Future<void> _handlePost(HttpRequest request)
-    async
     {
         //logDebug('WebServiceHandler._handlePost: Request: ${request.contentLength}');
 

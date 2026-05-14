@@ -7,12 +7,10 @@ analyzer:
   errors:
     # Otherwise cause the import of all_lint_rules to warn because of some rules conflicts.
     # The conflicts are fixed in this file instead, so we can safely ignore the warning.
-    document_ignores: ignore
     included_file_warning: ignore
     missing_required_param: error
     missing_return: error
     must_be_immutable: error
-    omit_obvious_local_variable_types: ignore
   exclude: [
     'lib/App.widgetbook.dart',
     'lib/constants/generated/*.dart',
@@ -41,10 +39,14 @@ linter:
     constant_identifier_names: false
     curly_braces_in_flow_control_structures: false
     depend_on_referenced_packages: false
+    diagnostic_describe_all_properties: false
+    document_ignores: false
     file_names: false
     flutter_style_todos: false
     lines_longer_than_80_chars: false
     omit_local_variable_types: false
+    omit_obvious_local_variable_types: false
+    omit_obvious_property_types: false
     prefer_double_quotes: false
     prefer_final_parameters: false
     public_member_api_docs: false
