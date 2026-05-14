@@ -1,35 +1,17 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class NativeFunctionBodyFormatter extends IFormatter
+class NativeFunctionBodyFormatter extends TypedFormatter<NativeFunctionBody>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    NativeFunctionBodyFormatter(this.config, this.astVisitor, this.formatState);
+    NativeFunctionBodyFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(NativeFunctionBody node)
     {
-        const String methodName = 'NativeFunctionBodyFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! NativeFunctionBody)
-            throw FormatException('Not a NativeFunctionBody: ${node.runtimeType}');
-
         formatState.copyEntity(node.nativeKeyword, astVisitor, '$methodName/node.nativeKeyword');
         formatState.copyEntity(node.stringLiteral, astVisitor, '$methodName/node.stringLiteral');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

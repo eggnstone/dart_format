@@ -1,31 +1,18 @@
 /*
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
 import '../Data/Config.dart';
 import '../FormatState.dart';
 import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class AdjacentStringsFormatter extends IFormatter
+class AdjacentStringsFormatter extends TypedFormatter<AdjacentStrings>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    AdjacentStringsFormatter(this.config, this.astVisitor, this.formatState);
+    AdjacentStringsFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(AdjacentStrings node)
     {
-        const String methodName = 'AdjacentStringsFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! AdjacentStrings)
-            throw FormatException('Not an AdjacentStrings: ${node.runtimeType}');
-
         final String textWithPossibleLineBreak = formatState.getText(node.offset, node.end);
         //final bool pushLevel2 = textWithPossibleLineBreak.contains('\n');
         log('textWithPossibleLineBreak: ${StringTools.toDisplayString(textWithPossibleLineBreak)}', 0);
@@ -40,8 +27,6 @@ class AdjacentStringsFormatter extends IFormatter
 
         *//*if (pushLevel)
             formatState.popLevelAndIndent();*//*
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }
 */

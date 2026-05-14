@@ -1,35 +1,17 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class InterpolationStringFormatter extends IFormatter
+class InterpolationStringFormatter extends TypedFormatter<InterpolationString>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    InterpolationStringFormatter(this.config, this.astVisitor, this.formatState);
+    InterpolationStringFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(InterpolationString node)
     {
-        const String methodName = 'InterpolationStringFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! InterpolationString)
-            throw FormatException('Not an InterpolationString: ${node.runtimeType}');
-
         //if (Constants.DEBUG_I_FORMATTER) log('Before node.contents: ${node.contents.runtimeType} ${StringTools.toDisplayString(node.contents, Constants.MAX_DEBUG_LENGTH)}');
         //formatState.copyEntity(node.contents, astVisitor, '$methodName/node.contents');
         formatState.copyString(node.contents.offset, node.contents.end, '$methodName/node.contents');
         //if (Constants.DEBUG_I_FORMATTER) log('After  node.contents: ${node.contents.runtimeType} ${StringTools.toDisplayString(node.contents, Constants.MAX_DEBUG_LENGTH)}');
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

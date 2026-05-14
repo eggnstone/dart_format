@@ -1,33 +1,17 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
 import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
 import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class VariableDeclarationFormatter extends IFormatter
+class VariableDeclarationFormatter extends TypedFormatter<VariableDeclaration>
 {
-    static const String CLASS_NAME = 'VariableDeclarationListFormatter';
-
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    VariableDeclarationFormatter(this.config, this.astVisitor, this.formatState);
+    VariableDeclarationFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(VariableDeclaration node)
     {
-        const String methodName = '$CLASS_NAME.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! VariableDeclaration)
-            throw FormatException('Not a VariableDeclaration: ${node.runtimeType}');
-
         bool pushLevel = false;
         if (node.initializer != null)
         {
@@ -78,7 +62,5 @@ class VariableDeclarationFormatter extends IFormatter
 
         if (pushLevel)
             formatState.popLevelAndIndent();
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

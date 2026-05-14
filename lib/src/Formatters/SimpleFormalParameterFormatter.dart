@@ -1,30 +1,14 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class SimpleFormalParameterFormatter extends IFormatter
+class SimpleFormalParameterFormatter extends TypedFormatter<SimpleFormalParameter>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    SimpleFormalParameterFormatter(this.config, this.astVisitor, this.formatState);
+    SimpleFormalParameterFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(SimpleFormalParameter node)
     {
-        const String methodName = 'SimpleFormalParameterFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! SimpleFormalParameter)
-            throw FormatException('Not a SimpleFormalParameter: ${node.runtimeType}');
-
         /*
         formatState.dump(node, 'node');
         formatState.dump(node.requiredKeyword, 'requiredKeyword');
@@ -65,7 +49,5 @@ class SimpleFormalParameterFormatter extends IFormatter
             final int? spacesForName = config.fixSpaces ? (node.offset == node.name!.offset ? null : 1) : null;
             formatState.copyEntity(node.name, astVisitor, '$methodName/node.name', spacesForName);
         }
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

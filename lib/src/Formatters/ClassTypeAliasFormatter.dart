@@ -1,31 +1,15 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class ClassTypeAliasFormatter extends IFormatter
+class ClassTypeAliasFormatter extends TypedFormatter<ClassTypeAlias>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    ClassTypeAliasFormatter(this.config, this.astVisitor, this.formatState);
+    ClassTypeAliasFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(ClassTypeAlias node)
     {
-        const String methodName = 'ClassTypeAliasFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! ClassTypeAlias)
-            throw FormatException('Not a ClassTypeAlias: ${node.runtimeType}');
-
         formatState.acceptList(node.metadata, astVisitor, '$methodName/node.metadata');
         formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword');
         formatState.copyEntity(node.typedefKeyword, astVisitor, '$methodName/node.typedefKeyword');
@@ -43,7 +27,5 @@ class ClassTypeAliasFormatter extends IFormatter
         formatState.copyEntity(node.withClause, astVisitor, '$methodName/node.withClause');
         formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

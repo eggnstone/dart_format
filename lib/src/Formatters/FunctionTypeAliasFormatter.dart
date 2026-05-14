@@ -1,31 +1,15 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class FunctionTypeAliasFormatter extends IFormatter
+class FunctionTypeAliasFormatter extends TypedFormatter<FunctionTypeAlias>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    FunctionTypeAliasFormatter(this.config, this.astVisitor, this.formatState);
+    FunctionTypeAliasFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(FunctionTypeAlias node)
     {
-        const String methodName = 'FunctionTypeAliasFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! FunctionTypeAlias)
-            throw FormatException('Not a FunctionTypeAlias: ${node.runtimeType}');
-
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.augmentKeyword, astVisitor, '$methodName/node.augmentKeyword');
         formatState.copyEntity(node.typedefKeyword, astVisitor, '$methodName/node.typedefKeyword');
@@ -34,7 +18,5 @@ class FunctionTypeAliasFormatter extends IFormatter
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
         formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

@@ -1,31 +1,15 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class FunctionDeclarationFormatter extends IFormatter
+class FunctionDeclarationFormatter extends TypedFormatter<FunctionDeclaration>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    FunctionDeclarationFormatter(this.config, this.astVisitor, this.formatState);
+    FunctionDeclarationFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(FunctionDeclaration node)
     {
-        const String methodName = 'FunctionDeclarationFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! FunctionDeclaration)
-            throw FormatException('Not a FunctionDeclaration: ${node.runtimeType}');
-
         /*
         formatState.dump(node, 'node');
         formatState.dumpList(node.sortedCommentAndAnnotations, 'sortedCommentAndAnnotations');
@@ -47,7 +31,5 @@ class FunctionDeclarationFormatter extends IFormatter
         //logWarning('S functionExpression');
         formatState.copyEntity(node.functionExpression, astVisitor, '$methodName/node.functionExpression');
         //logWarning('E functionExpression');
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

@@ -1,35 +1,17 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class VariableDeclarationListFormatter extends IFormatter
+class VariableDeclarationListFormatter extends TypedFormatter<VariableDeclarationList>
 {
-    static const String CLASS_NAME = 'VariableDeclarationListFormatter';
-
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    VariableDeclarationListFormatter(this.config, this.astVisitor, this.formatState);
+    VariableDeclarationListFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(VariableDeclarationList node)
     {
-        const String methodName = '$CLASS_NAME.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! VariableDeclarationList)
-            throw FormatException('Not a VariableDeclarationList: ${node.runtimeType}');
-
         final String textWithPossibleLineBreak = formatState.getText(node.offset, node.variables.first.offset);
-        //log('$CLASS_NAME: textWithPossibleLineBreak: ${StringTools.toDisplayString(textWithPossibleLineBreak)}', 0);
+        //log('$methodName: textWithPossibleLineBreak: ${StringTools.toDisplayString(textWithPossibleLineBreak)}', 0);
         final bool pushLevel = textWithPossibleLineBreak.contains('\n');
 
         bool alreadyPushed = false;
@@ -73,7 +55,5 @@ class VariableDeclarationListFormatter extends IFormatter
 
         if (alreadyPushed)
             formatState.popLevelAndIndent();
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

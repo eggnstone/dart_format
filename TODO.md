@@ -24,7 +24,7 @@ TODO
 - Add/remove spaces
 - Fix too big block indentation after "if () // comment\n"
 - Sort imports
-- Remove empty lines at start and end
+- Remove empty lines at start and end of file
 - Spaces: "a . b"
 - Do not remove trailing commas from end-of-line comments
 - Force empty line between methods

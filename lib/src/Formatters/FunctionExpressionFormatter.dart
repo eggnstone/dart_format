@@ -1,30 +1,14 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class FunctionExpressionFormatter extends IFormatter
+class FunctionExpressionFormatter extends TypedFormatter<FunctionExpression>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    FunctionExpressionFormatter(this.config, this.astVisitor, this.formatState);
+    FunctionExpressionFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(FunctionExpression node)
     {
-        const String methodName = 'FunctionExpressionFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! FunctionExpression)
-            throw FormatException('Not a FunctionExpression: ${node.runtimeType}');
-
         /*
         formatState.dump(node, 'node');
         formatState.dump(node.typeParameters, 'typeParameters');
@@ -47,7 +31,5 @@ class FunctionExpressionFormatter extends IFormatter
 
         formatState.consumeSpacesBeforeFunctionBody(node.body, config);
         formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

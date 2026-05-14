@@ -1,31 +1,15 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class SwitchStatementFormatter extends IFormatter
+class SwitchStatementFormatter extends TypedFormatter<SwitchStatement>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    SwitchStatementFormatter(this.config, this.astVisitor, this.formatState);
+    SwitchStatementFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(SwitchStatement node)
     {
-        const String methodName = 'SwitchStatementFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! SwitchStatement)
-            throw FormatException('Not a SwitchStatement: ${node.runtimeType}');
-
         formatState.copyEntity(node.switchKeyword, astVisitor, '$methodName/node.switchKeyword');
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space1);
         formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression');
@@ -33,7 +17,5 @@ class SwitchStatementFormatter extends IFormatter
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
         formatState.acceptList(node.members, astVisitor, '$methodName/node.members');
         formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

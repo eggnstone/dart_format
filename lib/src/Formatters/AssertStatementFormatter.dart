@@ -4,30 +4,18 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/syntactic_entity.dart';
 
 import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
 import '../Tools/FormatTools.dart';
 import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class AssertStatementFormatter extends IFormatter
+class AssertStatementFormatter extends TypedFormatter<AssertStatement>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    AssertStatementFormatter(this.config, this.astVisitor, this.formatState);
+    AssertStatementFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(AssertStatement node)
     {
-        const String methodName = 'AssertStatementFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! AssertStatement)
-            throw FormatException('Not an AssertStatement: ${node.runtimeType}');
-
         formatState.copyEntity(node.assertKeyword, astVisitor, '$methodName/node.assertKeyword');
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space0);
         formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
@@ -62,7 +50,5 @@ class AssertStatementFormatter extends IFormatter
 
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

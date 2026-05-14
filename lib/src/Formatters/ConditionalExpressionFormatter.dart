@@ -1,31 +1,15 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class ConditionalExpressionFormatter extends IFormatter
+class ConditionalExpressionFormatter extends TypedFormatter<ConditionalExpression>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    ConditionalExpressionFormatter(this.config, this.astVisitor, this.formatState);
+    ConditionalExpressionFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(ConditionalExpression node)
     {
-        const String methodName = 'ConditionalExpressionFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! ConditionalExpression)
-            throw FormatException('Not a ConditionalExpression: ${node.runtimeType}');
-
         formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
 
         formatState.pushLevel('$methodName/node.question+thenExpression');
@@ -37,7 +21,5 @@ class ConditionalExpressionFormatter extends IFormatter
         formatState.copyEntity(node.colon, astVisitor, '$methodName/node.colon', config.space1);
         formatState.copyEntity(node.elseExpression, astVisitor, '$methodName/node.elseExpression', config.space1);
         formatState.popLevelAndIndent();
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

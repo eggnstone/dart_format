@@ -1,31 +1,15 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class GenericTypeAliasFormatter extends IFormatter
+class GenericTypeAliasFormatter extends TypedFormatter<GenericTypeAlias>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    GenericTypeAliasFormatter(this.config, this.astVisitor, this.formatState);
+    GenericTypeAliasFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(GenericTypeAlias node)
     {
-        const String methodName = 'GenericTypeAliasFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! GenericTypeAlias)
-            throw FormatException('Not a GenericTypeAlias: ${node.runtimeType}');
-
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.augmentKeyword, astVisitor, '$methodName/node.augmentKeyword');
         formatState.copyEntity(node.typedefKeyword, astVisitor, '$methodName/node.typedefKeyword');
@@ -34,7 +18,5 @@ class GenericTypeAliasFormatter extends IFormatter
         formatState.copyEntity(node.equals, astVisitor, '$methodName/node.equals', config.space1);
         formatState.copyEntity(node.type, astVisitor, '$methodName/node.type', config.space1);
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

@@ -4,30 +4,18 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/syntactic_entity.dart';
 
 import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
 import '../Tools/FormatTools.dart';
 import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class AssertInitializerFormatter extends IFormatter
+class AssertInitializerFormatter extends TypedFormatter<AssertInitializer>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    AssertInitializerFormatter(this.config, this.astVisitor, this.formatState);
+    AssertInitializerFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(AssertInitializer node)
     {
-        const String methodName = 'AssertInitializerFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! AssertInitializer)
-            throw FormatException('Not an AssertInitializer: ${node.runtimeType}');
-
         formatState.copyEntity(node.assertKeyword, astVisitor, '$methodName/node.assertKeyword');
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space0);
         formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
@@ -61,7 +49,5 @@ class AssertInitializerFormatter extends IFormatter
         }
 
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

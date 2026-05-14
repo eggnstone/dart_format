@@ -1,34 +1,16 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
 import '../Copier.dart';
-import '../Data/Config.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
 import '../Types/Spacing.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class MethodDeclarationFormatter extends IFormatter
+class MethodDeclarationFormatter extends TypedFormatter<MethodDeclaration>
 {
-    static const String CLASS_NAME = 'MethodDeclarationFormatter';
-
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    MethodDeclarationFormatter(this.config, this.astVisitor, this.formatState);
+    MethodDeclarationFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(MethodDeclaration node)
     {
-        const String methodName = '$CLASS_NAME.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! MethodDeclaration)
-            throw FormatException('Not a MethodDeclaration: ${node.runtimeType}');
-
         /*
         formatState.dump(node, 'node');
         formatState.dumpList(node.sortedCommentAndAnnotations, 'sortedCommentAndAnnotations');
@@ -58,7 +40,5 @@ class MethodDeclarationFormatter extends IFormatter
         copier.copyNullableEntity(node.typeParameters, '$methodName/node.typeParameters', Spacing.zero);
         copier.copyNullableEntity(node.parameters, '$methodName/node.parameters', Spacing.zero);
         copier.copyEntity(node.body, '$methodName/node.body', Spacing.emptyFunctionBodyZeroOne);
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

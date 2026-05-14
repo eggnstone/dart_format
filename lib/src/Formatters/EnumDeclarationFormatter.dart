@@ -1,32 +1,16 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/token.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class EnumDeclarationFormatter extends IFormatter
+class EnumDeclarationFormatter extends TypedFormatter<EnumDeclaration>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    EnumDeclarationFormatter(this.config, this.astVisitor, this.formatState);
+    EnumDeclarationFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(EnumDeclaration node)
     {
-        const String methodName = 'EnumDeclarationFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! EnumDeclaration)
-            throw FormatException('Not an EnumDeclaration: ${node.runtimeType}');
-
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.augmentKeyword, astVisitor, '$methodName/node.augmentKeyword');
         formatState.copyEntity(node.enumKeyword, astVisitor, '$methodName/node.enumKeyword');
@@ -46,7 +30,5 @@ class EnumDeclarationFormatter extends IFormatter
         formatState.copySemicolon(body.semicolon, config, '$methodName/node.body.semicolon', config.space0);
         formatState.acceptList(body.members, astVisitor, '$methodName/node.body.members');
         formatState.copyClosingBraceAndPopLevel(body.rightBracket, config, '$methodName/node.body.rightBracket');
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

@@ -1,31 +1,15 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class FieldFormalParameterFormatter extends IFormatter
+class FieldFormalParameterFormatter extends TypedFormatter<FieldFormalParameter>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    FieldFormalParameterFormatter(this.config, this.astVisitor, this.formatState);
+    FieldFormalParameterFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(FieldFormalParameter node)
     {
-        const String methodName = 'FieldFormalParameterFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! FieldFormalParameter)
-            throw FormatException('Not a FieldFormalParameter: ${node.runtimeType}');
-
         /*
         formatState.dump(node, 'node');
         formatState.dump(node.type, 'node.type');
@@ -48,7 +32,5 @@ class FieldFormalParameterFormatter extends IFormatter
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters', config.space0);
         formatState.copyEntity(node.parameters, astVisitor, '$methodName/node.parameters', config.space0);
         formatState.copyEntity(node.question, astVisitor, '$methodName/node.question', config.space0);
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

@@ -1,32 +1,16 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
 import '../Copier.dart';
-import '../Data/Config.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
 import '../Types/Spacing.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class IfStatementFormatter extends IFormatter
+class IfStatementFormatter extends TypedFormatter<IfStatement>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    IfStatementFormatter(this.config, this.astVisitor, this.formatState);
+    IfStatementFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(IfStatement node)
     {
-        const String methodName = 'IfStatementFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! IfStatement)
-            throw FormatException('Not an IfStatement: ${node.runtimeType}');
-
         /*
         formatState.dump(node, 'node');
         formatState.dump(node.expression, 'expression');
@@ -63,7 +47,5 @@ class IfStatementFormatter extends IFormatter
 
         if (indentElse)
             formatState.popLevelAndIndent();
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

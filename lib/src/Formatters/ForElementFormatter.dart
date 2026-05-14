@@ -1,31 +1,15 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class ForElementFormatter extends IFormatter
+class ForElementFormatter extends TypedFormatter<ForElement>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    ForElementFormatter(this.config, this.astVisitor, this.formatState);
+    ForElementFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(ForElement node)
     {
-        const String methodName = 'ForElementFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! ForElement)
-            throw FormatException('Not a ForElement: ${node.runtimeType}');
-
         final int? spacesForForKeyword = config.fixSpaces ? (node.offset == node.forKeyword.offset ? null : 1) : null;
 
         formatState.copyEntity(node.awaitKeyword, astVisitor, '$methodName/node.awaitKeyword');
@@ -36,7 +20,5 @@ class ForElementFormatter extends IFormatter
         formatState.pushLevel('$methodName/node.body');
         formatState.copyEntity(node.body, astVisitor, '$methodName/node.body');
         formatState.popLevelAndIndent();
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

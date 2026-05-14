@@ -1,42 +1,23 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class BlockFormatter extends IFormatter
+class BlockFormatter extends TypedFormatter<Block>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    BlockFormatter(this.config, this.astVisitor, this.formatState);
+    BlockFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(Block node)
     {
-        const String methodName = 'BlockFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! Block)
-            throw FormatException('Not a Block: ${node.runtimeType}');
-
         if (_canKeepSingleLineClosure(node))
         {
             _formatSingleLineClosure(node);
-            if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
             return;
         }
 
         formatState.copyOpeningBraceAndPushLevel(node.leftBracket, config, '$methodName/node.leftBracket');
         formatState.acceptList(node.statements, astVisitor, '$methodName/node.statements');
         formatState.copyClosingBraceAndPopLevel(node.rightBracket, config, '$methodName/node.rightBracket');
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 
     bool _canKeepSingleLineClosure(Block node)
@@ -67,12 +48,10 @@ class BlockFormatter extends IFormatter
 
     void _formatSingleLineClosure(Block node)
     {
-        const String methodName = 'BlockFormatter._formatSingleLineClosure';
-
         formatState.consumeText(formatState.lastConsumedPosition, node.leftBracket.offset, '', methodName, spaces: 1);
 
         final String blockText = formatState.getText(node.leftBracket.offset, node.rightBracket.end);
-        final String normalized = blockText.replaceAll(RegExp(r' +'), ' ');
+        final String normalized = blockText.replaceAll(RegExp(' +'), ' ');
         formatState.consumeText(node.leftBracket.offset, node.rightBracket.end, normalized, methodName);
     }
 }

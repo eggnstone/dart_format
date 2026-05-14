@@ -1,30 +1,14 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class FunctionTypedFormalParameterFormatter extends IFormatter
+class FunctionTypedFormalParameterFormatter extends TypedFormatter<FunctionTypedFormalParameter>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    FunctionTypedFormalParameterFormatter(this.config, this.astVisitor, this.formatState);
+    FunctionTypedFormalParameterFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(FunctionTypedFormalParameter node)
     {
-        const String methodName = 'FunctionTypedFormalParameterFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! FunctionTypedFormalParameter)
-            throw FormatException('Not a FunctionTypedFormalParameter: ${node.runtimeType}');
-
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.covariantKeyword, astVisitor, '$methodName/node.covariantKeyword');
         formatState.copyEntity(node.requiredKeyword, astVisitor, '$methodName/node.requiredKeyword');
@@ -36,7 +20,5 @@ class FunctionTypedFormalParameterFormatter extends IFormatter
         // This whole formatter should not be necessary, because it doesn't do anything special.
         // But when FormalParameterListFormatter calls parameter.accept(astVisitor); the question is omitted.
         formatState.copyEntity(node.question, astVisitor, '$methodName/node.question');
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

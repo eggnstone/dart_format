@@ -1,34 +1,16 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class VariableDeclarationStatementFormatter extends IFormatter
+class VariableDeclarationStatementFormatter extends TypedFormatter<VariableDeclarationStatement>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    VariableDeclarationStatementFormatter(this.config, this.astVisitor, this.formatState);
+    VariableDeclarationStatementFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(VariableDeclarationStatement node)
     {
-        const String methodName = 'VariableDeclarationStatementFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! VariableDeclarationStatement)
-            throw FormatException('Not a VariableDeclarationStatement: ${node.runtimeType}');
-
         formatState.copyEntity(node.variables, astVisitor, '$methodName/node.variables');
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

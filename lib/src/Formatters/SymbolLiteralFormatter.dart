@@ -1,33 +1,15 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class SymbolLiteralFormatter extends IFormatter
+class SymbolLiteralFormatter extends TypedFormatter<SymbolLiteral>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    SymbolLiteralFormatter(this.config, this.astVisitor, this.formatState);
+    SymbolLiteralFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(SymbolLiteral node)
     {
-        const String methodName = 'SymbolLiteralFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! SymbolLiteral)
-            throw FormatException('Not a SymbolLiteral: ${node.runtimeType}');
-
         formatState.copyEntity(node.poundSign, astVisitor, '$methodName/node.poundSign');
         formatState.acceptTokenListWithPeriod(node.components, astVisitor, '$methodName/node.components');
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

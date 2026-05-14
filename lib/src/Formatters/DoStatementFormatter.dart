@@ -1,31 +1,15 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class DoStatementFormatter extends IFormatter
+class DoStatementFormatter extends TypedFormatter<DoStatement>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    DoStatementFormatter(this.config, this.astVisitor, this.formatState);
+    DoStatementFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(DoStatement node)
     {
-        const String methodName = 'DoStatementFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! DoStatement)
-            throw FormatException('Not a DoStatement: ${node.runtimeType}');
-
         formatState.copyEntity(node.doKeyword, astVisitor, '$methodName/node.doKeyword');
         formatState.copyEntity(node.body, astVisitor, '$methodName/node.body', config.space1);
         formatState.copyEntity(node.whileKeyword, astVisitor, '$methodName/node.whileKeyword', config.space1);
@@ -33,7 +17,5 @@ class DoStatementFormatter extends IFormatter
         formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

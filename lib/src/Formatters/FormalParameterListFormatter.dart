@@ -4,33 +4,21 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/token.dart';
 
 import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
 import '../Exceptions/DartFormatException.dart';
-import '../FormatState.dart';
 import '../Tools/CommentTools.dart';
 import '../Tools/FormatTools.dart';
 import '../Tools/LogTools.dart';
 import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class FormalParameterListFormatter extends IFormatter
+class FormalParameterListFormatter extends TypedFormatter<FormalParameterList>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    FormalParameterListFormatter(this.config, this.astVisitor, this.formatState);
+    FormalParameterListFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(FormalParameterList node)
     {
-        const String methodName = 'FormalParameterListFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! FormalParameterList)
-            throw FormatException('Not a FormalParameterList: ${node.runtimeType}');
-
         /*
         formatState.dump(node, 'node');
         formatState.dump(node.leftParenthesis, 'leftParenthesis');
@@ -129,7 +117,5 @@ class FormalParameterListFormatter extends IFormatter
 
         formatState.popLevelAndIndent();
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

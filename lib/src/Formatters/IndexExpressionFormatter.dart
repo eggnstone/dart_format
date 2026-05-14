@@ -1,30 +1,14 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
-import '../FormatState.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class IndexExpressionFormatter extends IFormatter
+class IndexExpressionFormatter extends TypedFormatter<IndexExpression>
 {
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    IndexExpressionFormatter(this.config, this.astVisitor, this.formatState);
+    IndexExpressionFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(IndexExpression node)
     {
-        const String methodName = 'IndexExpressionFormatter.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! IndexExpression)
-            throw FormatException('Not an IndexExpression: ${node.runtimeType}');
-
         // TODO: test if period is null?
         formatState.copyEntity(node.period, astVisitor, '$methodName/node.period');//, config.space0);
         // TODO: test if target is null?
@@ -33,7 +17,5 @@ class IndexExpressionFormatter extends IFormatter
         formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
         formatState.copyEntity(node.index, astVisitor, '$methodName/node.index');
         formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }

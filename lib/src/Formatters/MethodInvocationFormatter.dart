@@ -1,34 +1,16 @@
-// ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Constants/Constants.dart';
-import '../Data/Config.dart';
 import '../Data/ConfigExtension.dart';
-import '../FormatState.dart';
 import '../Tools/LogTools.dart';
-import '../Tools/StringTools.dart';
-import 'IFormatter.dart';
+import 'TypedFormatter.dart';
 
-class MethodInvocationFormatter extends IFormatter
+class MethodInvocationFormatter extends TypedFormatter<MethodInvocation>
 {
-    static const String CLASS_NAME = 'MethodInvocationFormatter';
-
-    final AstVisitor<void> astVisitor;
-    final Config config;
-    final FormatState formatState;
-
-    MethodInvocationFormatter(this.config, this.astVisitor, this.formatState);
+    MethodInvocationFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void format(AstNode node)
+    void formatNode(MethodInvocation node)
     {
-        const String methodName = '$CLASS_NAME.format';
-        if (Constants.DEBUG_I_FORMATTER) log('START $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', formatState.logIndent++);
-
-        if (node is! MethodInvocation)
-            throw FormatException('Not a MethodInvocation: ${node.runtimeType}');
-
         /*
         formatState.dump(node, 'node');
         formatState.dump(node.target, 'target');
@@ -73,7 +55,5 @@ class MethodInvocationFormatter extends IFormatter
 
         if (pushLevel)
             formatState.popLevelAndIndent();
-
-        if (Constants.DEBUG_I_FORMATTER) log('END   $methodName(${StringTools.toDisplayString(node, Constants.MAX_DEBUG_LENGTH)})', --formatState.logIndent);
     }
 }
