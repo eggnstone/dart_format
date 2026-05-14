@@ -6,7 +6,9 @@ import 'Formatters/ArgumentListFormatter.dart';
 import 'Formatters/AssertInitializerFormatter.dart';
 import 'Formatters/AssertStatementFormatter.dart';
 import 'Formatters/AssignmentExpressionFormatter.dart';
+import 'Formatters/AsExpressionFormatter.dart';
 import 'Formatters/BinaryExpressionFormatter.dart';
+import 'Formatters/IsExpressionFormatter.dart';
 import 'Formatters/BlockFormatter.dart';
 import 'Formatters/BreakStatementFormatter.dart';
 import 'Formatters/ClassDeclarationFormatter.dart';
@@ -100,6 +102,7 @@ class FormatVisitor extends AstVisitor<void>
     late final ArgumentListFormatter _argumentListFormatter = ArgumentListFormatter(config, this, _formatState);
     late final AssertInitializerFormatter _assertInitializerFormatter = AssertInitializerFormatter(config, this, _formatState);
     late final AssertStatementFormatter _assertStatementFormatter = AssertStatementFormatter(config, this, _formatState);
+    late final AsExpressionFormatter _asExpressionFormatter = AsExpressionFormatter(config, this, _formatState);
     late final AssignmentExpressionFormatter _assignmentExpressionFormatter = AssignmentExpressionFormatter(config, this, _formatState);
     late final BinaryExpressionFormatter _binaryExpressionFormatter = BinaryExpressionFormatter(config, this, _formatState);
     late final BlockFormatter _blockFormatter = BlockFormatter(config, this, _formatState);
@@ -142,6 +145,7 @@ class FormatVisitor extends AstVisitor<void>
     late final InstanceCreationExpressionFormatter _instanceCreationExpressionFormatter = InstanceCreationExpressionFormatter(config, this, _formatState);
     late final InterpolationExpressionFormatter _interpolationExpressionFormatter = InterpolationExpressionFormatter(config, this, _formatState);
     late final InterpolationStringFormatter _interpolationStringFormatter = InterpolationStringFormatter(config, this, _formatState);
+    late final IsExpressionFormatter _isExpressionFormatter = IsExpressionFormatter(config, this, _formatState);
     late final LabelFormatter _labelFormatter = LabelFormatter(config, this, _formatState);
     late final LibraryDirectiveFormatter _libraryDirectiveFormatter = LibraryDirectiveFormatter(config, this, _formatState);
     late final ListLiteralFormatter _listLiteralFormatter = ListLiteralFormatter(config, this, _formatState);
@@ -220,7 +224,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitAsExpression(AsExpression node)
-    => _defaultFormatter.format(node);
+    => _asExpressionFormatter.format(node);
 
     @override
     void visitAssertInitializer(AssertInitializer node)
@@ -576,7 +580,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitIsExpression(IsExpression node)
-    => _defaultFormatter.format(node);
+    => _isExpressionFormatter.format(node);
 
     @override
     void visitLabel(Label node)
