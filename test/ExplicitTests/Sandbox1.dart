@@ -16,8 +16,8 @@ void f()
     if (true)
         ;
     else
-    if (true)
-        ;
+        if (true)
+            ;
 }
 
 void f()
