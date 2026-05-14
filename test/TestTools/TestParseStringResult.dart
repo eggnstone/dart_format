@@ -9,7 +9,7 @@ class TestParseStringResult implements ParseStringResult
     final CompilationUnit _unit;
 
     TestParseStringResult({required String content, required CompilationUnit unit})
-        : _content = content, _unit = unit;
+      : _content = content, _unit = unit;
 
     @override
     String get content

@@ -264,7 +264,6 @@ void main()
                             TestTools.expect(actualText, equals(expectedText));
                         }
                     );
-
                 }
             );
         }

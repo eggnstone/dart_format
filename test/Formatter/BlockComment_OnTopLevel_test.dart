@@ -289,13 +289,11 @@ void main()
                             //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                         }
                     );
-
                 }
             );
 
             group('TODO: proper name', ()
                 {
-
                     test('Not indented, between statements', ()
                         {
                             const String inputText =

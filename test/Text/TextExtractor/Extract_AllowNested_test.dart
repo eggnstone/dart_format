@@ -92,7 +92,6 @@ void main()
                     expect(() => TextExtractor.extract(inputText, TextType.Normal, startMarker, endMarker, allowNested: true), throwsA(isA<Exception>()));
                 }
             );
-
         }
     );
 }

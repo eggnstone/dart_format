@@ -10,7 +10,7 @@ void main()
 
     final Formatter formatterInline = Formatter(Config.all(
         addNewLineBeforeOpeningBrace: false,
-        addNewLineAfterClosingBrace: false,
+        addNewLineAfterClosingBrace: false
     ));
 
     test('Call with closure arg whose { and } sit on the outer paren lines collapses one indent level', ()
@@ -53,5 +53,4 @@ void main()
             TestTools.expect(actualText, equals(expectedText));
         }
     );
-
 }

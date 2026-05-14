@@ -44,7 +44,7 @@ class FormatState
             required DateTime startDateTime
         }
     )
-        : _indentationSpacesPerLevel = indentationSpacesPerLevel,
+      : _indentationSpacesPerLevel = indentationSpacesPerLevel,
         _maxDateTime = maxDateTime,
         _removeTrailingCommas = removeTrailingCommas,
         _parseResult = parseResult,
@@ -965,5 +965,4 @@ class FormatState
 
         _lastConsumedPosition = value;
     }
-
 }

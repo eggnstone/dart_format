@@ -1,4 +1,3 @@
-
 import 'package:analyzer/dart/ast/ast.dart';
 
 abstract class SimpleVisitor extends AstVisitor<void>

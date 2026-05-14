@@ -29,7 +29,6 @@ void main()
                     //logDebug('actualText:\n\n${StringTools.toDisplayString(actualText)}\n\n$actualText');
                 }
             );
-
         }
     );
 }

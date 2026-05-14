@@ -199,7 +199,7 @@ class FormatVisitor extends AstVisitor<void>
     late final DefaultFormatter _defaultFormatter = DefaultFormatter(config, this, _formatState);
 
     FormatVisitor({required this.config, required FormatState formatState})
-        : _formatState = formatState;
+      : _formatState = formatState;
 
     @override
     void visitAdjacentStrings(AdjacentStrings node)
@@ -927,5 +927,4 @@ class FormatVisitor extends AstVisitor<void>
     @override
     void visitYieldStatement(YieldStatement node)
     => _yieldStatementFormatter.format(node);
-
 }

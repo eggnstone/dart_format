@@ -1,4 +1,3 @@
-
 import 'package:dart_format/src/Data/Config.dart';
 
 class TestConfig
@@ -9,10 +8,10 @@ class TestConfig
     final String name;
 
     TestConfig([this.expectedText, this.restText])
-        : config = Config.experimental(), name = 'Default';
+      : config = Config.experimental(), name = 'Default';
 
     TestConfig.custom(this.name, this.config, [this.expectedText, this.restText]);
 
     TestConfig.none([this.expectedText, this.restText])
-        : config = Config.none(), name = 'None';
+      : config = Config.none(), name = 'None';
 }
