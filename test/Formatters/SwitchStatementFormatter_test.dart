@@ -24,7 +24,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('switch (i)\n{\n    case 0:;\n}\n')
+                TestConfig(
+                    'switch (i)\n'
+                    '{\n'
+                    '    case 0:;\n'
+                    '}\n'
+                )
             ]
         )
     ];

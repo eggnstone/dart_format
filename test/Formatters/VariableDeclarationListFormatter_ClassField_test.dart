@@ -35,7 +35,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('late\n    int i=0')
+                TestConfig(
+                    'late\n'
+                    '    int i=0'
+                )
             ]
         ),
         TestGroupConfig(
@@ -50,7 +53,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('int\n    i=0')
+                TestConfig(
+                    'int\n'
+                    '    i=0'
+                )
             ]
         ),
         TestGroupConfig(
@@ -65,7 +71,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('int i=\n0')
+                TestConfig(
+                    'int i=\n'
+                    '0'
+                )
             ]
         )
     ];

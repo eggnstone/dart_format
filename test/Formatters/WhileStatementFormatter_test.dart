@@ -24,7 +24,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('while (true)\n    ;')
+                TestConfig(
+                    'while (true)\n'
+                    '    ;'
+                )
             ]
         ),
         TestGroupConfig(

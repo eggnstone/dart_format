@@ -21,7 +21,11 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('base mixin M on A, B\n{\n}\n')
+                TestConfig(
+                    'base mixin M on A, B\n'
+                    '{\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -30,7 +34,11 @@ void main()
             name: 'MixinDeclaration / augment mixin M{}',
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('augment mixin M\n{\n}\n')
+                TestConfig(
+                    'augment mixin M\n'
+                    '{\n'
+                    '}\n'
+                )
             ]
         )
     ];

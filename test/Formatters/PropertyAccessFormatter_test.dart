@@ -24,7 +24,11 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('f\n.a\n    .b')
+                TestConfig(
+                    'f\n'
+                    '.a\n'
+                    '    .b'
+                )
             ]
         ),
         TestGroupConfig(

@@ -20,7 +20,11 @@ void main()
             name: 'Multiline ConditionalExpression',
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('true\n    ? true\n    : false')
+                TestConfig(
+                    'true\n'
+                    '    ? true\n'
+                    '    : false'
+                )
             ],
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<Expression>(18, 'true'),

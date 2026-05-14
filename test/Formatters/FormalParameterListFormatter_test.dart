@@ -45,7 +45,11 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('(\n    int i\n)')
+                TestConfig(
+                    '(\n'
+                    '    int i\n'
+                    ')'
+                )
             ]
         ),
         TestGroupConfig(
@@ -60,7 +64,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('(\n    int i,\n    int j\n)')
+                TestConfig(
+                    '(\n'
+                    '    int i,\n'
+                    '    int j\n'
+                    ')'
+                )
             ]
         ),
         TestGroupConfig(
@@ -74,7 +83,11 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('({\n    int i\n})')
+                TestConfig(
+                    '({\n'
+                    '    int i\n'
+                    '})'
+                )
             ]
         ),
         TestGroupConfig(

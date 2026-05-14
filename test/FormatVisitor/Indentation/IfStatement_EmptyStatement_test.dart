@@ -15,7 +15,11 @@ void main()
         name: 'IfStatement / EmptyStatement',
         testConfigs: <TestConfig>[
             TestConfig.none(null, ''),
-            TestConfig('if (true)\n    ;\n', '')
+            TestConfig(
+                'if (true)\n'
+                '    ;\n',
+                ''
+            )
         ]
     );
 

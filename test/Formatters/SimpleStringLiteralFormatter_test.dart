@@ -47,7 +47,10 @@ void main()
             name: 'SimpleStringLiteral triple " first indent removed, second indent preserved',
             testConfigs: <TestConfig>[
                 TestConfig.none('"""abc\n    xyz"""'),
-                TestConfig('"""abc\n    xyz"""')
+                TestConfig(
+                    '"""abc\n'
+                    '    xyz"""'
+                )
             ]
         ),
         TestGroupConfig(
@@ -58,7 +61,10 @@ void main()
             name: 'SimpleStringLiteral raw triple " first indent removed, second indent preserved',
             testConfigs: <TestConfig>[
                 TestConfig.none('r"""abc\n    xyz"""'),
-                TestConfig('r"""abc\n    xyz"""')
+                TestConfig(
+                    'r"""abc\n'
+                    '    xyz"""'
+                )
             ]
         )
     ];

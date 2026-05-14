@@ -14,7 +14,15 @@ void main()
         name: 'ClassDeclaration / VoidMethod / EmptyStatement',
         testConfigs: <TestConfig>[
             TestConfig.none(),
-            TestConfig('class C\n{\n    void m()\n    {\n        ;\n    }\n}\n')
+            TestConfig(
+                'class C\n'
+                '{\n'
+                '    void m()\n'
+                '    {\n'
+                '        ;\n'
+                '    }\n'
+                '}\n'
+            )
         ]
     );
 

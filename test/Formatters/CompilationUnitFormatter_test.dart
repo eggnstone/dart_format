@@ -18,7 +18,10 @@ void main()
             name: 'Lonely block comment',
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('/*Comment\nA*/\n')
+                TestConfig(
+                    '/*Comment\n'
+                    'A*/\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -27,7 +30,10 @@ void main()
             name: 'Lonely block comment / formatted',
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('/*Comment\n A*/\n')
+                TestConfig(
+                    '/*Comment\n'
+                    ' A*/\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -37,7 +43,10 @@ void main()
             astVisitors: <TestVisitor<void>>[TestVisitor<ClassDeclaration>(0, '/*Comment\nA*/class C{}')],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('/*Comment\nA*/class C{}\n')
+                TestConfig(
+                    '/*Comment\n'
+                    'A*/class C{}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -47,7 +56,10 @@ void main()
             astVisitors: <TestVisitor<void>>[TestVisitor<ClassDeclaration>(14, 'class C{}')],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('/*Comment\n A*/class C{}\n')
+                TestConfig(
+                    '/*Comment\n'
+                    ' A*/class C{}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -57,7 +69,10 @@ void main()
             astVisitors: <TestVisitor<void>>[TestVisitor<ClassDeclaration>(0, 'class C{}')],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('class C{}/*Comment\nA*/\n')
+                TestConfig(
+                    'class C{}/*Comment\n'
+                    'A*/\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -67,7 +82,10 @@ void main()
             astVisitors: <TestVisitor<void>>[TestVisitor<ClassDeclaration>(0, 'class C{}')],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('class C{}/*Comment\n A*/\n')
+                TestConfig(
+                    'class C{}/*Comment\n'
+                    ' A*/\n'
+                )
             ]
         ),
         /*
@@ -83,7 +101,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('class C{}/*Comment\nA*/\n')
+                TestConfig(
+                    'class C{}/*Comment\n'
+                    'A*/\n'
+                )
             ]
         ),*/
 
@@ -93,7 +114,10 @@ void main()
             name: 'Lonely doc block comment',
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('/**DocComment\nA*/\n')
+                TestConfig(
+                    '/**DocComment\n'
+                    'A*/\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -102,7 +126,10 @@ void main()
             name: 'Lonely doc block comment / formatted',
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('/**DocComment\n A*/\n')
+                TestConfig(
+                    '/**DocComment\n'
+                    ' A*/\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -112,7 +139,10 @@ void main()
             astVisitors: <TestVisitor<void>>[TestVisitor<ClassDeclaration>(0, '/**DocComment\nA*/class C{}')],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('/**DocComment\nA*/class C{}\n')
+                TestConfig(
+                    '/**DocComment\n'
+                    'A*/class C{}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -122,7 +152,10 @@ void main()
             astVisitors: <TestVisitor<void>>[TestVisitor<ClassDeclaration>(18, 'class C{}')],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('/**DocComment\n A*/class C{}\n')
+                TestConfig(
+                    '/**DocComment\n'
+                    ' A*/class C{}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -132,7 +165,10 @@ void main()
             astVisitors: <TestVisitor<void>>[TestVisitor<ClassDeclaration>(0, 'class C{}')],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('class C{}/**DocComment\nA*/\n')
+                TestConfig(
+                    'class C{}/**DocComment\n'
+                    'A*/\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -142,7 +178,10 @@ void main()
             astVisitors: <TestVisitor<void>>[TestVisitor<ClassDeclaration>(0, 'class C{}')],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('class C{}/**DocComment\n A*/\n')
+                TestConfig(
+                    'class C{}/**DocComment\n'
+                    ' A*/\n'
+                )
             ]
         ),
         TestGroupConfig(

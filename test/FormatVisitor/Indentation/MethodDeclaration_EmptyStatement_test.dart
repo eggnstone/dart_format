@@ -18,7 +18,13 @@ void main()
         name: 'MethodDeclaration / EmptyStatement',
         testConfigs: <TestConfig>[
             TestConfig.none(null, ''),
-            TestConfig('void m()\n{\n    ;\n}\n', '')
+            TestConfig(
+                'void m()\n'
+                '{\n'
+                '    ;\n'
+                '}\n',
+                ''
+            )
         ]
     );
 

@@ -37,7 +37,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('i\n    = f.a.b')
+                TestConfig(
+                    'i\n'
+                    '    = f.a.b'
+                )
             ]
         ),
         TestGroupConfig(
@@ -51,7 +54,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('i =\n    f.a.b')
+                TestConfig(
+                    'i =\n'
+                    '    f.a.b'
+                )
             ]
         ),
         TestGroupConfig(
@@ -65,7 +71,11 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('i\n    =\n    f.a.b')
+                TestConfig(
+                    'i\n'
+                    '    =\n'
+                    '    f.a.b'
+                )
             ]
         ),
         TestGroupConfig(

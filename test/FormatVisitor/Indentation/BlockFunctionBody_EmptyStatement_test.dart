@@ -14,7 +14,12 @@ void main()
         name: 'BlockFunctionBody / EmptyStatement',
         testConfigs: <TestConfig>[
             TestConfig.none(),
-            TestConfig('\n{\n    ;\n}\n')
+            TestConfig(
+                '\n'
+                '{\n'
+                '    ;\n'
+                '}\n'
+            )
         ]
     );
 

@@ -39,7 +39,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('for (;  ;)  \n    ;')
+                TestConfig(
+                    'for (;  ;)  \n'
+                    '    ;'
+                )
             ]
         ),
         TestGroupConfig(

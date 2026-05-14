@@ -42,7 +42,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('()\n{}')
+                TestConfig(
+                    '()\n'
+                    '{}'
+                )
             ]
         ),
         TestGroupConfig(
@@ -57,7 +60,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('(  )  \n{  }')
+                TestConfig(
+                    '(  )  \n'
+                    '{  }'
+                )
             ]
         ),
         TestGroupConfig(

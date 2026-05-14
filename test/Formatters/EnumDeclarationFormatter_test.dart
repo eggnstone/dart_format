@@ -24,7 +24,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('enum E implements F\n{\n    x\n}\n')
+                TestConfig(
+                    'enum E implements F\n'
+                    '{\n'
+                    '    x\n'
+                    '}\n'
+                )
             ]
         ), 
         TestGroupConfig(
@@ -37,7 +42,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('enum E\n{\n    x,y\n}\n')
+                TestConfig(
+                    'enum E\n'
+                    '{\n'
+                    '    x,y\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -50,7 +60,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('enum E\n{\n    x,y/**/\n}\n')
+                TestConfig(
+                    'enum E\n'
+                    '{\n'
+                    '    x,y/**/\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -63,7 +78,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('enum E\n{\n    x,y;\n}\n')
+                TestConfig(
+                    'enum E\n'
+                    '{\n'
+                    '    x,y;\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -77,7 +97,13 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('enum E\n{\n    x,y;\n    void m();\n}\n')
+                TestConfig(
+                    'enum E\n'
+                    '{\n'
+                    '    x,y;\n'
+                    '    void m();\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -90,7 +116,13 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('enum E\n{\n    x,\n    y\n}\n')
+                TestConfig(
+                    'enum E\n'
+                    '{\n'
+                    '    x,\n'
+                    '    y\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -103,7 +135,13 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('enum E\n{\n    x,\n    y\n}\n')
+                TestConfig(
+                    'enum E\n'
+                    '{\n'
+                    '    x,\n'
+                    '    y\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -117,7 +155,14 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('enum E\n{\n    x,\n    y,\n    z\n}\n')
+                TestConfig(
+                    'enum E\n'
+                    '{\n'
+                    '    x,\n'
+                    '    y,\n'
+                    '    z\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -130,7 +175,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('enum E<T>\n{\n    x\n}\n')
+                TestConfig(
+                    'enum E<T>\n'
+                    '{\n'
+                    '    x\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -143,7 +193,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('enum E with M\n{\n    x\n}\n')
+                TestConfig(
+                    'enum E with M\n'
+                    '{\n'
+                    '    x\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -158,7 +213,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('enum E<T> with M implements F\n{\n    x\n}\n')
+                TestConfig(
+                    'enum E<T> with M implements F\n'
+                    '{\n'
+                    '    x\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -170,7 +230,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('augment enum E\n{\n    x\n}\n')
+                TestConfig(
+                    'augment enum E\n'
+                    '{\n'
+                    '    x\n'
+                    '}\n'
+                )
             ]
         )
     ];

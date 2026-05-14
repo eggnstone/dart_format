@@ -25,7 +25,11 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('case 0:\n    ;\n    ;')
+                TestConfig(
+                    'case 0:\n'
+                    '    ;\n'
+                    '    ;'
+                )
             ]
         )
     ];

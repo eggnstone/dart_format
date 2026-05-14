@@ -15,10 +15,16 @@ void main()
     final TestGroupConfig testGroupConfig = TestGroupConfig(
         inputNodeCreator: AstCreator.createDeclaration,
         inputMiddle: text,
-        name: 'TODO',
+        name: 'ClassDeclaration / Empty / BackToBackBlockComments',
         testConfigs: <TestConfig>[
             TestConfig.none(),
-            TestConfig('class C\n{\n}        /*\n*//*\n*/')
+            TestConfig(
+                'class C\n'
+                '{\n'
+                '}        /*\n'
+                '*//*\n'
+                '*/'
+            )
             //TestConfig('class C\n{\n    void m()\n    {\n    }\n/*Comment*/\n}\n')
         ]
     );

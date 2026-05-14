@@ -26,7 +26,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('@a abstract interface class C<T> extends E with W implements I\n{\n    C();\n}\n')
+                TestConfig(
+                    '@a abstract interface class C<T> extends E with W implements I\n'
+                    '{\n'
+                    '    C();\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -38,7 +43,11 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('@a sealed class C\n{\n}\n')
+                TestConfig(
+                    '@a sealed class C\n'
+                    '{\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -47,7 +56,11 @@ void main()
             name: 'ClassDeclaration / base class C{}',
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('base class C\n{\n}\n')
+                TestConfig(
+                    'base class C\n'
+                    '{\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -56,7 +69,11 @@ void main()
             name: 'ClassDeclaration / abstract base class C{}',
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('abstract base class C\n{\n}\n')
+                TestConfig(
+                    'abstract base class C\n'
+                    '{\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -65,7 +82,11 @@ void main()
             name: 'ClassDeclaration / abstract mixin class C{}',
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('abstract mixin class C\n{\n}\n')
+                TestConfig(
+                    'abstract mixin class C\n'
+                    '{\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -77,7 +98,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('class C\n    with M\n{\n}\n')
+                TestConfig(
+                    'class C\n'
+                    '    with M\n'
+                    '{\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -111,7 +137,11 @@ void main()
             name: 'ClassDeclaration / augment class C{}',
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('augment class C\n{\n}\n')
+                TestConfig(
+                    'augment class C\n'
+                    '{\n'
+                    '}\n'
+                )
             ]
         )
     ];

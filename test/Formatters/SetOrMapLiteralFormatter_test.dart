@@ -46,7 +46,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('\n{\n    b\n}')
+                TestConfig(
+                    '\n'
+                    '{\n'
+                    '    b\n'
+                    '}'
+                )
             ]
         ),
         TestGroupConfig(
@@ -74,7 +79,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('\n{\n    b\n}')
+                TestConfig(
+                    '\n'
+                    '{\n'
+                    '    b\n'
+                    '}'
+                )
             ]
         ),
         TestGroupConfig(
@@ -88,7 +98,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('\n{\n    b\n}')
+                TestConfig(
+                    '\n'
+                    '{\n'
+                    '    b\n'
+                    '}'
+                )
             ]
         ),
         TestGroupConfig(

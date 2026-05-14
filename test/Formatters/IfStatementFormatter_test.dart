@@ -35,7 +35,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('if (true)\n    ;')
+                TestConfig(
+                    'if (true)\n'
+                    '    ;'
+                )
             ]
         ),
         TestGroupConfig(
@@ -65,7 +68,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('if (true)\n{}')
+                TestConfig(
+                    'if (true)\n'
+                    '{}'
+                )
             ]
         ),
         TestGroupConfig(
@@ -108,7 +114,11 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('if (true)\n    ; else\n    ;')
+                TestConfig(
+                    'if (true)\n'
+                    '    ; else\n'
+                    '    ;'
+                )
             ]
         ),
         TestGroupConfig(
@@ -124,7 +134,11 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('if (true)\n    ; else if(true)\n;')
+                TestConfig(
+                    'if (true)\n'
+                    '    ; else if(true)\n'
+                    ';'
+                )
             ]
         ),
         TestGroupConfig(
@@ -140,7 +154,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('if (true)\n    ;\nelse if(true)\n;')
+                TestConfig(
+                    'if (true)\n'
+                    '    ;\n'
+                    'else if(true)\n'
+                    ';'
+                )
             ]
         ),
         TestGroupConfig(
@@ -156,7 +175,13 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('if (true)\n    ;\nelse if(true)\n{\n}')
+                TestConfig(
+                    'if (true)\n'
+                    '    ;\n'
+                    'else if(true)\n'
+                    '{\n'
+                    '}'
+                )
             ]
         ),
         TestGroupConfig(
@@ -188,7 +213,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none('if(true);\nelse;\n'),
-                TestConfig('if (true);\nelse;\n')
+                TestConfig(
+                    'if (true);\n'
+                    'else;\n'
+                )
             ]
         ),
         TestGroupConfig(

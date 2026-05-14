@@ -24,7 +24,12 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('extension E<T1,T2> on C<T1,T2>\n{\n    void m(){}\n}\n')
+                TestConfig(
+                    'extension E<T1,T2> on C<T1,T2>\n'
+                    '{\n'
+                    '    void m(){}\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -33,7 +38,11 @@ void main()
             name: 'ExtensionDeclaration / augment extension E{}',
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('augment extension E\n{\n}\n')
+                TestConfig(
+                    'augment extension E\n'
+                    '{\n'
+                    '}\n'
+                )
             ]
         )
     ];

@@ -14,7 +14,11 @@ void main()
         name: 'BlockFunctionBody / NewLine',
         testConfigs: <TestConfig>[
             TestConfig.none(),
-            TestConfig('\n{\n}\n')
+            TestConfig(
+                '\n'
+                '{\n'
+                '}\n'
+            )
         ]
     );
 

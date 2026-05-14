@@ -14,7 +14,13 @@ void main()
         name: 'BlockFunctionBody / IfStatement / EmptyStatement',
         testConfigs: <TestConfig>[
             TestConfig.none(),
-            TestConfig('\n{\n    if (true)\n        ;\n}\n')
+            TestConfig(
+                '\n'
+                '{\n'
+                '    if (true)\n'
+                '        ;\n'
+                '}\n'
+            )
         ]
     );
 

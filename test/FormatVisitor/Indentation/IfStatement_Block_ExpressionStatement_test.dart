@@ -15,7 +15,14 @@ void main()
         name: 'IfStatement / Block / ExpressionStatement',
         testConfigs: <TestConfig>[
             TestConfig.none(null, ''),
-            TestConfig('if (true)\n{\n    a;\n    b;\n}\n', '')
+            TestConfig(
+                'if (true)\n'
+                '{\n'
+                '    a;\n'
+                '    b;\n'
+                '}\n',
+                ''
+            )
         ]
     );
 

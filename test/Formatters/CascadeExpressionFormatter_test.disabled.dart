@@ -25,7 +25,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('C\n    ..c()')
+                TestConfig(
+                    'C\n'
+                    '    ..c()'
+                )
             ]
         ),
         TestGroupConfig(
@@ -41,7 +44,11 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('C\n    ..a()\n    ..b()')
+                TestConfig(
+                    'C\n'
+                    '    ..a()\n'
+                    '    ..b()'
+                )
             ]
         )
     ];

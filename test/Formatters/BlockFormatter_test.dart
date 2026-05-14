@@ -23,7 +23,13 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('\n{\n    a;\n    b;\n}\n')
+                TestConfig(
+                    '\n'
+                    '{\n'
+                    '    a;\n'
+                    '    b;\n'
+                    '}\n'
+                )
             ]
         ),
         TestGroupConfig(
@@ -37,7 +43,15 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('\n{\n    /*Comment1*/\n    /*Comment2*/a;/*Comment3*/\n    /*Comment4*/b;/*Comment5*/\n    /*Comment6*/\n}\n')
+                TestConfig(
+                    '\n'
+                    '{\n'
+                    '    /*Comment1*/\n'
+                    '    /*Comment2*/a;/*Comment3*/\n'
+                    '    /*Comment4*/b;/*Comment5*/\n'
+                    '    /*Comment6*/\n'
+                    '}\n'
+                )
             ]
         )
     ];

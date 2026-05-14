@@ -24,7 +24,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('true\n    && false')
+                TestConfig(
+                    'true\n'
+                    '    && false'
+                )
             ]
         )
     ];

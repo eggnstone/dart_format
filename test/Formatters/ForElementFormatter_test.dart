@@ -24,7 +24,10 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('await for (a  in  b)\n    c')
+                TestConfig(
+                    'await for (a  in  b)\n'
+                    '    c'
+                )
             ]
         )
     ];

@@ -10,10 +10,18 @@ void main()
     final TestGroupConfig testGroupConfig = TestGroupConfig(
         inputNodeCreator: AstCreator.createDeclaration,
         inputMiddle: 'class C{void m()=>a;/*Comment*/void d(){}}',
-        name: 'TODO2',
+        name: 'ClassDeclaration / TwoMethods / CommentBetween',
         testConfigs: <TestConfig>[
             TestConfig.none(),
-            TestConfig('class C\n{\n    void m() => a;\n    /*Comment*/void d() \n    {\n    }\n}\n')
+            TestConfig(
+                'class C\n'
+                '{\n'
+                '    void m() => a;\n'
+                '    /*Comment*/void d() \n'
+                '    {\n'
+                '    }\n'
+                '}\n'
+            )
         ]
     );
 
