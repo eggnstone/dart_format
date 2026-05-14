@@ -10,17 +10,6 @@ class FunctionDeclarationFormatter extends TypedFormatter<FunctionDeclaration>
     @override
     void formatNode(FunctionDeclaration node)
     {
-        /*
-        formatState.dump(node, 'node');
-        formatState.dumpList(node.sortedCommentAndAnnotations, 'sortedCommentAndAnnotations');
-        formatState.dump(node.augmentKeyword, 'augmentKeyword');
-        formatState.dump(node.externalKeyword, 'externalKeyword');
-        formatState.dump(node.returnType, 'returnType');
-        formatState.dump(node.propertyKeyword, 'propertyKeyword');
-        formatState.dump(node.name, 'name');
-        formatState.dump(node.functionExpression, 'functionExpression');
-        */
-
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
         formatState.copyEntity(node.augmentKeyword, astVisitor, '$methodName/node.augmentKeyword');
         formatState.copyEntity(node.externalKeyword, astVisitor, '$methodName/node.externalKeyword');

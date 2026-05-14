@@ -19,14 +19,6 @@ class FormalParameterListFormatter extends TypedFormatter<FormalParameterList>
     @override
     void formatNode(FormalParameterList node)
     {
-        /*
-        formatState.dump(node, 'node');
-        formatState.dump(node.leftParenthesis, 'leftParenthesis');
-        formatState.dump(node.leftDelimiter, 'leftDelimiter');
-        formatState.dump(node.rightDelimiter, 'rightDelimiter');
-        formatState.dump(node.rightParenthesis, 'rightParenthesis');
-        */
-
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space0);
         formatState.pushLevel('$methodName/node.leftParenthesis');
 

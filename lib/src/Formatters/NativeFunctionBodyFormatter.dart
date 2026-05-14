@@ -10,8 +10,8 @@ class NativeFunctionBodyFormatter extends TypedFormatter<NativeFunctionBody>
     @override
     void formatNode(NativeFunctionBody node)
     {
-        formatState.copyEntity(node.nativeKeyword, astVisitor, '$methodName/node.nativeKeyword');
-        formatState.copyEntity(node.stringLiteral, astVisitor, '$methodName/node.stringLiteral');
+        formatState.copyEntity(node.nativeKeyword, astVisitor, '$methodName/node.nativeKeyword', config.space1);
+        formatState.copyEntity(node.stringLiteral, astVisitor, '$methodName/node.stringLiteral', config.space1);
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
     }
 }

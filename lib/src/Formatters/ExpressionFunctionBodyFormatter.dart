@@ -10,15 +10,6 @@ class ExpressionFunctionBodyFormatter extends TypedFormatter<ExpressionFunctionB
     @override
     void formatNode(ExpressionFunctionBody node)
     {
-        /*
-        formatState.dump(node, 'node');
-        //formatState.dumpList(node.sortedCommentAndAnnotations, 'sortedCommentAndAnnotations');
-        formatState.dump2(node.keyword, node, 'keyword');
-        formatState.dump2(node.functionDefinition, node.keyword, 'functionDefinition');
-        formatState.dump2(node.expression, node.functionDefinition, 'expression');
-        formatState.dump2(node.semicolon, node.expression, 'semicolon');
-        */
-
         formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword');
         formatState.copyEntity(node.star, astVisitor, '$methodName/node.star');
 

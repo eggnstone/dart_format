@@ -23,7 +23,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig("native 'n';\n")
+                TestConfig(" native 'n';\n")
             ]
         )
     ];

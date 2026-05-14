@@ -11,15 +11,6 @@ class MethodInvocationFormatter extends TypedFormatter<MethodInvocation>
     @override
     void formatNode(MethodInvocation node)
     {
-        /*
-        formatState.dump(node, 'node');
-        formatState.dump(node.target, 'target');
-        formatState.dump(node.operator, 'operator');
-        formatState.dump(node.methodName, 'methodName');
-        formatState.dump(node.typeArguments, 'typeArguments');
-        formatState.dump(node.argumentList, 'argumentList');
-        */
-
         final String textWithPossibleLineBreak = formatState.getText(node.offset, node.argumentList.offset);
         final bool pushLevel = textWithPossibleLineBreak.contains('\n');
 

@@ -10,13 +10,6 @@ class DefaultFormalParameterFormatter extends TypedFormatter<DefaultFormalParame
     @override
     void formatNode(DefaultFormalParameter node)
     {
-        /*
-        formatState.dump(node, 'node');
-        formatState.dump(node.parameter, 'parameter');
-        formatState.dump(node.separator, 'separator');
-        formatState.dump(node.defaultValue, 'defaultValue');
-        */
-
         formatState.copyEntity(node.parameter, astVisitor, '$methodName/node.parameter');
 
         int? spacesForSeparator;

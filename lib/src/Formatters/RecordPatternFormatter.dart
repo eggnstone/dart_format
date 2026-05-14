@@ -10,7 +10,7 @@ class RecordPatternFormatter extends TypedFormatter<RecordPattern>
     @override
     void formatNode(RecordPattern node)
     {
-        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space1);
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
         formatState.acceptListWithComma(node.fields, node.rightParenthesis, astVisitor, '$methodName/node.fields', trimCommaText: config.fixSpaces);
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
     }

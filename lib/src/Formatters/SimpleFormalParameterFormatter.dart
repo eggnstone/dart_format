@@ -9,15 +9,6 @@ class SimpleFormalParameterFormatter extends TypedFormatter<SimpleFormalParamete
     @override
     void formatNode(SimpleFormalParameter node)
     {
-        /*
-        formatState.dump(node, 'node');
-        formatState.dump(node.requiredKeyword, 'requiredKeyword');
-        formatState.dump(node.keyword, 'keyword');
-        formatState.dump(node.covariantKeyword, 'covariantKeyword');
-        formatState.dump(node.type, 'type');
-        formatState.dump(node.name, 'name');
-        */
-
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
 
         if (node.requiredKeyword != null)

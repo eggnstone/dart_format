@@ -54,6 +54,7 @@ import 'Formatters/LabelFormatter.dart';
 import 'Formatters/LibraryDirectiveFormatter.dart';
 import 'Formatters/ListLiteralFormatter.dart';
 import 'Formatters/ListPatternFormatter.dart';
+import 'Formatters/MapPatternEntryFormatter.dart';
 import 'Formatters/MapPatternFormatter.dart';
 import 'Formatters/MethodDeclarationFormatter.dart';
 import 'Formatters/MethodInvocationFormatter.dart';
@@ -65,6 +66,8 @@ import 'Formatters/NativeFunctionBodyFormatter.dart';
 import 'Formatters/ObjectPatternFormatter.dart';
 import 'Formatters/PartDirectiveFormatter.dart';
 import 'Formatters/PartOfDirectiveFormatter.dart';
+import 'Formatters/PatternFieldFormatter.dart';
+import 'Formatters/PatternVariableDeclarationFormatter.dart';
 import 'Formatters/PatternVariableDeclarationStatementFormatter.dart';
 import 'Formatters/PostfixExpressionFormatter.dart';
 import 'Formatters/PrefixedIdentifierFormatter.dart';
@@ -150,6 +153,7 @@ class FormatVisitor extends AstVisitor<void>
     late final LibraryDirectiveFormatter _libraryDirectiveFormatter = LibraryDirectiveFormatter(config, this, _formatState);
     late final ListLiteralFormatter _listLiteralFormatter = ListLiteralFormatter(config, this, _formatState);
     late final ListPatternFormatter _listPatternFormatter = ListPatternFormatter(config, this, _formatState);
+    late final MapPatternEntryFormatter _mapPatternEntryFormatter = MapPatternEntryFormatter(config, this, _formatState);
     late final MapPatternFormatter _mapPatternFormatter = MapPatternFormatter(config, this, _formatState);
     late final MethodDeclarationFormatter _methodDeclarationFormatter = MethodDeclarationFormatter(config, this, _formatState);
     late final MethodInvocationFormatter _methodInvocationFormatter = MethodInvocationFormatter(config, this, _formatState);
@@ -161,6 +165,8 @@ class FormatVisitor extends AstVisitor<void>
     late final ObjectPatternFormatter _objectPatternFormatter = ObjectPatternFormatter(config, this, _formatState);
     late final PartDirectiveFormatter _partDirectiveFormatter = PartDirectiveFormatter(config, this, _formatState);
     late final PartOfDirectiveFormatter _partOfDirectiveFormatter = PartOfDirectiveFormatter(config, this, _formatState);
+    late final PatternFieldFormatter _patternFieldFormatter = PatternFieldFormatter(config, this, _formatState);
+    late final PatternVariableDeclarationFormatter _patternVariableDeclarationFormatter = PatternVariableDeclarationFormatter(config, this, _formatState);
     late final PatternVariableDeclarationStatementFormatter _patternVariableDeclarationStatementFormatter = PatternVariableDeclarationStatementFormatter(config, this, _formatState);
     late final PostfixExpressionFormatter _postfixExpressionFormatter = PostfixExpressionFormatter(config, this, _formatState);
     late final PrefixedIdentifierFormatter _prefixedIdentifierFormatter = PrefixedIdentifierFormatter(config, this, _formatState);
@@ -620,7 +626,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitMapPatternEntry(MapPatternEntry node)
-    => _defaultFormatter.format(node);
+    => _mapPatternEntryFormatter.format(node);
 
     @override
     void visitMethodDeclaration(MethodDeclaration node)
@@ -700,7 +706,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitPatternField(PatternField node)
-    => _defaultFormatter.format(node);
+    => _patternFieldFormatter.format(node);
 
     @override
     void visitPatternFieldName(PatternFieldName node)
@@ -708,7 +714,7 @@ class FormatVisitor extends AstVisitor<void>
 
     @override
     void visitPatternVariableDeclaration(PatternVariableDeclaration node)
-    => _defaultFormatter.format(node);
+    => _patternVariableDeclarationFormatter.format(node);
 
     @override
     void visitPatternVariableDeclarationStatement(PatternVariableDeclarationStatement node)

@@ -9,7 +9,5 @@ class EmptyFunctionBodyFormatter extends TypedFormatter<EmptyFunctionBody>
 
     @override
     void formatNode(EmptyFunctionBody node)
-    {
-        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
-    }
+    => formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
 }

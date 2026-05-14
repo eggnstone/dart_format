@@ -10,11 +10,6 @@ class AssignmentExpressionFormatter extends TypedFormatter<AssignmentExpression>
     @override
     void formatNode(AssignmentExpression node)
     {
-        /*formatState.dump(node, 'node');
-        formatState.dump(node.leftHandSide, 'leftHandSide');
-        formatState.dump(node.operator, 'operator');
-        formatState.dump(node.rightHandSide, 'rightHandSide');*/
-
         formatState.copyEntity(node.leftHandSide, astVisitor, '$methodName/node.leftHandSide');
         formatState.copyEntity(node.operator, astVisitor, '$methodName/node.operator', config.space1);
         formatState.copyEntity(node.rightHandSide, astVisitor, '$methodName/node.rightHandSide', config.space1);

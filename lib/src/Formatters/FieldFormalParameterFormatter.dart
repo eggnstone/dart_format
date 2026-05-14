@@ -10,11 +10,6 @@ class FieldFormalParameterFormatter extends TypedFormatter<FieldFormalParameter>
     @override
     void formatNode(FieldFormalParameter node)
     {
-        /*
-        formatState.dump(node, 'node');
-        formatState.dump(node.type, 'node.type');
-        */
-
         final int? spacesForCovariantKeyword = node.covariantKeyword == null ? null : config.fixSpaces ? (node.offset == node.covariantKeyword!.offset ? null : 1) : null;
         final int? spacesForRequiredKeyword = node.requiredKeyword == null ? null : config.fixSpaces ? (node.offset == node.requiredKeyword!.offset ? null : 1) : null;
         final int? spacesForKeyword = node.keyword == null ? null : config.fixSpaces ? (node.offset == node.keyword!.offset ? null : 1) : null;

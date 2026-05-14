@@ -16,12 +16,10 @@ class ClassTypeAliasFormatter extends TypedFormatter<ClassTypeAlias>
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
         formatState.copyEntity(node.equals, astVisitor, '$methodName/node.equals');
-        //formatState.copyEntity(node.macroKeyword, astVisitor, '$methodName/node.macroKeyword');
         formatState.copyEntity(node.sealedKeyword, astVisitor, '$methodName/node.sealedKeyword');
         formatState.copyEntity(node.baseKeyword, astVisitor, '$methodName/node.baseKeyword');
         formatState.copyEntity(node.interfaceKeyword, astVisitor, '$methodName/node.interfaceKeyword');
         formatState.copyEntity(node.finalKeyword, astVisitor, '$methodName/node.finalKeyword');
-        //formatState.copyEntity(node.augmentKeyword, astVisitor, '$methodName/node.augmentKeyword');
         formatState.copyEntity(node.mixinKeyword, astVisitor, '$methodName/node.mixinKeyword');
         formatState.copyEntity(node.superclass, astVisitor, '$methodName/node.superclass');
         formatState.copyEntity(node.withClause, astVisitor, '$methodName/node.withClause');

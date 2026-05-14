@@ -106,8 +106,17 @@ class AstCreator
     static MapPattern createMapPatternInPatternVariableDeclaration(String s)
     => createPatternVariableDeclarationStatementInFunction(s).declaration.pattern as MapPattern;
 
+    static MapPatternEntry createMapPatternEntryInPatternVariableDeclaration(String s)
+    => createMapPatternInPatternVariableDeclaration(s).elements.whereType<MapPatternEntry>().first;
+
     static ObjectPattern createObjectPatternInPatternVariableDeclaration(String s)
     => createPatternVariableDeclarationStatementInFunction(s).declaration.pattern as ObjectPattern;
+
+    static PatternField createPatternFieldInObjectPattern(String s)
+    => createObjectPatternInPatternVariableDeclaration(s).fields[0];
+
+    static PatternVariableDeclaration createPatternVariableDeclarationInFunction(String s)
+    => createPatternVariableDeclarationStatementInFunction(s).declaration;
 
     static RecordPattern createRecordPatternInPatternVariableDeclaration(String s)
     => createPatternVariableDeclarationStatementInFunction(s).declaration.pattern as RecordPattern;

@@ -1,6 +1,5 @@
 TODO
 ====
-- Add tests from other machine (format the complete Flutter checkout)
 - Error "Missed some text" does not fully carry over to the plugin when the text contains "<" or ">"
   - e.g. <DartFormatException>.
   - e.g. offset < lastConsumedPosition
@@ -15,9 +14,9 @@ TODO
 - Ensure DEBUG is off when publishing
 - Safety: don't accept result if length is 0 or very short, e.g. when throwing UnimplementedError in StringTools.
 - No blank lines between {{ and }}
-- No blank line after { and before }
+- No blank lines after { and before }
 - Investigate line endings. Keep existing style, but also offer option to convert.
-- No more than maxEmptyLines blank lines at file end.
+- No more than maxEmptyLines blank lines at the file end. actually do not allow any blank lines at the end of the file, just the newline.
 - else\nif
 - Indent interpolations?
 - Force line break after if/else/...

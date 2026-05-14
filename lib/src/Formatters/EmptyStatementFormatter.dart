@@ -9,7 +9,5 @@ class EmptyStatementFormatter extends TypedFormatter<EmptyStatement>
 
     @override
     void formatNode(EmptyStatement node)
-    {
-        formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
-    }
+    => formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
 }

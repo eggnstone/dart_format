@@ -10,14 +10,6 @@ class NamedTypeFormatter extends TypedFormatter<NamedType>
     @override
     void formatNode(NamedType node)
     {
-        /*
-        formatState.dump(node, 'node');
-        formatState.dump(node.importPrefix, 'importPrefix');
-        formatState.dump(node.name2, 'name2');
-        formatState.dump(node.typeArguments, 'typeArguments');
-        formatState.dump(node.question, 'question');
-        */
-
         final int? spacesForName2 = config.fixSpaces ? (node.offset == node.name.offset ? null : 0) : null;
 
         formatState.copyEntity(node.importPrefix, astVisitor, '$methodName/node.importPrefix');
