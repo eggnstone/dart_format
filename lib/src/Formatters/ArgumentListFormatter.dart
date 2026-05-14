@@ -1,9 +1,7 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/source/line_info.dart';
 
-import '../Copier.dart';
 import '../Data/ConfigExtension.dart';
-import '../Types/Spacing.dart';
 import 'TypedFormatter.dart';
 
 class ArgumentListFormatter extends TypedFormatter<ArgumentList>
@@ -13,18 +11,17 @@ class ArgumentListFormatter extends TypedFormatter<ArgumentList>
     @override
     void formatNode(ArgumentList node)
     {
-        final Copier copier = Copier(astVisitor, config, formatState, node);
         final bool isBlockPattern = _isBlockPattern(node);
 
-        copier.copyEntity(node.leftParenthesis, '$methodName/node.leftParenthesis', Spacing.zero);
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space0);
         if (!isBlockPattern)
             formatState.pushLevel('$methodName/node.leftParenthesis');
 
-        copier.acceptListWithComma(node.arguments, node.rightParenthesis, '$methodName/node.arguments', leadingSpaces: config.space0, trimCommaText: config.fixSpaces);
+        formatState.acceptListWithComma(node.arguments, node.rightParenthesis, astVisitor, '$methodName/node.arguments', leadingSpaces: config.space0, trimCommaText: config.fixSpaces);
         if (!isBlockPattern)
             formatState.popLevelAndIndent();
 
-        copier.copyEntity(node.rightParenthesis, '$methodName/node.rightParenthesis', Spacing.zero);
+        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
     }
 
     ArgumentList? _getCalleeArgumentList(Expression arg)

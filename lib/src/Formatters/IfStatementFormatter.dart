@@ -1,7 +1,6 @@
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Copier.dart';
-import '../Types/Spacing.dart';
+import '../Data/ConfigExtension.dart';
 import 'TypedFormatter.dart';
 
 class IfStatementFormatter extends TypedFormatter<IfStatement>
@@ -11,26 +10,14 @@ class IfStatementFormatter extends TypedFormatter<IfStatement>
     @override
     void formatNode(IfStatement node)
     {
-        /*
-        formatState.dump(node, 'node');
-        formatState.dump(node.expression, 'expression');
-        formatState.dump(node.ifKeyword, 'ifKeyword');
-        formatState.dump(node.leftParenthesis, 'leftParenthesis');
-        formatState.dump(node.caseClause, 'caseClause');
-        formatState.dump(node.rightParenthesis, 'rightParenthesis');
-        formatState.dump(node.thenStatement, 'thenStatement');
-        */
-
-        final Copier copier = Copier(astVisitor, config, formatState, node);
-
-        copier.copyEntity(node.ifKeyword, '$methodName/node.ifKeyword', Spacing.zeroOne);
-        copier.copyEntity(node.leftParenthesis, '$methodName/node.leftParenthesis', Spacing.one);
-        copier.copyEntity(node.expression, '$methodName/node.expression', Spacing.zero);
-        copier.copyNullableEntity(node.caseClause, '$methodName/node.caseClause', Spacing.one);
-        copier.copyEntity(node.rightParenthesis, '$methodName/node.rightParenthesis', Spacing.zero);
+        formatState.copyEntity(node.ifKeyword, astVisitor, '$methodName/node.ifKeyword', config.getSpacesZeroOne(node, node.ifKeyword));
+        formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space1);
+        formatState.copyEntity(node.expression, astVisitor, '$methodName/node.expression', config.space0);
+        formatState.copyEntity(node.caseClause, astVisitor, '$methodName/node.caseClause', config.space1);
+        formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
 
         formatState.pushLevel('$methodName/node.thenStatement');
-        copier.copyEntity(node.thenStatement, '$methodName/node.thenStatement', Spacing.emptyStatementZeroOne);
+        formatState.copyEntity(node.thenStatement, astVisitor, '$methodName/node.thenStatement', config.getSpacesEmptyStatementZeroOne(node.thenStatement));
         formatState.popLevelAndIndent();
 
         if (node.elseKeyword == null)
@@ -38,12 +25,12 @@ class IfStatementFormatter extends TypedFormatter<IfStatement>
 
         final bool indentElse = node.elseStatement is! IfStatement;
 
-        copier.copyNullableEntity(node.elseKeyword, '$methodName/node.elseKeyword', Spacing.one);
+        formatState.copyEntity(node.elseKeyword, astVisitor, '$methodName/node.elseKeyword', config.space1);
 
         if (indentElse)
             formatState.pushLevel('$methodName/node.elseKeyword');
 
-        copier.copyNullableEntity(node.elseStatement, '$methodName/node.elseStatement', Spacing.emptyStatementZeroOne);
+        formatState.copyEntity(node.elseStatement, astVisitor, '$methodName/node.elseStatement', node.elseStatement == null ? null : config.getSpacesEmptyStatementZeroOne(node.elseStatement!));
 
         if (indentElse)
             formatState.popLevelAndIndent();
