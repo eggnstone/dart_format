@@ -27,7 +27,8 @@ class ArgumentListFormatter extends TypedFormatter<ArgumentList>
 
     /// Returns the inner opening/closing brackets of [arg] when [arg] is something
     /// whose own brackets could collapse with the surrounding ArgumentList's parens:
-    /// another call's `(`/`)`, or a closure body's `{`/`}`. Returns null otherwise.
+    /// another call's `(`/`)`, a closure body's `{`/`}`, or a collection literal's
+    /// `(`/`)` / `[`/`]` / `{`/`}`. Returns null otherwise.
     ({SyntacticEntity left, SyntacticEntity right})? _getInnerBrackets(Expression arg)
     {
         Expression target = arg;
@@ -36,15 +37,27 @@ class ArgumentListFormatter extends TypedFormatter<ArgumentList>
 
         if (target is MethodInvocation)
             return (left: target.argumentList.leftParenthesis, right: target.argumentList.rightParenthesis);
+
         if (target is InstanceCreationExpression)
             return (left: target.argumentList.leftParenthesis, right: target.argumentList.rightParenthesis);
+
         if (target is FunctionExpressionInvocation)
             return (left: target.argumentList.leftParenthesis, right: target.argumentList.rightParenthesis);
+
         if (target is FunctionExpression && target.body is BlockFunctionBody)
         {
             final Block block = (target.body as BlockFunctionBody).block;
             return (left: block.leftBracket, right: block.rightBracket);
         }
+
+        if (target is RecordLiteral)
+            return (left: target.leftParenthesis, right: target.rightParenthesis);
+
+        if (target is ListLiteral)
+            return (left: target.leftBracket, right: target.rightBracket);
+
+        if (target is SetOrMapLiteral)
+            return (left: target.leftBracket, right: target.rightBracket);
 
         return null;
     }
