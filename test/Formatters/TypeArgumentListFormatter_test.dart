@@ -26,6 +26,26 @@ void main()
                 TestConfig.none(),
                 TestConfig('<A, B>')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createTypeArgumentListInMethodReturnType,
+            inputLeading: 'class C{D',
+            inputMiddle: '<\nA,\nB\n>',
+            inputTrailing: 'c() => d();}',
+            name: 'TypeArgumentList multi-line indents body and keeps closing > at outer level',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedType>(11, 'A'),
+                TestVisitor<NamedType>(14, 'B')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig(
+                    '<\n'
+                    '    A,\n'
+                    '    B\n'
+                    '>'
+                )
+            ]
         )
     ];
 

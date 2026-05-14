@@ -10,7 +10,9 @@ class RecordTypeAnnotationNamedFieldsFormatter extends TypedFormatter<RecordType
     void formatNode(RecordTypeAnnotationNamedFields node)
     {
         formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
+        formatState.pushLevel('$methodName/node.leftBracket');
         formatState.acceptListWithComma(node.fields, node.rightBracket, astVisitor, '$methodName/node.fields');
+        formatState.popLevelAndIndent();
         formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket');
     }
 }

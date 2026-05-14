@@ -26,6 +26,28 @@ void main()
                 TestConfig.none(),
                 TestConfig('(a, b)')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createRecordPatternInPatternVariableDeclaration,
+            inputLeading: 'void f((int,int,int) r){var ',
+            inputMiddle: '(\na,\nb,\nc\n)',
+            inputTrailing: '=r;}',
+            name: 'RecordPattern multi-line indents body and keeps closing ) at outer level',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<PatternField>(30, 'a'),
+                TestVisitor<PatternField>(33, 'b'),
+                TestVisitor<PatternField>(36, 'c')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig(
+                    '(\n'
+                    '    a,\n'
+                    '    b,\n'
+                    '    c\n'
+                    ')'
+                )
+            ]
         )
     ];
 

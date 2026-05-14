@@ -11,7 +11,9 @@ class RecordPatternFormatter extends TypedFormatter<RecordPattern>
     void formatNode(RecordPattern node)
     {
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis');
+        formatState.pushLevel('$methodName/node.leftParenthesis');
         formatState.acceptListWithComma(node.fields, node.rightParenthesis, astVisitor, '$methodName/node.fields', trimCommaText: config.fixSpaces);
+        formatState.popLevelAndIndent();
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
     }
 }

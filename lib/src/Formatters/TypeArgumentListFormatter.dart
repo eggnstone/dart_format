@@ -11,7 +11,9 @@ class TypeArgumentListFormatter extends TypedFormatter<TypeArgumentList>
     void formatNode(TypeArgumentList node)
     {
         formatState.copyEntity(node.leftBracket, astVisitor, '$methodName/node.leftBracket');
+        formatState.pushLevel('$methodName/node.leftBracket');
         formatState.acceptListWithComma(node.arguments, node.rightBracket, astVisitor, '$methodName/node.arguments', leadingSpaces: config.space0, trimCommaText: config.fixSpaces);
+        formatState.popLevelAndIndent();
         formatState.copyEntity(node.rightBracket, astVisitor, '$methodName/node.rightBracket', config.space0);
     }
 }

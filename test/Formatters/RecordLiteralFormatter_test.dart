@@ -41,6 +41,26 @@ void main()
                 TestConfig.none(),
                 TestConfig('const (a:1,b:2)')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createInitializerInTopLevelVariable,
+            inputLeading: 'var r=',
+            inputMiddle: '(\na:1,\nb:2\n)',
+            inputTrailing: ';',
+            name: 'RecordLiteral multi-line indents body and keeps closing ) at outer level',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<NamedExpression>(8, 'a:1'),
+                TestVisitor<NamedExpression>(13, 'b:2')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig(
+                    '(\n'
+                    '    a:1,\n'
+                    '    b:2\n'
+                    ')'
+                )
+            ]
         )
     ];
 

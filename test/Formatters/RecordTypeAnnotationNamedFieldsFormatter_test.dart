@@ -25,6 +25,26 @@ void main()
                 TestConfig.none(),
                 TestConfig('{int b}')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createRecordTypeAnnotationNamedFieldsInVariable,
+            inputLeading: 'void f(){(int,',
+            inputMiddle: '{\nint b,\nint c\n}',
+            inputTrailing: ') r;}',
+            name: 'RecordTypeAnnotationNamedFields multi-line indents body and keeps closing } at outer level',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<RecordTypeAnnotationNamedField>(16, 'int b'),
+                TestVisitor<RecordTypeAnnotationNamedField>(23, 'int c')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig(
+                    '{\n'
+                    '    int b,\n'
+                    '    int c\n'
+                    '}'
+                )
+            ]
         )
     ];
 

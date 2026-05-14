@@ -39,6 +39,26 @@ void main()
                 TestConfig.none(),
                 TestConfig('({int a,int b})')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createMethodReturnType,
+            inputLeading: 'class C{static ',
+            inputMiddle: '(\nint,\nint\n)',
+            inputTrailing: ' c(){}}',
+            name: 'RecordTypeAnnotation multi-line positional fields',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<RecordTypeAnnotationPositionalField>(17, 'int'),
+                TestVisitor<RecordTypeAnnotationPositionalField>(22, 'int')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig(
+                    '(\n'
+                    '    int,\n'
+                    '    int\n'
+                    ')'
+                )
+            ]
         )
     ];
 

@@ -12,10 +12,12 @@ class RecordTypeAnnotationFormatter extends TypedFormatter<RecordTypeAnnotation>
     void formatNode(RecordTypeAnnotation node)
     {
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space0);
+        formatState.pushLevel('$methodName/node.leftParenthesis');
 
         final Token endTokenForPositionalFields = node.namedFields?.beginToken ?? node.rightParenthesis;
         formatState.acceptListWithComma(node.positionalFields, endTokenForPositionalFields, astVisitor, '$methodName/node.positionalFields');
         formatState.copyEntity(node.namedFields, astVisitor, '$methodName/node.namedFields');
+        formatState.popLevelAndIndent();
         formatState.copyEntity(node.rightParenthesis, astVisitor, '$methodName/node.rightParenthesis', config.space0);
 
         formatState.copyEntity(node.question, astVisitor, '$methodName/node.question');
