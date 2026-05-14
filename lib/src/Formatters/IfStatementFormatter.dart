@@ -31,7 +31,7 @@ class IfStatementFormatter extends TypedFormatter<IfStatement>
         // body and should be indented one level past `else` like any other body.
         final bool elseIfOnSameLine =
             node.elseStatement is IfStatement &&
-            !_isOnDifferentLine(node.elseKeyword!.end, node.elseStatement!.offset);
+                !_isOnDifferentLine(node.elseKeyword!.end, node.elseStatement!.offset);
         final bool indentElse = !elseIfOnSameLine;
 
         formatState.copyEntity(node.elseKeyword, astVisitor, '$methodName/node.elseKeyword', config.space1);
