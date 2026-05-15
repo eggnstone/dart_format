@@ -24,6 +24,17 @@ void main()
                 TestConfig.none(),
                 TestConfig("export 'x.dart' if (a.b.c) 'y.dart';\n")
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createDirective,
+            inputMiddle: "export    'x.dart';",
+            name: 'ExportDirective with extra whitespace before URI',
+            astVisitors: <AstVisitor<void>>[
+                TestVisitor<SimpleStringLiteral>(10, "'x.dart'")
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig("export 'x.dart';\n")
+            ]
         )
     ];
 
