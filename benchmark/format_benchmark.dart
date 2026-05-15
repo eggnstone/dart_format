@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dart_format/src/Data/Config.dart';
-import 'package:dart_format/src/Formatter.dart';
+import 'package:dart_format/src/Format/Formatter.dart';
 
 typedef _Sample = ({String path, String source});
 

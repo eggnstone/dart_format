@@ -1,5 +1,5 @@
 import 'package:dart_format/src/Data/Config.dart';
-import 'package:dart_format/src/Formatter.dart';
+import 'package:dart_format/src/Format/Formatter.dart';
 import 'package:eggnstone_dart/eggnstone_dart.dart';
 import 'package:test/test.dart';
 

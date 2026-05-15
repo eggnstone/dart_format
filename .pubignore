@@ -10,5 +10,5 @@
 /all_lint_rules.yaml
 /analysis_options.yaml
 /favicon.ico
-/lib/src/Analyzer.dart
+/lib/src/Debug/DebugAnalyzer.dart
 /TODO.md

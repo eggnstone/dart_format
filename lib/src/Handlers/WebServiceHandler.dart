@@ -12,7 +12,7 @@ import '../Data/Config.dart';
 import '../Data/JsonResponse.dart';
 import '../Data/Version.dart';
 import '../Exceptions/DartFormatException.dart';
-import '../Formatter.dart';
+import '../Format/Formatter.dart';
 import '../Tools/ContentTypeTools.dart';
 import '../Tools/HttpTools.dart';
 import '../Tools/LogTools.dart';

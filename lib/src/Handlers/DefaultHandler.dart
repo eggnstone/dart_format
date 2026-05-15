@@ -3,7 +3,7 @@ import 'dart:io';
 import '../Constants/Constants.dart';
 import '../Constants/ExitCodes.dart';
 import '../Data/Config.dart';
-import '../Formatter.dart';
+import '../Format/Formatter.dart';
 import '../Tools/InfoTools.dart';
 import '../Tools/LogTools.dart';
 import '../Tools/VersionTools.dart';

@@ -1,5 +1,5 @@
 import 'package:dart_format/src/Data/Config.dart';
-import 'package:dart_format/src/Formatter.dart';
+import 'package:dart_format/src/Format/Formatter.dart';
 import 'package:test/test.dart';
 
 import '../../TestTools/TestTools.dart';
@@ -18,7 +18,7 @@ void main()
                     const String inputText = r"void f(){g('$a');}";
                     const String expectedText = "void f()\n{\n    g('\$a');\n}\n";
 
-                    //Analyzer.analyze(inputText);
+                    //DebugAnalyzer.analyze(inputText);
 
                     final String actualText = formatter.format(inputText);
 
@@ -32,7 +32,7 @@ void main()
                     const String inputText = r"void f(){g('a$b');}";
                     const String expectedText = "void f()\n{\n    g('a\$b');\n}\n";
 
-                    //Analyzer.analyze(inputText);
+                    //DebugAnalyzer.analyze(inputText);
 
                     final String actualText = formatter.format(inputText);
 
@@ -46,7 +46,7 @@ void main()
                     const String inputText = '/**//**/\n';
                     const String expectedText = inputText;
 
-                    //Analyzer.analyze(inputText);
+                    //DebugAnalyzer.analyze(inputText);
 
                     final String actualText = formatter.format(inputText);
 
@@ -60,7 +60,7 @@ void main()
                     const String inputText = "String s = r'\\';\n";
                     const String expectedText = inputText;
 
-                    //Analyzer.analyze(inputText);
+                    //DebugAnalyzer.analyze(inputText);
 
                     final String actualText = formatter.format(inputText);
 

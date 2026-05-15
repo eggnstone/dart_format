@@ -1,5 +1,5 @@
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:dart_format/src/FormatState.dart';
+import 'package:dart_format/src/Format/FormatState.dart';
 
 import 'SimpleVisitor.dart';
 import 'TestVisitor.dart';

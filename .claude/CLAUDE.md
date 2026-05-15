@@ -14,7 +14,9 @@ Three invocation modes are dispatched from `bin/dart_format.dart`:
 
 **The formatter is a streaming AST walker.** It re-emits the original source text token-by-token in declaration order, never re-prints from the AST alone. That's why every formatter must consume every child entity of its node — anything skipped becomes a "Missed some text" runtime error.
 
-### Pipeline (`lib/src/Formatter.dart`)
+`lib/src/` is grouped as: `Format/` (pipeline — `Formatter`, `FormatVisitor`, `FormatState`, `FormatErrorReporter`), `Output/` (text-emission primitives — `IndentedOutput`, `StringBufferEx`), `Formatters/` (96 per-node formatters), `Handlers/` (the three CLI invocation modes), `Debug/` (dev-only helpers), plus `Cli/`, `Constants/`, `Data/`, `Enums/`, `Exceptions/`, `Text/`, `Tools/`. `test/` mirrors this layout (e.g. `test/Format/Formatter/`, `test/Output/IndentedOutput/`).
+
+### Pipeline (`lib/src/Format/Formatter.dart`)
 
 `Formatter.format(String source)`:
 
@@ -25,7 +27,7 @@ Three invocation modes are dispatched from `bin/dart_format.dart`:
 5. Post-passes via `TextTools`: collapse runs of empty lines per `maxEmptyLines`, ensure trailing newline.
 6. `_verifyResult` re-parses the output as a safety net.
 
-### Per-node dispatch (`lib/src/FormatVisitor.dart`)
+### Per-node dispatch (`lib/src/Format/FormatVisitor.dart`)
 
 `FormatVisitor` extends the analyzer's `AstVisitor`. It holds one `late final` instance per node-kind formatter (~90 of them, all under `lib/src/Formatters/`) and overrides each `visitXxx` to delegate to the matching `IFormatter`. Anything without a dedicated formatter falls through to `DefaultFormatter`.
 
@@ -33,9 +35,7 @@ Three invocation modes are dispatched from `bin/dart_format.dart`:
 
 Each implements `IFormatter.format(AstNode)`. The contract: walk the node's children in the order the analyzer's `@GenerateNodeImpl(childEntitiesOrder: [...])` annotation lists (in `package:analyzer/src/dart/ast/ast.dart`), emitting each via `FormatState.copyEntity` / `acceptList` / `copySemicolon`. Tokens get copied verbatim with spacing rules; sub-AstNodes get re-visited (which recurses through `FormatVisitor`).
 
-`Copier` (`lib/src/Copier.dart`) is a convenience wrapper around `FormatState` used by some of the heavier formatters.
-
-### State (`lib/src/FormatState.dart`)
+### State (`lib/src/Format/FormatState.dart`)
 
 `FormatState` is the streaming text emitter. It tracks `_lastConsumedPosition` in the source buffer, owns an output `StringBufferEx` (with an indentation stack for nested levels), and is the source of the "Missed some text" exception when a formatter advances past tokens it didn't emit. All formatters share one `FormatState` per `Formatter.format` call.
 
@@ -49,9 +49,12 @@ Each implements `IFormatter.format(AstNode)`. The contract: walk the node's chil
 
 ### Tests (`test/`)
 
+`test/` mirrors `lib/src/` — one folder per class, grouped by the same subfolders.
+
 - `test/Formatters/<Name>Formatter_test.dart` — one file per per-node formatter. Uses `TestTools.runTestGroupsForFormatter` to feed a parsed AST fragment through a single formatter and assert the output matches `inputMiddle` (or `TestConfig.expectedText`). `MetaAstVisitor` also verifies every child node the formatter visits matches an expected `TestVisitor`.
-- `test/Formatter/`, `test/FormatVisitor/`, `test/FormatState/` — broader layers.
-- `test/Combinations/`, `test/ExplicitTests/` — end-to-end fixtures.
+- `test/Format/Formatter/`, `test/Format/FormatVisitor/`, `test/Format/FormatState/`, `test/Format/FormatErrorReporter/` — pipeline classes.
+- `test/Output/IndentedOutput/`, `test/Debug/DebugDumper/` — emission primitives and dev helpers.
+- `test/Combinations/`, `test/ExplicitTests/` — end-to-end fixtures (no lib/src/ counterpart).
 - `test/TestTools/AstCreator.dart` — builds AST nodes from source strings via `package:analyzer/dart/analysis/utilities.dart`; see the comment on `createCompilationUnitTolerant` for the one helper that bypasses diagnostic-rejection (only for defensive-coverage tests).
 
 ### When adding a new per-node formatter

@@ -1,8 +1,8 @@
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:dart_format/src/Data/Config.dart';
-import 'package:dart_format/src/FormatState.dart';
-import 'package:dart_format/src/FormatVisitor.dart';
+import 'package:dart_format/src/Format/FormatState.dart';
+import 'package:dart_format/src/Format/FormatVisitor.dart';
 import 'package:dart_format/src/Formatters/IFormatter.dart';
 import 'package:dart_format/src/Tools/FormatTools.dart';
 import 'package:dart_format/src/Tools/LogTools.dart';

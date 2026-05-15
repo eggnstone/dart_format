@@ -2,7 +2,7 @@
 
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:dart_format/src/Constants/Constants.dart';
-import 'package:dart_format/src/FormatState.dart';
+import 'package:dart_format/src/Format/FormatState.dart';
 import 'package:dart_format/src/Tools/LogTools.dart';
 import 'package:dart_format/src/Tools/StringTools.dart';
 import 'package:meta/meta.dart';

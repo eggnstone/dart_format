@@ -6,7 +6,7 @@ import '../Constants/ExitCodes.dart';
 import '../Data/Config.dart';
 import '../Enums/FailType.dart';
 import '../Exceptions/DartFormatException.dart';
-import '../Formatter.dart';
+import '../Format/Formatter.dart';
 import '../Tools/LogTools.dart';
 import '../Tools/VersionTools.dart';
 
