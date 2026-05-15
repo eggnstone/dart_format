@@ -14,6 +14,8 @@ class StringTools
     static const int UPPER_A = 65;
     static const int UPPER_Z = 90;
 
+    static final List<String> _spacesCache = List<String>.generate(33, (int i) => ' ' * i, growable: false);
+
     static String condense(String s)
     {
         if (s.isEmpty)
@@ -235,6 +237,10 @@ class StringTools
 
     static String shorten50(String s)
     => shorten(s, 50);
+
+    /// Returns a string of [n] spaces. Cached for n in [0..32].
+    static String spaces(int n)
+    => n < _spacesCache.length ? _spacesCache[n] : ' ' * n;
 
     static bool startsWithNormalChar(String s)
     => s.isNotEmpty && isNormalCharCode(s.codeUnitAt(0));

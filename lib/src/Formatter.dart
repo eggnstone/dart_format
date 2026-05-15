@@ -25,7 +25,12 @@ class Formatter
     Formatter(Config config) : _config = config;
 
     /// Format the given string.
-    String format(String s)
+    ///
+    /// If [phaseMicroseconds] is non-null, accumulates per-phase elapsed
+    /// microseconds into it (keys: normalize, parse, visit, tidyBlankLines,
+    /// verify, crlfRestore). Used by the benchmark harness — when null there
+    /// is no extra work.
+    String format(String s, {Map<String, int>? phaseMicroseconds})
     {
         if (Constants.DEBUG_FORMATTER)
         {
@@ -35,9 +40,14 @@ class Formatter
             logInternal('  maxEmptyLines: ${_config.maxEmptyLines}');
         }
 
+        final Stopwatch? phaseTimer = phaseMicroseconds == null ? null : (Stopwatch()..start());
+
         final bool wasCrlf = s.contains('\r\n');
         final String cleanedS = s.replaceAll('\r', '');
+        _recordPhase(phaseTimer, phaseMicroseconds, 'normalize');
+
         final ParseStringResult parseResult = AnalyzerUtilities.parseString(content: cleanedS, throwIfDiagnostics: false);
+        _recordPhase(phaseTimer, phaseMicroseconds, 'parse');
 
         final List<Diagnostic> errors = parseResult.errors;
         if (errors.isNotEmpty)
@@ -56,11 +66,17 @@ class Formatter
         final FormatVisitor visitor = FormatVisitor(config: _config, formatState: formatState);
         formatState.compilationUnit.accept(visitor);
         String result = formatState.getResult();
+        _recordPhase(phaseTimer, phaseMicroseconds, 'visit');
 
         result = TextTools(_config).tidyBlankLines(result);
+        _recordPhase(phaseTimer, phaseMicroseconds, 'tidyBlankLines');
 
         final String verifiedResult = _verifyResult(cleanedS, result, parseResult.lineInfo);
-        return wasCrlf ? verifiedResult.replaceAll('\n', '\r\n') : verifiedResult;
+        _recordPhase(phaseTimer, phaseMicroseconds, 'verify');
+
+        final String finalResult = wasCrlf ? verifiedResult.replaceAll('\n', '\r\n') : verifiedResult;
+        _recordPhase(phaseTimer, phaseMicroseconds, 'crlfRestore');
+        return finalResult;
     }
 
     void _logAndThrowWarning(String message, CharacterLocation location)
@@ -73,6 +89,15 @@ class Formatter
     {
         if (Constants.DEBUG_FORMAT_STATE)
             logInternalWarning(s);
+    }
+
+    void _recordPhase(Stopwatch? timer, Map<String, int>? out, String phase)
+    {
+        if (timer == null || out == null)
+            return;
+
+        out[phase] = (out[phase] ?? 0) + timer.elapsedMicroseconds;
+        timer.reset();
     }
 
     String _verifyResult(String s, String result, LineInfo lineInfo)

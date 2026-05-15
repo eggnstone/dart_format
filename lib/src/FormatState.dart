@@ -371,7 +371,7 @@ class FormatState
 
             if (spaces != null)
             {
-                final String lastText = _output.lastStringBuffer.toString();
+                final String lastText = _output.lastText;
 
                 if (Constants.DEBUG_FORMAT_STATE_SPACING)
                 {
@@ -386,7 +386,7 @@ class FormatState
                 else
                 {
                     if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('    Adding $spaces spaces because lastText does not end with line break');
-                    write(' ' * spaces);
+                    write(StringTools.spaces(spaces));
                 }
             }
         }
@@ -446,7 +446,7 @@ class FormatState
                     {
                         if (existingSpacesLeft != spaces)
                         {
-                            fixedFiller = ' ' * spaces;
+                            fixedFiller = StringTools.spaces(spaces);
                             if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('    fixedFiller/4c: ${StringTools.toDisplayString(fixedFiller)}');
                         }
                     }
@@ -462,7 +462,7 @@ class FormatState
                             }
                             else
                             {
-                                final String lastText = _output.lastStringBuffer.toString();
+                                final String lastText = _output.lastText;
                                 if (lastText.endsWith('\n'))
                                 {
                                     fixedFiller = fixedFillerTrimmedLeft;
@@ -489,7 +489,7 @@ class FormatState
                             }
                             else
                             {
-                                fixedFiller = fixedFillerTrimmedRight + ' ' * spaces;
+                                fixedFiller = fixedFillerTrimmedRight + StringTools.spaces(spaces);
                                 if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('    fixedFiller/4h: ${StringTools.toDisplayString(fixedFiller)}');
                             }
                         }

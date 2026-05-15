@@ -9,6 +9,9 @@ import 'Tools/StringTools.dart';
 
 class IndentedOutput
 {
+    // ignore: non_constant_identifier_names
+    static final RegExp BLANK_LINE_REG_EXP = RegExp(r'\n\s+\n');
+
     final int _indentationSpacesPerLevel;
 
     final List<StringBufferEx> _textBuffers = <StringBufferEx>[StringBufferEx()];
@@ -111,11 +114,11 @@ class IndentedOutput
         if (lastLevel.type == IndentationType.single)
         {
             if (!s.trim().startsWith('{'))
-                indent = ' ' * effectiveIndentSize;
+                indent = StringTools.spaces(effectiveIndentSize);
         }
         else if (lastLevel.type == IndentationType.multiple)
         {
-            indent = ' ' * effectiveIndentSize;
+            indent = StringTools.spaces(effectiveIndentSize);
         }
 
         if (Constants.DEBUG_FORMAT_STATE) logInternal('  indent:      ${StringTools.toDisplayString(indent)}');
@@ -124,7 +127,7 @@ class IndentedOutput
             s = s.substring(0, s.length - 1);
 
         s = s.replaceAll('\n', '\n$indent');
-        s = s.replaceAll(RegExp('\n\\s+\n'), '\n\n');
+        s = s.replaceAll(BLANK_LINE_REG_EXP, '\n\n');
 
         if (endsWithNewLine)
             s += '\n';

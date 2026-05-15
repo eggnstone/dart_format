@@ -1,3 +1,7 @@
+/benchmark
+/doc
+/test
+
 *.bat
 *.iml
 *.ps1
@@ -5,8 +9,6 @@
 
 /all_lint_rules.yaml
 /analysis_options.yaml
-/doc/
 /favicon.ico
 /lib/src/Analyzer.dart
-/test/
 /TODO.md
