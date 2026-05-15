@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.1
+
+- Preserved input line endings when formatting: CRLF stays CRLF, LF stays LF. Previously every run rewrote files to LF-only, leaving git on Windows perpetually warning about renormalisation.
+- ~12 % faster on real-world Dart sources.
+
 ## 2.0.0
 
 CLI overhaul — see README for the new shape.
