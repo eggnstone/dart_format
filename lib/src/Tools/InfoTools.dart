@@ -9,11 +9,11 @@ class InfoTools
     static void writeUsageToStdOut()
     {
         writelnToStdOut('Usage: dart_format [args] <file|dir|glob> [<file|dir|glob> ...]', preventLoggingToTempFile: true);
-        writelnToStdOut('    Positional inputs may be files, directories (recursed into *.dart),', preventLoggingToTempFile: true);
-        writelnToStdOut('    or glob patterns (e.g. "lib/**/*.dart").', preventLoggingToTempFile: true);
+        writelnToStdOut('    Positional inputs may be files, directories (recursed into *.dart), or glob patterns (e.g. "lib/**/*.dart").', preventLoggingToTempFile: true);
         writelnToStdOut('    Pass `-` (or pipe stdin with no positional args) to format stdin to stdout.', preventLoggingToTempFile: true);
         writelnToStdOut('    --check, -c                      No writes; exits non-zero if any file would change (for CI)', preventLoggingToTempFile: true);
-        writelnToStdOut('    --config=<JSON>                  Specifies the configuration', preventLoggingToTempFile: true);
+        writelnToStdOut('    --config=<JSON>                  Inline configuration JSON (mutually exclusive with --config-file)', preventLoggingToTempFile: true);
+        writelnToStdOut('    --config-file=<PATH>             Path to a JSON config file (mutually exclusive with --config)', preventLoggingToTempFile: true);
         writelnToStdOut('    --dry-run, -n                    Formats in memory only; reports would-format files; no filesystem writes', preventLoggingToTempFile: true);
         writelnToStdOut('    --errors-as-json                 Writes errors as JSON to stderr', preventLoggingToTempFile: true);
         writelnToStdOut('    --exclude=<GLOB>, -x <GLOB>      Excludes files matching the glob (repeatable)', preventLoggingToTempFile: true);

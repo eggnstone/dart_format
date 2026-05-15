@@ -4,6 +4,7 @@ class CliArgs
 {
     static const String CLASS_NAME = 'CliArgs';
 
+    final String? configFile;
     final String? configText;
     final String? errorMessage;
     final int? port;
@@ -20,6 +21,7 @@ class CliArgs
     final bool skipVersionCheck;
 
     const CliArgs({
+        required this.configFile,
         required this.configText,
         required this.errorMessage,
         required this.errorsAsJson,
@@ -49,8 +51,14 @@ class CliArgs
             if (portRaw != null && port == null)
                 return CliArgs._error('--port expects an integer, got "$portRaw".');
 
+            final String? configText = results['config'] as String?;
+            final String? configFile = results['config-file'] as String?;
+            if (configText != null && configFile != null)
+                return const CliArgs._error('Cannot specify both --config and --config-file.');
+
             return CliArgs(
-                configText: results['config'] as String?,
+                configFile: configFile,
+                configText: configText,
                 errorMessage: null,
                 errorsAsJson: results['errors-as-json'] as bool,
                 excludes: List<String>.unmodifiable(results.multiOption('exclude')),
@@ -73,7 +81,8 @@ class CliArgs
     }
 
     const CliArgs._error(String message)
-      : configText = null,
+      : configFile = null,
+        configText = null,
         errorMessage = message,
         errorsAsJson = false,
         excludes = const <String>[],
@@ -94,7 +103,8 @@ class CliArgs
         parser.addFlag('help', abbr: 'h', negatable: false, help: 'Print this help and exit.');
         parser.addFlag('version', abbr: 'V', negatable: false, help: 'Print version and exit.');
         parser.addFlag('check', abbr: 'c', negatable: false, help: 'No writes; exit non-zero if any file would change. For CI.');
-        parser.addOption('config', help: 'Configuration JSON.', valueHelp: 'JSON');
+        parser.addOption('config', help: 'Configuration JSON (mutually exclusive with --config-file).', valueHelp: 'JSON');
+        parser.addOption('config-file', help: 'Path to a JSON configuration file (mutually exclusive with --config).', valueHelp: 'PATH');
         parser.addFlag('dry-run', abbr: 'n', negatable: false, help: 'Format in memory only; no file writes.');
         parser.addFlag('errors-as-json', negatable: false, help: 'Write errors as JSON to stderr.');
         parser.addMultiOption('exclude', abbr: 'x', help: 'Exclude files matching this glob (repeatable).', valueHelp: 'GLOB');

@@ -32,8 +32,8 @@ class PipeHandler
         const String METHOD_NAME = '$CLASS_NAME.run';
         _logDebug('$METHOD_NAME START');
 
-        final bool isNewerVersionAvailable = await VersionTools().isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
-        final int exitCodeForSuccess = isNewerVersionAvailable ? ExitCodes.SUCCESS_AND_NEW_VERSION_AVAILABLE : ExitCodes.SUCCESS;        
+        // Newer-version notice is informational only; exit code stays 0 on success.
+        await VersionTools().isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
 
         try
         {
@@ -44,7 +44,7 @@ class PipeHandler
             writeToStdOut(formattedText, preventLoggingToTempFile: true);
 
             _logDebug('$METHOD_NAME END with SUCCESS');
-            return exitCodeForSuccess;
+            return ExitCodes.SUCCESS;
         }
         on DartFormatException catch (e)
         {
@@ -60,8 +60,8 @@ class PipeHandler
         else
             writelnToStdErr('${dartFormatException.type.displayName}: ${dartFormatException.message}');
 
-        _logDebug('$METHOD_NAME END with ERROR');
-        return ExitCodes.ERROR;
+        _logDebug('$METHOD_NAME END with FAILURE');
+        return ExitCodes.FAILURE;
     }
 
     void _logDebug(String s)

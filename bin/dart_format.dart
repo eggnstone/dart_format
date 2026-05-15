@@ -40,7 +40,7 @@ async
     );
 
     logDebug('main END (ExitCode=$exitCode, EncounteredErrorInRunZonedGuarded=$encounteredErrorInRunZonedGuarded)', preventLoggingToConsole: true);
-    exit(exitCode ?? ExitCodes.ERROR);
+    exit(exitCode ?? ExitCodes.FAILURE);
 }
 
 Future<int> mainNoThrow(CliArgs cliArgs)
@@ -56,12 +56,12 @@ async
     {
         final String optionalLocation = e.line == null && e.column == null ? '' : ' at ${e.line}:${e.column}';
         writelnToStdErr('${e.type.displayName}$optionalLocation: ${e.message}');
-        exitCode = ExitCodes.ERROR;
+        exitCode = ExitCodes.FAILURE;
     }
     catch (e)
     {
         writelnToStdErr('Error in dart_format: $e');
-        exitCode = ExitCodes.ERROR;
+        exitCode = ExitCodes.FAILURE;
     }
     finally
     {
@@ -93,8 +93,10 @@ async
         InfoTools.writeCopyrightToStdOut();
         InfoTools.writeUsageToStdOut();
         writelnToStdErr(cliArgs.errorMessage!);
-        return ExitCodes.ERROR;
+        return ExitCodes.USAGE_ERROR;
     }
+
+    final String? configText = _readConfig(cliArgs);
 
     if (cliArgs.isWebService)
     {
@@ -111,7 +113,7 @@ async
     if (isStdinMode)
     {
         final PipeHandler pipeHandler = PipeHandler(
-            configText: cliArgs.configText,
+            configText: configText,
             errorsAsJson: cliArgs.errorsAsJson,
             skipVersionCheck: cliArgs.skipVersionCheck
         );
@@ -123,7 +125,7 @@ async
         InfoTools.writeCopyrightToStdOut();
         logDebug('No inputs given => Printing usage.');
         InfoTools.writeUsageToStdOut();
-        return ExitCodes.ERROR;
+        return ExitCodes.USAGE_ERROR;
     }
 
     final List<String> resolvedFileNames = FileResolver.resolve(
@@ -132,11 +134,30 @@ async
     );
 
     final DefaultHandler defaultHandler = DefaultHandler(
-        configText: cliArgs.configText,
+        configText: configText,
         fileNames: resolvedFileNames,
         isCheck: cliArgs.isCheck,
         isDryRun: cliArgs.isDryRun,
         skipVersionCheck: cliArgs.skipVersionCheck
     );
     return defaultHandler.run();
+}
+
+String? _readConfig(CliArgs cliArgs)
+{
+    if (cliArgs.configFile == null)
+        return cliArgs.configText;
+
+    final File file = File(cliArgs.configFile!);
+    if (!file.existsSync())
+        throw DartFormatException.error('--config-file not found: ${cliArgs.configFile}');
+
+    try
+    {
+        return file.readAsStringSync();
+    }
+    on FileSystemException catch (e)
+    {
+        throw DartFormatException.error('Failed to read --config-file ${cliArgs.configFile}: ${e.message}');
+    }
 }

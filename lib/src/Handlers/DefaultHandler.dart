@@ -34,8 +34,10 @@ class DefaultHandler
 
         InfoTools.writeCopyrightToStdOut();
 
-        final bool isNewerVersionAvailable = await VersionTools(writeToStdOut: true).isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
-        final int exitCodeForSuccess = isNewerVersionAvailable ? ExitCodes.SUCCESS_AND_NEW_VERSION_AVAILABLE : ExitCodes.SUCCESS;
+        // The "newer version available" notice is printed to stdout for the
+        // user; the exit code stays 0 on success so scripts/CI don't trip on
+        // a cosmetic upgrade prompt.
+        await VersionTools(writeToStdOut: true).isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
 
         final bool noWriteMode = isCheck || isDryRun;
 
@@ -79,11 +81,11 @@ class DefaultHandler
         if (isCheck && wouldChangeCount > 0)
         {
             _logDebug('$METHOD_NAME with CHECK_FAILURE');
-            return ExitCodes.ERROR;
+            return ExitCodes.FAILURE;
         }
 
         _logDebug('$METHOD_NAME with SUCCESS');
-        return exitCodeForSuccess;
+        return ExitCodes.SUCCESS;
     }
 
     void _logDebug(String s)

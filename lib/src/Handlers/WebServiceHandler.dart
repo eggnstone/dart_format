@@ -44,8 +44,8 @@ class WebServiceHandler
         _logDebug('$METHOD_NAME START');
 
         final Version? latestVersion = await versionTools.getLatestVersion(skipVersionCheck: skipVersionCheck);
-        final bool isNewerVersionAvailable = await versionTools.isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
-        final int exitCodeForSuccess = isNewerVersionAvailable ? ExitCodes.SUCCESS_AND_NEW_VERSION_AVAILABLE : ExitCodes.SUCCESS;
+        // Newer-version notice is informational only; exit code stays 0 on success.
+        await versionTools.isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
 
         try
         {
@@ -134,18 +134,18 @@ class WebServiceHandler
 
             if (terminateWithError)
             {
-                _logDebug('$METHOD_NAME END with ERROR');
-                return ExitCodes.ERROR;
+                _logDebug('$METHOD_NAME END with FAILURE');
+                return ExitCodes.FAILURE;
             }
 
             _logDebug('$METHOD_NAME END with SUCCESS');
-            return exitCodeForSuccess;
+            return ExitCodes.SUCCESS;
         }
         catch (e)
         {
             writelnToStdErr(e.toString());
-            _logDebug('$METHOD_NAME END with ERROR');
-            return ExitCodes.ERROR;
+            _logDebug('$METHOD_NAME END with FAILURE');
+            return ExitCodes.FAILURE;
         }
     }
 

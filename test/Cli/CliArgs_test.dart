@@ -253,6 +253,30 @@ void main()
                     expect(args.port, isNull);
                 }
             );
+
+            test('--config-file=<path> sets configFile', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--config-file=cfg.json', 'A.dart']);
+
+                    expect(args.configFile, equals('cfg.json'));
+                }
+            );
+
+            test('No --config-file leaves configFile null', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['A.dart']);
+
+                    expect(args.configFile, isNull);
+                }
+            );
+
+            test('--config and --config-file together set errorMessage', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--config={"K":"V"}', '--config-file=cfg.json']);
+
+                    expect(args.errorMessage, isNotNull);
+                }
+            );
         }
     );
 }

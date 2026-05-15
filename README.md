@@ -25,7 +25,8 @@ Usage: dart_format [args] <file|dir|glob> [<file|dir|glob> ...]
     or glob patterns (e.g. "lib/**/*.dart").
     Pass `-` (or pipe stdin with no positional args) to format stdin to stdout.
     --check, -c                      No writes; exits non-zero if any file would change (for CI)
-    --config=<JSON>                  Specifies the configuration
+    --config=<JSON>                  Inline configuration JSON (mutually exclusive with --config-file)
+    --config-file=<PATH>             Path to a JSON config file (mutually exclusive with --config)
     --dry-run, -n                    Formats in memory only; reports would-format files; no filesystem writes
     --errors-as-json                 Writes errors as JSON to stderr
     --exclude=<GLOB>, -x <GLOB>      Excludes files matching the glob (repeatable)

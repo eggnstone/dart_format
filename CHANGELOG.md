@@ -10,6 +10,7 @@ CLI overhaul — see README for the new shape.
 - Removed `-dr` short flag. Dry-run is now `--dry-run` / `-n`.
 - `--dry-run` (`-n`) no longer writes `<name>.formatted.dart` sibling files. It parses, formats in memory, and reports — no filesystem writes.
 - `--webservice` is no longer advertised in help; the canonical spelling is `--web` (`--webservice` keeps working).
+- Exit codes are now Black-style 0/1/2: `0` success, `1` failure (parse error, `--check` diff, missing path), `2` usage error. The previous `ERROR = 9` and `SUCCESS_AND_NEW_VERSION_AVAILABLE = -1` are gone — a newer-version notice prints to stdout but no longer changes the exit code.
 
 **New**
 
@@ -19,6 +20,8 @@ CLI overhaul — see README for the new shape.
 - `--check` / `-c` mode: no writes, exits non-zero if any file would change. For CI / pre-commit.
 - `--help` / `-h` and `--version` / `-V`.
 - `--port=<N>` for web service mode. Without it the existing default (try 7777, fall back to a random free port) is preserved; with it the server binds to exactly that port and fails if it is taken, so scripts can rely on a known address.
+- `--config-file=<PATH>` to read config JSON from a file. Mutually exclusive with `--config=<JSON>` (the inline form, which stays for the IDE plugins). Easier on shells that fight you over inline JSON quoting.
+- Partial config JSON is now accepted — missing fields fall back to defaults. Previously a `{}` or any subset would throw `Null is not a subtype of bool`.
 
 ## 1.10.0
 

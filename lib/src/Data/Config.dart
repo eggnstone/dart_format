@@ -99,12 +99,17 @@ abstract class Config with _$Config
     => _$ConfigFromJson(json);
 
     /// Create a new instance of [Config] from a JSON string.
+    /// Missing fields fall back to [Config.all] defaults, so callers can pass
+    /// a partial object that overrides only the keys they care about.
     factory Config.fromJsonText(String? s)
     {
         if (s == null)
             return Config.all();
 
-        return Config.fromJson(Map<String, dynamic>.from(jsonDecode(s)));
+        final Map<String, dynamic> userJson = Map<String, dynamic>.from(jsonDecode(s));
+        final Map<String, dynamic> defaults = Config.all().toJson();
+        final Map<String, dynamic> merged = <String, dynamic>{...defaults, ...userJson};
+        return Config.fromJson(merged);
     }
 
     /// Create a new instance of [Config] with all options turned on, including experimental options.
