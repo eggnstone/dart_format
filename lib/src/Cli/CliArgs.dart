@@ -6,6 +6,7 @@ class CliArgs
 
     final String? configText;
     final String? errorMessage;
+    final List<String> excludes;
     final List<String> fileNames;
     final bool errorsAsJson;
     final bool isDryRun;
@@ -21,6 +22,7 @@ class CliArgs
         required this.configText,
         required this.errorMessage,
         required this.errorsAsJson,
+        required this.excludes,
         required this.fileNames,
         required this.isDryRun,
         required this.isEmpty,
@@ -50,6 +52,7 @@ class CliArgs
                 configText: results['config'] as String?,
                 errorMessage: null,
                 errorsAsJson: results['errors-as-json'] as bool,
+                excludes: List<String>.unmodifiable(results.multiOption('exclude')),
                 fileNames: List<String>.unmodifiable(results.rest),
                 isDryRun: results['dry-run'] as bool,
                 isEmpty: rawArgs.isEmpty,
@@ -71,6 +74,7 @@ class CliArgs
       : configText = null,
         errorMessage = message,
         errorsAsJson = false,
+        excludes = const <String>[],
         fileNames = const <String>[],
         isDryRun = false,
         isEmpty = false,
@@ -89,6 +93,7 @@ class CliArgs
         parser.addOption('config', help: 'Configuration JSON.', valueHelp: 'JSON');
         parser.addFlag('dry-run', abbr: 'n', negatable: false, help: 'Format in memory only; no file writes.');
         parser.addFlag('errors-as-json', negatable: false, help: 'Write errors as JSON to stderr.');
+        parser.addMultiOption('exclude', abbr: 'x', help: 'Exclude files matching this glob (repeatable).', valueHelp: 'GLOB');
         parser.addFlag('log-to-console', help: 'Log to console.');
         parser.addFlag('pipe', negatable: false, help: 'Format stdin (UTF-8) and write to stdout.');
         parser.addFlag('skip-version-check', negatable: false, help: 'Skip version check on start-up.');

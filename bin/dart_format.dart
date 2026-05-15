@@ -8,6 +8,7 @@ import 'package:dart_format/src/Exceptions/DartFormatException.dart';
 import 'package:dart_format/src/Handlers/DefaultHandler.dart';
 import 'package:dart_format/src/Handlers/PipeHandler.dart';
 import 'package:dart_format/src/Handlers/WebServiceHandler.dart';
+import 'package:dart_format/src/Tools/FileResolver.dart';
 import 'package:dart_format/src/Tools/InfoTools.dart';
 import 'package:dart_format/src/Tools/LogTools.dart';
 
@@ -119,9 +120,14 @@ async
         return webServiceHandler.run();
     }
 
+    final List<String> resolvedFileNames = FileResolver.resolve(
+        inputs: cliArgs.fileNames,
+        userExcludes: cliArgs.excludes
+    );
+
     final DefaultHandler defaultHandler = DefaultHandler(
         configText: cliArgs.configText,
-        fileNames: cliArgs.fileNames,
+        fileNames: resolvedFileNames,
         isDryRun: cliArgs.isDryRun,
         skipVersionCheck: cliArgs.skipVersionCheck
     );

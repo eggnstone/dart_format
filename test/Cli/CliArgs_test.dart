@@ -179,6 +179,38 @@ void main()
                     expect(args.errorMessage, isNotNull);
                 }
             );
+
+            test('--exclude collects a single value', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--exclude=**/*.g.dart', 'A.dart']);
+
+                    expect(args.excludes, equals(<String>['**/*.g.dart']));
+                }
+            );
+
+            test('--exclude repeats and collects in order', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--exclude=**/*.g.dart', '--exclude=**/build/**', 'A.dart']);
+
+                    expect(args.excludes, equals(<String>['**/*.g.dart', '**/build/**']));
+                }
+            );
+
+            test('-x is the short alias for --exclude', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['-x', '**/*.g.dart', 'A.dart']);
+
+                    expect(args.excludes, equals(<String>['**/*.g.dart']));
+                }
+            );
+
+            test('No --exclude leaves excludes empty', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['A.dart']);
+
+                    expect(args.excludes, isEmpty);
+                }
+            );
         }
     );
 }

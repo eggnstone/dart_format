@@ -20,11 +20,13 @@ https://marketplace.visualstudio.com/items?itemName=eggnstone.DartFormat
 - Follow the instructions at https://pub.dev/packages/dart_format/install
 
 ```
-Usage: dart_format [args]
-    <dart file> [<dart file> ...]    Formats the specified dart file(s)
+Usage: dart_format [args] <file|dir|glob> [<file|dir|glob> ...]
+    Positional inputs may be files, directories (recursed into *.dart),
+    or glob patterns (e.g. "lib/**/*.dart").
     --config=<JSON>                  Specifies the configuration
     --dry-run, -n                    Formats in memory only; reports would-format files; no filesystem writes
     --errors-as-json                 Writes errors as JSON to stderr
+    --exclude=<GLOB>, -x <GLOB>      Excludes files matching the glob (repeatable)
     --help, -h                       Prints this help and exits
     --log-to-console[=true|false]    Logs to console
     --pipe                           Formats stdin (UTF-8) and writes to stdout
@@ -32,3 +34,38 @@ Usage: dart_format [args]
     --version, -V                    Prints the version and exits
     --web                            Starts in web service mode
 ```
+
+### Examples
+
+```sh
+# Format a single file
+dart_format lib/main.dart
+
+# Format every .dart file under lib/ and test/ recursively
+dart_format lib test
+
+# Use a glob (handy on Windows where the shell does not expand wildcards)
+dart_format "lib/**/*.dart"
+
+# Exclude by file ending (repeatable)
+dart_format lib --exclude="**/*.g.dart" --exclude="**/*.freezed.dart"
+
+# Exclude a folder
+dart_format lib --exclude="**/legacy/**"
+
+# Exclude a specific file
+dart_format lib --exclude="lib/generated_code.dart"
+
+# Dry-run: list which files would change without writing anything
+dart_format lib -n
+```
+
+### Default excludes
+
+The following are always skipped during directory recursion and glob
+expansion. Pass an explicit file path to format one of them on purpose.
+
+- Folders: `.dart_tool/`, `build/`, and any hidden directory (`.git/`, `.idea/`, …).
+- Codegen suffixes: `*.chopper.dart`, `*.config.dart`, `*.freezed.dart`,
+  `*.g.dart`, `*.gen.dart`, `*.gr.dart`, `*.mocks.dart`, `*.pb*.dart`,
+  `*.swagger.dart`.
