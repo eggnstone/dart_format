@@ -4,6 +4,7 @@ import 'dart:io';
 import '../Constants/Constants.dart';
 import '../Constants/ExitCodes.dart';
 import '../Data/Config.dart';
+import '../Enums/FailType.dart';
 import '../Exceptions/DartFormatException.dart';
 import '../Formatter.dart';
 import '../Tools/LogTools.dart';
@@ -57,7 +58,7 @@ class PipeHandler
         if (errorsAsJson)
             writelnToStdErr(jsonEncode(dartFormatException));
         else
-            writelnToStdErr('${dartFormatException.type.name}: ${dartFormatException.message}');
+            writelnToStdErr('${dartFormatException.type.displayName}: ${dartFormatException.message}');
 
         _logDebug('$METHOD_NAME END with ERROR');
         return ExitCodes.ERROR;

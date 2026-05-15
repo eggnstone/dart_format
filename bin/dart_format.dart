@@ -54,7 +54,7 @@ async
     on DartFormatException catch (e)
     {
         final String optionalLocation = e.line == null && e.column == null ? '' : ' at ${e.line}:${e.column}';
-        writelnToStdErr('${e.type.name}$optionalLocation: ${e.message}');
+        writelnToStdErr('${e.type.displayName}$optionalLocation: ${e.message}');
         exitCode = ExitCodes.ERROR;
     }
     catch (e)
