@@ -19,6 +19,7 @@ class InfoTools
         writelnToStdOut('    --exclude=<GLOB>, -x <GLOB>      Excludes files matching the glob (repeatable)', preventLoggingToTempFile: true);
         writelnToStdOut('    --help, -h                       Prints this help and exits', preventLoggingToTempFile: true);
         writelnToStdOut('    --log-to-console[=true|false]    Logs to console', preventLoggingToTempFile: true);
+        writelnToStdOut('    --port=<N>                       Port for web service mode (default: 7777, fallback random)', preventLoggingToTempFile: true);
         writelnToStdOut('    --skip-version-check             Skips version check on start-up', preventLoggingToTempFile: true);
         writelnToStdOut('    --version, -V                    Prints the version and exits', preventLoggingToTempFile: true);
         writelnToStdOut('    --web                            Starts in web service mode', preventLoggingToTempFile: true);

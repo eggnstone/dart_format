@@ -18,6 +18,7 @@ CLI overhaul — see README for the new shape.
 - Default excludes applied during recursion / glob expansion: hidden directories (`.dart_tool/`, `.git/`, `.idea/`, …), `build/`, and the common codegen suffixes (`*.chopper.dart`, `*.config.dart`, `*.freezed.dart`, `*.g.dart`, `*.gen.dart`, `*.gr.dart`, `*.mocks.dart`, `*.pb*.dart`, `*.swagger.dart`). Explicit file paths bypass these.
 - `--check` / `-c` mode: no writes, exits non-zero if any file would change. For CI / pre-commit.
 - `--help` / `-h` and `--version` / `-V`.
+- `--port=<N>` for web service mode. Without it the existing default (try 7777, fall back to a random free port) is preserved; with it the server binds to exactly that port and fails if it is taken, so scripts can rely on a known address.
 
 ## 1.10.0
 

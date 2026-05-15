@@ -23,13 +23,14 @@ class WebServiceHandler
 {
     static const String CLASS_NAME = 'WebServiceHandler';
 
+    final int? port;
     final bool skipVersionCheck;
     final DateTime _startTime = DateTime.now();
 
     static int _requestCount = 0;
     static double _maxMillisecondsPerKiloCharacter = 0;
 
-    WebServiceHandler({required this.skipVersionCheck});
+    WebServiceHandler({required this.skipVersionCheck, this.port});
 
     Future<int> run()
     async
@@ -50,13 +51,20 @@ class WebServiceHandler
         {
             HttpServer server;
 
-            try
+            if (port == null)
             {
-                server = await HttpServer.bind(InternetAddress.loopbackIPv4, Constants.PREFERRED_PORT);
+                try
+                {
+                    server = await HttpServer.bind(InternetAddress.loopbackIPv4, Constants.PREFERRED_PORT);
+                }
+                on SocketException
+                {
+                    server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+                }
             }
-            on SocketException
+            else
             {
-                server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+                server = await HttpServer.bind(InternetAddress.loopbackIPv4, port!);
             }
 
             server.handleError(_handleServerError);

@@ -31,6 +31,7 @@ Usage: dart_format [args] <file|dir|glob> [<file|dir|glob> ...]
     --exclude=<GLOB>, -x <GLOB>      Excludes files matching the glob (repeatable)
     --help, -h                       Prints this help and exits
     --log-to-console[=true|false]    Logs to console
+    --port=<N>                       Port for web service mode (default: 7777, fallback random)
     --skip-version-check             Skips version check on start-up
     --version, -V                    Prints the version and exits
     --web                            Starts in web service mode

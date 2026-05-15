@@ -229,6 +229,30 @@ void main()
                     expect(args.excludes, isEmpty);
                 }
             );
+
+            test('--port=<n> sets port', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--web', '--port=8080']);
+
+                    expect(args.port, equals(8080));
+                }
+            );
+
+            test('--port with non-integer value is rejected', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--web', '--port=N']);
+
+                    expect(args.errorMessage, isNotNull);
+                }
+            );
+
+            test('No --port leaves port null (server picks)', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--web']);
+
+                    expect(args.port, isNull);
+                }
+            );
         }
     );
 }

@@ -98,7 +98,10 @@ async
 
     if (cliArgs.isWebService)
     {
-        final WebServiceHandler webServiceHandler = WebServiceHandler(skipVersionCheck: cliArgs.skipVersionCheck);
+        final WebServiceHandler webServiceHandler = WebServiceHandler(
+            port: cliArgs.port,
+            skipVersionCheck: cliArgs.skipVersionCheck
+        );
         return webServiceHandler.run();
     }
 

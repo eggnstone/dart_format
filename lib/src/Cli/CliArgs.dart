@@ -6,6 +6,7 @@ class CliArgs
 
     final String? configText;
     final String? errorMessage;
+    final int? port;
     final List<String> excludes;
     final List<String> fileNames;
     final bool errorsAsJson;
@@ -29,6 +30,7 @@ class CliArgs
         required this.isEmpty,
         required this.isWebService,
         required this.logToConsole,
+        required this.port,
         required this.showHelp,
         required this.showVersion,
         required this.skipVersionCheck
@@ -42,6 +44,11 @@ class CliArgs
         {
             final ArgResults results = parser.parse(_normalize(rawArgs));
 
+            final String? portRaw = results['port'] as String?;
+            final int? port = portRaw == null ? null : int.tryParse(portRaw);
+            if (portRaw != null && port == null)
+                return CliArgs._error('--port expects an integer, got "$portRaw".');
+
             return CliArgs(
                 configText: results['config'] as String?,
                 errorMessage: null,
@@ -53,6 +60,7 @@ class CliArgs
                 isEmpty: rawArgs.isEmpty,
                 isWebService: results['web'] as bool,
                 logToConsole: results['log-to-console'] as bool,
+                port: port,
                 showHelp: results['help'] as bool,
                 showVersion: results['version'] as bool,
                 skipVersionCheck: results['skip-version-check'] as bool
@@ -75,6 +83,7 @@ class CliArgs
         isEmpty = false,
         isWebService = false,
         logToConsole = false,
+        port = null,
         showHelp = false,
         showVersion = false,
         skipVersionCheck = false;
@@ -90,6 +99,7 @@ class CliArgs
         parser.addFlag('errors-as-json', negatable: false, help: 'Write errors as JSON to stderr.');
         parser.addMultiOption('exclude', abbr: 'x', help: 'Exclude files matching this glob (repeatable).', valueHelp: 'GLOB');
         parser.addFlag('log-to-console', help: 'Log to console.');
+        parser.addOption('port', help: 'Port for web service mode (default: 7777, fallback random).', valueHelp: 'N');
         parser.addFlag('skip-version-check', negatable: false, help: 'Skip version check on start-up.');
         parser.addFlag('web', aliases: <String>['webservice'], negatable: false, help: 'Start in web service mode.');
         return parser;

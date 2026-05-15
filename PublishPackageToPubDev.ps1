@@ -1,10 +1,16 @@
-$versionRegex = "version: (\d+)\.(\d+).(\d+)"
+# Refuses anything that is not a plain MAJOR.MINOR.PATCH stable release -
+# pre-release suffixes like `2.0.0-dev1` are rejected on purpose so we don't
+# publish dev versions by mistake.
+$versionRegex = "^version: (\d+)\.(\d+)\.(\d+)\s*$"
 $pubspecFileName = "pubspec.yaml"
 $versionDartFileName = "lib/src/Constants/Generated/VersionConstants.dart"
 
-$pubspecFileContent = (Get-Content -Path $pubspecFileName)
-$select = $pubspecFileContent | Select-String -Pattern $versionRegex
-$dummy = $select[0] -match $versionRegex
+$versionLine = (Get-Content -Path $pubspecFileName) | Where-Object { $_ -match "^version: " } | Select-Object -First 1
+if (-not ($versionLine -match $versionRegex))
+{
+    Write-Error "${pubspecFileName} version is not a plain MAJOR.MINOR.PATCH stable release: '$versionLine'. Update pubspec.yaml to a stable version (e.g. 2.0.0) before publishing."
+    exit 1
+}
 $major = $matches[1]
 $minor = $matches[2]
 $patch = $matches[3]
