@@ -96,15 +96,16 @@ async
         return ExitCodes.ERROR;
     }
 
-    if (cliArgs.isEmpty)
+    if (cliArgs.isWebService)
     {
-        InfoTools.writeCopyrightToStdOut();
-        logDebug('No arguments given => Printing usage.');
-        InfoTools.writeUsageToStdOut();
-        return ExitCodes.ERROR;
+        final WebServiceHandler webServiceHandler = WebServiceHandler(skipVersionCheck: cliArgs.skipVersionCheck);
+        return webServiceHandler.run();
     }
 
-    if (cliArgs.isPipe)
+    final bool isStdinMode = cliArgs.fileNames.contains('-')
+        || (cliArgs.fileNames.isEmpty && !stdin.hasTerminal);
+
+    if (isStdinMode)
     {
         final PipeHandler pipeHandler = PipeHandler(
             configText: cliArgs.configText,
@@ -114,10 +115,12 @@ async
         return pipeHandler.run();
     }
 
-    if (cliArgs.isWebService)
+    if (cliArgs.fileNames.isEmpty)
     {
-        final WebServiceHandler webServiceHandler = WebServiceHandler(skipVersionCheck: cliArgs.skipVersionCheck);
-        return webServiceHandler.run();
+        InfoTools.writeCopyrightToStdOut();
+        logDebug('No inputs given => Printing usage.');
+        InfoTools.writeUsageToStdOut();
+        return ExitCodes.ERROR;
     }
 
     final List<String> resolvedFileNames = FileResolver.resolve(
@@ -128,6 +131,7 @@ async
     final DefaultHandler defaultHandler = DefaultHandler(
         configText: cliArgs.configText,
         fileNames: resolvedFileNames,
+        isCheck: cliArgs.isCheck,
         isDryRun: cliArgs.isDryRun,
         skipVersionCheck: cliArgs.skipVersionCheck
     );

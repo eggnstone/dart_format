@@ -108,11 +108,36 @@ void main()
                 }
             );
 
-            test('--pipe sets isPipe', ()
+            test('--pipe is no longer accepted', ()
                 {
                     final CliArgs args = CliArgs.parse(<String>['--pipe']);
 
-                    expect(args.isPipe, isTrue);
+                    expect(args.errorMessage, isNotNull);
+                }
+            );
+
+            test('--check sets isCheck', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--check', 'A.dart']);
+
+                    expect(args.isCheck, isTrue);
+                }
+            );
+
+            test('-c is the short alias for --check', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['-c', 'A.dart']);
+
+                    expect(args.isCheck, isTrue);
+                }
+            );
+
+            test('Bare `-` is preserved as a positional (stdin marker)', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['-']);
+
+                    expect(args.fileNames, equals(<String>['-']));
+                    expect(args.errorMessage, isNull);
                 }
             );
 
@@ -172,13 +197,6 @@ void main()
                 }
             );
 
-            test('--pipe and --web together set errorMessage', ()
-                {
-                    final CliArgs args = CliArgs.parse(<String>['--pipe', '--web']);
-
-                    expect(args.errorMessage, isNotNull);
-                }
-            );
 
             test('--exclude collects a single value', ()
                 {

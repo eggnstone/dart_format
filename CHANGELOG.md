@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.0.0
+
+CLI overhaul — see README for the new shape.
+
+**Breaking changes**
+
+- Removed `--pipe`. Stdin is now auto-detected when no positional args are given, and a bare `-` positional also reads from stdin.
+- Removed `-dr` short flag. Dry-run is now `--dry-run` / `-n`.
+- `--dry-run` (`-n`) no longer writes `<name>.formatted.dart` sibling files. It parses, formats in memory, and reports — no filesystem writes.
+- `--webservice` is no longer advertised in help; the canonical spelling is `--web` (`--webservice` keeps working).
+
+**New**
+
+- Positional args accept files, directories (recursed into `*.dart`), and glob patterns (e.g. `"lib/**/*.dart"`).
+- `--exclude=<GLOB>` / `-x` flag, repeatable: covers file-ending, folder, and specific-file exclusions in one mechanism.
+- Default excludes applied during recursion / glob expansion: hidden directories (`.dart_tool/`, `.git/`, `.idea/`, …), `build/`, and the common codegen suffixes (`*.chopper.dart`, `*.config.dart`, `*.freezed.dart`, `*.g.dart`, `*.gen.dart`, `*.gr.dart`, `*.mocks.dart`, `*.pb*.dart`, `*.swagger.dart`). Explicit file paths bypass these.
+- `--check` / `-c` mode: no writes, exits non-zero if any file would change. For CI / pre-commit.
+- `--help` / `-h` and `--version` / `-V`.
+
 ## 1.10.0
 
 - Many indentation fixes for multi-line code (#11, #12).

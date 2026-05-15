@@ -23,13 +23,14 @@ https://marketplace.visualstudio.com/items?itemName=eggnstone.DartFormat
 Usage: dart_format [args] <file|dir|glob> [<file|dir|glob> ...]
     Positional inputs may be files, directories (recursed into *.dart),
     or glob patterns (e.g. "lib/**/*.dart").
+    Pass `-` (or pipe stdin with no positional args) to format stdin to stdout.
+    --check, -c                      No writes; exits non-zero if any file would change (for CI)
     --config=<JSON>                  Specifies the configuration
     --dry-run, -n                    Formats in memory only; reports would-format files; no filesystem writes
     --errors-as-json                 Writes errors as JSON to stderr
     --exclude=<GLOB>, -x <GLOB>      Excludes files matching the glob (repeatable)
     --help, -h                       Prints this help and exits
     --log-to-console[=true|false]    Logs to console
-    --pipe                           Formats stdin (UTF-8) and writes to stdout
     --skip-version-check             Skips version check on start-up
     --version, -V                    Prints the version and exits
     --web                            Starts in web service mode
@@ -58,6 +59,15 @@ dart_format lib --exclude="lib/generated_code.dart"
 
 # Dry-run: list which files would change without writing anything
 dart_format lib -n
+
+# Check mode for CI / pre-commit: same as -n but exits non-zero if any file would change
+dart_format --check lib
+
+# Format stdin to stdout (pipe auto-detected when no positional args are given)
+cat lib/main.dart | dart_format
+
+# Same, but with an explicit `-` positional marker
+dart_format - < lib/main.dart
 ```
 
 ### Default excludes

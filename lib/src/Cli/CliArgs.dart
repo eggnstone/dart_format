@@ -9,9 +9,9 @@ class CliArgs
     final List<String> excludes;
     final List<String> fileNames;
     final bool errorsAsJson;
+    final bool isCheck;
     final bool isDryRun;
     final bool isEmpty;
-    final bool isPipe;
     final bool isWebService;
     final bool logToConsole;
     final bool showHelp;
@@ -24,9 +24,9 @@ class CliArgs
         required this.errorsAsJson,
         required this.excludes,
         required this.fileNames,
+        required this.isCheck,
         required this.isDryRun,
         required this.isEmpty,
-        required this.isPipe,
         required this.isWebService,
         required this.logToConsole,
         required this.showHelp,
@@ -42,22 +42,16 @@ class CliArgs
         {
             final ArgResults results = parser.parse(_normalize(rawArgs));
 
-            final bool isPipe = results['pipe'] as bool;
-            final bool isWebService = results['web'] as bool;
-
-            if (isPipe && isWebService)
-                return const CliArgs._error('Cannot specify both --pipe and --web.');
-
             return CliArgs(
                 configText: results['config'] as String?,
                 errorMessage: null,
                 errorsAsJson: results['errors-as-json'] as bool,
                 excludes: List<String>.unmodifiable(results.multiOption('exclude')),
                 fileNames: List<String>.unmodifiable(results.rest),
+                isCheck: results['check'] as bool,
                 isDryRun: results['dry-run'] as bool,
                 isEmpty: rawArgs.isEmpty,
-                isPipe: isPipe,
-                isWebService: isWebService,
+                isWebService: results['web'] as bool,
                 logToConsole: results['log-to-console'] as bool,
                 showHelp: results['help'] as bool,
                 showVersion: results['version'] as bool,
@@ -76,9 +70,9 @@ class CliArgs
         errorsAsJson = false,
         excludes = const <String>[],
         fileNames = const <String>[],
+        isCheck = false,
         isDryRun = false,
         isEmpty = false,
-        isPipe = false,
         isWebService = false,
         logToConsole = false,
         showHelp = false,
@@ -90,12 +84,12 @@ class CliArgs
         final ArgParser parser = ArgParser();
         parser.addFlag('help', abbr: 'h', negatable: false, help: 'Print this help and exit.');
         parser.addFlag('version', abbr: 'V', negatable: false, help: 'Print version and exit.');
+        parser.addFlag('check', abbr: 'c', negatable: false, help: 'No writes; exit non-zero if any file would change. For CI.');
         parser.addOption('config', help: 'Configuration JSON.', valueHelp: 'JSON');
         parser.addFlag('dry-run', abbr: 'n', negatable: false, help: 'Format in memory only; no file writes.');
         parser.addFlag('errors-as-json', negatable: false, help: 'Write errors as JSON to stderr.');
         parser.addMultiOption('exclude', abbr: 'x', help: 'Exclude files matching this glob (repeatable).', valueHelp: 'GLOB');
         parser.addFlag('log-to-console', help: 'Log to console.');
-        parser.addFlag('pipe', negatable: false, help: 'Format stdin (UTF-8) and write to stdout.');
         parser.addFlag('skip-version-check', negatable: false, help: 'Skip version check on start-up.');
         parser.addFlag('web', aliases: <String>['webservice'], negatable: false, help: 'Start in web service mode.');
         return parser;
