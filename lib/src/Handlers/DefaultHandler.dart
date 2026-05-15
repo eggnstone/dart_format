@@ -37,22 +37,40 @@ class DefaultHandler
 
         final Config config = Config.fromJsonText(configText);
         final Formatter formatter = Formatter(config);
+        int wouldChangeCount = 0;
+        int unchangedCount = 0;
         for (final String fileName in fileNames)
         {
-            writelnToStdOut('  Processing $fileName');
+            if (!isDryRun)
+                writelnToStdOut('  Processing $fileName');
 
             final File inputFile = File(fileName);
             final String inputText = inputFile.readAsStringSync();
             final String result = formatter.format(inputText);
-            if (result == inputText && !isDryRun)
+            final bool wouldChange = result != inputText;
+
+            if (isDryRun)
             {
-                //_logDebug('    No changes made.');
+                if (wouldChange)
+                {
+                    wouldChangeCount++;
+                    writelnToStdOut('would format $fileName');
+                }
+                else
+                {
+                    unchangedCount++;
+                }
                 continue;
             }
 
-            final File outputFile = isDryRun ? File('$fileName.formatted.dart') : inputFile;
-            outputFile.writeAsStringSync(result);
+            if (!wouldChange)
+                continue;
+
+            inputFile.writeAsStringSync(result);
         }
+
+        if (isDryRun)
+            writelnToStdOut('$wouldChangeCount file(s) would be reformatted, $unchangedCount left unchanged.');
 
         _logDebug('$METHOD_NAME with SUCCESS');
         return exitCodeForSuccess;

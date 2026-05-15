@@ -8,6 +8,4 @@ class ExitCodes
 
     /// The exit code for an error.
     static const int ERROR = 9;
-
-    ExitCodes._();
 }

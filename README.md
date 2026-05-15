@@ -22,11 +22,13 @@ https://marketplace.visualstudio.com/items?itemName=eggnstone.DartFormat
 ```
 Usage: dart_format [args]
     <dart file> [<dart file> ...]    Formats the specified dart file(s)
-    --config=<config JSON>           Specifies the configuration
-    --dry-run, -dr                   Writes output to "<original filename>.formatted.dart"
+    --config=<JSON>                  Specifies the configuration
+    --dry-run, -n                    Formats in memory only; reports would-format files; no filesystem writes
     --errors-as-json                 Writes errors as JSON to stderr
-    --log-to-console                 Logs to console
+    --help, -h                       Prints this help and exits
+    --log-to-console[=true|false]    Logs to console
     --pipe                           Formats stdin (UTF-8) and writes to stdout
     --skip-version-check             Skips version check on start-up
-    --web[service]                   Starts in web service mode
+    --version, -V                    Prints the version and exits
+    --web                            Starts in web service mode
 ```
