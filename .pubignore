@@ -1,4 +1,5 @@
 *.bat
+*.iml
 *.ps1
 *.sh
 

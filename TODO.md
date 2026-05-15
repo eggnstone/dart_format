@@ -12,8 +12,6 @@ TODO
 - Own lint rule: don't return Future<void>s.
 - Ensure DEBUG is off when publishing
 - Safety: don't accept result if length is 0 or very short, e.g. when throwing UnimplementedError in StringTools.
-- No blank lines between {{ and }}
-- Investigate line endings. Keep existing style, but also offer option to convert.
 - else\nif
 - Indent interpolations?
 - Force line break after if/else/...

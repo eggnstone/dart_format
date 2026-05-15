@@ -35,6 +35,7 @@ class Formatter
             logInternal('  maxEmptyLines: ${_config.maxEmptyLines}');
         }
 
+        final bool wasCrlf = s.contains('\r\n');
         final String cleanedS = s.replaceAll('\r', '');
         final ParseStringResult parseResult = AnalyzerUtilities.parseString(content: cleanedS, throwIfDiagnostics: false);
 
@@ -58,7 +59,8 @@ class Formatter
 
         result = TextTools(_config).tidyBlankLines(result);
 
-        return _verifyResult(cleanedS, result, parseResult.lineInfo);
+        final String verifiedResult = _verifyResult(cleanedS, result, parseResult.lineInfo);
+        return wasCrlf ? verifiedResult.replaceAll('\n', '\r\n') : verifiedResult;
     }
 
     void _logAndThrowWarning(String message, CharacterLocation location)
