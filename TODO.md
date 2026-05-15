@@ -11,7 +11,6 @@ TODO
 - Own lint rule: don't call unawaited stuff in a try-catch block.
 - Own lint rule: don't return Future<void>s.
 - Ensure DEBUG is off when publishing
-- Safety: don't accept result if length is 0 or very short, e.g. when throwing UnimplementedError in StringTools.
 - else\nif
 - Indent interpolations?
 - Force line break after if/else/...
@@ -25,6 +24,7 @@ TODO
 
 DONE
 ====
+- Safety: WebServiceHandler now catches `Error` (UnimplementedError, StateError, …) in both `_handlePostFormat` and `_handleRequest` so a thrown Error returns `X-DartFormat-Result: Fail` (or HTTP 500) instead of letting the plugin write an empty/half-built body to the user's file.
 - No blank lines after `{` and before `}` (TextTools.tidyBlankLines, gated on maxEmptyLines >= 0).
 - No blank lines at the start of the file (TextTools.tidyBlankLines).
 - No blank lines at the end of the file, just the trailing newline (TextTools.tidyBlankLines).

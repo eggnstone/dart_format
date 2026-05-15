@@ -360,18 +360,21 @@ class WebServiceHandler
             request.response.headers.add('X-DartFormat-Result', 'Fail');
             request.response.headers.add('X-DartFormat-Exception', jsonEncode(dartFormatException.toJson()));
         }
-        /*// ignore: avoid_catching_errors
+        // Catch Error too. UnimplementedError, StateError, RangeError, etc.
+        // extend Error (NOT Exception), so without this block they would
+        // escape the handler and the IDE plugin could see a half-set
+        // response with an empty body - which a careless caller would write
+        // over the user's source file.
+        // ignore: avoid_catching_errors
         on Error catch (e, st)
         {
-            // necessary?
             logErrorObject(METHOD_NAME, e, st);
-
             final DartFormatException dartFormatException = DartFormatException.error(e.toString());
             request.response.statusCode = HttpStatus.ok;
             request.response.headers.contentType = ContentType.text;
             request.response.headers.add('X-DartFormat-Result', 'Fail');
             request.response.headers.add('X-DartFormat-Exception', jsonEncode(dartFormatException.toJson()));
-        }*/
+        }
         finally
         {
             //logDebug('$METHOD_NAME: Calling flushAndClose');
@@ -414,12 +417,20 @@ class WebServiceHandler
             request.response.writeln('Exception: $e');
             await HttpTools.flushAndClose(request);
         }
-        /*// ignore: avoid_catching_errors
+        // Mirror of the Exception block above. Without this, an Error
+        // (UnimplementedError, StateError, ...) thrown deeper than
+        // _handlePostFormat would leave the response in an indeterminate
+        // state and the plugin could write a half-built body to disk.
+        // ignore: avoid_catching_errors
         on Error catch (e, st)
         {
-            // necessary?
             logErrorObject(METHOD_NAME, e, st);
-        }*/
+            writelnToStdErr('Error: $e');
+            request.response.statusCode = HttpStatus.internalServerError;
+            request.response.headers.contentType = ContentType.text;
+            request.response.writeln('Error: $e');
+            await HttpTools.flushAndClose(request);
+        }
         finally
         {
             final double seconds = DateTime.now().difference(startTime).inMilliseconds / 1000;
