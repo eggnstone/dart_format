@@ -10,8 +10,6 @@ TODO
 - Own lint rule: don't return Futures in a try-catch block.
 - Own lint rule: don't call unawaited stuff in a try-catch block.
 - Own lint rule: don't return Future<void>s.
-- Ensure DEBUG is off when publishing
-- else\nif
 - Indent interpolations?
 - Force line break after if/else/...
 - Add/remove spaces
@@ -24,6 +22,8 @@ TODO
 
 DONE
 ====
+- Ensure DEBUG is off when publishing (PublishPackageToPubDev.ps1 now refuses to publish if any DEBUG flag in Constants.dart is left on).
+- else\nif
 - Safety: WebServiceHandler now catches `Error` (UnimplementedError, StateError, …) in both `_handlePostFormat` and `_handleRequest` so a thrown Error returns `X-DartFormat-Result: Fail` (or HTTP 500) instead of letting the plugin write an empty/half-built body to the user's file.
 - No blank lines after `{` and before `}` (TextTools.tidyBlankLines, gated on maxEmptyLines >= 0).
 - No blank lines at the start of the file (TextTools.tidyBlankLines).

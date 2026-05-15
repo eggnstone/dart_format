@@ -15,6 +15,17 @@ $major = $matches[1]
 $minor = $matches[2]
 $patch = $matches[3]
 
+# Refuse to publish if the master DEBUG flag in Constants.dart is on. Every
+# DEBUG_X flag derives from `(DEBUG && …) || DEBUG_ALL`, so DEBUG=false is
+# sufficient to keep them all off in production builds.
+$constantsFileName = "lib/src/Constants/Constants.dart"
+$debugLine = Get-Content -Path $constantsFileName | Where-Object { $_ -match '^\s*static const bool DEBUG\s*=' } | Select-Object -First 1
+if (-not ($debugLine -match '=\s*false\s*;\s*$'))
+{
+    Write-Error "Constants.DEBUG is not set to false. Reset it before publishing.`n  $($debugLine.Trim())"
+    exit 1
+}
+
 $oldVersionDartFileContent = Get-Content -Path $versionDartFileName -Raw
 $newVersionDartFileContent = $oldVersionDartFileContent `
     -replace "MAJOR = \d+;", "MAJOR = $major;" `
