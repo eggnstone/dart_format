@@ -14,9 +14,11 @@ void main()
         {
             test('Explicit .dart file passes through', ()
                 {
-                    final String root = _setupTempTree(<String, String>{
-                        'A.dart': ''
-                    });
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'A.dart': ''
+                        }
+                    );
 
                     final List<String> resolved = FileResolver.resolve(inputs: <String>['$root/A.dart']);
 
@@ -26,13 +28,15 @@ void main()
 
             test('Directory expands to its .dart descendants and skips non-dart files', ()
                 {
-                    final String root = _setupTempTree(<String, String>{
-                        'A.dart': '',
-                        'B.dart': '',
-                        'C.txt': '',
-                        'sub/D.dart': '',
-                        'sub/E.md': ''
-                    });
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'A.dart': '',
+                            'B.dart': '',
+                            'C.txt': '',
+                            'sub/D.dart': '',
+                            'sub/E.md': ''
+                        }
+                    );
 
                     final List<String> resolved = FileResolver.resolve(inputs: <String>[root]);
 
@@ -42,11 +46,13 @@ void main()
 
             test('Glob in a positional matches expected files', ()
                 {
-                    final String root = _setupTempTree(<String, String>{
-                        'lib/A.dart': '',
-                        'lib/B.dart': '',
-                        'test/C.dart': ''
-                    });
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'lib/A.dart': '',
+                            'lib/B.dart': '',
+                            'test/C.dart': ''
+                        }
+                    );
 
                     final List<String> resolved = FileResolver.resolve(inputs: <String>['$root/lib/*.dart']);
 
@@ -56,12 +62,14 @@ void main()
 
             test('--exclude="**/*.g.dart" strips generated files during directory recursion', ()
                 {
-                    final String root = _setupTempTree(<String, String>{
-                        'A.dart': '',
-                        'B.g.dart': '',
-                        'sub/C.dart': '',
-                        'sub/D.g.dart': ''
-                    });
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'A.dart': '',
+                            'B.g.dart': '',
+                            'sub/C.dart': '',
+                            'sub/D.g.dart': ''
+                        }
+                    );
 
                     final List<String> resolved = FileResolver.resolve(
                         inputs: <String>[root],
@@ -74,11 +82,13 @@ void main()
 
             test('--exclude="**/build/**" strips a folder', ()
                 {
-                    final String root = _setupTempTree(<String, String>{
-                        'A.dart': '',
-                        'build/B.dart': '',
-                        'build/sub/C.dart': ''
-                    });
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'A.dart': '',
+                            'build/B.dart': '',
+                            'build/sub/C.dart': ''
+                        }
+                    );
 
                     final List<String> resolved = FileResolver.resolve(inputs: <String>[root]);
 
@@ -88,11 +98,13 @@ void main()
 
             test('--exclude=<file> strips a single explicit file path', ()
                 {
-                    final String root = _setupTempTree(<String, String>{
-                        'A.dart': '',
-                        'B.dart': '',
-                        'C.dart': ''
-                    });
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'A.dart': '',
+                            'B.dart': '',
+                            'C.dart': ''
+                        }
+                    );
 
                     final List<String> resolved = FileResolver.resolve(
                         inputs: <String>[root],
@@ -105,13 +117,15 @@ void main()
 
             test('Default excludes skip .dart_tool/, build/, and hidden dirs', ()
                 {
-                    final String root = _setupTempTree(<String, String>{
-                        'A.dart': '',
-                        '.dart_tool/B.dart': '',
-                        'build/C.dart': '',
-                        '.git/D.dart': '',
-                        '.idea/E.dart': ''
-                    });
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'A.dart': '',
+                            '.dart_tool/B.dart': '',
+                            'build/C.dart': '',
+                            '.git/D.dart': '',
+                            '.idea/E.dart': ''
+                        }
+                    );
 
                     final List<String> resolved = FileResolver.resolve(inputs: <String>[root]);
 
@@ -121,12 +135,14 @@ void main()
 
             test('Default excludes skip codegen suffixes (core)', ()
                 {
-                    final String root = _setupTempTree(<String, String>{
-                        'A.dart': '',
-                        'B.g.dart': '',
-                        'C.freezed.dart': '',
-                        'D.mocks.dart': ''
-                    });
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'A.dart': '',
+                            'B.g.dart': '',
+                            'C.freezed.dart': '',
+                            'D.mocks.dart': ''
+                        }
+                    );
 
                     final List<String> resolved = FileResolver.resolve(inputs: <String>[root]);
 
@@ -136,18 +152,20 @@ void main()
 
             test('Default excludes skip codegen suffixes (extended)', ()
                 {
-                    final String root = _setupTempTree(<String, String>{
-                        'A.dart': '',
-                        'B.gr.dart': '',
-                        'C.config.dart': '',
-                        'D.gen.dart': '',
-                        'E.chopper.dart': '',
-                        'F.pb.dart': '',
-                        'G.pbenum.dart': '',
-                        'H.pbjson.dart': '',
-                        'I.pbgrpc.dart': '',
-                        'J.swagger.dart': ''
-                    });
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'A.dart': '',
+                            'B.gr.dart': '',
+                            'C.config.dart': '',
+                            'D.gen.dart': '',
+                            'E.chopper.dart': '',
+                            'F.pb.dart': '',
+                            'G.pbenum.dart': '',
+                            'H.pbjson.dart': '',
+                            'I.pbgrpc.dart': '',
+                            'J.swagger.dart': ''
+                        }
+                    );
 
                     final List<String> resolved = FileResolver.resolve(inputs: <String>[root]);
 
@@ -157,9 +175,11 @@ void main()
 
             test('Explicit path bypasses default excludes', ()
                 {
-                    final String root = _setupTempTree(<String, String>{
-                        'A.g.dart': ''
-                    });
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'A.g.dart': ''
+                        }
+                    );
 
                     final List<String> resolved = FileResolver.resolve(inputs: <String>['$root/A.g.dart']);
 
@@ -169,9 +189,11 @@ void main()
 
             test('Explicit path still honours user excludes', ()
                 {
-                    final String root = _setupTempTree(<String, String>{
-                        'A.dart': ''
-                    });
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'A.dart': ''
+                        }
+                    );
 
                     final List<String> resolved = FileResolver.resolve(
                         inputs: <String>['$root/A.dart'],
@@ -184,9 +206,11 @@ void main()
 
             test('Duplicates collapse when matched via multiple inputs', ()
                 {
-                    final String root = _setupTempTree(<String, String>{
-                        'A.dart': ''
-                    });
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'A.dart': ''
+                        }
+                    );
 
                     final List<String> resolved = FileResolver.resolve(inputs: <String>[root, '$root/A.dart']);
 
@@ -196,11 +220,13 @@ void main()
 
             test('Results are sorted lexicographically', ()
                 {
-                    final String root = _setupTempTree(<String, String>{
-                        'C.dart': '',
-                        'A.dart': '',
-                        'B.dart': ''
-                    });
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'C.dart': '',
+                            'A.dart': '',
+                            'B.dart': ''
+                        }
+                    );
 
                     final List<String> resolved = FileResolver.resolve(inputs: <String>[root]);
 
@@ -210,9 +236,11 @@ void main()
 
             test('Non-.dart explicit path is rejected with DartFormatException', ()
                 {
-                    final String root = _setupTempTree(<String, String>{
-                        'A.txt': ''
-                    });
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'A.txt': ''
+                        }
+                    );
 
                     expect(() => FileResolver.resolve(inputs: <String>['$root/A.txt']),
                         throwsA(isA<DartFormatException>()));
@@ -226,11 +254,34 @@ void main()
                 }
             );
 
+            test('Dot input "." picks up .dart files (not falsely excluded as hidden dirs)', ()
+                {
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'lib/A.dart': '',
+                            'test/B.dart': ''
+                        }
+                    );
+
+                    final Directory previousCwd = Directory.current;
+                    Directory.current = root;
+                    addTearDown(() => Directory.current = previousCwd);
+
+                    final List<String> resolved = FileResolver.resolve(inputs: <String>['.']);
+
+                    expect(resolved.length, equals(2));
+                    expect(resolved.any((String p) => p.endsWith('lib/A.dart')), isTrue);
+                    expect(resolved.any((String p) => p.endsWith('test/B.dart')), isTrue);
+                }
+            );
+
             test('All paths in result use forward slashes', ()
                 {
-                    final String root = _setupTempTree(<String, String>{
-                        'sub/A.dart': ''
-                    });
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'sub/A.dart': ''
+                        }
+                    );
 
                     final List<String> resolved = FileResolver.resolve(inputs: <String>[root]);
 

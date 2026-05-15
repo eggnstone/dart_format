@@ -7,8 +7,8 @@ CLI overhaul — see README for the new shape.
 **Breaking changes**
 
 - Removed `--pipe`. Stdin is now auto-detected when no positional args are given, and a bare `-` positional also reads from stdin.
-- Removed `-dr` short flag. Dry-run is now `--dry-run` / `-n`.
-- `--dry-run` (`-n`) no longer writes `<name>.formatted.dart` sibling files. It parses, formats in memory, and reports — no filesystem writes.
+- Removed `--dry-run` / `-n` (and the old `-dr`). Use `--check` / `-c` for a no-write preview; CI gets the non-zero exit on diffs for free.
+- The previous `--dry-run` behaviour of writing `<name>.formatted.dart` sibling files is gone entirely (no replacement; sibling-file output is not coming back).
 - `--webservice` is no longer advertised in help; the canonical spelling is `--web` (`--webservice` keeps working).
 - Exit codes are now Black-style 0/1/2: `0` success, `1` failure (parse error, `--check` diff, missing path), `2` usage error. The previous `ERROR = 9` and `SUCCESS_AND_NEW_VERSION_AVAILABLE = -1` are gone — a newer-version notice prints to stdout but no longer changes the exit code.
 

@@ -67,20 +67,19 @@ void main()
                 }
             );
 
-            test('--dry-run sets isDryRun', ()
+            test('--dry-run is no longer accepted', ()
                 {
                     final CliArgs args = CliArgs.parse(<String>['--dry-run', 'A.dart']);
 
-                    expect(args.isDryRun, isTrue);
-                    expect(args.fileNames, equals(<String>['A.dart']));
+                    expect(args.errorMessage, isNotNull);
                 }
             );
 
-            test('-n sets isDryRun', ()
+            test('-n is no longer accepted', ()
                 {
                     final CliArgs args = CliArgs.parse(<String>['-n', 'A.dart']);
 
-                    expect(args.isDryRun, isTrue);
+                    expect(args.errorMessage, isNotNull);
                 }
             );
 
@@ -196,7 +195,6 @@ void main()
                     expect(args.errorMessage, isNotNull);
                 }
             );
-
 
             test('--exclude collects a single value', ()
                 {

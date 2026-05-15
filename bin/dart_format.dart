@@ -137,7 +137,6 @@ async
         configText: configText,
         fileNames: resolvedFileNames,
         isCheck: cliArgs.isCheck,
-        isDryRun: cliArgs.isDryRun,
         skipVersionCheck: cliArgs.skipVersionCheck
     );
     return defaultHandler.run();

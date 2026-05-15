@@ -27,7 +27,6 @@ Usage: dart_format [args] <file|dir|glob> [<file|dir|glob> ...]
     --check, -c                      No writes; exits non-zero if any file would change (for CI)
     --config=<JSON>                  Inline configuration JSON (mutually exclusive with --config-file)
     --config-file=<PATH>             Path to a JSON config file (mutually exclusive with --config)
-    --dry-run, -n                    Formats in memory only; reports would-format files; no filesystem writes
     --errors-as-json                 Writes errors as JSON to stderr
     --exclude=<GLOB>, -x <GLOB>      Excludes files matching the glob (repeatable)
     --help, -h                       Prints this help and exits
@@ -59,10 +58,7 @@ dart_format lib --exclude="**/legacy/**"
 # Exclude a specific file
 dart_format lib --exclude="lib/generated_code.dart"
 
-# Dry-run: list which files would change without writing anything
-dart_format lib -n
-
-# Check mode for CI / pre-commit: same as -n but exits non-zero if any file would change
+# Check mode (for CI / pre-commit, or just a no-write preview): exits non-zero if any file would change
 dart_format --check lib
 
 # Format stdin to stdout (pipe auto-detected when no positional args are given)

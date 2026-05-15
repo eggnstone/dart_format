@@ -12,7 +12,6 @@ class CliArgs
     final List<String> fileNames;
     final bool errorsAsJson;
     final bool isCheck;
-    final bool isDryRun;
     final bool isEmpty;
     final bool isWebService;
     final bool logToConsole;
@@ -28,7 +27,6 @@ class CliArgs
         required this.excludes,
         required this.fileNames,
         required this.isCheck,
-        required this.isDryRun,
         required this.isEmpty,
         required this.isWebService,
         required this.logToConsole,
@@ -64,7 +62,6 @@ class CliArgs
                 excludes: List<String>.unmodifiable(results.multiOption('exclude')),
                 fileNames: List<String>.unmodifiable(results.rest),
                 isCheck: results['check'] as bool,
-                isDryRun: results['dry-run'] as bool,
                 isEmpty: rawArgs.isEmpty,
                 isWebService: results['web'] as bool,
                 logToConsole: results['log-to-console'] as bool,
@@ -88,7 +85,6 @@ class CliArgs
         excludes = const <String>[],
         fileNames = const <String>[],
         isCheck = false,
-        isDryRun = false,
         isEmpty = false,
         isWebService = false,
         logToConsole = false,
@@ -105,7 +101,6 @@ class CliArgs
         parser.addFlag('check', abbr: 'c', negatable: false, help: 'No writes; exit non-zero if any file would change. For CI.');
         parser.addOption('config', help: 'Configuration JSON (mutually exclusive with --config-file).', valueHelp: 'JSON');
         parser.addOption('config-file', help: 'Path to a JSON configuration file (mutually exclusive with --config).', valueHelp: 'PATH');
-        parser.addFlag('dry-run', abbr: 'n', negatable: false, help: 'Format in memory only; no file writes.');
         parser.addFlag('errors-as-json', negatable: false, help: 'Write errors as JSON to stderr.');
         parser.addMultiOption('exclude', abbr: 'x', help: 'Exclude files matching this glob (repeatable).', valueHelp: 'GLOB');
         parser.addFlag('log-to-console', help: 'Log to console.');

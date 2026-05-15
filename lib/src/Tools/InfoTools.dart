@@ -14,7 +14,6 @@ class InfoTools
         writelnToStdOut('    --check, -c                      No writes; exits non-zero if any file would change (for CI)', preventLoggingToTempFile: true);
         writelnToStdOut('    --config=<JSON>                  Inline configuration JSON (mutually exclusive with --config-file)', preventLoggingToTempFile: true);
         writelnToStdOut('    --config-file=<PATH>             Path to a JSON config file (mutually exclusive with --config)', preventLoggingToTempFile: true);
-        writelnToStdOut('    --dry-run, -n                    Formats in memory only; reports would-format files; no filesystem writes', preventLoggingToTempFile: true);
         writelnToStdOut('    --errors-as-json                 Writes errors as JSON to stderr', preventLoggingToTempFile: true);
         writelnToStdOut('    --exclude=<GLOB>, -x <GLOB>      Excludes files matching the glob (repeatable)', preventLoggingToTempFile: true);
         writelnToStdOut('    --help, -h                       Prints this help and exits', preventLoggingToTempFile: true);

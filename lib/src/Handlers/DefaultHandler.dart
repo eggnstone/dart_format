@@ -15,13 +15,11 @@ class DefaultHandler
     final String? configText;
     final List<String> fileNames;
     final bool isCheck;
-    final bool isDryRun;
     final bool skipVersionCheck;
 
     DefaultHandler({
         required this.fileNames,
         required this.isCheck,
-        required this.isDryRun,
         required this.skipVersionCheck,
         this.configText
     });
@@ -39,49 +37,50 @@ class DefaultHandler
         // a cosmetic upgrade prompt.
         await VersionTools(writeToStdOut: true).isNewerVersionAvailable(skipVersionCheck: skipVersionCheck);
 
-        final bool noWriteMode = isCheck || isDryRun;
-
         final Config config = Config.fromJsonText(configText);
         final Formatter formatter = Formatter(config);
-        int wouldChangeCount = 0;
+        int changedCount = 0;
         int unchangedCount = 0;
         for (final String fileName in fileNames)
         {
-            if (!noWriteMode)
-                writelnToStdOut('  Processing $fileName');
-
             final File inputFile = File(fileName);
             final String inputText = inputFile.readAsStringSync();
             final String result = formatter.format(inputText);
             final bool wouldChange = result != inputText;
 
-            if (noWriteMode)
+            if (!wouldChange)
             {
-                if (wouldChange)
-                {
-                    wouldChangeCount++;
-                    writelnToStdOut('would format $fileName');
-                }
-                else
-                {
-                    unchangedCount++;
-                }
+                unchangedCount++;
                 continue;
             }
 
-            if (!wouldChange)
+            changedCount++;
+
+            if (isCheck)
+            {
+                writelnToStdOut('Would format $fileName');
                 continue;
+            }
 
             inputFile.writeAsStringSync(result);
+            writelnToStdOut('Formatted $fileName');
         }
 
-        if (noWriteMode)
-            writelnToStdOut('$wouldChangeCount file(s) would be reformatted, $unchangedCount left unchanged.');
+        if (isCheck)
+            writelnToStdOut('$changedCount file(s) would be formatted, $unchangedCount left unchanged.');
+        else
+            writelnToStdOut('$changedCount file(s) formatted, $unchangedCount left unchanged.');
 
-        if (isCheck && wouldChangeCount > 0)
+        if (isCheck)
         {
-            _logDebug('$METHOD_NAME with CHECK_FAILURE');
-            return ExitCodes.FAILURE;
+            if (changedCount > 0)
+            {
+                writelnToStdOut('Check FAILED: $changedCount file(s) need formatting.');
+                _logDebug('$METHOD_NAME with CHECK_FAILURE');
+                return ExitCodes.FAILURE;
+            }
+
+            writelnToStdOut('Check OK: all files are already formatted.');
         }
 
         _logDebug('$METHOD_NAME with SUCCESS');

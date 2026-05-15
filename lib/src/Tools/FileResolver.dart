@@ -139,8 +139,8 @@ class FileResolver
             if (r'.+()|^$\{}[]'.contains(c))
             {
                 buf
-                    ..write(r'\')
-                    ..write(c);
+                ..write(r'\')
+                ..write(c);
                 i++;
                 continue;
             }
@@ -200,5 +200,14 @@ class FileResolver
     => input.contains('*') || input.contains('?') || input.contains('[') || input.contains('{');
 
     static String _normalise(String path)
-    => path.replaceAll(r'\', '/');
+    {
+        final String forwardSlashed = path.replaceAll(r'\', '/');
+
+        // Strip a leading `./` so paths discovered under input `.` are not
+        // mis-matched by hidden-directory excludes like `**/.*/**`.
+        if (forwardSlashed.startsWith('./'))
+            return forwardSlashed.substring(2);
+
+        return forwardSlashed;
+    }
 }
