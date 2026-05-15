@@ -153,14 +153,20 @@ class WebServiceHandler
     => '</body></html>';
 
     String _getHtmlStart(String s)
-    => '''
+    {
+        final String title = s.isEmpty
+            ? 'dart_format v${VersionConstants.VERSION}'
+            : 'dart_format v${VersionConstants.VERSION} $s';
+
+        return '''
     <html lang="en">
     <head>
-    <title>dart_format $s</title>
+    <title>$title</title>
     </head>
     <body>
-    <h1 style="text-align: center; font-family: monospace;"><!--suppress HtmlUnknownTarget --><img style="vertical-align: middle;" alt="Logo" src="/favicon.ico">&nbsp;&nbsp;dart_format $s</h1>
+    <h1 style="text-align: center; font-family: monospace;"><!--suppress HtmlUnknownTarget --><img style="vertical-align: middle;" alt="Logo" src="/favicon.ico">&nbsp;&nbsp;$title</h1>
     ''';
+    }
 
     Future<void> _handleGet(HttpRequest request, {Function()? onQuit})
     {
