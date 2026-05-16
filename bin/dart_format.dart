@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dart_format/src/Cli/CliArgs.dart';
+import 'package:dart_format/src/Constants/Constants.dart';
 import 'package:dart_format/src/Constants/ExitCodes.dart';
 import 'package:dart_format/src/Enums/FailType.dart';
 import 'package:dart_format/src/Exceptions/DartFormatException.dart';
@@ -161,9 +162,18 @@ String? _readConfig(CliArgs cliArgs)
     if (cliArgs.configFile == null)
         return cliArgs.configText;
 
-    final File file = File(cliArgs.configFile!);
+    final String path = cliArgs.configFile!;
+    final String lower = path.toLowerCase();
+    if (!lower.endsWith('.json') && !lower.endsWith('.dart_format'))
+        throw DartFormatException.error('--config-file must end in .json or .dart_format: $path');
+
+    final File file = File(path);
     if (!file.existsSync())
-        throw DartFormatException.error('--config-file not found: ${cliArgs.configFile}');
+        throw DartFormatException.error('--config-file not found: $path');
+
+    final int size = file.lengthSync();
+    if (size > Constants.MAX_CONFIG_FILE_SIZE_IN_BYTES)
+        throw DartFormatException.error('--config-file exceeds maximum size of ${Constants.MAX_CONFIG_FILE_SIZE_IN_BYTES} bytes: $size bytes at $path');
 
     try
     {
@@ -171,6 +181,6 @@ String? _readConfig(CliArgs cliArgs)
     }
     on FileSystemException catch (e)
     {
-        throw DartFormatException.error('Failed to read --config-file ${cliArgs.configFile}: ${e.message}');
+        throw DartFormatException.error('Failed to read --config-file $path: ${e.message}');
     }
 }
