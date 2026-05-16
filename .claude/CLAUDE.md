@@ -8,7 +8,7 @@ Three invocation modes are dispatched from `bin/dart_format.dart`:
 
 - **File mode** (`DefaultHandler`): reads files, formats, writes back — or to `<name>.formatted.dart` with `--dry-run`.
 - **Pipe mode** (`PipeHandler`): reads source from stdin, writes formatted source to stdout. Used by IDE plugins for one-off invocations.
-- **Web service** (`WebServiceHandler`, `--web`): HTTP server on `127.0.0.1:7777` (falls back to a random port if busy). `POST /format` takes a multipart body with `Config` (JSON) + `Text` (Dart source) parts. `GET /`, `/status`, `/quit`, `/favicon.ico` exist for diagnostics. Used by long-running IDE plugins to avoid repeated process startup.
+- **Web service** (`WebServiceHandler`, `--web`): HTTP server on `127.0.0.1`, random free port by default (announced in the JSON line printed to stdout); pin a specific port with `--port=N`. `POST /format` takes a multipart body with `Config` (JSON) + `Text` (Dart source) parts. `GET /`, `/status`, `/quit`, `/favicon.ico` exist for diagnostics. Used by long-running IDE plugins to avoid repeated process startup.
 
 ## Architecture
 

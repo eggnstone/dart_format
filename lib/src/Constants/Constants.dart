@@ -29,8 +29,6 @@ class Constants
     static const int MAX_REQUEST_BODY_SIZE_IN_BYTES = 4 * 1024 * 1024;
     static const int MAX_REQUEST_HANDLING_TIME_IN_SECONDS = 60;
 
-    static const int PREFERRED_PORT = 7777;
-
     static const String REMOVE_TAG = 'DART_FORMAT_REMOVE';
     static const String REMOVE_START = '<$REMOVE_TAG>';
     static const String REMOVE_END = '</$REMOVE_TAG>';

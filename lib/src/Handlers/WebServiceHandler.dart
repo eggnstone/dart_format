@@ -59,23 +59,10 @@ class WebServiceHandler
 
         try
         {
-            HttpServer server;
-
-            if (port == null)
-            {
-                try
-                {
-                    server = await HttpServer.bind(InternetAddress.loopbackIPv4, Constants.PREFERRED_PORT);
-                }
-                on SocketException
-                {
-                    server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
-                }
-            }
-            else
-            {
-                server = await HttpServer.bind(InternetAddress.loopbackIPv4, port!);
-            }
+            // Default to a random free port; the chosen port is announced via
+            // the JSON line printed to stdout below. Pin with --port=N if you
+            // need a predictable address (e.g. for `curl 127.0.0.1:N/status`).
+            final HttpServer server = await HttpServer.bind(InternetAddress.loopbackIPv4, port ?? 0);
 
             server.handleError(_handleServerError);
             _readyCompleter.complete(server.port);

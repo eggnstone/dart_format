@@ -1,8 +1,13 @@
-# Stops the currently-running dart_format web service on 127.0.0.1:7777 (if
-# any) and starts a fresh one in the background.
+# Stops the currently-running dart_format web service on 127.0.0.1:$port (if
+# any) and starts a fresh one in the background, pinned to the same port via
+# --port=$port so /quit and follow-up requests can find it.
+#
+# dart_format's own default is to pick a random free port and announce it via
+# the JSON line on stdout; this script overrides that so the address stays
+# predictable for manual testing.
 #
 # Assumes `dart_format` is on PATH (installed via `dart pub global activate
-# dart_format`). Adjust $port below if your service runs elsewhere.
+# dart_format`). Adjust $port below if you want a different fixed port.
 
 $port = 7777
 $quitUrl = "http://127.0.0.1:${port}/quit"

@@ -126,7 +126,7 @@ class CliArgs
         parser.addMultiOption('exclude', abbr: 'x', help: 'Exclude files matching this glob (repeatable).', valueHelp: 'GLOB');
         parser.addFlag('log-to-console', help: 'Log to console.');
         parser.addFlag('log-to-temp-file', help: 'Log to a file in the system temp directory.');
-        parser.addOption('port', help: 'Port for web service mode (default: 7777, fallback random).', valueHelp: 'N');
+        parser.addOption('port', help: 'Port for web service mode (default: random free port, announced on stdout).', valueHelp: 'N');
         parser.addFlag('skip-version-check', negatable: false, help: 'Skip version check on start-up.');
         parser.addFlag('web', aliases: <String>['webservice'], negatable: false, help: 'Start in web service mode.');
         return parser;

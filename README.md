@@ -25,13 +25,15 @@ Usage: dart_format [args] <file|dir|glob> [<file|dir|glob> ...]
     or glob patterns (e.g. "lib/**/*.dart").
     Pass `-` (or pipe stdin with no positional args) to format stdin to stdout.
     --check, -c                      No writes; exits non-zero if any file would change (for CI)
+    --check-version                  Checks pub.dev for a newer dart_format release on start-up
     --config=<JSON>                  Inline configuration JSON (mutually exclusive with --config-file)
     --config-file=<PATH>             Path to a JSON config file (mutually exclusive with --config)
     --errors-as-json                 Writes errors as JSON to stderr
     --exclude=<GLOB>, -x <GLOB>      Excludes files matching the glob (repeatable)
     --help, -h                       Prints this help and exits
     --log-to-console[=true|false]    Logs to console
-    --port=<N>                       Port for web service mode (default: 7777, fallback random)
+    --log-to-temp-file[=true|false]  Logs to a file in the system temp directory
+    --port=<N>                       Port for web service mode (default: random free port, announced on stdout)
     --skip-version-check             Skips version check on start-up
     --version, -V                    Prints the version and exits
     --web                            Starts in web service mode

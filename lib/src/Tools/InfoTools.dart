@@ -20,7 +20,7 @@ class InfoTools
         writelnToStdOut('    --help, -h                       Prints this help and exits', preventLoggingToTempFile: true);
         writelnToStdOut('    --log-to-console[=true|false]    Logs to console', preventLoggingToTempFile: true);
         writelnToStdOut('    --log-to-temp-file[=true|false]  Logs to a file in the system temp directory', preventLoggingToTempFile: true);
-        writelnToStdOut('    --port=<N>                       Port for web service mode (default: 7777, fallback random)', preventLoggingToTempFile: true);
+        writelnToStdOut('    --port=<N>                       Port for web service mode (default: random free port, announced on stdout)', preventLoggingToTempFile: true);
         writelnToStdOut('    --skip-version-check             Skips version check on start-up', preventLoggingToTempFile: true);
         writelnToStdOut('    --version, -V                    Prints the version and exits', preventLoggingToTempFile: true);
         writelnToStdOut('    --web                            Starts in web service mode', preventLoggingToTempFile: true);
