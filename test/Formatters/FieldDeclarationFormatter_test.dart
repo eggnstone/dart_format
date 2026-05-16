@@ -68,6 +68,20 @@ void main()
                 TestConfig.none(),
                 TestConfig('augment int i=0;\n')
             ]
+        ),
+        TestGroupConfig(
+            inputNodeCreator: AstCreator.createFieldDeclarationInClass,
+            inputLeading: 'class C{',
+            inputMiddle: 'static    const int i = 0;',
+            inputTrailing: '}',
+            name: 'FieldDeclaration with extra spaces between static and const',
+            astVisitors: <TestVisitor<void>>[
+                TestVisitor<VariableDeclarationList>(18, 'const int i = 0')
+            ],
+            testConfigs: <TestConfig>[
+                TestConfig.none(),
+                TestConfig('static const int i = 0;\n')
+            ]
         )
     ];
 

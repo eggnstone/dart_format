@@ -4,14 +4,18 @@
 
 Security pass on the web service used by the IDE plugins. No plugin changes required to keep working.
 
+**Bug fixes**
+
+- Extra whitespace between field modifiers (e.g. `static    const`) is now collapsed.
+
 **CLI behaviour changes**
 
 - `--check-version` is the new opt-in for the pub.dev release check. CLI invocations no longer hit the network by default. `--skip-version-check` still works. Web mode (= IDE plugins) is unchanged.
 - `--log-to-temp-file` is a real flag now (defaults off, accepts `=true`/`=false`). CLI invocations no longer write a log file unless asked. Web mode still force-logs so the IDE plugins can surface the log path.
-- Unknown long options are silently dropped with a stderr warning — forward-compat so a future IDE plugin can pass a flag this binary doesn't know yet without bringing the service down. Previously-removed options (`--dry-run`, `--pipe`) and unknown short options still error explicitly.
+- Unknown long options are silently dropped with a stderr warning — forward-compat so a future IDE plugin can pass a flag this binary doesn't know yet without bringing the service down.
 - Directory recursion no longer descends into symlinked subdirectories, and glob matches that hit a symlink directly are skipped. Prevents accidentally formatting files outside the target tree.
 - `--config-file` now requires a `.json` or `.dart_format` suffix and rejects anything larger than 1 MiB. Stops a typo / wrong-path from silently reading a huge unrelated file.
-- Web mode no longer tries port 7777 first — it binds a random free port. The port is announced on stdout as before (`{"StatusCode":200,…,"Message":"http://127.0.0.1:NNNN"}`). Pin with `--port=N` if you need a predictable address (e.g. for `curl 127.0.0.1:N/status` or a restart script).
+- Web mode no longer tries port 7777 first — it binds a random free port. The port is announced on stdout as before. Pin with `--port=N` if you need a predictable address.
 
 **Web service hardening**
 

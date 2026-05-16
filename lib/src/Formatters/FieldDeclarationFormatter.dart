@@ -16,7 +16,7 @@ class FieldDeclarationFormatter extends TypedFormatter<FieldDeclaration>
         formatState.copyEntity(node.covariantKeyword, astVisitor, '$methodName/node.covariantKeyword');
         formatState.copyEntity(node.externalKeyword, astVisitor, '$methodName/node.externalKeyword');
         formatState.copyEntity(node.staticKeyword, astVisitor, '$methodName/node.staticKeyword');
-        formatState.copyEntity(node.fields, astVisitor, '$methodName/node.fields');
+        formatState.copyEntity(node.fields, astVisitor, '$methodName/node.fields', config.getSpacesZeroOne(node, node.fields));
         formatState.copySemicolon(node.semicolon, config, '$methodName/node.semicolon', config.space0);
     }
 }
