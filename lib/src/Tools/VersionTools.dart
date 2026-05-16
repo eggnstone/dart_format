@@ -9,7 +9,7 @@ import 'LogTools.dart';
 
 class VersionTools
 {
-    static const String DART_FORMAT_VERSIONS_URL = 'https://pub.dartlang.org/packages/dart_format.json';
+    static const String DART_FORMAT_VERSIONS_URL = 'https://pub.dev/api/packages/dart_format';
 
     final bool writeToStdOut;
 
@@ -58,7 +58,11 @@ class VersionTools
             //logDebug('Response: ${response.body}');
             final Map<String, dynamic> json = jsonDecode(response.body);
             //logDebug('json: $json');
-            final String version = JsonTools.getOrThrow<List<dynamic>>(json, 'versions')[0];
+            // pub.dev's package endpoint returns the latest stable release as
+            // `latest.version` (a string). The older pub.dartlang.org host
+            // returned a top-level `versions` list and is being retired.
+            final Map<String, dynamic> latest = JsonTools.getOrThrow<Map<String, dynamic>>(json, 'latest');
+            final String version = JsonTools.getOrThrow<String>(latest, 'version');
             //logDebug('version: $version');
 
             return Version.parse(version);

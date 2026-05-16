@@ -232,6 +232,31 @@ void main()
                 }
             );
 
+            test('--port=70000 is rejected', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--port=70000']);
+
+                    expect(args.errorMessage, isNotNull);
+                }
+            );
+
+            test('--port=-1 is rejected', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--port=-1']);
+
+                    expect(args.errorMessage, isNotNull);
+                }
+            );
+
+            test('--port=65535 is accepted', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--port=65535']);
+
+                    expect(args.errorMessage, isNull);
+                    expect(args.port, 65535);
+                }
+            );
+
             test('--skip-version-check sets skipVersionCheck', ()
                 {
                     final CliArgs args = CliArgs.parse(<String>['--skip-version-check']);

@@ -62,8 +62,8 @@ class CliArgs
 
             final String? portRaw = results['port'] as String?;
             final int? port = portRaw == null ? null : int.tryParse(portRaw);
-            if (portRaw != null && port == null)
-                return CliArgs._error('--port expects an integer, got "$portRaw".');
+            if (portRaw != null && (port == null || port < 0 || port > 65535))
+                return CliArgs._error('--port expects an integer in 0..65535, got "$portRaw".');
 
             final String? configText = results['config'] as String?;
             final String? configFile = results['config-file'] as String?;
