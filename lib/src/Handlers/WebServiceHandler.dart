@@ -387,12 +387,18 @@ class WebServiceHandler
         final String mimeMultiPart0 = await encoding0.decodeStream(mimeMultiParts[0]);
         final String mimeMultiPart1 = await encoding1.decodeStream(mimeMultiParts[1]);
 
+        // Parse the part names from Content-Disposition rather than comparing
+        // the whole header verbatim — extra whitespace, single quotes, casing
+        // of `form-data`, etc. all vary between HTTP clients.
+        final String? name0 = ContentTypeTools.get(mimeMultiParts[0].headers['content-disposition'], 'name');
+        final String? name1 = ContentTypeTools.get(mimeMultiParts[1].headers['content-disposition'], 'name');
+
         String? configText;
         String? text;
 
-        if (mimeMultiParts[0].headers['content-disposition'] == 'form-data; name="Config"')
+        if (name0 == 'Config')
             configText = mimeMultiPart0;
-        else if (mimeMultiParts[1].headers['content-disposition'] == 'form-data; name="Config"')
+        else if (name1 == 'Config')
             configText = mimeMultiPart1;
 
         if (configText == null)
@@ -404,9 +410,9 @@ class WebServiceHandler
             //throw DartFormatException.error('Part named "Config" is empty.', null);
         }
 
-        if (mimeMultiParts[0].headers['content-disposition'] == 'form-data; name="Text"')
+        if (name0 == 'Text')
             text = mimeMultiPart0;
-        else if (mimeMultiParts[1].headers['content-disposition'] == 'form-data; name="Text"')
+        else if (name1 == 'Text')
             text = mimeMultiPart1;
 
         if (text == null)
