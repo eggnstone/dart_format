@@ -30,7 +30,11 @@ class Formatter
     /// microseconds into it (keys: normalize, parse, visit, tidyBlankLines,
     /// verify, crlfRestore). Used by the benchmark harness — when null there
     /// is no extra work.
-    String format(String s, {Map<String, int>? phaseMicroseconds})
+    ///
+    /// [maxFormatTime] overrides the default `MAX_FORMAT_TIME_IN_SECONDS`
+    /// budget. Tests use a near-zero duration to drive the timeout path
+    /// without needing pathological inputs.
+    String format(String s, {Map<String, int>? phaseMicroseconds, Duration? maxFormatTime})
     {
         if (Constants.DEBUG_FORMATTER)
         {
@@ -41,20 +45,22 @@ class Formatter
         }
 
         final Stopwatch? phaseTimer = phaseMicroseconds == null ? null : (Stopwatch()..start());
+        final DateTime startDateTime = DateTime.now();
+        final DateTime maxDateTime = startDateTime.add(maxFormatTime ?? const Duration(seconds: Constants.MAX_FORMAT_TIME_IN_SECONDS));
 
         final bool wasCrlf = s.contains('\r\n');
         final String cleanedS = s.replaceAll('\r', '');
         _recordPhase(phaseTimer, phaseMicroseconds, 'normalize');
+        _throwIfTimedOut(maxDateTime, 'normalize');
 
         final ParseStringResult parseResult = AnalyzerUtilities.parseString(content: cleanedS, throwIfDiagnostics: false);
         _recordPhase(phaseTimer, phaseMicroseconds, 'parse');
+        _throwIfTimedOut(maxDateTime, 'parse');
 
         final List<Diagnostic> errors = parseResult.errors;
         if (errors.isNotEmpty)
             _logAndThrowWarning(errors.first.message, parseResult.lineInfo.getLocation(errors.first.offset));
 
-        final DateTime startDateTime = DateTime.now();
-        final DateTime maxDateTime = startDateTime.add(const Duration(seconds: Constants.MAX_FORMAT_TIME_IN_SECONDS));
         final FormatState formatState = FormatState(
             parseResult,
             indentationSpacesPerLevel: _config.indentationSpacesPerLevel,
@@ -67,16 +73,25 @@ class Formatter
         formatState.compilationUnit.accept(visitor);
         String result = formatState.getResult();
         _recordPhase(phaseTimer, phaseMicroseconds, 'visit');
+        _throwIfTimedOut(maxDateTime, 'visit');
 
         result = TextTools(_config).tidyBlankLines(result);
         _recordPhase(phaseTimer, phaseMicroseconds, 'tidyBlankLines');
+        _throwIfTimedOut(maxDateTime, 'tidyBlankLines');
 
         final String verifiedResult = _verifyResult(cleanedS, result, parseResult.lineInfo);
         _recordPhase(phaseTimer, phaseMicroseconds, 'verify');
+        _throwIfTimedOut(maxDateTime, 'verify');
 
         final String finalResult = wasCrlf ? verifiedResult.replaceAll('\n', '\r\n') : verifiedResult;
         _recordPhase(phaseTimer, phaseMicroseconds, 'crlfRestore');
         return finalResult;
+    }
+
+    void _throwIfTimedOut(DateTime maxDateTime, String phase)
+    {
+        if (DateTime.now().isAfter(maxDateTime))
+            throw DartFormatException.warning('Maximum time for formatting reached after $phase phase.');
     }
 
     void _logAndThrowWarning(String message, CharacterLocation location)

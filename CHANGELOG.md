@@ -2,13 +2,18 @@
 
 ## 2.2.0
 
-- Web service: capped POST body size at 4 MiB and rejected POSTs without a Content-Length, so a runaway or hostile client can't buffer an oversize body into memory.
-- Web service: rejected requests whose Host header doesn't claim a loopback name (`127.0.0.1`, `localhost`, `::1`). The TCP bind was already loopback-only; this closes the matching browser-side gap.
-- Web service: logged a `Warn:` line when a request omits the `X-DartFormat-Client` header. Step 1 of a staged opt-in — the header becomes required in a future release once the IntelliJ and VS Code plugins have shipped support.
-- Web service: wrapped `/format` handling in a 60 s per-request wall-clock timeout. If anything inside the request (slow body upload, slow stream decode, formatter not honouring its own time budget) blows past the limit, the client gets a `DartFormatException` back instead of waiting indefinitely.
-- CLI: introduced `--check-version` as an opt-in for the pub.dev release check. File and pipe modes no longer hit the network on every invocation — pass `--check-version` if you want the "newer version available" notice. Web mode still checks automatically until the IntelliJ and VS Code plugins ship support for the flag. `--skip-version-check` still works for back-compat.
-- CLI: unknown long options (`--<anything>` the parser hasn't been told about) are now silently dropped with a stderr warning instead of failing the whole invocation. Forward-compat so a newer IDE plugin can pass a flag this binary doesn't recognise without bringing the service down. Previously-removed options (`--dry-run`, `--pipe`) still error explicitly, and unknown short options (`-x` style) still error too — so typos in known flags don't go quiet.
-- CLI: `--log-to-temp-file` is now a real flag (defaults off, also accepts `=true`/`=false`). Previously the flag was silently stripped and the temp-file log was force-on for every invocation. File and pipe modes now write a log only when explicitly asked. Web mode still force-logs because IDE plugins surface the log path in their bug-report flow — that'll flip to honouring the flag in a future release once both plugins ship `--log-to-temp-file=true` on their spawn command.
+Security pass on the web service used by the IDE plugins. No plugin changes required to keep working.
+
+**CLI behaviour changes**
+
+- `--check-version` is the new opt-in for the pub.dev release check. CLI invocations no longer hit the network by default. `--skip-version-check` still works. Web mode (= IDE plugins) is unchanged.
+- `--log-to-temp-file` is a real flag now (defaults off, accepts `=true`/`=false`). CLI invocations no longer write a log file unless asked. Web mode still force-logs so the IDE plugins can surface the log path.
+- Unknown long options are silently dropped with a stderr warning — forward-compat so a future IDE plugin can pass a flag this binary doesn't know yet without bringing the service down. Previously-removed options (`--dry-run`, `--pipe`) and unknown short options still error explicitly.
+
+**Web service hardening**
+
+- Rejects oversize POSTs (>4 MiB or no `Content-Length`), non-loopback `Host` headers, and any request that exceeds 60 s wall-clock — instead of OOMing, accepting cross-origin browser traffic, or hanging.
+- The format-time budget now applies to every phase (parse, visit, tidy, verify), not just the visit pass.
 
 ## 2.1.0
 

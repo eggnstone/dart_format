@@ -29,6 +29,17 @@ void main()
                     expect(() => formatterNone.format(inputText), throwsA(isA<DartFormatException>()));
                 }
             );
+
+            test('throws when maxFormatTime is already exceeded', ()
+                {
+                    const String inputText = 'class A {}';
+
+                    expect(
+                        () => formatterNone.format(inputText, maxFormatTime: const Duration(seconds: -1)),
+                        throwsA(isA<DartFormatException>().having((DartFormatException e) => e.message, 'message', contains('Maximum time')))
+                    );
+                }
+            );
         }
     );
 }
