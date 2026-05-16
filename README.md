@@ -79,3 +79,29 @@ expansion. Pass an explicit file path to format one of them on purpose.
 - Codegen suffixes: `*.chopper.dart`, `*.config.dart`, `*.freezed.dart`,
   `*.g.dart`, `*.gen.dart`, `*.gr.dart`, `*.mocks.dart`, `*.pb*.dart`,
   `*.swagger.dart`.
+
+## Security model
+
+dart_format is designed for use on a single-user development machine. If
+that matches your environment, the defaults are fine. The notes below
+cover the cases where it doesn't.
+
+- **Web mode** (`--web`, used by the IDE plugins) binds only to
+  `127.0.0.1` and isn't authenticated. Anything running on the same
+  machine — including other local user accounts on a multi-seat box —
+  can talk to your formatter. The service can't read your files; it can
+  only format text the caller sends it. Don't expose it beyond loopback.
+- **Browser hardening** (2.2.0): the service rejects requests whose
+  Host header isn't a loopback name, caps POST bodies at 4 MiB, and
+  enforces a 60 s per-request wall-clock. That blocks the obvious
+  DNS-rebinding and OOM-by-CSRF tricks a visited web page could play
+  against `127.0.0.1`.
+- **Temp logging**: in web mode, dart_format writes a session log to the
+  system temp directory (filenames it touched, errors). Rotates at
+  10 MiB. Old files (`dart_format_*.log*`) are deleted on startup once
+  they're 30+ days old. Disable with `--log-to-temp-file=false`. CLI
+  modes don't log unless `--log-to-temp-file` is passed.
+- **Snapshot trust**: dart_format is installed via `dart pub global
+  activate`, which stores a compiled snapshot under `~/.pub-cache/`.
+  Anyone who can write to that directory can replace the binary. Same
+  caveat as every other pub-installed CLI.

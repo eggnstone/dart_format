@@ -11,7 +11,8 @@ class CliArgs
     // instead of the silent forward-compat drop we now do for unknown longs.
     // Short options (e.g. `-n`) all fall through to the parser, which already
     // emits a clear error on unknown abbreviations.
-    static const Set<String> REMOVED_LONG_OPTIONS = <String>{
+    static const Set<String> REMOVED_LONG_OPTIONS = <String>
+    {
         'dry-run',
         'pipe'
     };
