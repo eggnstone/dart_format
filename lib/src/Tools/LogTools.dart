@@ -58,7 +58,9 @@ class LogTools
     static String? get logFilePath
     {
         final String? p = _logFilePath;
-        if (p == null) return null;
+        if (p == null)
+            return null;
+
         final int sep = _lastPathSeparatorIndex(p);
         return sep < 0 ? null : p.substring(0, sep);
     }
@@ -68,7 +70,9 @@ class LogTools
     static String? get logFileName
     {
         final String? p = _logFilePath;
-        if (p == null) return null;
+        if (p == null)
+            return null;
+
         final int sep = _lastPathSeparatorIndex(p);
         return sep < 0 ? p : p.substring(sep + 1);
     }
@@ -79,8 +83,12 @@ class LogTools
     /// its startup JSON before any actual log entries have been emitted.
     static bool ensureLogFile()
     {
-        if (!(logToTempFile ?? false)) return false;
-        if (_logFile != null) return true;
+        if (!(logToTempFile ?? false))
+            return false;
+
+        if (_logFile != null)
+            return true;
+
         return _createLogFile();
     }
 

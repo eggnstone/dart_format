@@ -463,13 +463,17 @@ class FormatState
                             else
                             {
                                 final String lastText = _output.lastText;
-                                if (lastText.endsWith('\n'))
+                                // Treat empty lastText as "fresh line": when nothing has been
+                                // emitted yet (e.g. the file starts with a `//` comment), we
+                                // must not prepend a space — that would shove a stray space
+                                // before the very first character of the output.
+                                if (lastText.isEmpty || lastText.endsWith('\n'))
                                 {
                                     fixedFiller = fixedFillerTrimmedLeft;
                                     if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('    fixedFiller/4e: ${StringTools.toDisplayString(fixedFiller)}');
                                 }
                                 else
-                                {                                
+                                {
                                     fixedFiller = ' $fixedFillerTrimmedLeft';
                                     if (Constants.DEBUG_FORMAT_STATE_SPACING) logInternal('    fixedFiller/4f: ${StringTools.toDisplayString(fixedFiller)}');
                                 }
