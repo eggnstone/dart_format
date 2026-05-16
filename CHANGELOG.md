@@ -19,6 +19,7 @@ Security pass on the web service used by the IDE plugins. No plugin changes requ
 - The format-time budget now applies to every phase (parse, visit, tidy, verify), not just the visit pass.
 - Unexpected internal errors (anything that isn't a `DartFormatException`) no longer echo `e.toString()` back over the wire. The wire response is a generic "see the dart_format log" message; the full stack trace stays in the local temp log. Real format errors with line/column info are unaffected.
 - Log file rotates at 10 MiB into a sibling `.old` file. A long-running web service is now capped at roughly 20 MiB of log per session instead of growing forever.
+- Old `dart_format_*.log` / `.log.old` files in the system temp directory are deleted on startup once they're 30+ days old. Stops a slow accumulation of leftover logs over months of use.
 
 ## 2.1.0
 

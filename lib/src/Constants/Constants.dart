@@ -23,6 +23,8 @@ class Constants
 
     static const int HTTP_TOOLS_WAIT_BETWEEN_FLUSH_AND_CLOSE_IN_MILLISECONDS = 100;
 
+    static const int LOG_FILE_RETENTION_IN_DAYS = 30;
+
     static const int MAX_CONFIG_FILE_SIZE_IN_BYTES = 1 * 1024 * 1024;
     static const int MAX_DEBUG_LENGTH = 50;
     static const int MAX_FORMAT_TIME_IN_SECONDS = DEBUG ? 10 : 50;

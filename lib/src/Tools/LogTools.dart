@@ -187,6 +187,8 @@ class LogTools
 
     static bool _createLogFile()
     {
+        _cleanupOldLogFiles();
+
         String timestamp = DateTime.now().toIso8601String();
         timestamp = timestamp.replaceAll(':', '-');
         timestamp = timestamp.replaceAll('T', '_');
@@ -203,6 +205,50 @@ class LogTools
         catch (e)
         {
             return false;
+        }
+    }
+
+    // Run once per session (called from _createLogFile on the first log write).
+    // Drops any `dart_format_*.log` / `.log.old` file in systemTemp that hasn't
+    // been touched in LOG_FILE_RETENTION_IN_DAYS days. Best-effort: per-file
+    // failures (e.g. locked by a concurrent dart_format process) are swallowed.
+    static void _cleanupOldLogFiles()
+    {
+        try
+        {
+            final DateTime cutoff = DateTime.now().subtract(const Duration(days: Constants.LOG_FILE_RETENTION_IN_DAYS));
+            final String pidSuffix = '_$pid.log';
+
+            for (final FileSystemEntity entity in Directory.systemTemp.listSync(followLinks: false))
+            {
+                if (entity is! File)
+                    continue;
+
+                final String name = entity.uri.pathSegments.last;
+                if (!name.startsWith('dart_format_'))
+                    continue;
+
+                if (!name.endsWith('.log') && !name.endsWith('.log.old'))
+                    continue;
+
+                // Never delete the current process's own files.
+                if (name.contains(pidSuffix))
+                    continue;
+
+                try
+                {
+                    if (entity.lastModifiedSync().isBefore(cutoff))
+                        entity.deleteSync();
+                }
+                on FileSystemException
+                {
+                    // File locked / deleted concurrently — skip.
+                }
+            }
+        }
+        on FileSystemException
+        {
+            // systemTemp not listable — skip cleanup, not fatal.
         }
     }
 
