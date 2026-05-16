@@ -25,13 +25,18 @@ class WebServiceHandler
 
     final int? port;
     final bool skipVersionCheck;
+    final Duration requestTimeout;
     final DateTime _startTime = DateTime.now();
     final Completer<int> _readyCompleter = Completer<int>();
 
     static int _requestCount = 0;
     static double _maxMillisecondsPerKiloCharacter = 0;
 
-    WebServiceHandler({required this.skipVersionCheck, this.port});
+    WebServiceHandler({
+        required this.skipVersionCheck,
+        this.port,
+        this.requestTimeout = const Duration(seconds: Constants.MAX_REQUEST_HANDLING_TIME_IN_SECONDS)
+    });
 
     /// Resolves with the actually-bound port once the HTTP server is listening.
     /// Tests await this to learn which port `port: 0` landed on.
@@ -272,115 +277,16 @@ class WebServiceHandler
 
         try
         {
-            //throw DartFormatException.warning('WARNING', CharacterLocation(1, 1));
-            //throw DartFormatException.error('ERROR', CharacterLocation(1, 1));
-
-            //logDebug('Request.contentLength: request.contentLength: ${request.contentLength}');
-
-            // Content-Length is required so the cap below can be enforced before reading the body.
-            if (request.contentLength < 0)
-            {
-                request.response.statusCode = HttpStatus.lengthRequired;
-                request.response.headers.contentType = ContentType.text;
-                request.response.writeln('Content-Length header is required.');
-                return;
-            }
-
-            // Bail before multipart parsing so a hostile client can't OOM the process.
-            if (request.contentLength > Constants.MAX_REQUEST_BODY_SIZE_IN_BYTES)
-            {
-                request.response.statusCode = HttpStatus.requestEntityTooLarge;
-                request.response.headers.contentType = ContentType.text;
-                request.response.writeln('Request body exceeds maximum of ${Constants.MAX_REQUEST_BODY_SIZE_IN_BYTES} bytes.');
-                return;
-            }
-
-            final List<String>? contentTypeList = request.headers['content-type'];
-            //logDebug('contentTypeList: $contentTypeList');
-            final String? contentType = contentTypeList?.first;
-            //logDebug('contentType: $contentType');
-            if (contentType == null)
-                throw DartFormatException.error('No content-type header found.');
-
-            final String? boundary = ContentTypeTools.getBoundary(contentType);
-            //logDebug('boundary: $boundary');
-            if (boundary == null)
-                throw DartFormatException.error('No boundary found.');
-
-            final Stream<MimeMultipart> mimeMultiPartStreams = MimeMultipartTransformer(boundary).bind(request);
-
-            final List<MimeMultipart> mimeMultiParts = await mimeMultiPartStreams.toList();
-            //logDebug('mimeMultiParts: ${mimeMultiParts.length}');
-            if (mimeMultiParts.length != 2)
-                throw DartFormatException.error('Expected 2 parts, got ${mimeMultiParts.length}.');
-
-            //logDebug('mimeMultiParts[0].headers: ${mimeMultiParts[0].headers}');
-            final String? contentType0 = mimeMultiParts[0].headers['content-type'];
-            //logDebug('contentType0: $contentType0');
-            final String? charset0 = ContentTypeTools.getCharset(contentType0);
-            //logDebug('charset0: $charset0');
-
-            //logDebug('mimeMultiParts[1].headers: ${mimeMultiParts[1].headers}');
-            final String? contentType1 = mimeMultiParts[1].headers['content-type'];
-            //logDebug('contentType1: $contentType1');
-            final String? charset1 = ContentTypeTools.getCharset(contentType1);
-            //logDebug('charset1: $charset1');
-
-            final Encoding? encoding0 = Encoding.getByName(charset0);
-            final Encoding? encoding1 = Encoding.getByName(charset1);
-
-            if (encoding0 == null)
-                throw DartFormatException.error('Cannot find decoder for charset "$charset0".');
-
-            if (encoding1 == null)
-                throw DartFormatException.error('Cannot find decoder for charset "$charset1".');
-
-            final String mimeMultiPart0 = await encoding0.decodeStream(mimeMultiParts[0]);
-            final String mimeMultiPart1 = await encoding1.decodeStream(mimeMultiParts[1]);
-
-            String? configText;
-            String? text;
-
-            if (mimeMultiParts[0].headers['content-disposition'] == 'form-data; name="Config"')
-                configText = mimeMultiPart0;
-            else if (mimeMultiParts[1].headers['content-disposition'] == 'form-data; name="Config"')
-                configText = mimeMultiPart1;
-
-            if (configText == null)
-                throw DartFormatException.error('No part named "Config" found.');
-
-            if (configText.isEmpty)
-            {
-                //logDebug('Part named "Config" is empty. => Using default config.');
-                //throw DartFormatException.error('Part named "Config" is empty.', null);
-            }
-
-            if (mimeMultiParts[0].headers['content-disposition'] == 'form-data; name="Text"')
-                text = mimeMultiPart0;
-            else if (mimeMultiParts[1].headers['content-disposition'] == 'form-data; name="Text"')
-                text = mimeMultiPart1;
-
-            if (text == null)
-                throw DartFormatException.error('No part named "Text" found .');
-
-            if (text.isEmpty)
-                throw DartFormatException.error('Part named "Text" is empty.');
-
-            //logDebug('configText: ${StringTools.toDisplayString(configText)}');
-            //logDebug('text: ${StringTools.toDisplayString(text, Constants.MAX_DEBUG_LENGTH)}');
-
-            final Config config = configText.isEmpty ? Config.all() : Config.fromJsonText(configText);
-            final Formatter formatter = Formatter(config);
-            final String formattedText = formatter.format(text);
-            if (formattedText.isEmpty)
-                throw DartFormatException.error('No output generated.');
-
-            //logDebug('Sending formatted text: ${StringTools.toDisplayString(formattedText, Constants.MAX_DEBUG_LENGTH)}');
-
+            await _handlePostFormatInner(request).timeout(requestTimeout);
+        }
+        on TimeoutException catch (e, st)
+        {
+            logErrorObject(METHOD_NAME, e, st);
+            final DartFormatException dartFormatException = DartFormatException.error('Request timed out after ${requestTimeout.inSeconds}s.');
             request.response.statusCode = HttpStatus.ok;
             request.response.headers.contentType = ContentType.text;
-            request.response.headers.add('X-DartFormat-Result', 'OK');
-            request.response.write(formattedText);
+            request.response.headers.add('X-DartFormat-Result', 'Fail');
+            request.response.headers.add('X-DartFormat-Exception', jsonEncode(dartFormatException.toJson()));
         }
         on DartFormatException catch (e, st)
         {
@@ -419,6 +325,120 @@ class WebServiceHandler
             //logDebug('$METHOD_NAME: Calling flushAndClose');
             await HttpTools.flushAndClose(request);
         }
+    }
+
+    Future<void> _handlePostFormatInner(HttpRequest request)
+    async
+    {
+        //throw DartFormatException.warning('WARNING', CharacterLocation(1, 1));
+        //throw DartFormatException.error('ERROR', CharacterLocation(1, 1));
+
+        //logDebug('Request.contentLength: request.contentLength: ${request.contentLength}');
+
+        // Content-Length is required so the cap below can be enforced before reading the body.
+        if (request.contentLength < 0)
+        {
+            request.response.statusCode = HttpStatus.lengthRequired;
+            request.response.headers.contentType = ContentType.text;
+            request.response.writeln('Content-Length header is required.');
+            return;
+        }
+
+        // Bail before multipart parsing so a hostile client can't OOM the process.
+        if (request.contentLength > Constants.MAX_REQUEST_BODY_SIZE_IN_BYTES)
+        {
+            request.response.statusCode = HttpStatus.requestEntityTooLarge;
+            request.response.headers.contentType = ContentType.text;
+            request.response.writeln('Request body exceeds maximum of ${Constants.MAX_REQUEST_BODY_SIZE_IN_BYTES} bytes.');
+            return;
+        }
+
+        final List<String>? contentTypeList = request.headers['content-type'];
+        //logDebug('contentTypeList: $contentTypeList');
+        final String? contentType = contentTypeList?.first;
+        //logDebug('contentType: $contentType');
+        if (contentType == null)
+            throw DartFormatException.error('No content-type header found.');
+
+        final String? boundary = ContentTypeTools.getBoundary(contentType);
+        //logDebug('boundary: $boundary');
+        if (boundary == null)
+            throw DartFormatException.error('No boundary found.');
+
+        final Stream<MimeMultipart> mimeMultiPartStreams = MimeMultipartTransformer(boundary).bind(request);
+
+        final List<MimeMultipart> mimeMultiParts = await mimeMultiPartStreams.toList();
+        //logDebug('mimeMultiParts: ${mimeMultiParts.length}');
+        if (mimeMultiParts.length != 2)
+            throw DartFormatException.error('Expected 2 parts, got ${mimeMultiParts.length}.');
+
+        //logDebug('mimeMultiParts[0].headers: ${mimeMultiParts[0].headers}');
+        final String? contentType0 = mimeMultiParts[0].headers['content-type'];
+        //logDebug('contentType0: $contentType0');
+        final String? charset0 = ContentTypeTools.getCharset(contentType0);
+        //logDebug('charset0: $charset0');
+
+        //logDebug('mimeMultiParts[1].headers: ${mimeMultiParts[1].headers}');
+        final String? contentType1 = mimeMultiParts[1].headers['content-type'];
+        //logDebug('contentType1: $contentType1');
+        final String? charset1 = ContentTypeTools.getCharset(contentType1);
+        //logDebug('charset1: $charset1');
+
+        final Encoding? encoding0 = Encoding.getByName(charset0);
+        final Encoding? encoding1 = Encoding.getByName(charset1);
+
+        if (encoding0 == null)
+            throw DartFormatException.error('Cannot find decoder for charset "$charset0".');
+
+        if (encoding1 == null)
+            throw DartFormatException.error('Cannot find decoder for charset "$charset1".');
+
+        final String mimeMultiPart0 = await encoding0.decodeStream(mimeMultiParts[0]);
+        final String mimeMultiPart1 = await encoding1.decodeStream(mimeMultiParts[1]);
+
+        String? configText;
+        String? text;
+
+        if (mimeMultiParts[0].headers['content-disposition'] == 'form-data; name="Config"')
+            configText = mimeMultiPart0;
+        else if (mimeMultiParts[1].headers['content-disposition'] == 'form-data; name="Config"')
+            configText = mimeMultiPart1;
+
+        if (configText == null)
+            throw DartFormatException.error('No part named "Config" found.');
+
+        if (configText.isEmpty)
+        {
+            //logDebug('Part named "Config" is empty. => Using default config.');
+            //throw DartFormatException.error('Part named "Config" is empty.', null);
+        }
+
+        if (mimeMultiParts[0].headers['content-disposition'] == 'form-data; name="Text"')
+            text = mimeMultiPart0;
+        else if (mimeMultiParts[1].headers['content-disposition'] == 'form-data; name="Text"')
+            text = mimeMultiPart1;
+
+        if (text == null)
+            throw DartFormatException.error('No part named "Text" found .');
+
+        if (text.isEmpty)
+            throw DartFormatException.error('Part named "Text" is empty.');
+
+        //logDebug('configText: ${StringTools.toDisplayString(configText)}');
+        //logDebug('text: ${StringTools.toDisplayString(text, Constants.MAX_DEBUG_LENGTH)}');
+
+        final Config config = configText.isEmpty ? Config.all() : Config.fromJsonText(configText);
+        final Formatter formatter = Formatter(config);
+        final String formattedText = formatter.format(text);
+        if (formattedText.isEmpty)
+            throw DartFormatException.error('No output generated.');
+
+        //logDebug('Sending formatted text: ${StringTools.toDisplayString(formattedText, Constants.MAX_DEBUG_LENGTH)}');
+
+        request.response.statusCode = HttpStatus.ok;
+        request.response.headers.contentType = ContentType.text;
+        request.response.headers.add('X-DartFormat-Result', 'OK');
+        request.response.write(formattedText);
     }
 
     Future<void> _handleRequest(HttpRequest request, {Function()? onQuit})
