@@ -90,6 +90,44 @@ void main()
                     }
                 }
             );
+
+            test('GET /status with non-loopback Host is rejected with 403', ()
+                async
+                {
+                    final int statusCode = await _getStatusCodeWithHost(boundPort, '/status', 'evil.example');
+                    expect(statusCode, HttpStatus.forbidden);
+                }
+            );
+
+            test('GET /quit with non-loopback Host is rejected with 403 and does not terminate the server', ()
+                async
+                {
+                    final int rejectedStatusCode = await _getStatusCodeWithHost(boundPort, '/quit', 'evil.example');
+                    expect(rejectedStatusCode, HttpStatus.forbidden);
+
+                    // Server should still respond to a legitimate request.
+                    final int legitStatusCode = await _getStatusCodeWithHost(boundPort, '/status', '127.0.0.1');
+                    expect(legitStatusCode, HttpStatus.ok);
+                }
+            );
         }
     );
+}
+
+Future<int> _getStatusCodeWithHost(int port, String path, String hostHeader)
+async
+{
+    final HttpClient client = HttpClient();
+    try
+    {
+        final HttpClientRequest request = await client.getUrl(Uri.parse('http://127.0.0.1:$port$path'));
+        request.headers.set('host', hostHeader);
+        final HttpClientResponse response = await request.close();
+        await response.drain<void>();
+        return response.statusCode;
+    }
+    finally
+    {
+        client.close(force: true);
+    }
 }

@@ -433,6 +433,19 @@ class WebServiceHandler
         // TODO: timeout?
         try
         {
+            // Reject anything whose Host header doesn't claim a loopback name.
+            // Stops DNS-rebinding pages that resolved attacker.example to 127.0.0.1.
+            final String? host = request.headers.host;
+            if (host == null || (host != '127.0.0.1' && host != 'localhost' && host != '::1'))
+            {
+                logDebug('$METHOD_NAME: rejecting non-loopback Host: $host');
+                request.response.statusCode = HttpStatus.forbidden;
+                request.response.headers.contentType = ContentType.text;
+                request.response.writeln('Forbidden.');
+                await HttpTools.flushAndClose(request);
+                return;
+            }
+
             if (request.method == 'GET')
             {
                 await _handleGet(request, onQuit: onQuit);

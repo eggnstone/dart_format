@@ -3,6 +3,7 @@
 ## 2.2.0
 
 - Web service: capped POST body size at 4 MiB and rejected POSTs without a Content-Length, so a runaway or hostile client can't buffer an oversize body into memory.
+- Web service: rejected requests whose Host header doesn't claim a loopback name (`127.0.0.1`, `localhost`, `::1`). The TCP bind was already loopback-only; this closes the matching browser-side gap.
 
 ## 2.1.0
 
