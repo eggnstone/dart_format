@@ -27,6 +27,7 @@ class Constants
     static const int MAX_DEBUG_LENGTH = 50;
     static const int MAX_FORMAT_TIME_IN_SECONDS = DEBUG ? 10 : 50;
     static const int MAX_FORMAT_TIME_IN_SECONDS_FOR_TESTS = 1;
+    static const int MAX_LOG_FILE_SIZE_IN_BYTES = 10 * 1024 * 1024;
     static const int MAX_REQUEST_BODY_SIZE_IN_BYTES = 4 * 1024 * 1024;
     static const int MAX_REQUEST_HANDLING_TIME_IN_SECONDS = 60;
 

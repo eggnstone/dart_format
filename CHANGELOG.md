@@ -18,6 +18,7 @@ Security pass on the web service used by the IDE plugins. No plugin changes requ
 - Rejects oversize POSTs (>4 MiB or no `Content-Length`), non-loopback `Host` headers, and any request that exceeds 60 s wall-clock — instead of OOMing, accepting cross-origin browser traffic, or hanging.
 - The format-time budget now applies to every phase (parse, visit, tidy, verify), not just the visit pass.
 - Unexpected internal errors (anything that isn't a `DartFormatException`) no longer echo `e.toString()` back over the wire. The wire response is a generic "see the dart_format log" message; the full stack trace stays in the local temp log. Real format errors with line/column info are unaffected.
+- Log file rotates at 10 MiB into a sibling `.old` file. A long-running web service is now capped at roughly 20 MiB of log per session instead of growing forever.
 
 ## 2.1.0
 

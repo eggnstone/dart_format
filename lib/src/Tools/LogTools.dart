@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:eggnstone_dart/eggnstone_dart.dart' as eggnstone_dart;
 import 'package:intl/intl.dart';
 
+import '../Constants/Constants.dart';
+
 void logInternal(String message)
 => LogTools.logInternal(message);
 
@@ -47,6 +49,8 @@ class LogTools
 
     static final DateFormat _dateTimeFormatter = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
     static RandomAccessFile? _logFile;
+    static String? _logFilePath;
+    static int _logFileSizeBytes = 0;
 
     static void logInternal(String message)
     {
@@ -118,13 +122,13 @@ class LogTools
             if (!_createLogFile())
                 return;
 
-        //s = MemoryInfo ''+s;
-
-        //eggnstone_dart.logDebug('## 1');
-        _logFile!.writeStringSync('${_dateTimeFormatter.format(DateTime.now())} $s\n');
-        //eggnstone_dart.logDebug('## 2');
+        final String line = '${_dateTimeFormatter.format(DateTime.now())} $s\n';
+        _logFile!.writeStringSync(line);
         _logFile!.flushSync();
-        //eggnstone_dart.logDebug('## 3');
+        _logFileSizeBytes += line.length;
+
+        if (_logFileSizeBytes > Constants.MAX_LOG_FILE_SIZE_IN_BYTES)
+            _rotateLogFile();
     }
 
     static void writeToStdOut(String s, {bool preventLoggingToTempFile = false})
@@ -192,11 +196,56 @@ class LogTools
         try
         {
             _logFile = File(logFileName).openSync(mode: FileMode.append);
+            _logFilePath = logFileName;
+            _logFileSizeBytes = File(logFileName).lengthSync();
             return true;
         }
         catch (e)
         {
             return false;
+        }
+    }
+
+    // Caps each session's log at 2 * MAX_LOG_FILE_SIZE_IN_BYTES: the current
+    // file plus one rotated `.old` backup. The current path stays the same so
+    // any caller (e.g. IDE plugin surfacing the log to the user) still finds
+    // the recent entries; older entries are in `<path>.old`.
+    static void _rotateLogFile()
+    {
+        final String? currentPath = _logFilePath;
+        if (_logFile == null || currentPath == null)
+            return;
+
+        try
+        {
+            _logFile!.closeSync();
+        }
+        on FileSystemException
+        {
+            // best effort
+        }
+        _logFile = null;
+
+        try
+        {
+            final File oldFile = File('$currentPath.old');
+            if (oldFile.existsSync())
+                oldFile.deleteSync();
+            File(currentPath).renameSync('$currentPath.old');
+        }
+        on FileSystemException
+        {
+            // best effort — proceed to open a fresh handle at currentPath
+        }
+
+        try
+        {
+            _logFile = File(currentPath).openSync(mode: FileMode.append);
+            _logFileSizeBytes = 0;
+        }
+        on FileSystemException
+        {
+            _logFile = null;
         }
     }
 }
