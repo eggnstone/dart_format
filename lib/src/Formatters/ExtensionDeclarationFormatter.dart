@@ -1,6 +1,5 @@
 import 'package:analyzer/dart/ast/ast.dart';
 
-import '../Data/ConfigExtension.dart';
 import 'TypedFormatter.dart';
 
 class ExtensionDeclarationFormatter extends TypedFormatter<ExtensionDeclaration>

@@ -24,7 +24,7 @@ async
     // modes honour the flag so a CI run of `dart_format --check` doesn't
     // litter /tmp on every invocation. Step 2 will flip web mode to honour
     // the flag too, once the plugins ship `--log-to-temp-file=true`.
-    LogTools.logToTempFile = cliArgs.isWebService ? true : cliArgs.logToTempFile;
+    LogTools.logToTempFile = cliArgs.isWebService || cliArgs.logToTempFile;
 
     logDebug('main START', preventLoggingToConsole: true);
 

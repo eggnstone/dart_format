@@ -12,6 +12,12 @@ _JsonResponse _$JsonResponseFromJson(Map<String, dynamic> json) =>
       status: json['Status'] as String,
       currentVersion: json['CurrentVersion'] as String?,
       latestVersion: json['LatestVersion'] as String?,
+      protocol: json['Protocol'] as String?,
+      address: json['Address'] as String?,
+      port: (json['Port'] as num?)?.toInt(),
+      processId: (json['ProcessId'] as num?)?.toInt(),
+      logFilePath: json['LogFilePath'] as String?,
+      logFileName: json['LogFileName'] as String?,
       message: json['Message'] as String?,
     );
 
@@ -21,5 +27,11 @@ Map<String, dynamic> _$JsonResponseToJson(_JsonResponse instance) =>
       'Status': instance.status,
       'CurrentVersion': ?instance.currentVersion,
       'LatestVersion': ?instance.latestVersion,
+      'Protocol': ?instance.protocol,
+      'Address': ?instance.address,
+      'Port': ?instance.port,
+      'ProcessId': ?instance.processId,
+      'LogFilePath': ?instance.logFilePath,
+      'LogFileName': ?instance.logFileName,
       'Message': ?instance.message,
     };

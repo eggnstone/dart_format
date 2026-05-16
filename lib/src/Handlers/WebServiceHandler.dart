@@ -67,14 +67,26 @@ class WebServiceHandler
             server.handleError(_handleServerError);
             _readyCompleter.complete(server.port);
 
+            // Force-create the log file (if temp-file logging is enabled) so
+            // the startup JSON can advertise its path even before any actual
+            // log lines have been emitted.
+            LogTools.ensureLogFile();
+
             const String protocol = 'http';
-            final String message = '$protocol://${server.address.address}:${server.port}';
+            final String address = server.address.address;
+            final String message = '$protocol://$address:${server.port}';
             final String currentVersion = VersionConstants.VERSION.toString();
             final JsonResponse jsonResponse = JsonResponse(
                 statusCode: 200,
                 status: 'OK',
                 currentVersion: currentVersion,
                 latestVersion: latestVersion?.toString(),
+                protocol: protocol,
+                address: address,
+                port: server.port,
+                processId: pid,
+                logFilePath: LogTools.logFilePath,
+                logFileName: LogTools.logFileName,
                 message: message
             );
             writelnToStdOut(jsonEncode(jsonResponse.toJson()));

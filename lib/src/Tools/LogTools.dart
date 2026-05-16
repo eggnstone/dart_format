@@ -52,6 +52,45 @@ class LogTools
     static String? _logFilePath;
     static int _logFileSizeBytes = 0;
 
+    /// Directory containing the active temp log file, or null when temp-file
+    /// logging is disabled or hasn't been initialised yet. Used by
+    /// WebServiceHandler to advertise the path in the startup JSON.
+    static String? get logFilePath
+    {
+        final String? p = _logFilePath;
+        if (p == null) return null;
+        final int sep = _lastPathSeparatorIndex(p);
+        return sep < 0 ? null : p.substring(0, sep);
+    }
+
+    /// Filename portion of the active temp log file (without directory), or
+    /// null when temp-file logging is disabled or hasn't been initialised yet.
+    static String? get logFileName
+    {
+        final String? p = _logFilePath;
+        if (p == null) return null;
+        final int sep = _lastPathSeparatorIndex(p);
+        return sep < 0 ? p : p.substring(sep + 1);
+    }
+
+    /// Triggers creation of the temp log file if temp-file logging is enabled
+    /// but no log lines have been written yet. Returns true if a log file is
+    /// ready afterwards. Lets the web service advertise the log path/name in
+    /// its startup JSON before any actual log entries have been emitted.
+    static bool ensureLogFile()
+    {
+        if (!(logToTempFile ?? false)) return false;
+        if (_logFile != null) return true;
+        return _createLogFile();
+    }
+
+    static int _lastPathSeparatorIndex(String path)
+    {
+        final int forward = path.lastIndexOf('/');
+        final int backward = path.lastIndexOf(r'\');
+        return forward > backward ? forward : backward;
+    }
+
     static void logInternal(String message)
     {
         if (logInternals)
@@ -193,7 +232,7 @@ class LogTools
         timestamp = timestamp.replaceAll(':', '-');
         timestamp = timestamp.replaceAll('T', '_');
         timestamp = timestamp.substring(0, timestamp.lastIndexOf('.'));
-        final String logFileName = '${Directory.systemTemp.path}/dart_format_${timestamp}_$pid.log';
+        final String logFileName = '${Directory.systemTemp.path}${Platform.pathSeparator}dart_format_${timestamp}_$pid.log';
 
         try
         {

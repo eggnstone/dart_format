@@ -18,6 +18,10 @@ Security pass on the web service used by the IDE plugins. No plugin changes requ
 - `--config-file` now requires a `.json` or `.dart_format` suffix and rejects anything larger than 1 MiB. Stops a typo / wrong-path from silently reading a huge unrelated file.
 - Web mode no longer tries port 7777 first — it binds a random free port. The port is announced on stdout as before. Pin with `--port=N` if you need a predictable address.
 
+**Web service**
+
+- Startup JSON now advertises structured fields plugins can read directly: `Protocol`, `Address`, `Port`, `ProcessId`, `LogFilePath`, `LogFileName`. `Message` (the full URL string) is kept for back-compat with older plugin builds and will be removed in a future release. Plugins should prefer the structured fields and fall back to `Message` only when they're absent.
+
 **Web service hardening**
 
 - Rejects oversize POSTs (>4 MiB or no `Content-Length`), non-loopback `Host` headers, and any request that exceeds 60 s wall-clock — instead of OOMing, accepting cross-origin browser traffic, or hanging.

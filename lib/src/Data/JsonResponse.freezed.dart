@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$JsonResponse {
 
-@JsonKey(name: 'StatusCode') int get statusCode;@JsonKey(name: 'Status') String get status;@JsonKey(includeIfNull: false, name: 'CurrentVersion') String? get currentVersion;@JsonKey(includeIfNull: false, name: 'LatestVersion') String? get latestVersion;@JsonKey(includeIfNull: false, name: 'Message') String? get message;
+@JsonKey(name: 'StatusCode') int get statusCode;@JsonKey(name: 'Status') String get status;@JsonKey(includeIfNull: false, name: 'CurrentVersion') String? get currentVersion;@JsonKey(includeIfNull: false, name: 'LatestVersion') String? get latestVersion;@JsonKey(includeIfNull: false, name: 'Protocol') String? get protocol;@JsonKey(includeIfNull: false, name: 'Address') String? get address;@JsonKey(includeIfNull: false, name: 'Port') int? get port;@JsonKey(includeIfNull: false, name: 'ProcessId') int? get processId;@JsonKey(includeIfNull: false, name: 'LogFilePath') String? get logFilePath;@JsonKey(includeIfNull: false, name: 'LogFileName') String? get logFileName;@JsonKey(includeIfNull: false, name: 'Message') String? get message;
 /// Create a copy of JsonResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $JsonResponseCopyWith<JsonResponse> get copyWith => _$JsonResponseCopyWithImpl<J
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is JsonResponse&&(identical(other.statusCode, statusCode) || other.statusCode == statusCode)&&(identical(other.status, status) || other.status == status)&&(identical(other.currentVersion, currentVersion) || other.currentVersion == currentVersion)&&(identical(other.latestVersion, latestVersion) || other.latestVersion == latestVersion)&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is JsonResponse&&(identical(other.statusCode, statusCode) || other.statusCode == statusCode)&&(identical(other.status, status) || other.status == status)&&(identical(other.currentVersion, currentVersion) || other.currentVersion == currentVersion)&&(identical(other.latestVersion, latestVersion) || other.latestVersion == latestVersion)&&(identical(other.protocol, protocol) || other.protocol == protocol)&&(identical(other.address, address) || other.address == address)&&(identical(other.port, port) || other.port == port)&&(identical(other.processId, processId) || other.processId == processId)&&(identical(other.logFilePath, logFilePath) || other.logFilePath == logFilePath)&&(identical(other.logFileName, logFileName) || other.logFileName == logFileName)&&(identical(other.message, message) || other.message == message));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,statusCode,status,currentVersion,latestVersion,message);
+int get hashCode => Object.hash(runtimeType,statusCode,status,currentVersion,latestVersion,protocol,address,port,processId,logFilePath,logFileName,message);
 
 @override
 String toString() {
-  return 'JsonResponse(statusCode: $statusCode, status: $status, currentVersion: $currentVersion, latestVersion: $latestVersion, message: $message)';
+  return 'JsonResponse(statusCode: $statusCode, status: $status, currentVersion: $currentVersion, latestVersion: $latestVersion, protocol: $protocol, address: $address, port: $port, processId: $processId, logFilePath: $logFilePath, logFileName: $logFileName, message: $message)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $JsonResponseCopyWith<$Res>  {
   factory $JsonResponseCopyWith(JsonResponse value, $Res Function(JsonResponse) _then) = _$JsonResponseCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'StatusCode') int statusCode,@JsonKey(name: 'Status') String status,@JsonKey(includeIfNull: false, name: 'CurrentVersion') String? currentVersion,@JsonKey(includeIfNull: false, name: 'LatestVersion') String? latestVersion,@JsonKey(includeIfNull: false, name: 'Message') String? message
+@JsonKey(name: 'StatusCode') int statusCode,@JsonKey(name: 'Status') String status,@JsonKey(includeIfNull: false, name: 'CurrentVersion') String? currentVersion,@JsonKey(includeIfNull: false, name: 'LatestVersion') String? latestVersion,@JsonKey(includeIfNull: false, name: 'Protocol') String? protocol,@JsonKey(includeIfNull: false, name: 'Address') String? address,@JsonKey(includeIfNull: false, name: 'Port') int? port,@JsonKey(includeIfNull: false, name: 'ProcessId') int? processId,@JsonKey(includeIfNull: false, name: 'LogFilePath') String? logFilePath,@JsonKey(includeIfNull: false, name: 'LogFileName') String? logFileName,@JsonKey(includeIfNull: false, name: 'Message') String? message
 });
 
 
@@ -65,12 +65,18 @@ class _$JsonResponseCopyWithImpl<$Res>
 
 /// Create a copy of JsonResponse
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? statusCode = null,Object? status = null,Object? currentVersion = freezed,Object? latestVersion = freezed,Object? message = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? statusCode = null,Object? status = null,Object? currentVersion = freezed,Object? latestVersion = freezed,Object? protocol = freezed,Object? address = freezed,Object? port = freezed,Object? processId = freezed,Object? logFilePath = freezed,Object? logFileName = freezed,Object? message = freezed,}) {
   return _then(_self.copyWith(
 statusCode: null == statusCode ? _self.statusCode : statusCode // ignore: cast_nullable_to_non_nullable
 as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,currentVersion: freezed == currentVersion ? _self.currentVersion : currentVersion // ignore: cast_nullable_to_non_nullable
 as String?,latestVersion: freezed == latestVersion ? _self.latestVersion : latestVersion // ignore: cast_nullable_to_non_nullable
+as String?,protocol: freezed == protocol ? _self.protocol : protocol // ignore: cast_nullable_to_non_nullable
+as String?,address: freezed == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
+as String?,port: freezed == port ? _self.port : port // ignore: cast_nullable_to_non_nullable
+as int?,processId: freezed == processId ? _self.processId : processId // ignore: cast_nullable_to_non_nullable
+as int?,logFilePath: freezed == logFilePath ? _self.logFilePath : logFilePath // ignore: cast_nullable_to_non_nullable
+as String?,logFileName: freezed == logFileName ? _self.logFileName : logFileName // ignore: cast_nullable_to_non_nullable
 as String?,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -157,10 +163,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'StatusCode')  int statusCode, @JsonKey(name: 'Status')  String status, @JsonKey(includeIfNull: false, name: 'CurrentVersion')  String? currentVersion, @JsonKey(includeIfNull: false, name: 'LatestVersion')  String? latestVersion, @JsonKey(includeIfNull: false, name: 'Message')  String? message)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'StatusCode')  int statusCode, @JsonKey(name: 'Status')  String status, @JsonKey(includeIfNull: false, name: 'CurrentVersion')  String? currentVersion, @JsonKey(includeIfNull: false, name: 'LatestVersion')  String? latestVersion, @JsonKey(includeIfNull: false, name: 'Protocol')  String? protocol, @JsonKey(includeIfNull: false, name: 'Address')  String? address, @JsonKey(includeIfNull: false, name: 'Port')  int? port, @JsonKey(includeIfNull: false, name: 'ProcessId')  int? processId, @JsonKey(includeIfNull: false, name: 'LogFilePath')  String? logFilePath, @JsonKey(includeIfNull: false, name: 'LogFileName')  String? logFileName, @JsonKey(includeIfNull: false, name: 'Message')  String? message)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _JsonResponse() when $default != null:
-return $default(_that.statusCode,_that.status,_that.currentVersion,_that.latestVersion,_that.message);case _:
+return $default(_that.statusCode,_that.status,_that.currentVersion,_that.latestVersion,_that.protocol,_that.address,_that.port,_that.processId,_that.logFilePath,_that.logFileName,_that.message);case _:
   return orElse();
 
 }
@@ -178,10 +184,10 @@ return $default(_that.statusCode,_that.status,_that.currentVersion,_that.latestV
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'StatusCode')  int statusCode, @JsonKey(name: 'Status')  String status, @JsonKey(includeIfNull: false, name: 'CurrentVersion')  String? currentVersion, @JsonKey(includeIfNull: false, name: 'LatestVersion')  String? latestVersion, @JsonKey(includeIfNull: false, name: 'Message')  String? message)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'StatusCode')  int statusCode, @JsonKey(name: 'Status')  String status, @JsonKey(includeIfNull: false, name: 'CurrentVersion')  String? currentVersion, @JsonKey(includeIfNull: false, name: 'LatestVersion')  String? latestVersion, @JsonKey(includeIfNull: false, name: 'Protocol')  String? protocol, @JsonKey(includeIfNull: false, name: 'Address')  String? address, @JsonKey(includeIfNull: false, name: 'Port')  int? port, @JsonKey(includeIfNull: false, name: 'ProcessId')  int? processId, @JsonKey(includeIfNull: false, name: 'LogFilePath')  String? logFilePath, @JsonKey(includeIfNull: false, name: 'LogFileName')  String? logFileName, @JsonKey(includeIfNull: false, name: 'Message')  String? message)  $default,) {final _that = this;
 switch (_that) {
 case _JsonResponse():
-return $default(_that.statusCode,_that.status,_that.currentVersion,_that.latestVersion,_that.message);case _:
+return $default(_that.statusCode,_that.status,_that.currentVersion,_that.latestVersion,_that.protocol,_that.address,_that.port,_that.processId,_that.logFilePath,_that.logFileName,_that.message);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +204,10 @@ return $default(_that.statusCode,_that.status,_that.currentVersion,_that.latestV
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'StatusCode')  int statusCode, @JsonKey(name: 'Status')  String status, @JsonKey(includeIfNull: false, name: 'CurrentVersion')  String? currentVersion, @JsonKey(includeIfNull: false, name: 'LatestVersion')  String? latestVersion, @JsonKey(includeIfNull: false, name: 'Message')  String? message)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'StatusCode')  int statusCode, @JsonKey(name: 'Status')  String status, @JsonKey(includeIfNull: false, name: 'CurrentVersion')  String? currentVersion, @JsonKey(includeIfNull: false, name: 'LatestVersion')  String? latestVersion, @JsonKey(includeIfNull: false, name: 'Protocol')  String? protocol, @JsonKey(includeIfNull: false, name: 'Address')  String? address, @JsonKey(includeIfNull: false, name: 'Port')  int? port, @JsonKey(includeIfNull: false, name: 'ProcessId')  int? processId, @JsonKey(includeIfNull: false, name: 'LogFilePath')  String? logFilePath, @JsonKey(includeIfNull: false, name: 'LogFileName')  String? logFileName, @JsonKey(includeIfNull: false, name: 'Message')  String? message)?  $default,) {final _that = this;
 switch (_that) {
 case _JsonResponse() when $default != null:
-return $default(_that.statusCode,_that.status,_that.currentVersion,_that.latestVersion,_that.message);case _:
+return $default(_that.statusCode,_that.status,_that.currentVersion,_that.latestVersion,_that.protocol,_that.address,_that.port,_that.processId,_that.logFilePath,_that.logFileName,_that.message);case _:
   return null;
 
 }
@@ -213,13 +219,19 @@ return $default(_that.statusCode,_that.status,_that.currentVersion,_that.latestV
 @JsonSerializable()
 
 class _JsonResponse implements JsonResponse {
-  const _JsonResponse({@JsonKey(name: 'StatusCode') required this.statusCode, @JsonKey(name: 'Status') required this.status, @JsonKey(includeIfNull: false, name: 'CurrentVersion') this.currentVersion, @JsonKey(includeIfNull: false, name: 'LatestVersion') this.latestVersion, @JsonKey(includeIfNull: false, name: 'Message') this.message});
+  const _JsonResponse({@JsonKey(name: 'StatusCode') required this.statusCode, @JsonKey(name: 'Status') required this.status, @JsonKey(includeIfNull: false, name: 'CurrentVersion') this.currentVersion, @JsonKey(includeIfNull: false, name: 'LatestVersion') this.latestVersion, @JsonKey(includeIfNull: false, name: 'Protocol') this.protocol, @JsonKey(includeIfNull: false, name: 'Address') this.address, @JsonKey(includeIfNull: false, name: 'Port') this.port, @JsonKey(includeIfNull: false, name: 'ProcessId') this.processId, @JsonKey(includeIfNull: false, name: 'LogFilePath') this.logFilePath, @JsonKey(includeIfNull: false, name: 'LogFileName') this.logFileName, @JsonKey(includeIfNull: false, name: 'Message') this.message});
   factory _JsonResponse.fromJson(Map<String, dynamic> json) => _$JsonResponseFromJson(json);
 
 @override@JsonKey(name: 'StatusCode') final  int statusCode;
 @override@JsonKey(name: 'Status') final  String status;
 @override@JsonKey(includeIfNull: false, name: 'CurrentVersion') final  String? currentVersion;
 @override@JsonKey(includeIfNull: false, name: 'LatestVersion') final  String? latestVersion;
+@override@JsonKey(includeIfNull: false, name: 'Protocol') final  String? protocol;
+@override@JsonKey(includeIfNull: false, name: 'Address') final  String? address;
+@override@JsonKey(includeIfNull: false, name: 'Port') final  int? port;
+@override@JsonKey(includeIfNull: false, name: 'ProcessId') final  int? processId;
+@override@JsonKey(includeIfNull: false, name: 'LogFilePath') final  String? logFilePath;
+@override@JsonKey(includeIfNull: false, name: 'LogFileName') final  String? logFileName;
 @override@JsonKey(includeIfNull: false, name: 'Message') final  String? message;
 
 /// Create a copy of JsonResponse
@@ -235,16 +247,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _JsonResponse&&(identical(other.statusCode, statusCode) || other.statusCode == statusCode)&&(identical(other.status, status) || other.status == status)&&(identical(other.currentVersion, currentVersion) || other.currentVersion == currentVersion)&&(identical(other.latestVersion, latestVersion) || other.latestVersion == latestVersion)&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _JsonResponse&&(identical(other.statusCode, statusCode) || other.statusCode == statusCode)&&(identical(other.status, status) || other.status == status)&&(identical(other.currentVersion, currentVersion) || other.currentVersion == currentVersion)&&(identical(other.latestVersion, latestVersion) || other.latestVersion == latestVersion)&&(identical(other.protocol, protocol) || other.protocol == protocol)&&(identical(other.address, address) || other.address == address)&&(identical(other.port, port) || other.port == port)&&(identical(other.processId, processId) || other.processId == processId)&&(identical(other.logFilePath, logFilePath) || other.logFilePath == logFilePath)&&(identical(other.logFileName, logFileName) || other.logFileName == logFileName)&&(identical(other.message, message) || other.message == message));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,statusCode,status,currentVersion,latestVersion,message);
+int get hashCode => Object.hash(runtimeType,statusCode,status,currentVersion,latestVersion,protocol,address,port,processId,logFilePath,logFileName,message);
 
 @override
 String toString() {
-  return 'JsonResponse(statusCode: $statusCode, status: $status, currentVersion: $currentVersion, latestVersion: $latestVersion, message: $message)';
+  return 'JsonResponse(statusCode: $statusCode, status: $status, currentVersion: $currentVersion, latestVersion: $latestVersion, protocol: $protocol, address: $address, port: $port, processId: $processId, logFilePath: $logFilePath, logFileName: $logFileName, message: $message)';
 }
 
 
@@ -255,7 +267,7 @@ abstract mixin class _$JsonResponseCopyWith<$Res> implements $JsonResponseCopyWi
   factory _$JsonResponseCopyWith(_JsonResponse value, $Res Function(_JsonResponse) _then) = __$JsonResponseCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'StatusCode') int statusCode,@JsonKey(name: 'Status') String status,@JsonKey(includeIfNull: false, name: 'CurrentVersion') String? currentVersion,@JsonKey(includeIfNull: false, name: 'LatestVersion') String? latestVersion,@JsonKey(includeIfNull: false, name: 'Message') String? message
+@JsonKey(name: 'StatusCode') int statusCode,@JsonKey(name: 'Status') String status,@JsonKey(includeIfNull: false, name: 'CurrentVersion') String? currentVersion,@JsonKey(includeIfNull: false, name: 'LatestVersion') String? latestVersion,@JsonKey(includeIfNull: false, name: 'Protocol') String? protocol,@JsonKey(includeIfNull: false, name: 'Address') String? address,@JsonKey(includeIfNull: false, name: 'Port') int? port,@JsonKey(includeIfNull: false, name: 'ProcessId') int? processId,@JsonKey(includeIfNull: false, name: 'LogFilePath') String? logFilePath,@JsonKey(includeIfNull: false, name: 'LogFileName') String? logFileName,@JsonKey(includeIfNull: false, name: 'Message') String? message
 });
 
 
@@ -272,12 +284,18 @@ class __$JsonResponseCopyWithImpl<$Res>
 
 /// Create a copy of JsonResponse
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? statusCode = null,Object? status = null,Object? currentVersion = freezed,Object? latestVersion = freezed,Object? message = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? statusCode = null,Object? status = null,Object? currentVersion = freezed,Object? latestVersion = freezed,Object? protocol = freezed,Object? address = freezed,Object? port = freezed,Object? processId = freezed,Object? logFilePath = freezed,Object? logFileName = freezed,Object? message = freezed,}) {
   return _then(_JsonResponse(
 statusCode: null == statusCode ? _self.statusCode : statusCode // ignore: cast_nullable_to_non_nullable
 as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,currentVersion: freezed == currentVersion ? _self.currentVersion : currentVersion // ignore: cast_nullable_to_non_nullable
 as String?,latestVersion: freezed == latestVersion ? _self.latestVersion : latestVersion // ignore: cast_nullable_to_non_nullable
+as String?,protocol: freezed == protocol ? _self.protocol : protocol // ignore: cast_nullable_to_non_nullable
+as String?,address: freezed == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
+as String?,port: freezed == port ? _self.port : port // ignore: cast_nullable_to_non_nullable
+as int?,processId: freezed == processId ? _self.processId : processId // ignore: cast_nullable_to_non_nullable
+as int?,logFilePath: freezed == logFilePath ? _self.logFilePath : logFilePath // ignore: cast_nullable_to_non_nullable
+as String?,logFileName: freezed == logFileName ? _self.logFileName : logFileName // ignore: cast_nullable_to_non_nullable
 as String?,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
