@@ -446,6 +446,15 @@ class WebServiceHandler
                 return;
             }
 
+            // Staged opt-in Step 1: clients that don't send X-DartFormat-Client
+            // are still accepted, but logged so we can tell when it's safe to
+            // make the header required in a later release.
+            if (request.headers.value('x-dartformat-client') == null)
+            {
+                final String? userAgent = request.headers.value('user-agent');
+                logWarning('$METHOD_NAME: request missing X-DartFormat-Client header (User-Agent: $userAgent)');
+            }
+
             if (request.method == 'GET')
             {
                 await _handleGet(request, onQuit: onQuit);

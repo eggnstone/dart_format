@@ -4,6 +4,7 @@
 
 - Web service: capped POST body size at 4 MiB and rejected POSTs without a Content-Length, so a runaway or hostile client can't buffer an oversize body into memory.
 - Web service: rejected requests whose Host header doesn't claim a loopback name (`127.0.0.1`, `localhost`, `::1`). The TCP bind was already loopback-only; this closes the matching browser-side gap.
+- Web service: logged a `Warn:` line when a request omits the `X-DartFormat-Client` header. Step 1 of a staged opt-in — the header becomes required in a future release once the IntelliJ and VS Code plugins have shipped support.
 
 ## 2.1.0
 
