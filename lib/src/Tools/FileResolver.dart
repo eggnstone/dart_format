@@ -156,7 +156,10 @@ class FileResolver
     static List<String> _expandDirectory(String dir, List<RegExp> excludes)
     {
         final List<String> results = <String>[];
-        for (final FileSystemEntity entity in Directory(dir).listSync(recursive: true))
+        // followLinks: false stops recursive descent at symbolic links / Windows
+        // junctions, so a target directory containing a link to e.g. /etc or
+        // C:\Windows doesn't pull arbitrary files into the format set.
+        for (final FileSystemEntity entity in Directory(dir).listSync(recursive: true, followLinks: false))
         {
             if (entity is! File)
                 continue;
@@ -183,6 +186,13 @@ class FileResolver
                 continue;
 
             if (!entity.path.endsWith('.dart'))
+                continue;
+
+            // The `glob` package follows links during expansion and we have no
+            // knob to turn that off. Catching link-typed matches here covers
+            // the case where a glob matches a symlinked file directly; descent
+            // through a symlinked directory in the glob path is a known gap.
+            if (FileSystemEntity.isLinkSync(entity.path))
                 continue;
 
             final String normalised = _normalise(entity.path);

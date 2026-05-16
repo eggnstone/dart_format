@@ -204,6 +204,36 @@ void main()
                 }
             );
 
+            test('Symlinked directory inside a recursed dir is not descended into', ()
+                {
+                    final String root = _setupTempTree(<String, String>
+                        {
+                            'A.dart': ''
+                        }
+                    );
+                    final String outside = _setupTempTree(<String, String>
+                        {
+                            'INSIDE.dart': ''
+                        }
+                    );
+
+                    try
+                    {
+                        Link('$root/linked').createSync(outside);
+                    }
+                    on FileSystemException
+                    {
+                        // Symlink creation needs developer mode / admin on Windows.
+                        markTestSkipped('Cannot create symlinks on this platform.');
+                        return;
+                    }
+
+                    final List<String> resolved = FileResolver.resolve(inputs: <String>[root]);
+
+                    expect(resolved, equals(<String>['$root/A.dart']));
+                }
+            );
+
             test('Duplicates collapse when matched via multiple inputs', ()
                 {
                     final String root = _setupTempTree(<String, String>
