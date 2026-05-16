@@ -286,7 +286,9 @@ class WebServiceHandler
         on Exception catch (e, st)
         {
             logErrorObject(METHOD_NAME, e, st);
-            final DartFormatException dartFormatException = DartFormatException.error(e.toString());
+            // Unexpected non-DartFormatException — keep details out of the wire
+            // response. The full stack is in the temp log via logErrorObject.
+            final DartFormatException dartFormatException = DartFormatException.error('Internal error. See the dart_format log for details.');
             request.response.statusCode = HttpStatus.ok;
             request.response.headers.contentType = ContentType.text;
             request.response.headers.add('X-DartFormat-Result', 'Fail');
@@ -301,7 +303,9 @@ class WebServiceHandler
         on Error catch (e, st)
         {
             logErrorObject(METHOD_NAME, e, st);
-            final DartFormatException dartFormatException = DartFormatException.error(e.toString());
+            // Same as the Exception branch — Errors can carry paths / SDK
+            // internals in their toString(), so keep them off the wire.
+            final DartFormatException dartFormatException = DartFormatException.error('Internal error. See the dart_format log for details.');
             request.response.statusCode = HttpStatus.ok;
             request.response.headers.contentType = ContentType.text;
             request.response.headers.add('X-DartFormat-Result', 'Fail');
@@ -482,7 +486,9 @@ class WebServiceHandler
             writelnToStdErr('Exception: $e');
             request.response.statusCode = HttpStatus.internalServerError;
             request.response.headers.contentType = ContentType.text;
-            request.response.writeln('Exception: $e');
+            // Keep details out of the wire response; the full toString is in
+            // stderr / the temp log via the logError + writelnToStdErr above.
+            request.response.writeln('Internal error. See the dart_format log for details.');
             await HttpTools.flushAndClose(request);
         }
         // Mirror of the Exception block above. Without this, an Error
@@ -496,7 +502,7 @@ class WebServiceHandler
             writelnToStdErr('Error: $e');
             request.response.statusCode = HttpStatus.internalServerError;
             request.response.headers.contentType = ContentType.text;
-            request.response.writeln('Error: $e');
+            request.response.writeln('Internal error. See the dart_format log for details.');
             await HttpTools.flushAndClose(request);
         }
         finally
