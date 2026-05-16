@@ -12,6 +12,7 @@ class InfoTools
         writelnToStdOut('    Positional inputs may be files, directories (recursed into *.dart), or glob patterns (e.g. "lib/**/*.dart").', preventLoggingToTempFile: true);
         writelnToStdOut('    Pass `-` (or pipe stdin with no positional args) to format stdin to stdout.', preventLoggingToTempFile: true);
         writelnToStdOut('    --check, -c                      No writes; exits non-zero if any file would change (for CI)', preventLoggingToTempFile: true);
+        writelnToStdOut('    --check-version                  Checks pub.dev for a newer dart_format release on start-up', preventLoggingToTempFile: true);
         writelnToStdOut('    --config=<JSON>                  Inline configuration JSON (mutually exclusive with --config-file)', preventLoggingToTempFile: true);
         writelnToStdOut('    --config-file=<PATH>             Path to a JSON config file (mutually exclusive with --config)', preventLoggingToTempFile: true);
         writelnToStdOut('    --errors-as-json                 Writes errors as JSON to stderr', preventLoggingToTempFile: true);

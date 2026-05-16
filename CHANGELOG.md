@@ -6,6 +6,8 @@
 - Web service: rejected requests whose Host header doesn't claim a loopback name (`127.0.0.1`, `localhost`, `::1`). The TCP bind was already loopback-only; this closes the matching browser-side gap.
 - Web service: logged a `Warn:` line when a request omits the `X-DartFormat-Client` header. Step 1 of a staged opt-in — the header becomes required in a future release once the IntelliJ and VS Code plugins have shipped support.
 - Web service: wrapped `/format` handling in a 60 s per-request wall-clock timeout. If anything inside the request (slow body upload, slow stream decode, formatter not honouring its own time budget) blows past the limit, the client gets a `DartFormatException` back instead of waiting indefinitely.
+- CLI: introduced `--check-version` as an opt-in for the pub.dev release check. File and pipe modes no longer hit the network on every invocation — pass `--check-version` if you want the "newer version available" notice. Web mode still checks automatically until the IntelliJ and VS Code plugins ship support for the flag. `--skip-version-check` still works for back-compat.
+- CLI: unknown long options (`--<anything>` the parser hasn't been told about) are now silently dropped with a stderr warning instead of failing the whole invocation. Forward-compat so a newer IDE plugin can pass a flag this binary doesn't recognise without bringing the service down. Previously-removed options (`--dry-run`, `--pipe`) still error explicitly, and unknown short options (`-x` style) still error too — so typos in known flags don't go quiet.
 
 ## 2.1.0
 

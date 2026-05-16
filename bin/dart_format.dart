@@ -100,12 +100,22 @@ async
 
     if (cliArgs.isWebService)
     {
+        // Web mode keeps the historical "auto-check on start-up" until the
+        // IntelliJ and VS Code plugins have shipped support for --check-version
+        // (Step 2 of the staged opt-in). --skip-version-check still suppresses
+        // it; --check-version is silently accepted but is a no-op here today.
         final WebServiceHandler webServiceHandler = WebServiceHandler(
             port: cliArgs.port,
             skipVersionCheck: cliArgs.skipVersionCheck
         );
         return webServiceHandler.run();
     }
+
+    // CLI modes (file / pipe): the version check is opt-in. The previous
+    // default was opt-out (auto-check unless --skip-version-check); that meant
+    // every `dart_format --check` in CI did a DNS + HTTPS round-trip for no
+    // user-visible benefit. --skip-version-check still works for back-compat.
+    final bool skipVersionCheck = cliArgs.skipVersionCheck || !cliArgs.checkVersion;
 
     final bool isStdinMode = cliArgs.fileNames.contains('-')
         || (cliArgs.fileNames.isEmpty && !stdin.hasTerminal);
@@ -115,7 +125,7 @@ async
         final PipeHandler pipeHandler = PipeHandler(
             configText: configText,
             errorsAsJson: cliArgs.errorsAsJson,
-            skipVersionCheck: cliArgs.skipVersionCheck
+            skipVersionCheck: skipVersionCheck
         );
         return pipeHandler.run();
     }
@@ -137,7 +147,7 @@ async
         configText: configText,
         fileNames: resolvedFileNames,
         isCheck: cliArgs.isCheck,
-        skipVersionCheck: cliArgs.skipVersionCheck
+        skipVersionCheck: skipVersionCheck
     );
     return defaultHandler.run();
 }

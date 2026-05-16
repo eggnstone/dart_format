@@ -156,6 +156,41 @@ void main()
                 }
             );
 
+            test('--check-version sets checkVersion', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--check-version']);
+
+                    expect(args.checkVersion, isTrue);
+                    expect(args.errorMessage, isNull);
+                }
+            );
+
+            test('Without --check-version checkVersion defaults to false', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['A.dart']);
+
+                    expect(args.checkVersion, isFalse);
+                }
+            );
+
+            test('Unknown long options are silently dropped (forward-compat)', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--future-flag', '--web']);
+
+                    expect(args.errorMessage, isNull);
+                    expect(args.isWebService, isTrue);
+                }
+            );
+
+            test('Unknown long option with =value form is silently dropped', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--future-flag=v', '--web']);
+
+                    expect(args.errorMessage, isNull);
+                    expect(args.isWebService, isTrue);
+                }
+            );
+
             test('--skip-version-check sets skipVersionCheck', ()
                 {
                     final CliArgs args = CliArgs.parse(<String>['--skip-version-check']);
@@ -188,11 +223,11 @@ void main()
                 }
             );
 
-            test('Unknown long flag sets errorMessage', ()
+            test('Unknown long flag is silently dropped (forward-compat with newer plugins)', ()
                 {
                     final CliArgs args = CliArgs.parse(<String>['--unknown-flag']);
 
-                    expect(args.errorMessage, isNotNull);
+                    expect(args.errorMessage, isNull);
                 }
             );
 
