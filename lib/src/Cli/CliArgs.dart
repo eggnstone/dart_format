@@ -28,6 +28,7 @@ class CliArgs
     final bool isEmpty;
     final bool isWebService;
     final bool logToConsole;
+    final bool logToTempFile;
     final bool showHelp;
     final bool showVersion;
     final bool skipVersionCheck;
@@ -44,6 +45,7 @@ class CliArgs
         required this.isEmpty,
         required this.isWebService,
         required this.logToConsole,
+        required this.logToTempFile,
         required this.port,
         required this.showHelp,
         required this.showVersion,
@@ -80,6 +82,7 @@ class CliArgs
                 isEmpty: rawArgs.isEmpty,
                 isWebService: results['web'] as bool,
                 logToConsole: results['log-to-console'] as bool,
+                logToTempFile: results['log-to-temp-file'] as bool,
                 port: port,
                 showHelp: results['help'] as bool,
                 showVersion: results['version'] as bool,
@@ -104,6 +107,7 @@ class CliArgs
         isEmpty = false,
         isWebService = false,
         logToConsole = false,
+        logToTempFile = false,
         port = null,
         showHelp = false,
         showVersion = false,
@@ -121,6 +125,7 @@ class CliArgs
         parser.addFlag('errors-as-json', negatable: false, help: 'Write errors as JSON to stderr.');
         parser.addMultiOption('exclude', abbr: 'x', help: 'Exclude files matching this glob (repeatable).', valueHelp: 'GLOB');
         parser.addFlag('log-to-console', help: 'Log to console.');
+        parser.addFlag('log-to-temp-file', help: 'Log to a file in the system temp directory.');
         parser.addOption('port', help: 'Port for web service mode (default: 7777, fallback random).', valueHelp: 'N');
         parser.addFlag('skip-version-check', negatable: false, help: 'Skip version check on start-up.');
         parser.addFlag('web', aliases: <String>['webservice'], negatable: false, help: 'Start in web service mode.');
@@ -178,10 +183,9 @@ class CliArgs
         return result;
     }
 
-    // Rewrites `--log-to-console=true|false` (and `--log-to-temp-file=true|false`,
-    // historically accepted) into the flag form that ArgParser understands.
-    // Without this, `=value` syntax silently turns logging *on* regardless of
-    // the value.
+    // Rewrites `--log-to-console=true|false` and `--log-to-temp-file=true|false`
+    // into the flag form that ArgParser understands. Without this, `=value`
+    // syntax silently turns logging *on* regardless of the value.
     static List<String> _normalize(List<String> rawArgs)
     {
         const Map<String, String> trueAliases = <String, String>
@@ -198,7 +202,6 @@ class CliArgs
 
         return rawArgs
             .map((String arg) => trueAliases[arg] ?? falseAliases[arg] ?? arg)
-            .where((String arg) => arg != '--log-to-temp-file' && arg != '--no-log-to-temp-file')
             .toList();
     }
 }

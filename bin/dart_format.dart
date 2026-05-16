@@ -18,8 +18,12 @@ async
     final CliArgs cliArgs = CliArgs.parse(args);
     LogTools.logToConsole = cliArgs.logToConsole;
 
-    // Mandatory for the beta phase. Optional afterwards.
-    LogTools.logToTempFile = true;
+    // Step 1 of staged opt-in: web mode still force-logs to the temp file
+    // because IDE plugins surface that path in their bug-report flow. CLI
+    // modes honour the flag so a CI run of `dart_format --check` doesn't
+    // litter /tmp on every invocation. Step 2 will flip web mode to honour
+    // the flag too, once the plugins ship `--log-to-temp-file=true`.
+    LogTools.logToTempFile = cliArgs.isWebService ? true : cliArgs.logToTempFile;
 
     logDebug('main START', preventLoggingToConsole: true);
 

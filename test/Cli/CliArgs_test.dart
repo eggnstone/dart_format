@@ -191,6 +191,47 @@ void main()
                 }
             );
 
+            test('--log-to-temp-file sets logToTempFile', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--log-to-temp-file']);
+
+                    expect(args.logToTempFile, isTrue);
+                    expect(args.errorMessage, isNull);
+                }
+            );
+
+            test('--log-to-temp-file=true sets logToTempFile', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--log-to-temp-file=true']);
+
+                    expect(args.logToTempFile, isTrue);
+                }
+            );
+
+            test('--log-to-temp-file=false sets logToTempFile=false', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--log-to-temp-file=false']);
+
+                    expect(args.logToTempFile, isFalse);
+                }
+            );
+
+            test('--no-log-to-temp-file sets logToTempFile=false', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['--no-log-to-temp-file']);
+
+                    expect(args.logToTempFile, isFalse);
+                }
+            );
+
+            test('Without --log-to-temp-file logToTempFile defaults to false', ()
+                {
+                    final CliArgs args = CliArgs.parse(<String>['A.dart']);
+
+                    expect(args.logToTempFile, isFalse);
+                }
+            );
+
             test('--skip-version-check sets skipVersionCheck', ()
                 {
                     final CliArgs args = CliArgs.parse(<String>['--skip-version-check']);
