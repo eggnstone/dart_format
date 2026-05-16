@@ -11,10 +11,10 @@ class FunctionDeclarationFormatter extends TypedFormatter<FunctionDeclaration>
     void formatNode(FunctionDeclaration node)
     {
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.augmentKeyword, astVisitor, '$methodName/node.augmentKeyword');
-        formatState.copyEntity(node.externalKeyword, astVisitor, '$methodName/node.externalKeyword');
-        formatState.copyEntity(node.returnType, astVisitor, '$methodName/node.returnType');
-        formatState.copyEntity(node.propertyKeyword, astVisitor, '$methodName/node.propertyKeyword');
+        copyZeroOne(node, node.augmentKeyword, '$methodName/node.augmentKeyword');
+        copyZeroOne(node, node.externalKeyword, '$methodName/node.externalKeyword');
+        copyZeroOne(node, node.returnType, '$methodName/node.returnType');
+        copyZeroOne(node, node.propertyKeyword, '$methodName/node.propertyKeyword');
         formatState.copyEntity(node.name, astVisitor, '$methodName/node.name', config.space1);
 
         //logWarning('S functionExpression');

@@ -6,7 +6,8 @@ Security pass on the web service used by the IDE plugins. No plugin changes requ
 
 **Bug fixes**
 
-- Extra whitespace between field modifiers (e.g. `static    const`) is now collapsed.
+- Extra whitespace between declaration modifiers (e.g. `static    const`, `abstract    base    class`) is now collapsed.
+- `assert(...)` arg-list spacing is normalised: no spaces around the parens, exactly one space after the comma.
 
 **CLI behaviour changes**
 

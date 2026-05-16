@@ -11,10 +11,13 @@ class ClassTypeAliasFormatter extends TypedFormatter<ClassTypeAlias>
     void formatNode(ClassTypeAlias node)
     {
         formatState.acceptList(node.metadata, astVisitor, '$methodName/node.metadata');
-        formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword');
-        formatState.copyEntity(node.typedefKeyword, astVisitor, '$methodName/node.typedefKeyword');
-        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
+        copyZeroOne(node, node.abstractKeyword, '$methodName/node.abstractKeyword');
+        copyZeroOne(node, node.typedefKeyword, '$methodName/node.typedefKeyword');
+        copyZeroOne(node, node.name, '$methodName/node.name');
         formatState.copyEntity(node.typeParameters, astVisitor, '$methodName/node.typeParameters');
+        // From `equals` onward we leave spacing alone — `C=B` vs `C = B` is a
+        // separate formatting decision, not a "collapse extra whitespace" one,
+        // and the modifiers that may follow `=` are entangled with that choice.
         formatState.copyEntity(node.equals, astVisitor, '$methodName/node.equals');
         formatState.copyEntity(node.sealedKeyword, astVisitor, '$methodName/node.sealedKeyword');
         formatState.copyEntity(node.baseKeyword, astVisitor, '$methodName/node.baseKeyword');

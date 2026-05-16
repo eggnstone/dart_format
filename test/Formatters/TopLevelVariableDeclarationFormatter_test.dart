@@ -23,7 +23,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig('external  int  i  =  f  .  a  .  b;\n')
+                TestConfig('external int  i  =  f  .  a  .  b;\n')
             ]
         ),
         TestGroupConfig(

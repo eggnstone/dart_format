@@ -17,10 +17,10 @@ class ConstructorDeclarationFormatter extends TypedFormatter<ConstructorDeclarat
         final int? spacesBeforeHead = config.fixSpaces ? (node.offset == headOffset ? null : 1) : null;
 
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.augmentKeyword, astVisitor, '$methodName/node.augmentKeyword');
-        formatState.copyEntity(node.externalKeyword, astVisitor, '$methodName/node.externalKeyword');
-        formatState.copyEntity(node.constKeyword, astVisitor, '$methodName/node.constKeyword');
-        formatState.copyEntity(node.factoryKeyword, astVisitor, '$methodName/node.factoryKeyword');
+        copyZeroOne(node, node.augmentKeyword, '$methodName/node.augmentKeyword');
+        copyZeroOne(node, node.externalKeyword, '$methodName/node.externalKeyword');
+        copyZeroOne(node, node.constKeyword, '$methodName/node.constKeyword');
+        copyZeroOne(node, node.factoryKeyword, '$methodName/node.factoryKeyword');
         formatState.copyEntity(node.newKeyword, astVisitor, '$methodName/node.newKeyword', spacesBeforeHead);
         // https://github.com/dart-lang/sdk/issues/62067
         // returnType => typeName!

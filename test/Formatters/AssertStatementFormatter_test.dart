@@ -44,21 +44,6 @@ void main()
         TestGroupConfig(
             inputNodeCreator: AstCreator.createStatementInFunction,
             inputLeading: 'void f(){',
-            inputMiddle: "assert(true,'message');",
-            inputTrailing: '}',
-            name: "AssertStatement assert(true, 'message');",
-            astVisitors: <TestVisitor<void>>[
-                TestVisitor<BooleanLiteral>(16, 'true'),
-                TestVisitor<SimpleStringLiteral>(21, "'message'")
-            ],
-            testConfigs: <TestConfig>[
-                TestConfig.none(),
-                TestConfig("assert(true,'message');\n")
-            ]
-        ),
-        TestGroupConfig(
-            inputNodeCreator: AstCreator.createStatementInFunction,
-            inputLeading: 'void f(){',
             inputMiddle: "assert(true,'message',);",
             inputTrailing: '}',
             name: "AssertStatement assert(true, 'message',); (too little spacing)",
@@ -70,8 +55,8 @@ void main()
                 TestConfig.none(),
                 TestConfig.custom('Custom1', Config.all(fixSpaces: false), "assert(true,'message');\n"),
                 // ignore: avoid_redundant_argument_values
-                TestConfig.custom('Custom2', Config.all(fixSpaces: true, removeTrailingCommas: false), "assert(true,'message',);\n"),
-                TestConfig("assert(true,'message');\n")
+                TestConfig.custom('Custom2', Config.all(fixSpaces: true, removeTrailingCommas: false), "assert(true, 'message',);\n"),
+                TestConfig("assert(true, 'message');\n")
             ]
         ),
         TestGroupConfig(
@@ -79,17 +64,17 @@ void main()
             inputLeading: 'void f(){',
             inputMiddle: "assert    (    true    ,    'message'    ,    )    ;",
             inputTrailing: '}',
-            name: "AssertStatement assert(true, 'message',); (too much spacing)", // TODO: too little spacing
+            name: "AssertStatement assert(true, 'message',);",
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<BooleanLiteral>(20, '    true'),
-                TestVisitor<SimpleStringLiteral>(33, "    'message'")
+                TestVisitor<BooleanLiteral>(24, 'true'),
+                TestVisitor<SimpleStringLiteral>(37, "'message'")
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
                 TestConfig.custom('Custom1', Config.all(fixSpaces: false), "assert    (    true    ,    'message'        )    ;\n"),
                 // ignore: avoid_redundant_argument_values
-                TestConfig.custom('Custom2', Config.all(fixSpaces: true, removeTrailingCommas: false), "assert(    true,    'message',);\n"),
-                TestConfig("assert(    true,    'message');\n")
+                TestConfig.custom('Custom2', Config.all(fixSpaces: true, removeTrailingCommas: false), "assert(true, 'message',);\n"),
+                TestConfig("assert(true, 'message');\n")
             ]
         ),
         TestGroupConfig(
@@ -104,7 +89,7 @@ void main()
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
-                TestConfig("assert(true == true,'message');\n")
+                TestConfig("assert(true == true, 'message');\n")
             ]
         ),
         TestGroupConfig(

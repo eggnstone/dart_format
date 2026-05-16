@@ -11,14 +11,14 @@ class ClassDeclarationFormatter extends TypedFormatter<ClassDeclaration>
     void formatNode(ClassDeclaration node)
     {
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.augmentKeyword, astVisitor, '$methodName/node.augmentKeyword');
-        formatState.copyEntity(node.abstractKeyword, astVisitor, '$methodName/node.abstractKeyword');
-        formatState.copyEntity(node.sealedKeyword, astVisitor, '$methodName/node.sealedKeyword');
-        formatState.copyEntity(node.baseKeyword, astVisitor, '$methodName/node.baseKeyword');
-        formatState.copyEntity(node.interfaceKeyword, astVisitor, '$methodName/node.interfaceKeyword');
-        formatState.copyEntity(node.finalKeyword, astVisitor, '$methodName/node.finalKeyword');
-        formatState.copyEntity(node.mixinKeyword, astVisitor, '$methodName/node.mixinKeyword');
-        formatState.copyEntity(node.classKeyword, astVisitor, '$methodName/node.classKeyword');
+        copyZeroOne(node, node.augmentKeyword, '$methodName/node.augmentKeyword');
+        copyZeroOne(node, node.abstractKeyword, '$methodName/node.abstractKeyword');
+        copyZeroOne(node, node.sealedKeyword, '$methodName/node.sealedKeyword');
+        copyZeroOne(node, node.baseKeyword, '$methodName/node.baseKeyword');
+        copyZeroOne(node, node.interfaceKeyword, '$methodName/node.interfaceKeyword');
+        copyZeroOne(node, node.finalKeyword, '$methodName/node.finalKeyword');
+        copyZeroOne(node, node.mixinKeyword, '$methodName/node.mixinKeyword');
+        copyZeroOne(node, node.classKeyword, '$methodName/node.classKeyword');
 
         formatState.pushLevel('$methodName/node.classKeyword/after');
 

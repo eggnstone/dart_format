@@ -12,9 +12,9 @@ class EnumDeclarationFormatter extends TypedFormatter<EnumDeclaration>
     void formatNode(EnumDeclaration node)
     {
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
-        formatState.copyEntity(node.augmentKeyword, astVisitor, '$methodName/node.augmentKeyword');
-        formatState.copyEntity(node.enumKeyword, astVisitor, '$methodName/node.enumKeyword');
-        formatState.copyEntity(node.namePart.typeName, astVisitor, '$methodName/node.namePart.typeName');
+        copyZeroOne(node, node.augmentKeyword, '$methodName/node.augmentKeyword');
+        copyZeroOne(node, node.enumKeyword, '$methodName/node.enumKeyword');
+        copyZeroOne(node, node.namePart.typeName, '$methodName/node.namePart.typeName');
         formatState.copyEntity(node.namePart.typeParameters, astVisitor, '$methodName/node.namePart.typeParameters');
         formatState.copyEntity(node.withClause, astVisitor, '$methodName/node.withClause');
         formatState.copyEntity(node.implementsClause, astVisitor, '$methodName/node.implementsClause');

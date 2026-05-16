@@ -19,9 +19,9 @@ class AssertStatementFormatter extends TypedFormatter<AssertStatement>
         formatState.copyEntity(node.assertKeyword, astVisitor, '$methodName/node.assertKeyword');
         formatState.copyEntity(node.leftParenthesis, astVisitor, '$methodName/node.leftParenthesis', config.space0);
         formatState.pushLevel('$methodName/node.leftParenthesis');
-        formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition');
+        formatState.copyEntity(node.condition, astVisitor, '$methodName/node.condition', config.space0);
         formatState.copyEntity(node.comma, astVisitor, '$methodName/node.comma', config.space0);
-        formatState.copyEntity(node.message, astVisitor, '$methodName/node.message');
+        formatState.copyEntity(node.message, astVisitor, '$methodName/node.message', config.space1);
 
         final SyntacticEntity nodeBeforeRightParenthesis = node.message ?? node.comma ?? node.condition;
         if (Constants.DEBUG_I_FORMATTER)
