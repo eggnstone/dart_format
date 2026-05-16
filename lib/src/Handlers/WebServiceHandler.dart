@@ -26,11 +26,16 @@ class WebServiceHandler
     final int? port;
     final bool skipVersionCheck;
     final DateTime _startTime = DateTime.now();
+    final Completer<int> _readyCompleter = Completer<int>();
 
     static int _requestCount = 0;
     static double _maxMillisecondsPerKiloCharacter = 0;
 
     WebServiceHandler({required this.skipVersionCheck, this.port});
+
+    /// Resolves with the actually-bound port once the HTTP server is listening.
+    /// Tests await this to learn which port `port: 0` landed on.
+    Future<int> get ready => _readyCompleter.future;
 
     Future<int> run()
     async
@@ -68,6 +73,7 @@ class WebServiceHandler
             }
 
             server.handleError(_handleServerError);
+            _readyCompleter.complete(server.port);
 
             const String protocol = 'http';
             final String message = '$protocol://${server.address.address}:${server.port}';
@@ -110,24 +116,36 @@ class WebServiceHandler
                 }
             );*/
 
-            stdin.listen(
-                (List<int> event)
-                {
-                    final String input = systemEncoding.decode(event);
-                    logDebug('$METHOD_NAME: Unexpected input via stdin.listen()/onData: ${StringTools.toDisplayString(input, Constants.MAX_DEBUG_LENGTH)}');
-                },
-                onDone: ()
-                {
-                    logDebug('$METHOD_NAME: Quitting because stdin.listen()/onDone called.');
-                    terminate = true;
-                },
-                onError: (Object error, StackTrace stackTrace)
-                {
-                    logError('$METHOD_NAME: Quitting because stdin.listen()/onError called: $error');
-                    terminate = true;
-                    terminateWithError = true;
-                }
-            );
+            // stdin can only be listened to once per isolate; in test isolates
+            // the test runner has already claimed it. The watcher is an
+            // IDE-plugin convenience (detect plugin process death), so swallow
+            // the StateError and keep running.
+            try
+            {
+                stdin.listen(
+                    (List<int> event)
+                    {
+                        final String input = systemEncoding.decode(event);
+                        logDebug('$METHOD_NAME: Unexpected input via stdin.listen()/onData: ${StringTools.toDisplayString(input, Constants.MAX_DEBUG_LENGTH)}');
+                    },
+                    onDone: ()
+                    {
+                        logDebug('$METHOD_NAME: Quitting because stdin.listen()/onDone called.');
+                        terminate = true;
+                    },
+                    onError: (Object error, StackTrace stackTrace)
+                    {
+                        logError('$METHOD_NAME: Quitting because stdin.listen()/onError called: $error');
+                        terminate = true;
+                        terminateWithError = true;
+                    }
+                );
+            }
+            // ignore: avoid_catching_errors
+            on StateError catch (e)
+            {
+                logDebug('$METHOD_NAME: stdin already listened to, skipping watcher: $e');
+            }
 
             while (!terminate)
                 await Future<void>.delayed(const Duration(milliseconds: Constants.WEB_SERVICE_HANDLER_WAIT_FOR_TERMINATE_IN_MILLISECONDS));
@@ -143,6 +161,9 @@ class WebServiceHandler
         }
         catch (e)
         {
+            // Unblock anyone awaiting `ready` so they don't hang forever.
+            if (!_readyCompleter.isCompleted)
+                _readyCompleter.completeError(e);
             writelnToStdErr(e.toString());
             _logDebug('$METHOD_NAME END with FAILURE');
             return ExitCodes.FAILURE;
@@ -255,6 +276,24 @@ class WebServiceHandler
             //throw DartFormatException.error('ERROR', CharacterLocation(1, 1));
 
             //logDebug('Request.contentLength: request.contentLength: ${request.contentLength}');
+
+            // Content-Length is required so the cap below can be enforced before reading the body.
+            if (request.contentLength < 0)
+            {
+                request.response.statusCode = HttpStatus.lengthRequired;
+                request.response.headers.contentType = ContentType.text;
+                request.response.writeln('Content-Length header is required.');
+                return;
+            }
+
+            // Bail before multipart parsing so a hostile client can't OOM the process.
+            if (request.contentLength > Constants.MAX_REQUEST_BODY_SIZE_IN_BYTES)
+            {
+                request.response.statusCode = HttpStatus.requestEntityTooLarge;
+                request.response.headers.contentType = ContentType.text;
+                request.response.writeln('Request body exceeds maximum of ${Constants.MAX_REQUEST_BODY_SIZE_IN_BYTES} bytes.');
+                return;
+            }
 
             final List<String>? contentTypeList = request.headers['content-type'];
             //logDebug('contentTypeList: $contentTypeList');

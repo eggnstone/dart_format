@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0
+
+- Web service: capped POST body size at 4 MiB and rejected POSTs without a Content-Length, so a runaway or hostile client can't buffer an oversize body into memory.
+
 ## 2.1.0
 
 - Preserved input line endings when formatting: CRLF stays CRLF, LF stays LF. Previously every run rewrote files to LF-only, leaving git on Windows perpetually warning about renormalisation.
