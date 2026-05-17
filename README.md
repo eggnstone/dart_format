@@ -17,7 +17,7 @@ option that adds them.
 
 | Before | After |
 |--------|-------|
-| ![Before](images/Before.png) | ![After](images/After.png) |
+| ![Before](https://raw.githubusercontent.com/eggnstone/dart_format/master/images/Before.png) | ![After](https://raw.githubusercontent.com/eggnstone/dart_format/master/images/After.png) |
 
 ## Why dart_format?
 
