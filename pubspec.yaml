@@ -4,7 +4,7 @@ description: A configurable Dart and Flutter formatter that never wraps your lin
 homepage: https://github.com/eggnstone/dart_format
 repository: https://github.com/eggnstone/dart_format
 issue_tracker: https://github.com/eggnstone/dart_format/issues
-version: 2.2.2
+version: 2.2.3
 topics:
   - dart
   - flutter

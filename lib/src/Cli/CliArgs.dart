@@ -120,7 +120,7 @@ class CliArgs
         parser.addFlag('help', abbr: 'h', negatable: false, help: 'Print this help and exit.');
         parser.addFlag('version', abbr: 'V', negatable: false, help: 'Print version and exit.');
         parser.addFlag('check', abbr: 'c', negatable: false, help: 'No writes; exit non-zero if any file would change. For CI.');
-        parser.addFlag('check-version', negatable: false, help: 'Check pub.dev for a newer dart_format release on start-up.');
+        parser.addFlag('check-version', negatable: false, help: 'Check pub.dev for a newer dart_format release (standalone, or before normal operation).');
         parser.addOption('config', help: 'Configuration JSON (mutually exclusive with --config-file).', valueHelp: 'JSON');
         parser.addOption('config-file', help: 'Path to a JSON configuration file (mutually exclusive with --config).', valueHelp: 'PATH');
         parser.addFlag('errors-as-json', negatable: false, help: 'Write errors as JSON to stderr.');

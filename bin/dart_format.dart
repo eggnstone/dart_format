@@ -12,6 +12,7 @@ import 'package:dart_format/src/Handlers/WebServiceHandler.dart';
 import 'package:dart_format/src/Tools/FileResolver.dart';
 import 'package:dart_format/src/Tools/InfoTools.dart';
 import 'package:dart_format/src/Tools/LogTools.dart';
+import 'package:dart_format/src/Tools/VersionTools.dart';
 
 Future<void> main(List<String> args)
 async
@@ -137,6 +138,20 @@ async
 
     if (cliArgs.fileNames.isEmpty)
     {
+        // Standalone --check-version: behave like --help / --version — print
+        // copyright, run the pub.dev check, exit SUCCESS if up-to-date or
+        // FAILURE (same code as --check finding a diff) if a newer release
+        // exists. --skip-version-check is honoured: the check becomes a no-op
+        // and we exit SUCCESS. As a modifier alongside files/stdin/--web,
+        // --check-version still runs before the real work.
+        if (cliArgs.checkVersion)
+        {
+            InfoTools.writeCopyrightToStdOut();
+            final VersionTools versionTools = VersionTools(writeToStdOut: true);
+            final bool newerAvailable = await versionTools.isNewerVersionAvailable(skipVersionCheck: cliArgs.skipVersionCheck);
+            return newerAvailable ? ExitCodes.FAILURE : ExitCodes.SUCCESS;
+        }
+
         InfoTools.writeCopyrightToStdOut();
         logDebug('No inputs given => Printing usage.');
         InfoTools.writeUsageToStdOut();

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.3
+
+- `--check-version` works standalone (no positional args); exits non-zero if a newer release is available.
+
 ## 2.2.2
 
 - Removed the 10 MiB log rotation in web mode.
