@@ -1,23 +1,137 @@
 # dart_format
 
 [![Build](https://github.com/eggnstone/dart_format/actions/workflows/dart.yaml/badge.svg)](https://github.com/eggnstone/dart_format/actions)
-[![pub package](https://img.shields.io/pub/v/dart_format.svg)](https://pub.dartlang.org/packages/dart_format)
+[![pub package](https://img.shields.io/pub/v/dart_format.svg)](https://pub.dev/packages/dart_format)
+[![JetBrains plugin](https://img.shields.io/jetbrains/plugin/v/21003.svg?label=JetBrains)](https://plugins.jetbrains.com/plugin/21003-dartformat)
+[![VS Code extension](https://img.shields.io/visual-studio-marketplace/v/eggnstone.DartFormat.svg?label=VS%20Code)](https://marketplace.visualstudio.com/items?itemName=eggnstone.DartFormat)
 [![GitHub Issues](https://img.shields.io/github/issues/eggnstone/dart_format.svg)](https://github.com/eggnstone/dart_format/issues)
 [![GitHub Stars](https://img.shields.io/github/stars/eggnstone/dart_format.svg)](https://github.com/eggnstone/dart_format/stargazers)
 
-## A formatter for Dart.
+A configurable formatter for Dart and Flutter. Like `dart format` /
+`dartfmt`, but you decide the rules — brace placement, spacing,
+trailing commas, indentation width, empty-line collapsing.
 
-Like dartfmt.  
-But better ;)  
-Because it's configurable.
+**Keeps your line breaks.** No forced wrapping at a line-length limit,
+no inserted or removed line breaks unless you explicitly enable an
+option that adds them.
 
-Also available as a plugin for Jetbrains (Android Studio, IntelliJ IDEA, ...)  
-https://plugins.jetbrains.com/plugin/21003-dartformat  
-Also available as an extension for Visual Studio Code  
-https://marketplace.visualstudio.com/items?itemName=eggnstone.DartFormat
+| Before | After |
+|--------|-------|
+| ![Before](images/Before.png) | ![After](images/After.png) |
 
-## To run dart_format from the command line:
-- Follow the instructions at https://pub.dev/packages/dart_format/install
+## Why dart_format?
+
+The built-in `dart format` is opinionated by design: you take its
+style or you don't. `dart_format` lets you decide.
+
+**It never wraps lines.** No column limit, no automatic line breaks.
+Long lines stay long; short lines stay short. The only line breaks
+`dart_format` inserts are the ones you explicitly enable (e.g.
+`addNewLineBeforeOpeningBrace`). If you didn't ask for a break, you
+won't get one.
+
+```dart
+// dart format (built-in) — wraps at 80 columns
+final user = User(
+  name: 'Alice',
+  email: 'alice@example.com',
+  preferences: defaultPreferences,
+);
+
+// dart_format — keeps it on one line because you didn't ask for breaks
+final user = User(name: 'Alice', email: 'alice@example.com', preferences: defaultPreferences);
+```
+
+```dart
+// dart format (built-in)
+void main() {
+  if (debug) {
+    print('hi');
+  }
+}
+
+// dart_format with Allman braces + 4-space indent
+void main()
+{
+    if (debug)
+    {
+        print('hi');
+    }
+}
+```
+
+It runs as a **CLI**, accepts source on **stdin**, and ships as a
+long-running **HTTP service** used by the JetBrains plugin and VS Code
+extension — so the same engine formats files from the terminal, your
+editor, and CI.
+
+## Configuration
+
+Pass any subset as JSON via `--config` or `--config-file`. Missing keys
+fall back to the defaults below.
+
+| Option                         | Default | Controls                                      |
+|--------------------------------|---------|-----------------------------------------------|
+| `addNewLineBeforeOpeningBrace` | `true`  | `{` on its own line (Allman-style)            |
+| `addNewLineAfterOpeningBrace`  | `true`  | Body always on a new line                     |
+| `addNewLineBeforeClosingBrace` | `true`  | Closing `}` on its own line                   |
+| `addNewLineAfterClosingBrace`  | `true`  | Newline after a block                         |
+| `addNewLineAfterSemicolon`     | `true`  | One statement per line                        |
+| `addNewLineAtEndOfText`        | `true`  | Trailing newline at end of file               |
+| `fixSpaces`                    | `true`  | Normalise whitespace around tokens            |
+| `indentationSpacesPerLevel`    | `4`     | Indent width (`-1` = leave untouched)         |
+| `maxEmptyLines`                | `1`     | Collapse runs of blank lines (`-1` = leave)   |
+| `removeTrailingCommas`         | `true`  | Strip trailing commas                         |
+
+Example `dartformat.json`:
+
+```json
+{
+    "IndentationSpacesPerLevel": 2,
+    "AddNewLineBeforeOpeningBrace": false,
+    "RemoveTrailingCommas": false
+}
+```
+
+```sh
+dart_format --config-file=dartformat.json lib
+```
+
+## Install
+
+```sh
+dart pub global activate dart_format
+```
+
+Or use one of the IDE integrations:
+
+- **JetBrains** (IntelliJ IDEA, Android Studio, …):
+  https://plugins.jetbrains.com/plugin/21003-dartformat
+- **VS Code**:
+  https://marketplace.visualstudio.com/items?itemName=eggnstone.DartFormat
+
+Full install instructions: https://pub.dev/packages/dart_format/install
+
+## Quick start
+
+```sh
+# Format a single file
+dart_format lib/main.dart
+
+# Format every .dart file under lib/ and test/
+dart_format lib test
+
+# Glob (handy on Windows where the shell does not expand wildcards)
+dart_format "lib/**/*.dart"
+
+# CI / pre-commit: exits non-zero if any file would change
+dart_format --check lib
+
+# Pipe stdin to stdout (auto-detected when no positional args are given)
+cat lib/main.dart | dart_format
+```
+
+## CLI reference
 
 ```
 Usage: dart_format [args] <file|dir|glob> [<file|dir|glob> ...]
@@ -39,18 +153,9 @@ Usage: dart_format [args] <file|dir|glob> [<file|dir|glob> ...]
     --web                            Starts in web service mode
 ```
 
-### Examples
+### Exclude examples
 
 ```sh
-# Format a single file
-dart_format lib/main.dart
-
-# Format every .dart file under lib/ and test/ recursively
-dart_format lib test
-
-# Use a glob (handy on Windows where the shell does not expand wildcards)
-dart_format "lib/**/*.dart"
-
 # Exclude by file ending (repeatable)
 dart_format lib --exclude="**/*.g.dart" --exclude="**/*.freezed.dart"
 
@@ -59,15 +164,6 @@ dart_format lib --exclude="**/legacy/**"
 
 # Exclude a specific file
 dart_format lib --exclude="lib/generated_code.dart"
-
-# Check mode (for CI / pre-commit, or just a no-write preview): exits non-zero if any file would change
-dart_format --check lib
-
-# Format stdin to stdout (pipe auto-detected when no positional args are given)
-cat lib/main.dart | dart_format
-
-# Same, but with an explicit `-` positional marker
-dart_format - < lib/main.dart
 ```
 
 ### Default excludes
@@ -97,11 +193,10 @@ cover the cases where it doesn't.
   DNS-rebinding and OOM-by-CSRF tricks a visited web page could play
   against `127.0.0.1`.
 - **Temp logging**: in web mode, dart_format writes a session log to the
-  system temp directory (filenames it touched, errors). Rotates at
-  10 MiB. Old files (`dart_format_*.log*`) are deleted on startup once
-  they're 30+ days old. Disable with `--log-to-temp-file=false`. CLI
-  modes don't log unless `--log-to-temp-file` is passed.
+  system temp directory (filenames it touched, errors). Disable with
+  `--log-to-temp-file=false`. CLI modes don't log unless
+  `--log-to-temp-file` is passed.
 - **Snapshot trust**: dart_format is installed via `dart pub global
-  activate`, which stores a compiled snapshot under `~/.pub-cache/`.
+  activate`, which stores a compiled snapshot in the pub cache.
   Anyone who can write to that directory can replace the binary. Same
   caveat as every other pub-installed CLI.

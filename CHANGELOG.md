@@ -2,7 +2,10 @@
 
 ## 2.2.1
 
-...
+- Removed the 10 MiB log rotation in web mode.
+- Fixed a leading space inserted before file-start comments.
+- Collapsed extra whitespace between declaration modifiers.
+- Normalised spacing in `assert(...)` argument lists.
 
 ## 2.2.0
 

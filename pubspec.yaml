@@ -1,11 +1,16 @@
 name: dart_format
 copyright: "2022-2026 Mark Eggenstein"
-description: A formatter for Dart. Like dartfmt. But better ;) Because it's configurable.
+description: A configurable Dart and Flutter formatter that never wraps your lines unless you ask. Opt in to braces, spacing, trailing commas, indent width, blank lines. CLI, stdin, or HTTP service.
 homepage: https://github.com/eggnstone/dart_format
+repository: https://github.com/eggnstone/dart_format
+issue_tracker: https://github.com/eggnstone/dart_format/issues
 version: 2.2.1
 topics:
-  - code-style
+  - dart
+  - flutter
   - formatting
+  - code-style
+  - cli
 
 environment:
   sdk: ^3.10.0
