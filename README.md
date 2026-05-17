@@ -17,7 +17,7 @@ option that adds them.
 
 | Before | After |
 |--------|-------|
-| ![Before](https://raw.githubusercontent.com/eggnstone/dart_format/master/images/Before.png) | ![After](https://raw.githubusercontent.com/eggnstone/dart_format/master/images/After.png) |
+| <img src="https://raw.githubusercontent.com/eggnstone/dart_format/master/images/Before.png" alt="Before" width="400"> | <img src="https://raw.githubusercontent.com/eggnstone/dart_format/master/images/After.png" alt="After" width="400"> |
 
 ## Why dart_format?
 
@@ -40,24 +40,6 @@ final user = User(
 
 // dart_format — keeps it on one line because you didn't ask for breaks
 final user = User(name: 'Alice', email: 'alice@example.com', preferences: defaultPreferences);
-```
-
-```dart
-// dart format (built-in)
-void main() {
-  if (debug) {
-    print('hi');
-  }
-}
-
-// dart_format with Allman braces + 4-space indent
-void main()
-{
-    if (debug)
-    {
-        print('hi');
-    }
-}
 ```
 
 It runs as a **CLI**, accepts source on **stdin**, and ships as a

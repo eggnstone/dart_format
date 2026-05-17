@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.2.1
+## 2.2.2
 
 - Removed the 10 MiB log rotation in web mode.
 - Fixed a leading space inserted before file-start comments.
