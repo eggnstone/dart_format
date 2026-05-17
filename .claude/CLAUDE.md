@@ -1,4 +1,5 @@
-@~/.claude/flutter-conventions.md
+@~/.claude/coding-conventions.md
+@~/.claude/dart-and-flutter-conventions.md
 
 # CLAUDE.md
 
