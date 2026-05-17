@@ -1,7 +1,7 @@
 @~/.claude/coding-conventions.md
 @~/.claude/dart-and-flutter-conventions.md
 
-# CLAUDE.md
+# dart_format
 
 `dart_format` is a configurable Dart source-code formatter, published on pub.dev as an alternative to the built-in `dart format` / `dartfmt`. The same package powers a JetBrains plugin (IntelliJ IDEA, Android Studio) and a VS Code extension; those IDE clients talk to it over a small localhost HTTP service so a single long-running process can format many files quickly.
 
@@ -10,6 +10,13 @@ Three invocation modes are dispatched from `bin/dart_format.dart`:
 - **File mode** (`DefaultHandler`): reads files, formats, writes back — or to `<name>.formatted.dart` with `--dry-run`.
 - **Pipe mode** (`PipeHandler`): reads source from stdin, writes formatted source to stdout. Used by IDE plugins for one-off invocations.
 - **Web service** (`WebServiceHandler`, `--web`): HTTP server on `127.0.0.1`, random free port by default (announced in the JSON line printed to stdout); pin a specific port with `--port=N`. `POST /format` takes a multipart body with `Config` (JSON) + `Text` (Dart source) parts. `GET /`, `/status`, `/quit`, `/favicon.ico` exist for diagnostics. Used by long-running IDE plugins to avoid repeated process startup.
+
+## Project context
+
+- Stability: feature-stable.
+- Breaking changes: none within a major version.
+- Public API surface: low priority. Direct pub.dev usage is minimal (~11 likes); real consumers are the JetBrains and VS Code plugins. Treat the **CLI flags** and **HTTP wire protocol** as the actual public API — changes to either require plugin updates in lockstep.
+- Performance: web-service mode is on the IDE-plugin hot path; formatting latency is user-perceptible. Avoid adding allocations or re-parses in `FormatState` / `FormatVisitor` without measuring.
 
 ## Architecture
 
@@ -31,6 +38,8 @@ Three invocation modes are dispatched from `bin/dart_format.dart`:
 ### Per-node dispatch (`lib/src/Format/FormatVisitor.dart`)
 
 `FormatVisitor` extends the analyzer's `AstVisitor`. It holds one `late final` instance per node-kind formatter (~90 of them, all under `lib/src/Formatters/`) and overrides each `visitXxx` to delegate to the matching `IFormatter`. Anything without a dedicated formatter falls through to `DefaultFormatter`.
+
+**Fall-through risk:** when upgrading the `analyzer` dependency, new AST node types in `package:analyzer/src/dart/ast/ast.dart` silently fall through to `DefaultFormatter` and may format wrong. Check the analyzer changelog for new node classes on every upgrade and add a dedicated formatter where needed.
 
 ### Per-node formatters (`lib/src/Formatters/*.dart`)
 
@@ -58,9 +67,26 @@ Each implements `IFormatter.format(AstNode)`. The contract: walk the node's chil
 - `test/Combinations/`, `test/ExplicitTests/` — end-to-end fixtures (no lib/src/ counterpart).
 - `test/TestTools/AstCreator.dart` — builds AST nodes from source strings via `package:analyzer/dart/analysis/utilities.dart`; see the comment on `createCompilationUnitTolerant` for the one helper that bypasses diagnostic-rejection (only for defensive-coverage tests).
 
+## Recurring tasks
+
 ### When adding a new per-node formatter
 
 1. Find the AST class's `@GenerateNodeImpl(childEntitiesOrder: [...])` in the analyzer source — that's the source-order child list.
 2. Create `lib/src/Formatters/<Name>Formatter.dart` extending `IFormatter`, copying each listed child in order.
 3. Wire it into `FormatVisitor` (field + `visitXxx` override).
 4. Add `test/Formatters/<Name>Formatter_test.dart` covering the happy path and any optional children (`?` tokens, `null`-able sub-nodes).
+
+### When upgrading the `analyzer` dependency
+
+1. Read the analyzer changelog for new AST node classes.
+2. For each new node class, check whether `FormatVisitor` has a `visitXxx` override; if not, the node falls through to `DefaultFormatter`.
+3. Add dedicated formatters per the checklist above for any new nodes that need non-default behavior.
+4. Run the full test suite; failures here often surface AST shape changes.
+
+### When debugging "Missed some text"
+
+The current formatter advanced `FormatState._lastConsumedPosition` past tokens it didn't emit. Check the failing formatter against its analyzer `@GenerateNodeImpl(childEntitiesOrder: [...])` and confirm every listed child is being copied. Most often it's a newly-added optional token (`?` modifier, trailing comma, etc.) the formatter doesn't yet handle.
+
+### When the CLI or HTTP wire protocol changes
+
+Changes to CLI flags (`bin/dart_format.dart`), the `POST /format` multipart format, or any endpoint's request/response shape break the JetBrains and VS Code plugins. Update both plugins in lockstep with the package release. No "internal" justification for changes here — both surfaces are public API.
