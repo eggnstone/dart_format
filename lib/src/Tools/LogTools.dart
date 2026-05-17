@@ -50,7 +50,6 @@ class LogTools
     static final DateFormat _dateTimeFormatter = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
     static RandomAccessFile? _logFile;
     static String? _logFilePath;
-    static int _logFileSizeBytes = 0;
 
     /// Directory containing the active temp log file, or null when temp-file
     /// logging is disabled or hasn't been initialised yet. Used by
@@ -172,10 +171,6 @@ class LogTools
         final String line = '${_dateTimeFormatter.format(DateTime.now())} $s\n';
         _logFile!.writeStringSync(line);
         _logFile!.flushSync();
-        _logFileSizeBytes += line.length;
-
-        if (_logFileSizeBytes > Constants.MAX_LOG_FILE_SIZE_IN_BYTES)
-            _rotateLogFile();
     }
 
     static void writeToStdOut(String s, {bool preventLoggingToTempFile = false})
@@ -246,7 +241,6 @@ class LogTools
         {
             _logFile = File(logFileName).openSync(mode: FileMode.append);
             _logFilePath = logFileName;
-            _logFileSizeBytes = File(logFileName).lengthSync();
             return true;
         }
         catch (e)
@@ -256,9 +250,9 @@ class LogTools
     }
 
     // Run once per session (called from _createLogFile on the first log write).
-    // Drops any `dart_format_*.log` / `.log.old` file in systemTemp that hasn't
-    // been touched in LOG_FILE_RETENTION_IN_DAYS days. Best-effort: per-file
-    // failures (e.g. locked by a concurrent dart_format process) are swallowed.
+    // Drops any `dart_format_*.log` file in systemTemp that hasn't been touched
+    // in LOG_FILE_RETENTION_IN_DAYS days. Best-effort: per-file failures (e.g.
+    // locked by a concurrent dart_format process) are swallowed.
     static void _cleanupOldLogFiles()
     {
         try
@@ -275,7 +269,7 @@ class LogTools
                 if (!name.startsWith('dart_format_'))
                     continue;
 
-                if (!name.endsWith('.log') && !name.endsWith('.log.old'))
+                if (!name.endsWith('.log'))
                     continue;
 
                 // Never delete the current process's own files.
@@ -296,49 +290,6 @@ class LogTools
         on FileSystemException
         {
             // systemTemp not listable — skip cleanup, not fatal.
-        }
-    }
-
-    // Caps each session's log at 2 * MAX_LOG_FILE_SIZE_IN_BYTES: the current
-    // file plus one rotated `.old` backup. The current path stays the same so
-    // any caller (e.g. IDE plugin surfacing the log to the user) still finds
-    // the recent entries; older entries are in `<path>.old`.
-    static void _rotateLogFile()
-    {
-        final String? currentPath = _logFilePath;
-        if (_logFile == null || currentPath == null)
-            return;
-
-        try
-        {
-            _logFile!.closeSync();
-        }
-        on FileSystemException
-        {
-            // best effort
-        }
-        _logFile = null;
-
-        try
-        {
-            final File oldFile = File('$currentPath.old');
-            if (oldFile.existsSync())
-                oldFile.deleteSync();
-            File(currentPath).renameSync('$currentPath.old');
-        }
-        on FileSystemException
-        {
-            // best effort — proceed to open a fresh handle at currentPath
-        }
-
-        try
-        {
-            _logFile = File(currentPath).openSync(mode: FileMode.append);
-            _logFileSizeBytes = 0;
-        }
-        on FileSystemException
-        {
-            _logFile = null;
         }
     }
 }

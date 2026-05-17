@@ -1,34 +1,27 @@
 # Changelog
 
+## 2.2.1
+
+...
+
 ## 2.2.0
 
-Security pass on the web service used by the IDE plugins. No plugin changes required to keep working.
+Security pass on the web service used by the IDE plugins. No plugin changes needed.
 
-**Bug fixes**
+**CLI**
 
-- Extra whitespace between declaration modifiers (e.g. `static    const`, `abstract    base    class`) is now collapsed.
-- `assert(...)` arg-list spacing is normalised: no spaces around the parens, exactly one space after the comma.
-
-**CLI behaviour changes**
-
-- `--check-version` is the new opt-in for the pub.dev release check. CLI invocations no longer hit the network by default. `--skip-version-check` still works. Web mode (= IDE plugins) is unchanged.
-- `--log-to-temp-file` is a real flag now (defaults off, accepts `=true`/`=false`). CLI invocations no longer write a log file unless asked. Web mode still force-logs so the IDE plugins can surface the log path.
-- Unknown long options are silently dropped with a stderr warning — forward-compat so a future IDE plugin can pass a flag this binary doesn't know yet without bringing the service down.
-- Directory recursion no longer descends into symlinked subdirectories, and glob matches that hit a symlink directly are skipped. Prevents accidentally formatting files outside the target tree.
-- `--config-file` now requires a `.json` or `.dart_format` suffix and rejects anything larger than 1 MiB. Stops a typo / wrong-path from silently reading a huge unrelated file.
-- Web mode no longer tries port 7777 first — it binds a random free port. The port is announced on stdout as before. Pin with `--port=N` if you need a predictable address.
+- `--check-version` opt-in; CLI no longer hits the network by default.
+- `--log-to-temp-file` is a real flag (off by default).
+- Directory recursion and globs skip symlinks.
+- `--config-file` requires `.json`/`.dart_format` and ≤ 1 MiB.
+- Web mode binds a random free port by default; pin with `--port=N`.
 
 **Web service**
 
-- Startup JSON now advertises structured fields plugins can read directly: `Protocol`, `Address`, `Port`, `ProcessId`, `LogFilePath`, `LogFileName`. `Message` (the full URL string) is kept for back-compat with older plugin builds and will be removed in a future release. Plugins should prefer the structured fields and fall back to `Message` only when they're absent.
-
-**Web service hardening**
-
-- Rejects oversize POSTs (>4 MiB or no `Content-Length`), non-loopback `Host` headers, and any request that exceeds 60 s wall-clock — instead of OOMing, accepting cross-origin browser traffic, or hanging.
-- The format-time budget now applies to every phase (parse, visit, tidy, verify), not just the visit pass.
-- Unexpected internal errors (anything that isn't a `DartFormatException`) no longer echo `e.toString()` back over the wire. The wire response is a generic "see the dart_format log" message; the full stack trace stays in the local temp log. Real format errors with line/column info are unaffected.
-- Log file rotates at 10 MiB into a sibling `.old` file. A long-running web service is now capped at roughly 20 MiB of log per session instead of growing forever.
-- Old `dart_format_*.log` / `.log.old` files in the system temp directory are deleted on startup once they're 30+ days old. Stops a slow accumulation of leftover logs over months of use.
+- Startup JSON adds structured fields (`Protocol`, `Address`, `Port`, `ProcessId`, `LogFilePath`, `LogFileName`); `Message` kept for back-compat.
+- Rejects oversize POSTs, non-loopback `Host`, and requests over 60 s. Format-time budget covers every phase.
+- Internal errors no longer echo `e.toString()` over the wire; the full stack stays in the local log.
+- Stale `dart_format_*.log` files in the system temp directory are deleted on startup after 30 days.
 
 ## 2.1.0
 
