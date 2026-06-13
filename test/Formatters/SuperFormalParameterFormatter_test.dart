@@ -23,7 +23,7 @@ void main()
             ]
         ),
         TestGroupConfig(
-            inputNodeCreator: AstCreator.createFormalParameterInDefaultFormalParameterInFunction,
+            inputNodeCreator: AstCreator.createFormalParameterInFunction,
             inputLeading: 'void f({',
             inputMiddle: '@a required int super.s',
             inputTrailing: '}){}',
@@ -55,8 +55,7 @@ void main()
             name: 'SuperFormalParameter function-typed with typeParameters/parameters/question',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<NamedType>(20, 'int'),
-                TestVisitor<TypeParameterList>(31, '<T>'),
-                TestVisitor<FormalParameterList>(34, '(T s)')
+                TestVisitor<FunctionTypedFormalParameterSuffix>(31, '<T>(T s)?')
             ]
         )
     ];

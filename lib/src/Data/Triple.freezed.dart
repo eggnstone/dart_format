@@ -1,7 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+// ignore_for_file: type=lint, type=warning
 
 part of 'Triple.dart';
 
@@ -9,6 +8,7 @@ part of 'Triple.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -63,10 +63,10 @@ class _$TripleCopyWithImpl<T1,T2,T3,$Res>
 /// Create a copy of Triple
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? item1 = freezed,Object? item2 = freezed,Object? item3 = freezed,}) {
-  return _then(_self.copyWith(
-item1: freezed == item1 ? _self.item1 : item1 // ignore: cast_nullable_to_non_nullable
-as T1,item2: freezed == item2 ? _self.item2 : item2 // ignore: cast_nullable_to_non_nullable
-as T2,item3: freezed == item3 ? _self.item3 : item3 // ignore: cast_nullable_to_non_nullable
+  return _then(Triple(
+freezed == item1 ? _self.item1 : item1 // ignore: cast_nullable_to_non_nullable
+as T1,freezed == item2 ? _self.item2 : item2 // ignore: cast_nullable_to_non_nullable
+as T2,freezed == item3 ? _self.item3 : item3 // ignore: cast_nullable_to_non_nullable
 as T3,
   ));
 }

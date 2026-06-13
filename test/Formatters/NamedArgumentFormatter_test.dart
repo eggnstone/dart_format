@@ -1,5 +1,5 @@
 import 'package:analyzer/dart/ast/ast.dart';
-import 'package:dart_format/src/Formatters/NamedExpressionFormatter.dart';
+import 'package:dart_format/src/Formatters/NamedArgumentFormatter.dart';
 
 import '../TestTools/AstCreator.dart';
 import '../TestTools/TestConfig.dart';
@@ -13,13 +13,12 @@ void main()
 
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
         TestGroupConfig(
-            inputNodeCreator: AstCreator.createNamedExpressionInArgumentList,
+            inputNodeCreator: AstCreator.createNamedArgumentInArgumentList,
             inputLeading: 'void f(){g(',
             inputMiddle: 'n:1',
             inputTrailing: ');}',
-            name: 'NamedExpression',
+            name: 'NamedArgument',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<Label>(11, 'n:'),
                 TestVisitor<IntegerLiteral>(13, '1')
             ],
             testConfigs: <TestConfig>[
@@ -29,5 +28,5 @@ void main()
         )
     ];
 
-    TestTools.runTestGroupsForFormatter(testGroupConfigs, 'NamedExpressionFormatter', NamedExpressionFormatter.new, StackTrace.current);
+    TestTools.runTestGroupsForFormatter(testGroupConfigs, 'NamedArgumentFormatter', NamedArgumentFormatter.new, StackTrace.current);
 }

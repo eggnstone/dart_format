@@ -1,13 +1,14 @@
 import 'package:analyzer/dart/ast/ast.dart';
 
+import '../Data/ConfigExtension.dart';
 import 'TypedFormatter.dart';
 
-class SimpleFormalParameterFormatter extends TypedFormatter<SimpleFormalParameter>
+class RegularFormalParameterFormatter extends TypedFormatter<RegularFormalParameter>
 {
-    SimpleFormalParameterFormatter(super.config, super.astVisitor, super.formatState);
+    RegularFormalParameterFormatter(super.config, super.astVisitor, super.formatState);
 
     @override
-    void formatNode(SimpleFormalParameter node)
+    void formatNode(RegularFormalParameter node)
     {
         formatState.acceptList(node.sortedCommentAndAnnotations, astVisitor, '$methodName/node.sortedCommentAndAnnotations');
 
@@ -17,16 +18,16 @@ class SimpleFormalParameterFormatter extends TypedFormatter<SimpleFormalParamete
             formatState.copyEntity(node.requiredKeyword, astVisitor, '$methodName/node.requiredKeyword', spacesForRequiredKeyword);
         }
 
-        if (node.keyword != null)
-        {
-            final int? spacesForKeyword = config.fixSpaces ? (node.offset == node.keyword!.offset ? null : 1) : null;
-            formatState.copyEntity(node.keyword, astVisitor, '$methodName/node.keyword', spacesForKeyword);
-        }
-
         if (node.covariantKeyword != null)
         {
             final int? spacesForCovariantKeyword = config.fixSpaces ? (node.offset == node.covariantKeyword!.offset ? null : 1) : null;
             formatState.copyEntity(node.covariantKeyword, astVisitor, '$methodName/node.covariantKeyword', spacesForCovariantKeyword);
+        }
+
+        if (node.constFinalOrVarKeyword != null)
+        {
+            final int? spacesForKeyword = config.fixSpaces ? (node.offset == node.constFinalOrVarKeyword!.offset ? null : 1) : null;
+            formatState.copyEntity(node.constFinalOrVarKeyword, astVisitor, '$methodName/node.constFinalOrVarKeyword', spacesForKeyword);
         }
 
         if (node.type != null)
@@ -40,5 +41,8 @@ class SimpleFormalParameterFormatter extends TypedFormatter<SimpleFormalParamete
             final int? spacesForName = config.fixSpaces ? (node.offset == node.name!.offset ? null : 1) : null;
             formatState.copyEntity(node.name, astVisitor, '$methodName/node.name', spacesForName);
         }
+
+        formatState.copyEntity(node.functionTypedSuffix, astVisitor, '$methodName/node.functionTypedSuffix', config.space0);
+        formatState.copyEntity(node.defaultClause, astVisitor, '$methodName/node.defaultClause');
     }
 }

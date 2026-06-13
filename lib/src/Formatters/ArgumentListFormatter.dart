@@ -29,11 +29,9 @@ class ArgumentListFormatter extends TypedFormatter<ArgumentList>
     /// whose own brackets could collapse with the surrounding ArgumentList's parens:
     /// another call's `(`/`)`, a closure body's `{`/`}`, or a collection literal's
     /// `(`/`)` / `[`/`]` / `{`/`}`. Returns null otherwise.
-    ({SyntacticEntity left, SyntacticEntity right})? _getInnerBrackets(Expression arg)
+    ({SyntacticEntity left, SyntacticEntity right})? _getInnerBrackets(Argument arg)
     {
-        Expression target = arg;
-        if (target is NamedExpression)
-            target = target.expression;
+        final Expression target = arg is NamedArgument ? arg.argumentExpression : arg as Expression;
 
         if (target is MethodInvocation)
             return (left: target.argumentList.leftParenthesis, right: target.argumentList.rightParenthesis);

@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/analysis/features.dart';
 import 'package:analyzer/dart/analysis/utilities.dart' as analyzer_utilities;
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:dart_format/src/Tools/AnalyzerTools.dart';
 
 class AstCreator
 {
@@ -70,9 +71,6 @@ class AstCreator
     static ExtendsClause createExtendsClauseInClassDeclaration(String s)
     => createClassDeclaration(s).extendsClause!;
 
-    static FunctionTypedFormalParameter createFunctionTypedFormalParameterInFunction(String s)
-    => createFormalParameterInFunction(s) as FunctionTypedFormalParameter;
-
     static ImplementsClause createImplementsClauseInClassDeclaration(String s)
     => createClassDeclaration(s).implementsClause!;
 
@@ -91,8 +89,8 @@ class AstCreator
     static MixinOnClause createMixinOnClauseInMixinDeclaration(String s)
     => createMixinDeclaration(s).onClause!;
 
-    static NamedExpression createNamedExpressionInArgumentList(String s)
-    => createArgumentListInFunction(s).arguments[0] as NamedExpression;
+    static NamedArgument createNamedArgumentInArgumentList(String s)
+    => createArgumentListInFunction(s).arguments[0] as NamedArgument;
 
     static NativeFunctionBody createNativeFunctionBodyInClass(String s)
     => createMethodDeclaration(s).body as NativeFunctionBody;
@@ -143,14 +141,14 @@ class AstCreator
     => createConstructorDeclaration(s).initializers[0];
 
     static CompilationUnit createCompilationUnit(String s)
-    => analyzer_utilities.parseString(content: s).unit;
+    => AnalyzerTools.parseString(s).unit;
 
     // Production rejects any input with parse diagnostics (Formatter.dart:42-43).
     // Only use this helper to construct AST shapes the production guard would
     // reject (e.g. `async*` on an expression body) for defensive-coverage tests.
     // Do not introduce new uses without a reason — prefer valid Dart fixtures.
     static CompilationUnit createCompilationUnitTolerant(String s)
-    => analyzer_utilities.parseString(content: s, throwIfDiagnostics: false).unit;
+    => AnalyzerTools.parseString(s, throwIfDiagnostics: false).unit;
 
     static FunctionBody createFunctionBodyTolerant(String s)
     => (createCompilationUnitTolerant(s).declarations[0] as FunctionDeclaration).functionExpression.body;
@@ -240,11 +238,8 @@ class AstCreator
     static FormalParameter createFormalParameterInFunction(String s)
     => createFormalParameterListInFunction(s).parameters[0];
 
-    static DefaultFormalParameter createDefaultFormalParameterInFunction(String s)
-    => createFormalParameterInFunction(s) as DefaultFormalParameter;
-
-    static FormalParameter createFormalParameterInDefaultFormalParameterInFunction(String s)
-    => createDefaultFormalParameterInFunction(s).parameter;
+    static FormalParameterDefaultClause createFormalParameterDefaultClauseInFunction(String s)
+    => createFunctionParameter(s).defaultClause!;
 
     static FormalParameterList createFormalParameterListInFunction(String s)
     => createFunctionExpression(s).parameters!;
@@ -258,17 +253,14 @@ class AstCreator
     static FunctionDeclaration createFunctionDeclaration(String s)
     => createDeclaration(s) as FunctionDeclaration;
 
-    static DefaultFormalParameter createFunctionDefaultFormalParameter(String s)
-    => createFunctionParameter(s) as DefaultFormalParameter;
-
-    static NormalFormalParameter createFunctionDefaultFormalParameterParameter(String s)
-    => createFunctionDefaultFormalParameter(s).parameter;
-
     static FunctionExpression createFunctionExpression(String s)
     => createFunctionDeclaration(s).functionExpression;
 
     static FormalParameter createFunctionParameter(String s)
     => createFunctionParameters(s).parameters[0];
+
+    static FunctionTypedFormalParameterSuffix createFunctionTypedFormalParameterSuffixInFunction(String s)
+    => createFunctionParameter(s).functionTypedSuffix!;
 
     static FormalParameterList createFunctionParameters(String s)
     => createFunctionExpression(s).parameters!;
@@ -322,8 +314,11 @@ class AstCreator
     static SetOrMapLiteral createSetOrMapLiteral(String s)
     => createRightHandSideInAssignmentExpressionInFunction(s) as SetOrMapLiteral;
 
-    static SimpleFormalParameter createSimpleFormalParameterInFunction(String s)
-    => createFormalParameterInFunction(s) as SimpleFormalParameter;
+    static RegularFormalParameter createRegularFormalParameterInFunction(String s)
+    => createFormalParameterInFunction(s) as RegularFormalParameter;
+
+    static RecordLiteralNamedField createRecordLiteralNamedFieldInTopLevelVariable(String s)
+    => (createInitializerInTopLevelVariable(s) as RecordLiteral).fields[0] as RecordLiteralNamedField;
 
     static Statement createStatementInFunction(String s)
     => createBlockInFunction(s).statements[0];
@@ -356,7 +351,7 @@ class AstCreator
     => createStatementInFunction(s) as TryStatement;
 
     static TypeAnnotation createTypeAnnotationInFunctionParameter(String s)
-    => createSimpleFormalParameterInFunction(s).type!;
+    => createRegularFormalParameterInFunction(s).type!;
 
     static TypeAnnotation createFirstTypeArgumentInMethodReturnType(String s)
     => createTypeArgumentListInMethodReturnType(s).arguments[0];

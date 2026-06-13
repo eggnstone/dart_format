@@ -1,7 +1,6 @@
 // ignore_for_file: always_put_control_body_on_new_line
 
 import 'package:analyzer/dart/analysis/results.dart';
-import 'package:analyzer/dart/analysis/utilities.dart' as AnalyzerUtilities; // ignore: library_prefixes
 import 'package:analyzer/diagnostic/diagnostic.dart';
 import 'package:analyzer/source/line_info.dart';
 
@@ -9,6 +8,7 @@ import '../Constants/Constants.dart';
 import '../Data/Config.dart';
 import '../Data/IntTuple.dart';
 import '../Exceptions/DartFormatException.dart';
+import '../Tools/AnalyzerTools.dart';
 import '../Tools/FormatTools.dart';
 import '../Tools/LogTools.dart';
 import '../Tools/StringTools.dart';
@@ -53,7 +53,7 @@ class Formatter
         _recordPhase(phaseTimer, phaseMicroseconds, 'normalize');
         _throwIfTimedOut(maxDateTime, 'normalize');
 
-        final ParseStringResult parseResult = AnalyzerUtilities.parseString(content: cleanedS, throwIfDiagnostics: false);
+        final ParseStringResult parseResult = AnalyzerTools.parseString(cleanedS, throwIfDiagnostics: false);
         _recordPhase(phaseTimer, phaseMicroseconds, 'parse');
         _throwIfTimedOut(maxDateTime, 'parse');
 

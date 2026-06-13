@@ -30,7 +30,7 @@ void main()
             inputTrailing: '}',
             name: 'ContinueStatement with label',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<SimpleIdentifier>(29, 'outer')
+                TestVisitor<LabelReference>(29, 'outer')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

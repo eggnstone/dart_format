@@ -13,7 +13,7 @@ void main()
 
     final List<TestGroupConfig> testGroupConfigs = <TestGroupConfig>[
         TestGroupConfig(
-            inputNodeCreator: AstCreator.createFunctionDefaultFormalParameterParameter,
+            inputNodeCreator: AstCreator.createFunctionParameter,
             inputLeading: 'void f({',
             inputMiddle: '@a  required  C  this  .  x',
             inputTrailing: '}){}',
@@ -49,8 +49,7 @@ void main()
             name: 'function-typed this.x with typeParameters/parameters/question',
             astVisitors: <TestVisitor<void>>[
                 TestVisitor<NamedType>(10, 'int'),
-                TestVisitor<TypeParameterList>(20, '<T>'),
-                TestVisitor<FormalParameterList>(23, '(T s)')
+                TestVisitor<FunctionTypedFormalParameterSuffix>(20, '<T>(T s)?')
             ]
         )
     ];

@@ -168,10 +168,6 @@ abstract class SimpleVisitor extends AstVisitor<void>
     => visit(node);
 
     @override
-    void visitDefaultFormalParameter(DefaultFormalParameter node)
-    => visit(node);
-
-    @override
     void visitDoStatement(DoStatement node)
     => visit(node);
 
@@ -296,6 +292,10 @@ abstract class SimpleVisitor extends AstVisitor<void>
     => visit(node);
 
     @override
+    void visitFormalParameterDefaultClause(FormalParameterDefaultClause node)
+    => visit(node);
+
+    @override
     void visitFormalParameterList(FormalParameterList node)
     => visit(node);
 
@@ -324,7 +324,7 @@ abstract class SimpleVisitor extends AstVisitor<void>
     => visit(node);
 
     @override
-    void visitFunctionTypedFormalParameter(FunctionTypedFormalParameter node)
+    void visitFunctionTypedFormalParameterSuffix(FunctionTypedFormalParameterSuffix node)
     => visit(node);
 
     @override
@@ -400,6 +400,10 @@ abstract class SimpleVisitor extends AstVisitor<void>
     => visit(node);
 
     @override
+    void visitLabelReference(LabelReference node)
+    => visit(node);
+
+    @override
     void visitLibraryDirective(LibraryDirective node)
     => visit(node);
 
@@ -452,7 +456,7 @@ abstract class SimpleVisitor extends AstVisitor<void>
     => visit(node);
 
     @override
-    void visitNamedExpression(NamedExpression node)
+    void visitNamedArgument(NamedArgument node)
     => visit(node);
 
     @override
@@ -556,6 +560,10 @@ abstract class SimpleVisitor extends AstVisitor<void>
     => visit(node);
 
     @override
+    void visitRecordLiteralNamedField(RecordLiteralNamedField node)
+    => visit(node);
+
+    @override
     void visitRecordPattern(RecordPattern node)
     => visit(node);
 
@@ -577,6 +585,10 @@ abstract class SimpleVisitor extends AstVisitor<void>
 
     @override
     void visitRedirectingConstructorInvocation(RedirectingConstructorInvocation node)
+    => visit(node);
+
+    @override
+    void visitRegularFormalParameter(RegularFormalParameter node)
     => visit(node);
 
     @override
@@ -605,10 +617,6 @@ abstract class SimpleVisitor extends AstVisitor<void>
 
     @override
     void visitShowCombinator(ShowCombinator node)
-    => visit(node);
-
-    @override
-    void visitSimpleFormalParameter(SimpleFormalParameter node)
     => visit(node);
 
     @override

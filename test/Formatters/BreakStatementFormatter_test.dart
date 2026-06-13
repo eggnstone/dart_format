@@ -30,7 +30,7 @@ void main()
             inputTrailing: '}',
             name: 'BreakStatement with label',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<SimpleIdentifier>(26, 'outer')
+                TestVisitor<LabelReference>(26, 'outer')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

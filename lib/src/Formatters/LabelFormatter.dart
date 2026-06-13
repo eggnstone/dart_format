@@ -10,7 +10,7 @@ class LabelFormatter extends TypedFormatter<Label>
     @override
     void formatNode(Label node)
     {
-        formatState.copyEntity(node.label, astVisitor, '$methodName/node.label');
+        formatState.copyEntity(node.name, astVisitor, '$methodName/node.name');
         formatState.copyEntity(node.colon, astVisitor, '$methodName/node.colon', config.space0);
     }
 }

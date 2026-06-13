@@ -27,8 +27,8 @@ void main()
             inputTrailing: '{}',
             name: '2 param, single lines, trailing comma',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<SimpleFormalParameter>(7, 'int i'),
-                TestVisitor<SimpleFormalParameter>(13, 'int j')
+                TestVisitor<RegularFormalParameter>(7, 'int i'),
+                TestVisitor<RegularFormalParameter>(13, 'int j')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -43,8 +43,8 @@ void main()
             inputTrailing: '{}',
             name: '2 params, no trailing comma, formatter does not add one',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<SimpleFormalParameter>(7, 'int i'),
-                TestVisitor<SimpleFormalParameter>(13, 'int j')
+                TestVisitor<RegularFormalParameter>(7, 'int i'),
+                TestVisitor<RegularFormalParameter>(13, 'int j')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -59,8 +59,8 @@ void main()
             inputTrailing: '{}',
             name: '2 params, multi-line, trailing comma removed under default',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<SimpleFormalParameter>(8, 'int i'),
-                TestVisitor<SimpleFormalParameter>(15, 'int j')
+                TestVisitor<RegularFormalParameter>(8, 'int i'),
+                TestVisitor<RegularFormalParameter>(15, 'int j')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -87,7 +87,7 @@ void main()
             inputTrailing: '{}',
             name: '1 param, multiple lines',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<SimpleFormalParameter>(8, 'int i')
+                TestVisitor<RegularFormalParameter>(8, 'int i')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -105,8 +105,8 @@ void main()
             inputTrailing: '{}',
             name: '2 params, multiple lines',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<SimpleFormalParameter>(8, 'int i'),
-                TestVisitor<SimpleFormalParameter>(15, 'int j')
+                TestVisitor<RegularFormalParameter>(8, 'int i'),
+                TestVisitor<RegularFormalParameter>(15, 'int j')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -125,7 +125,7 @@ void main()
             inputTrailing: '{}',
             name: '1 named param, multiple lines',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<DefaultFormalParameter>(9, 'int i')
+                TestVisitor<RegularFormalParameter>(9, 'int i')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -143,8 +143,8 @@ void main()
             inputTrailing: '{}',
             name: '2 params, 1 normal, 1 named, single line',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<SimpleFormalParameter>(7, 'int i'),
-                TestVisitor<DefaultFormalParameter>(14, 'int j')
+                TestVisitor<RegularFormalParameter>(7, 'int i'),
+                TestVisitor<RegularFormalParameter>(14, 'int j')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -158,8 +158,8 @@ void main()
             inputTrailing: '{}',
             name: '2 params, 1 normal, 1 optional, single line',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<SimpleFormalParameter>(7, 'int i'),
-                TestVisitor<DefaultFormalParameter>(14, 'int j')
+                TestVisitor<RegularFormalParameter>(7, 'int i'),
+                TestVisitor<RegularFormalParameter>(14, 'int j')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -173,8 +173,8 @@ void main()
             inputTrailing: '{}',
             name: '2 params (too much spacing)', // TODO: too little spacing
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<SimpleFormalParameter>(9, 'int  i'),
-                TestVisitor<SimpleFormalParameter>(20, 'int  j')
+                TestVisitor<RegularFormalParameter>(9, 'int  i'),
+                TestVisitor<RegularFormalParameter>(20, 'int  j')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -188,8 +188,8 @@ void main()
             inputTrailing: '{}',
             name: '2 params with trailing line comment',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<SimpleFormalParameter>(12, 'int i'),
-                TestVisitor<SimpleFormalParameter>(23, 'int j')
+                TestVisitor<RegularFormalParameter>(12, 'int i'),
+                TestVisitor<RegularFormalParameter>(23, 'int j')
             ]
         )
     ];

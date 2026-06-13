@@ -19,8 +19,8 @@ void main()
             inputTrailing: ';',
             name: 'RecordLiteral',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<NamedExpression>(7, 'a:1'),
-                TestVisitor<NamedExpression>(11, 'b:2')
+                TestVisitor<RecordLiteralNamedField>(7, 'a:1'),
+                TestVisitor<RecordLiteralNamedField>(11, 'b:2')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -34,8 +34,8 @@ void main()
             inputTrailing: ';',
             name: 'RecordLiteral with const',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<NamedExpression>(13, 'a:1'),
-                TestVisitor<NamedExpression>(17, 'b:2')
+                TestVisitor<RecordLiteralNamedField>(13, 'a:1'),
+                TestVisitor<RecordLiteralNamedField>(17, 'b:2')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),
@@ -49,8 +49,8 @@ void main()
             inputTrailing: ';',
             name: 'RecordLiteral multi-line indents body and keeps closing ) at outer level',
             astVisitors: <TestVisitor<void>>[
-                TestVisitor<NamedExpression>(8, 'a:1'),
-                TestVisitor<NamedExpression>(13, 'b:2')
+                TestVisitor<RecordLiteralNamedField>(8, 'a:1'),
+                TestVisitor<RecordLiteralNamedField>(13, 'b:2')
             ],
             testConfigs: <TestConfig>[
                 TestConfig.none(),

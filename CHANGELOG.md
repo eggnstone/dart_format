@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.3.0
+
+- Migrated to analyzer 13 (formal-parameter, named-argument, and label AST restructuring).
+- Pinned the parse language version to the SDK floor so `final`/`var`/`covariant` parameters keep formatting.
+
 ## 2.2.3
 
 - `--check-version` works standalone (no positional args); exits non-zero if a newer release is available.
