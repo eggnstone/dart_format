@@ -14,3 +14,7 @@ pubspec.lock
 
 /.claude/settings.local.json
 /.idea/libraries/Dart_Packages.xml
+
+# Async workflow — PUBLIC REPO: ignore the whole folder.
+# Committing thoughts.md would publish raw thought-dumps. See .claude/ProjectSync.md.
+.async/

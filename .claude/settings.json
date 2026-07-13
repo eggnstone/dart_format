@@ -3,5 +3,20 @@
         "allow": [
             "Bash(dart bin/dart_format.dart *)"
         ]
+    },
+    "enabledMcpjsonServers": [
+        "dart"
+    ],
+    "hooks": {
+        "SessionStart": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session-start.sh"
+                    }
+                ]
+            }
+        ]
     }
 }

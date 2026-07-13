@@ -1,16 +1,39 @@
-# https://dash-overflow.net/articles/getting_started/
-
-# Enable all rules by default
+# Enable all lint rules by default, then opt out explicitly (dash-overflow style).
 include: all_lint_rules.yaml
+
+# Project structural conventions the analyzer can't express — member / field /
+# method order, one-class-per-file, no private top-level class, verb-first method
+# names. AST rules in the eggnstone_conventions_v12 analysis-server plugin.
+# Surfaced live in the IDE and by `dart analyze` run from THIS package root
+# (NOT `dart analyze lib`, and NOT `flutter analyze` — neither loads the plugin,
+# so a clean result from those means nothing).
+#
+# NOTE: this path points outside the repo, at the maintainer's local layout. An
+# outside clone simply won't have it — the analyzer then degrades gracefully
+# (plugin rules are skipped, everything else still runs). Accepted trade-off.
+plugins:
+  eggnstone_conventions_v12:
+    path: ../../pub.local/eggnstone_conventions/eggnstone_conventions_v12
+    diagnostics:
+      member_group_order: true
+      field_order: true
+      public_methods_first: true
+      alphabetical_methods: true
+      one_class_per_file: true
+      private_top_level_class: true
+      verb_first_method: true
 
 analyzer:
   errors:
-    # Otherwise cause the import of all_lint_rules to warn because of some rules conflicts.
-    # The conflicts are fixed in this file instead, so we can safely ignore the warning.
+    # all_lint_rules contains conflicting rules; the conflicts are resolved below,
+    # so the import warning is safe to silence.
     included_file_warning: ignore
     missing_required_param: error
     missing_return: error
     must_be_immutable: error
+  # PROJECT-OWNED — /project-sync never overwrites this list.
+  # test/ExplicitTests/main.*.dart and Sandbox*.dart are the formatter's INPUT
+  # FIXTURES: deliberately badly-formatted Dart. They must never be analyzed.
   exclude: [
     'lib/App.widgetbook.dart',
     'lib/constants/generated/*.dart',
@@ -27,28 +50,34 @@ analyzer:
     '**/*Injection.config.dart'
   ]
 
-# Explicitly disable only the rules we do not want.
 linter:
   rules:
+    always_put_required_named_parameters_first: false
     always_use_package_imports: false
     avoid_annotating_with_dynamic: false
-    avoid_classes_with_only_static_members: false
     avoid_catches_without_on_clauses: false
+    avoid_classes_with_only_static_members: false
     avoid_types_on_closure_parameters: false
     cascade_invocations: false
     constant_identifier_names: false
     curly_braces_in_flow_control_structures: false
     depend_on_referenced_packages: false
     diagnostic_describe_all_properties: false
+    discarded_futures: false
+    do_not_use_environment: false
     document_ignores: false
     file_names: false
     flutter_style_todos: false
     lines_longer_than_80_chars: false
+    non_constant_identifier_names: false
     omit_local_variable_types: false
     omit_obvious_local_variable_types: false
     omit_obvious_property_types: false
+    one_member_abstracts: false
     prefer_double_quotes: false
+    prefer_final_locals: false
     prefer_final_parameters: false
+    prefer_initializing_formals: false
     public_member_api_docs: false
     require_trailing_commas: false
     sort_child_properties_last: false
@@ -56,3 +85,5 @@ linter:
     sort_pub_dependencies: false
     sort_unnamed_constructors_first: false
     unnecessary_final: false
+    unnecessary_raw_strings: false
+    use_late_for_private_fields_and_variables: false

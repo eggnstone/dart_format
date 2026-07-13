@@ -11,6 +11,24 @@ Three invocation modes are dispatched from `bin/dart_format.dart`:
 - **Pipe mode** (`PipeHandler`): reads source from stdin, writes formatted source to stdout. Used by IDE plugins for one-off invocations.
 - **Web service** (`WebServiceHandler`, `--web`): HTTP server on `127.0.0.1`, random free port by default (announced in the JSON line printed to stdout); pin a specific port with `--port=N`. `POST /format` takes a multipart body with `Config` (JSON) + `Text` (Dart source) parts. `GET /`, `/status`, `/quit`, `/favicon.ico` exist for diagnostics. Used by long-running IDE plugins to avoid repeated process startup.
 
+## Positioning — how all three surfaces describe this
+
+`dart_format` (pub.dev), `DartFormatJetBrainsPlugin` and `DartFormatVSCodePlugin`
+broadcast the **same** message. Apply this to READMEs, pubspec / package.json /
+plugin.xml descriptions, marketplace listings, and release copy:
+
+1. **"Configurable Dart *and Flutter* formatter."** Always say "and Flutter" —
+   IDE users care, and pub.dev search picks it up. Never "Dart" alone.
+2. **Lead with "no forced line wrapping"** — "keeps your line breaks", "won't
+   rewrap your lines". This is *the* differentiator vs built-in `dart format`,
+   and the maintainer confirmed (2026-05-17) it is what resonates with users.
+   **Don't lead with the generic "configurable" claim.**
+3. Then the opt-in knobs: brace placement, spacing, trailing commas, indent
+   width, blank lines.
+4. Then the CLI + IDE story. **Cross-link all three surfaces** — each listing
+   links to the other two; the package powers both plugins via a local HTTP
+   service.
+
 ## Project context
 
 - Stability: feature-stable.

@@ -1,0 +1,45 @@
+{
+  "_doc": "Dart & Flutter MCP server (`dart mcp-server`). JSON has no comments, so these _-prefixed keys document the setup and are ignored by the loader. Functional config = mcpServers.dart.args. GOTCHA: `dart mcp-server --help` claims all features are enabled by default, but that is FALSE for 5 tools — run_tests, get_app_logs, get_active_location, list_running_apps, list_devices are enabledByDefault=false and must be turned on with `--enable`; `--disable` alone leaves them OFF (verified 2026-06-19 by probing tools/list over stdio: --disable-only advertises 9 tools, adding --enable surfaces all 5). So args carry BOTH `--disable <deny-list>` (remove default-on tools) and `--enable <list>` (add the default-off ones). analyze_files/lsp aren't in either arg — they're root-gated and register only once the client supplies a workspace root. The _enabled / _disabled keys below mirror the resulting set.",
+  "_enabled": [
+    "analyze_files            — static analysis / diagnostics",
+    "lsp                      — semantic code queries (definitions, references, hover, symbols)",
+    "run_tests                — run tests, structured results",
+    "widget_inspector         — the live widget tree",
+    "get_runtime_errors       — runtime errors from the running app",
+    "get_app_logs             — the running app's log output",
+    "get_active_location      — current active file/cursor location",
+    "hot_reload               — inject changed code into the running app (keeps state)",
+    "hot_restart              — restart the running app (loses in-memory state)",
+    "list_running_apps        — Dart/Flutter apps connected via DTD (not OS processes)",
+    "list_devices             — available devices/emulators",
+    "dtd                      — Dart Tooling Daemon connection (backs the runtime tools)",
+    "roots                    — workspace package discovery (which pubspec packages are in scope)",
+    "read_package_uris        — resolve package: URIs to on-disk files",
+    "rip_grep_packages        — ripgrep across package sources (incl. dependencies)",
+    "pub_dev_search           — search pub.dev"
+  ],
+  "_disabled": [
+    "dart_fix                       — edits files",
+    "dart_format                    — edits files",
+    "create_project                 — creates files",
+    "pub                            — installs/changes dependencies",
+    "launch_app                     — starts an app instance (you own the lifecycle)",
+    "stop_app                       — kills an app instance",
+    "flutter_driver_command         — drives the UI (taps/typing → can mutate your data)",
+    "flutter_driver_user_journey_test — drives the UI (can mutate your data)"
+  ],
+  "mcpServers": {
+    "dart": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "dart",
+        "mcp-server",
+        "--disable",
+        "dart_fix,dart_format,create_project,pub,launch_app,stop_app,flutter_driver_command,flutter_driver_user_journey_test",
+        "--enable",
+        "run_tests,get_app_logs,get_active_location,list_running_apps,list_devices"
+      ]
+    }
+  }
+}
