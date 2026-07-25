@@ -27,7 +27,7 @@ style or you don't. `dart_format` lets you decide.
 **It never wraps lines.** No column limit, no automatic line breaks.
 Long lines stay long; short lines stay short. The only line breaks
 `dart_format` inserts are the ones you explicitly enable (e.g.
-`addNewLineBeforeOpeningBrace`). If you didn't ask for a break, you
+`AddNewLineBeforeOpeningBrace`). If you didn't ask for a break, you
 won't get one.
 
 ```dart
@@ -52,18 +52,22 @@ editor, and CI.
 Pass any subset as JSON via `--config` or `--config-file`. Missing keys
 fall back to the defaults below.
 
+**Option names are PascalCase and case-sensitive.** A name that isn't in
+the table — `indentationSpacesPerLevel`, say — is rejected with an error
+that names it and suggests the right spelling; it is never ignored.
+
 | Option                         | Default | Controls                                      |
 |--------------------------------|---------|-----------------------------------------------|
-| `addNewLineBeforeOpeningBrace` | `true`  | `{` on its own line (Allman-style)            |
-| `addNewLineAfterOpeningBrace`  | `true`  | Body always on a new line                     |
-| `addNewLineBeforeClosingBrace` | `true`  | Closing `}` on its own line                   |
-| `addNewLineAfterClosingBrace`  | `true`  | Newline after a block                         |
-| `addNewLineAfterSemicolon`     | `true`  | One statement per line                        |
-| `addNewLineAtEndOfText`        | `true`  | Trailing newline at end of file               |
-| `fixSpaces`                    | `true`  | Normalise whitespace around tokens            |
-| `indentationSpacesPerLevel`    | `4`     | Indent width (`-1` = leave untouched)         |
-| `maxEmptyLines`                | `1`     | Collapse runs of blank lines (`-1` = leave)   |
-| `removeTrailingCommas`         | `true`  | Strip trailing commas                         |
+| `AddNewLineBeforeOpeningBrace` | `true`  | `{` on its own line (Allman-style)            |
+| `AddNewLineAfterOpeningBrace`  | `true`  | Body always on a new line                     |
+| `AddNewLineBeforeClosingBrace` | `true`  | Closing `}` on its own line                   |
+| `AddNewLineAfterClosingBrace`  | `true`  | Newline after a block                         |
+| `AddNewLineAfterSemicolon`     | `true`  | One statement per line                        |
+| `AddNewLineAtEndOfText`        | `true`  | Trailing newline at end of file               |
+| `FixSpaces`                    | `true`  | Normalise whitespace around tokens            |
+| `IndentationSpacesPerLevel`    | `4`     | Indent width (`-1` = leave untouched)         |
+| `MaxEmptyLines`                | `1`     | Collapse runs of blank lines (`-1` = leave)   |
+| `RemoveTrailingCommas`         | `true`  | Strip trailing commas                         |
 
 Example `dartformat.json`:
 
@@ -122,8 +126,8 @@ Usage: dart_format [args] <file|dir|glob> [<file|dir|glob> ...]
     Pass `-` (or pipe stdin with no positional args) to format stdin to stdout.
     --check, -c                      No writes; exits non-zero if any file would change (for CI)
     --check-version                  Checks pub.dev for a newer dart_format release on start-up
-    --config=<JSON>                  Inline configuration JSON (mutually exclusive with --config-file)
-    --config-file=<PATH>             Path to a JSON config file (mutually exclusive with --config)
+    --config=<JSON>                  Inline configuration JSON, PascalCase keys (mutually exclusive with --config-file)
+    --config-file=<PATH>             Path to a JSON config file, PascalCase keys (mutually exclusive with --config)
     --errors-as-json                 Writes errors as JSON to stderr
     --exclude=<GLOB>, -x <GLOB>      Excludes files matching the glob (repeatable)
     --help, -h                       Prints this help and exits

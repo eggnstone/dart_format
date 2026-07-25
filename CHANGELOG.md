@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.4.0
+
+- Unknown configuration option names are rejected with an error naming the option and suggesting the correct spelling; previously they were silently ignored.
+- Configuration values of the wrong type are rejected with an error naming the option.
+- Fixed the README configuration table, which listed the option names in camelCase instead of PascalCase.
+
 ## 2.3.0
 
 - Migrated to analyzer 13 (formal-parameter, named-argument, and label AST restructuring).

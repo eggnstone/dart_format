@@ -13,8 +13,8 @@ class InfoTools
         writelnToStdOut('    Pass `-` (or pipe stdin with no positional args) to format stdin to stdout.', preventLoggingToTempFile: true);
         writelnToStdOut('    --check, -c                      No writes; exits non-zero if any file would change (for CI)', preventLoggingToTempFile: true);
         writelnToStdOut('    --check-version                  Checks pub.dev for a newer dart_format release (standalone, or before normal operation)', preventLoggingToTempFile: true);
-        writelnToStdOut('    --config=<JSON>                  Inline configuration JSON (mutually exclusive with --config-file)', preventLoggingToTempFile: true);
-        writelnToStdOut('    --config-file=<PATH>             Path to a JSON config file (mutually exclusive with --config)', preventLoggingToTempFile: true);
+        writelnToStdOut('    --config=<JSON>                  Inline configuration JSON, PascalCase keys (mutually exclusive with --config-file)', preventLoggingToTempFile: true);
+        writelnToStdOut('    --config-file=<PATH>             Path to a JSON config file, PascalCase keys (mutually exclusive with --config)', preventLoggingToTempFile: true);
         writelnToStdOut('    --errors-as-json                 Writes errors as JSON to stderr', preventLoggingToTempFile: true);
         writelnToStdOut('    --exclude=<GLOB>, -x <GLOB>      Excludes files matching the glob (repeatable)', preventLoggingToTempFile: true);
         writelnToStdOut('    --help, -h                       Prints this help and exits', preventLoggingToTempFile: true);

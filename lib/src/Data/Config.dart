@@ -1,8 +1,8 @@
 // ignore_for_file: invalid_annotation_target
 
-import 'dart:convert';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import 'ConfigValidator.dart';
 
 part 'Config.freezed.dart';
 part 'Config.g.dart';
@@ -99,15 +99,17 @@ abstract class Config with _$Config
     => _$ConfigFromJson(json);
 
     /// Create a new instance of [Config] from a JSON string.
-    /// Missing fields fall back to [Config.all] defaults, so callers can pass
-    /// a partial object that overrides only the keys they care about.
+    /// Option names are PascalCase and case-sensitive; missing ones fall back to
+    /// [Config.all] defaults, so callers can pass a partial object that overrides
+    /// only the keys they care about. Unknown names and values of the wrong type
+    /// throw a `DartFormatException` instead of being silently ignored.
     factory Config.fromJsonText(String? s)
     {
         if (s == null)
             return Config.all();
 
-        final Map<String, dynamic> userJson = Map<String, dynamic>.from(jsonDecode(s));
         final Map<String, dynamic> defaults = Config.all().toJson();
+        final Map<String, dynamic> userJson = ConfigValidator.parse(s, defaults);
         final Map<String, dynamic> merged = <String, dynamic>{...defaults, ...userJson};
         return Config.fromJson(merged);
     }

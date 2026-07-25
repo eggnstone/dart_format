@@ -1,4 +1,5 @@
 import 'package:dart_format/src/Data/Config.dart';
+import 'package:dart_format/src/Exceptions/DartFormatException.dart';
 import 'package:test/test.dart';
 
 import '../../TestTools/TestTools.dart';
@@ -43,6 +44,26 @@ void main()
                     expect(c.fixSpaces, isFalse);
                     expect(c.removeTrailingCommas, equals(Config.REMOVE_TRAILING_COMMAS_DEFAULT));
                     expect(c.indentationSpacesPerLevel, equals(Config.INDENTATION_SPACES_PER_LEVEL_DEFAULT));
+                }
+            );
+
+            test('A camelCase option name throws instead of being ignored', ()
+                {
+                    expect(
+                        () => Config.fromJsonText('{"indentationSpacesPerLevel": 2}'),
+                        throwsA(isA<DartFormatException>().having((DartFormatException e) => e.message, 'message',
+                            contains('Did you mean "IndentationSpacesPerLevel"?')))
+                    );
+                }
+            );
+
+            test('A value of the wrong type throws', ()
+                {
+                    expect(
+                        () => Config.fromJsonText('{"MaxEmptyLines": "2"}'),
+                        throwsA(isA<DartFormatException>().having((DartFormatException e) => e.message, 'message',
+                            contains('expects a whole number')))
+                    );
                 }
             );
         }

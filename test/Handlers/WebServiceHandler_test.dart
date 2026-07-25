@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dart_format/src/Constants/Constants.dart';
@@ -91,6 +92,29 @@ void main()
                 }
             );
 
+            test('POST /format with a valid Config formats the text', ()
+                async
+                {
+                    final _FormatResponse response = await _postFormat(boundPort, '{"IndentationSpacesPerLevel": 2}', 'class C\n{\n    int x = 1;\n}\n');
+
+                    expect(response.result, equals('OK'));
+                    expect(response.exception, isNull);
+                    expect(response.body, contains('  int x = 1;'));
+                }
+            );
+
+            // The validation message is multi-line, and it travels in an HTTP
+            // header — so this also pins down that jsonEncode keeps it legal there.
+            test('POST /format with a camelCase option name fails with the suggestion in the header', ()
+                async
+                {
+                    final _FormatResponse response = await _postFormat(boundPort, '{"indentationSpacesPerLevel": 2}', 'class C\n{\n}\n');
+
+                    expect(response.result, equals('Fail'));
+                    expect(response.exception, contains(r'Did you mean \"IndentationSpacesPerLevel\"?'));
+                }
+            );
+
             test('GET /status with non-loopback Host is rejected with 403', ()
                 async
                 {
@@ -119,6 +143,50 @@ void main()
     // test reports as a late error. Verified manually instead. The wiring is a
     // single `await ... .timeout(d)` + `on TimeoutException catch` in
     // `WebServiceHandler._handlePostFormat`.
+}
+
+/// The interesting parts of a `POST /format` response: the `X-DartFormat-Result`
+/// and `X-DartFormat-Exception` headers plus the body.
+typedef _FormatResponse = ({String? result, String? exception, String body});
+
+Future<_FormatResponse> _postFormat(int port, String configText, String text)
+async
+{
+    const String boundary = '----X';
+    const String partHeaders = 'Content-Type: text/plain; charset=utf-8';
+    final String body = '--$boundary\r\n'
+        '$partHeaders\r\n'
+        'Content-Disposition: form-data; name="Config"\r\n'
+        '\r\n'
+        '$configText\r\n'
+        '--$boundary\r\n'
+        '$partHeaders\r\n'
+        'Content-Disposition: form-data; name="Text"\r\n'
+        '\r\n'
+        '$text\r\n'
+        '--$boundary--\r\n';
+    final List<int> bytes = utf8.encode(body);
+
+    final HttpClient client = HttpClient();
+    try
+    {
+        final HttpClientRequest request = await client.postUrl(Uri.parse('http://127.0.0.1:$port/format'));
+        request.headers.contentType = ContentType('multipart', 'form-data', parameters: <String, String>{'boundary': boundary});
+        request.contentLength = bytes.length;
+        request.add(bytes);
+
+        final HttpClientResponse response = await request.close();
+        final String responseBody = await utf8.decodeStream(response);
+        return (
+            result: response.headers.value('x-dartformat-result'),
+            exception: response.headers.value('x-dartformat-exception'),
+            body: responseBody
+        );
+    }
+    finally
+    {
+        client.close(force: true);
+    }
 }
 
 Future<int> _getStatusCodeWithHost(int port, String path, String hostHeader)
